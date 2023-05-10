@@ -177,3 +177,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# "Java Build files" generated for python
+**/jar/__init__.py
+**/jar/*.jar
