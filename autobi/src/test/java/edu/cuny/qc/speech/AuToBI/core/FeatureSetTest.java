@@ -19,17 +19,16 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
+import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 /**
  * Test class for FeatureSet.
@@ -37,7 +36,6 @@ import static org.junit.Assert.assertTrue;
  * @see FeatureSet
  */
 public class FeatureSetTest {
-
   @Test
   public void testFeatureConstructionWorksWithNullClassAttribute() {
     FeatureSet fs = new FeatureSet();
@@ -150,7 +148,6 @@ public class FeatureSetTest {
 
   @Test
   public void testInsertDataPointWhenNotAllocated() {
-
     FeatureSet fs = new FeatureSet();
     fs.insertDataPoint(new Word(0, 1, "test"));
 
@@ -194,7 +191,6 @@ public class FeatureSetTest {
     assertTrue(found);
   }
 
-
   @Test
   public void testConstructFeaturesNominal() {
     FeatureSet fs = new FeatureSet();
@@ -229,9 +225,9 @@ public class FeatureSetTest {
     fs.constructFeatures();
     String arffattributes = fs.generateArffAttributes();
 
-    assertEquals("@attribute two numeric\n" +
-        "@attribute nominal_one {value_one,value_two}\n", arffattributes);
-
+    assertEquals("@attribute two numeric\n"
+            + "@attribute nominal_one {value_one,value_two}\n",
+        arffattributes);
   }
 
   @Test
@@ -253,9 +249,9 @@ public class FeatureSetTest {
 
     String arffattributes = fs.generateArffAttributes();
 
-    assertEquals("@attribute two string\n" +
-        "@attribute nominal_one {value_one,value_two}\n", arffattributes);
-
+    assertEquals("@attribute two string\n"
+            + "@attribute nominal_one {value_one,value_two}\n",
+        arffattributes);
   }
 
   @Test
@@ -268,9 +264,9 @@ public class FeatureSetTest {
 
     String arffattributes = fs.generateArffAttributes();
 
-    assertEquals("@attribute two numeric\n" +
-        "@attribute nominal_one {}\n", arffattributes);
-
+    assertEquals("@attribute two numeric\n"
+            + "@attribute nominal_one {}\n",
+        arffattributes);
   }
 
   @Test
@@ -290,9 +286,10 @@ public class FeatureSetTest {
     fs.constructFeatures();
     String data = fs.generateArffData();
 
-    assertEquals("@data\n" +
-        "3,value_one\n" +
-        "5,value_two\n", data);
+    assertEquals("@data\n"
+            + "3,value_one\n"
+            + "5,value_two\n",
+        data);
   }
 
   @Test
@@ -311,9 +308,10 @@ public class FeatureSetTest {
     fs.constructFeatures();
     String data = fs.generateArffData();
 
-    assertEquals("@data\n" +
-        "3,value_one\n" +
-        "?,value_two\n", data);
+    assertEquals("@data\n"
+            + "3,value_one\n"
+            + "?,value_two\n",
+        data);
   }
 
   @Test
@@ -333,9 +331,10 @@ public class FeatureSetTest {
     fs.constructFeatures();
     String data = fs.generateArffData();
 
-    assertEquals("@data\n" +
-        "3,value_one\n" +
-        ",value_two\n", data);
+    assertEquals("@data\n"
+            + "3,value_one\n"
+            + ",value_two\n",
+        data);
   }
 
   @Test
@@ -357,7 +356,6 @@ public class FeatureSetTest {
 
     assertEquals("two,nominal_one\n", header);
   }
-
 
   @Test
   public void testGetFeatureIndexWorksOnClassAttribute() {

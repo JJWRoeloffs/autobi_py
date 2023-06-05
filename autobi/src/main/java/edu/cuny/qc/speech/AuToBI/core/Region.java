@@ -1,7 +1,7 @@
 /*  Region.java
 
     Copyright (c) 2009-2014 Andrew Rosenberg
-    
+
   This file is part of the AuToBI prosodic analysis package.
 
   AuToBI is free software: you can redistribute it and/or modify
@@ -9,41 +9,46 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import java.util.*;
 import java.io.Serializable;
+import java.util.*;
 
 /**
- * Region is a class to describe a region in time.  In the context of AuToBI, it is the main object that is used to
- * represent words, phrases, syllables, etc.
- * <p/>
- * Through the use of a map of strings to objects, a user is able to attach any attribute to a region, including other
- * regions.  AuToBI makes heavy use of this functionality in its feature extraction, serialization and model training.
+ * Region is a class to describe a region in time.  In the context of AuToBI, it is the main object
+ * that is used to represent words, phrases, syllables, etc. <p/> Through the use of a map of
+ * strings to objects, a user is able to attach any attribute to a region, including other regions.
+ * AuToBI makes heavy use of this functionality in its feature extraction, serialization and model
+ * training.
  */
 public class Region implements Serializable {
   private static final long serialVersionUID = 6410344724558496468L;
-  private double start;  // the start time
-  private double end;    // the end time
-  private String label;  // an optional label for the region.  For words, this is typically the orthography of the word
-  private String file;   // an optional field to store the path to the source file for the region.
-  private Map<String, Object> attributes;  // a collection of attributes associated with the region.
+  private double start; // the start time
+  private double end; // the end time
+  private String label; // an optional label for the region.  For words, this is typically the
+                        // orthography of the word
+  private String file; // an optional field to store the path to the source file for the region.
+  private Map<String, Object> attributes; // a collection of attributes associated with the region.
 
   private FeatureSet feature_set;
   // a FeatureSet that describes the features that are required on this region for classification
-  private Object[] fs_attributes; // a list of values for each of the required attributes from the FeatureSet
+  private Object[] fs_attributes; // a list of values for each of the required attributes from the
+                                  // FeatureSet
 
   /**
    * Constrcuts a new region with a label and file.
@@ -194,8 +199,8 @@ public class Region implements Serializable {
   /**
    * Retrieves the attributes hash.
    * <p/>
-   * This has been deprecated.  The correct way to use this functionality is to get a list of attribute names, and the
-   * get the values for each attribute individually.
+   * This has been deprecated.  The correct way to use this functionality is to get a list of
+   * attribute names, and the get the values for each attribute individually.
    *
    * @return the hash of attributes and their names
    */
@@ -220,7 +225,6 @@ public class Region implements Serializable {
    * @param fs the FeatureSet to be assigned
    */
   public void setFeatureSet(FeatureSet fs) {
-
     // Move any attributes that were required by the previous feature set.
     Map<String, Object> attr_storage = null;
     if (this.feature_set != null) {
@@ -228,7 +232,8 @@ public class Region implements Serializable {
       for (String f : feature_set.getRequiredFeatures()) {
         attr_storage.put(f, getAttribute(f));
       }
-      attr_storage.put(feature_set.getClassAttribute(), getAttribute(feature_set.getClassAttribute()));
+      attr_storage.put(
+          feature_set.getClassAttribute(), getAttribute(feature_set.getClassAttribute()));
     }
     this.feature_set = fs;
 
@@ -284,8 +289,8 @@ public class Region implements Serializable {
     checkMapUsage();
     if (feature_set != null && feature_set.getRequiredFeatures().contains(name)) {
       int idx = feature_set.getFeatureIndex(name);
-      return this.fs_attributes[idx] != null ||
-          (this.attributes.containsKey(name) && this.attributes.get(name) != null);
+      return this.fs_attributes[idx] != null
+          || (this.attributes.containsKey(name) && this.attributes.get(name) != null);
     } else {
       return this.attributes.containsKey(name) && this.attributes.get(name) != null;
     }
@@ -383,14 +388,15 @@ public class Region implements Serializable {
    * @return the string representation of the region
    */
   public String toString() {
-    return label + " [" + start + ", " + end + "]" + " (" + file + ")";
+    return label + " [" + start + ", " + end + "]"
+        + " (" + file + ")";
   }
 
   /**
    * Increases the capacity for an additional required feature.
    * <p/>
-   * This is used when a region has already been added to a data set, and then later, the required feature list for that
-   * attribute is increased.
+   * This is used when a region has already been added to a data set, and then later, the required
+   * feature list for that attribute is increased.
    */
   public void addRequiredFeatureCapacity() {
     // Reallocate

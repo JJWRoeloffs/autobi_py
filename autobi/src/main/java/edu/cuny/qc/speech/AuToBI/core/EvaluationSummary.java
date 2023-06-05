@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,13 +27,12 @@
 package edu.cuny.qc.speech.AuToBI.core;
 
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * A class for storing Evaluation data from a set of classification experiments. This class serves as a wrapper around a
- * set of annotated contingency matrices stored as EvaluationResults.
+ * A class for storing Evaluation data from a set of classification experiments. This class serves
+ * as a wrapper around a set of annotated contingency matrices stored as EvaluationResults.
  */
 public class EvaluationSummary {
   ArrayList<EvaluationResults> results;
@@ -71,9 +73,9 @@ public class EvaluationSummary {
         results.add(eval);
       } else {
         throw new AuToBIException(
-            "new evaluation results are inconsistent with existing results\nnew number of classes: " +
-                eval.getNumClasses() +
-                "\nexisting number of classes: " + results.get(0).getNumClasses());
+            "new evaluation results are inconsistent with existing results\nnew number of classes: "
+            + eval.getNumClasses()
+            + "\nexisting number of classes: " + results.get(0).getNumClasses());
       }
     }
   }
@@ -128,7 +130,6 @@ public class EvaluationSummary {
     }
     return agg.getStdev();
   }
-
 
   /**
    * Collapse the contingency tables and extract the f-measure for a class over all evaluations
@@ -293,7 +294,6 @@ public class EvaluationSummary {
    * @return Entropy Weighted Recall
    */
   private String getEntropyWeightedRecall() {
-
     Distribution distribution = new Distribution();
     String[] classnames = results.get(0).getClassNames();
     for (String c : classnames) {
@@ -306,7 +306,8 @@ public class EvaluationSummary {
     try {
       distribution.normalize();
     } catch (AuToBIException e) {
-      AuToBIUtils.error("Error normalizing class distribution in entropy calculation: " + e.getMessage());
+      AuToBIUtils.error(
+          "Error normalizing class distribution in entropy calculation: " + e.getMessage());
     }
 
     double recall = 0.0;
@@ -344,7 +345,8 @@ public class EvaluationSummary {
   }
 
   /**
-   * Get the number of points with true value equal to class name across all contained evaluation results
+   * Get the number of points with true value equal to class name across all contained evaluation
+   * results
    *
    * @param class_name the class to aggregate
    * @return the number of points with class equal to class_name

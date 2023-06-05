@@ -20,24 +20,22 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
-import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.io.IOException;
+import java.util.List;
+import org.junit.Test;
+
 /**
  * Test class for edu.cuny.qc.speech.AuToBI.io.NXTTier
  */
 public class TextGridReaderTest {
-
   @Test
   public void testReadsWords() {
     String filestem = ResourcePath.getResourcePath("test.TextGrid");
@@ -52,7 +50,6 @@ public class TextGridReaderTest {
       fail(e.getMessage());
     }
   }
-
 
   @Test
   public void testReadsWordsWithNamedTiers() {
@@ -150,6 +147,5 @@ public class TextGridReaderTest {
     } catch (IOException e) {
       fail(e.getMessage());
     }
-
   }
 }

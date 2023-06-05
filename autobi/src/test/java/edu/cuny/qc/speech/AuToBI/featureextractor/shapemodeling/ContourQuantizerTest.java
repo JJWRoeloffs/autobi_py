@@ -19,11 +19,10 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling;
 
-import edu.cuny.qc.speech.AuToBI.core.Contour;
-import org.junit.*;
-
 import static junit.framework.Assert.*;
 
+import edu.cuny.qc.speech.AuToBI.core.Contour;
+import org.junit.*;
 
 /**
  * A Test class for ContourQuantizer.
@@ -31,7 +30,6 @@ import static junit.framework.Assert.*;
  * @see ContourQuantizer
  */
 public class ContourQuantizerTest {
-
   @Test
   public void testConstructor() {
     ContourQuantizer cq = new ContourQuantizer(5, 2, 0.0, 0.6);
@@ -42,7 +40,7 @@ public class ContourQuantizerTest {
 
   @Test
   public void testQuantizedSize() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(0.0, 0.001, values);
     ContourQuantizer cq = new ContourQuantizer(6, 2, 0.0, 0.6);
     try {
@@ -55,17 +53,17 @@ public class ContourQuantizerTest {
 
   @Test
   public void testQuantizedValues() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(0.0, 0.001, values);
     ContourQuantizer cq = new ContourQuantizer(6, 2, 0.0, 0.6);
     try {
       int[] quantized = cq.quantize(c);
-      for (int i = 0; i < values.length; ++i) {        
+      for (int i = 0; i < values.length; ++i) {
         if (values[i] < 0.3) {
           assertEquals(0, quantized[i]);
         } else {
           assertEquals(1, quantized[i]);
-        }        
+        }
       }
     } catch (ContourQuantizerException e) {
       e.printStackTrace();
@@ -74,7 +72,7 @@ public class ContourQuantizerTest {
 
   @Test
   public void testQuantizedValuesOutsideLimits() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(0.0, 0.001, values);
     ContourQuantizer cq = new ContourQuantizer(6, 2, 0.25, 0.26);
     try {
@@ -93,21 +91,21 @@ public class ContourQuantizerTest {
 
   @Test
   public void testQuantizedValuesCollapseValues() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(0.0, 0.001, values);
     ContourQuantizer cq = new ContourQuantizer(3, 2, 0.0, 0.6);
     try {
       int[] quantized = cq.quantize(c);
       assertEquals(0, quantized[0]);
       assertEquals(0, quantized[1]);
-      assertEquals(1, quantized[2]);      
+      assertEquals(1, quantized[2]);
     } catch (ContourQuantizerException e) {
       e.printStackTrace();
     }
   }
   @Test
   public void testQuantizeThrowsExceptionOnSmallValues() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(0.0, 0.001, values);
     ContourQuantizer cq = new ContourQuantizer(10, 2, 0.0, 0.6);
     try {
@@ -117,5 +115,4 @@ public class ContourQuantizerTest {
       assertTrue(true);
     }
   }
-
 }

@@ -19,20 +19,19 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
 import edu.cuny.qc.speech.AuToBI.core.Distribution;
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for TiltFeatureExtractor
@@ -62,9 +61,7 @@ public class CorrectionSpectrumPADFeatureExtractorTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -143,7 +140,8 @@ public class CorrectionSpectrumPADFeatureExtractorTest {
       for (Region word : regions) {
         // In this test case the classifier should be able to correctly predict each test label
         assertEquals("CORRECT", word.getAttribute("nominal_bark_0_1__correction_prediction"));
-        assertEquals(0.6666, (Double) word.getAttribute("bark_0_1__correction_prediction_confidence"), 0.0001);
+        assertEquals(0.6666,
+            (Double) word.getAttribute("bark_0_1__correction_prediction_confidence"), 0.0001);
       }
     } catch (FeatureExtractorException e) {
       fail(e.getMessage());

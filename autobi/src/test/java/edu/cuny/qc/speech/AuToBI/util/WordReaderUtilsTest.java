@@ -19,20 +19,18 @@
  */
 package edu.cuny.qc.speech.AuToBI.util;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.AuToBIParameters;
 import edu.cuny.qc.speech.AuToBI.io.*;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Tests for ToBIUtils utility methods.
  */
 public class WordReaderUtilsTest {
-
   @Test
   public void testIsSilentRegionWorksWithDefaultTrue() {
-
     String label = "sil";
     assertTrue(WordReaderUtils.isSilentRegion(label));
   }

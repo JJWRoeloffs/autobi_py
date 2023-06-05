@@ -19,39 +19,34 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import edu.cuny.qc.speech.AuToBI.AuToBI;
-import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
-import edu.cuny.qc.speech.AuToBI.io.FormattedFile;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Test;
-
-import java.util.List;
-
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+
+import edu.cuny.qc.speech.AuToBI.AuToBI;
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
+import edu.cuny.qc.speech.AuToBI.io.FormattedFile;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for FeatureSetPropagator.
  * <p/>
  * These tests are much larger than the standard UnitTests.
  * <p/>
- * FeatureSetPropagator is responsible for reading word segmentation, and a wave file, then calling the feature
- * extraction routines to generate the required features for a FeatureSet.
- * <p/>
- * These test confirm that the process correctly operates on each style of input segmentation, generating appropriately
- * FeatureSet objects.
- * <p/>
- * Specific testing of file readers and feature extractors is reserved to their corresponding unit tests.
+ * FeatureSetPropagator is responsible for reading word segmentation, and a wave file, then calling
+ * the feature extraction routines to generate the required features for a FeatureSet. <p/> These
+ * test confirm that the process correctly operates on each style of input segmentation, generating
+ * appropriately FeatureSet objects. <p/> Specific testing of file readers and feature extractors is
+ * reserved to their corresponding unit tests.
  *
  * @see edu.cuny.qc.speech.AuToBI.core.FeatureSetPropagator
  */
 @SuppressWarnings("unchecked")
 public class FeatureSetPropagatorTest {
-
   @SuppressWarnings("UnusedDeclaration")
   @Test
   public void testConstructor() {
-
     AuToBI autobi = new AuToBI();
     FormattedFile file = new FormattedFile("");
     FeatureSet fs = new FeatureSet();
@@ -75,7 +70,8 @@ public class FeatureSetPropagatorTest {
   @Test
   public void testPropagateSimpleWordData() {
     AuToBI autobi = new AuToBI();
-    FormattedFile file = new FormattedFile(ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD);
+    FormattedFile file = new FormattedFile(
+        ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD);
     FeatureSet fs = new FeatureSet();
 
     FeatureSetPropagator fsp = new FeatureSetPropagator(autobi, file, fs);
@@ -110,7 +106,8 @@ public class FeatureSetPropagatorTest {
     autobi.getMonikerMap().put("test_class_attribute", fe.getClass());
     autobi.registerFeatureExtractor(fe);
 
-    FormattedFile file = new FormattedFile(ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD);
+    FormattedFile file = new FormattedFile(
+        ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD);
     FeatureSet fs = new FeatureSet();
 
     fs.setClassAttribute("test_class_attribute");

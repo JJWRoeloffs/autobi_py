@@ -18,11 +18,9 @@
  along with AuToBI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Test files are not provided for this file, so it is skipped. 
-
+// Test files are not provided for this file, so it is skipped.
 
 // package edu.cuny.qc.speech.AuToBI.core.syllabifier;
-
 
 // import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 // import edu.cuny.qc.speech.AuToBI.core.Region;
@@ -66,7 +64,8 @@
 //     }
 //     List<Region> regions = vs.generatePseudosyllableRegions(wav);
 
-//     // Note: there are 12 true syllables in the file.  If the approach is tuned to become more accurate,
+//     // Note: there are 12 true syllables in the file.  If the approach is tuned to become more
+//     accurate,
 //     // the expected value may change.
 //     assertEquals(14, regions.size());
 //   }

@@ -19,27 +19,25 @@
  */
 package edu.cuny.qc.speech.AuToBI.util;
 
-import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
-import edu.cuny.qc.speech.AuToBI.core.Distribution;
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
+import edu.cuny.qc.speech.AuToBI.core.Distribution;
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * Test class for PartitionUtils methods
  */
 public class PartitionUtilsTest {
-
   @Test
   public void testAssignFoldNumInRange() {
     List<Word> words = new ArrayList<Word>();
@@ -212,7 +210,6 @@ public class PartitionUtilsTest {
     PartitionUtils.splitData(strings, train, test, map, 1);
 
     assertEquals(strings.size(), train.size(), test.size());
-
   }
 
   @Test

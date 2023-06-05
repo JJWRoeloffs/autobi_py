@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,7 +28,6 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,7 +39,8 @@ public class SpeakerNormalizationParameterFeatureExtractor extends FeatureExtrac
   private String speaker_id_feature;
   private String destination_feature;
 
-  public SpeakerNormalizationParameterFeatureExtractor(String speaker_id_feature, String destination_feature) {
+  public SpeakerNormalizationParameterFeatureExtractor(
+      String speaker_id_feature, String destination_feature) {
     this.speaker_id_feature = speaker_id_feature;
     this.destination_feature = destination_feature;
 
@@ -48,7 +51,8 @@ public class SpeakerNormalizationParameterFeatureExtractor extends FeatureExtrac
 
   @Override
   public void extractFeatures(List regions) throws FeatureExtractorException {
-    HashMap<String, SpeakerNormalizationParameter> params = new HashMap<String, SpeakerNormalizationParameter>();
+    HashMap<String, SpeakerNormalizationParameter> params =
+        new HashMap<String, SpeakerNormalizationParameter>();
 
     for (Region r : (List<Region>) regions) {
       SpeakerNormalizationParameter norm_params;
@@ -59,15 +63,16 @@ public class SpeakerNormalizationParameterFeatureExtractor extends FeatureExtrac
       norm_params = params.get(r.getAttribute(speaker_id_feature));
       if (r.hasAttribute("f0")) {
         try {
-          norm_params.insertPitch(ContourUtils.getSubContour((Contour) r.getAttribute("f0"), r.getStart(), r.getEnd()));
+          norm_params.insertPitch(
+              ContourUtils.getSubContour((Contour) r.getAttribute("f0"), r.getStart(), r.getEnd()));
         } catch (AuToBIException e) {
           throw new FeatureExtractorException(e.getMessage());
         }
       }
       if (r.hasAttribute("I")) {
         try {
-          norm_params
-              .insertIntensity(ContourUtils.getSubContour((Contour) r.getAttribute("I"), r.getStart(), r.getEnd()));
+          norm_params.insertIntensity(
+              ContourUtils.getSubContour((Contour) r.getAttribute("I"), r.getStart(), r.getEnd()));
         } catch (AuToBIException e) {
           throw new FeatureExtractorException(e.getMessage());
         }

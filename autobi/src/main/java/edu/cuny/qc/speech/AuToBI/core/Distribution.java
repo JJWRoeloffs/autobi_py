@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,7 +27,6 @@
 package edu.cuny.qc.speech.AuToBI.core;
 
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
 import java.util.HashMap;
 
 /**
@@ -86,9 +88,9 @@ public class Distribution extends HashMap<String, Double> {
   /**
    * Normalize the distribution such that it sums to 1.
    * <p/>
-   * If there is no mass assigned to the distribution, this function will do nothing, and send a warning message.
-   * <p/>
-   * Before normalization, the object represents a histogram rather than a multinomial distribution
+   * If there is no mass assigned to the distribution, this function will do nothing, and send a
+   * warning message. <p/> Before normalization, the object represents a histogram rather than a
+   * multinomial distribution
    */
   public void normalize() throws AuToBIException {
     Double sum = 0.0;

@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,20 +27,20 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.*;
-
 import java.util.HashMap;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class CombinedContourFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "prodC";
-  private String feature1;     // the first feature
-  private String feature2;     // the second feature
-  private String extracted_f;  // the extracted feature name
-  private double f2_coeff;     // the combination coefficient of the second feature
+  private String feature1; // the first feature
+  private String feature2; // the second feature
+  private String extracted_f; // the extracted feature name
+  private double f2_coeff; // the combination coefficient of the second feature
 
   /**
-   * Constructs a new CombinedContourFeatureExtractor to merge two contours into a single numeric contour
+   * Constructs a new CombinedContourFeatureExtractor to merge two contours into a single numeric
+   * contour
    *
    * @param f1       the first contour feature
    * @param f2       the second contour feature
@@ -55,7 +58,8 @@ public class CombinedContourFeatureExtractor extends FeatureExtractor {
 
   public CombinedContourFeatureExtractor(String f1, String f2, String f2_coeff) {
     this(f1, f2, Double.parseDouble(f2_coeff));
-    // Respect the user specified f2_coeff string.  Double.parseDouble(s).toString() can introduce error.
+    // Respect the user specified f2_coeff string.  Double.parseDouble(s).toString() can introduce
+    // error.
     this.extracted_f = "prodC[" + f1 + "," + f2 + "," + f2_coeff + "]";
   }
 
@@ -76,7 +80,8 @@ public class CombinedContourFeatureExtractor extends FeatureExtractor {
         if (cache.containsKey(src)) {
           r.setAttribute(extracted_feature, cache.get(src));
         } else {
-          Contour c = combineContours((Contour) r.getAttribute(feature1), (Contour) r.getAttribute(feature2), f2_coeff);
+          Contour c = combineContours(
+              (Contour) r.getAttribute(feature1), (Contour) r.getAttribute(feature2), f2_coeff);
           r.setAttribute(extracted_feature, c);
           cache.put(src, c);
         }

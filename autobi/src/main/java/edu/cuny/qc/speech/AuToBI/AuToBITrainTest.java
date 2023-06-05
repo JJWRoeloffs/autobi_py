@@ -8,14 +8,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,18 +30,16 @@ import edu.cuny.qc.speech.AuToBI.io.*;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIReaderUtils;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import edu.cuny.qc.speech.AuToBI.util.ClassifierUtils;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AuToBITrainTest {
   public static void main(String[] args) {
-
     AuToBI autobi = new AuToBI();
     autobi.init(args);
 
@@ -55,23 +56,25 @@ public class AuToBITrainTest {
           format = FormattedFile.Format.CPROM;
         } else {
           AuToBIUtils.warn(
-              "Unrecognized or empty -format parameter. Defaulting to standard format.\n\t Current valid formats are:" +
-                  " " +
-                  "rhapsodie, cprom");
+              "Unrecognized or empty -format parameter. Defaulting to standard format.\n\t Current valid formats are:"
+              + " "
+              + "rhapsodie, cprom");
         }
       }
-      training_files = AuToBIReaderUtils.globFormattedFiles(autobi.getParameter("training_files"), format);
-      testing_files = AuToBIReaderUtils.globFormattedFiles(autobi.getParameter("testing_files"), format);
+      training_files =
+          AuToBIReaderUtils.globFormattedFiles(autobi.getParameter("training_files"), format);
+      testing_files =
+          AuToBIReaderUtils.globFormattedFiles(autobi.getParameter("testing_files"), format);
 
-
-      HashMap<String, AuToBITask> tasks = AuToBIUtils.createTaskListFromParameters(autobi.getParameters(), false);
+      HashMap<String, AuToBITask> tasks =
+          AuToBIUtils.createTaskListFromParameters(autobi.getParameters(), false);
 
       if (tasks.size() == 0) {
         AuToBIUtils.warn(
-            "No AuToBI tasks have been specified. Please indicate one or more tasks using one of the following:\n" +
-                "-pitch_accent_detector\n-pitch_accent_classifier\n-intontational_phrase_boundary_detector\n" +
-                "-intermediate_phrase_boundary_detector\n-phrase_accent_classifier\n" +
-                "-phrase_accent_boundary_tone_classifier");
+            "No AuToBI tasks have been specified. Please indicate one or more tasks using one of the following:\n"
+            + "-pitch_accent_detector\n-pitch_accent_classifier\n-intontational_phrase_boundary_detector\n"
+            + "-intermediate_phrase_boundary_detector\n-phrase_accent_classifier\n"
+            + "-phrase_accent_boundary_tone_classifier");
         return;
       }
 
@@ -79,17 +82,19 @@ public class AuToBITrainTest {
         AuToBITask task = tasks.get(task_label);
         AuToBITrainer trainer = new AuToBITrainer(autobi);
         try {
-
-          // Tone classification tasks ignore those points that do not have any associated prosodic event
+          // Tone classification tasks ignore those points that do not have any associated prosodic
+          // event
           if (task_label.equals("pitch_accent_classification")) {
-            autobi.getParameters().setParameter("attribute_omit", "nominal_PitchAccentType:NOACCENT");
+            autobi.getParameters().setParameter(
+                "attribute_omit", "nominal_PitchAccentType:NOACCENT");
           } else if (task_label.equals("phrase_accent_boundary_tone_classification")) {
-            autobi.getParameters().setParameter("attribute_omit", "nominal_PhraseAccentBoundaryTone:NOTONE");
+            autobi.getParameters().setParameter(
+                "attribute_omit", "nominal_PhraseAccentBoundaryTone:NOTONE");
           } else if (task_label.equals("phrase_accent_classification")) {
             autobi.getParameters().setParameter("attribute_omit", "nominal_PhraseAccent:NOTONE");
           } else if (task_label.equals("intermediate_phrase_boundary_detection")) {
-            autobi.getParameters()
-                .setParameter("attribute_omit", "nominal_IntermediatePhraseBoundary:INTONATIONAL_BOUNDARY");
+            autobi.getParameters().setParameter(
+                "attribute_omit", "nominal_IntermediatePhraseBoundary:INTONATIONAL_BOUNDARY");
           } else {
             autobi.getParameters().setParameter("attribute_omit", "");
           }
@@ -130,8 +135,8 @@ public class AuToBITrainTest {
         // prediction on test set
         ClassifierUtils.generatePredictions(task.getClassifier(), "hyp", "DEFAULT", testing_fs);
 
-        EvaluationResults er =
-            ClassifierUtils.generateEvaluationResults("hyp", testing_fs.getClassAttribute(), testing_fs);
+        EvaluationResults er = ClassifierUtils.generateEvaluationResults(
+            "hyp", testing_fs.getClassAttribute(), testing_fs);
 
         EvaluationSummary es = new EvaluationSummary(er);
 

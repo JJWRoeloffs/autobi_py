@@ -1,18 +1,17 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling;
 
+import static junit.framework.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.*;
-
 /**
- * Created with IntelliJ IDEA. User: andrew Date: 7/14/12 Time: 5:16 PM To change this template use File | Settings |
- * File Templates.
+ * Created with IntelliJ IDEA. User: andrew Date: 7/14/12 Time: 5:16 PM To change this template use
+ * File | Settings | File Templates.
  */
 public class CurveShapeLikelihoodFeatureExtractorTest {
   private CurveShapeLikelihoodFeatureExtractor fe;
@@ -77,5 +76,4 @@ public class CurveShapeLikelihoodFeatureExtractorTest {
       fail();
     }
   }
-
 }

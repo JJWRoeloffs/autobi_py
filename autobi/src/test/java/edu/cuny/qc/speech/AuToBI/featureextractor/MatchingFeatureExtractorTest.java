@@ -19,15 +19,14 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for MatchingFeatureExtractor
@@ -106,7 +105,8 @@ public class MatchingFeatureExtractorTest {
 
     try {
       fe.extractFeatures(regions);
-      assertFalse("Word has a constructed attribute when it shouldn't", w.hasAttribute("matching[first,second]"));
+      assertFalse("Word has a constructed attribute when it shouldn't",
+          w.hasAttribute("matching[first,second]"));
       assertEquals("CORRECT", w2.getAttribute("matching[first,second]"));
     } catch (FeatureExtractorException e) {
       fail();

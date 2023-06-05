@@ -15,20 +15,24 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
  *
  *
- * SPTK is covered by a BSD-style licenxe included in sptk-license.txt.  The SPTK copyright notice is included here
+ * SPTK is covered by a BSD-style licenxe included in sptk-license.txt.  The SPTK copyright notice
+ is included here
  *
  /******  BEGIN SPTK COPYRIGHT NOTICE ******
  / * This software has been licensed to the Centre of Speech Technology, KTH
@@ -91,7 +95,6 @@
 /* ----------------------------------------------------------------- */
 /******  END SPTK COPYRIGHT NOTICE ******/
 
-
 package edu.cuny.qc.speech.AuToBI;
 
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
@@ -100,10 +103,6 @@ import edu.cuny.qc.speech.AuToBI.core.PitchContour;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -111,6 +110,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class RAPTPitchExtractor {
   public Params par;
@@ -126,15 +128,14 @@ public class RAPTPitchExtractor {
     par.voice_bias = 0.0f;
     par.double_cost = 0.35f;
 
-
     par.wind_dur = 0.0075f;
     par.n_cands = 20;
-    par.mean_f0 = 200;     /* unused */
-    par.mean_f0_weight = 0.0f;  /* unused */
-    par.conditioning = 0;    /*unused */
+    par.mean_f0 = 200; /* unused */
+    par.mean_f0_weight = 0.0f; /* unused */
+    par.conditioning = 0; /*unused */
 
     // Should be parameterized
-    par.minF0 = 50;  // Default voice range.
+    par.minF0 = 50; // Default voice range.
     par.maxF0 = 500;
     par.frame_step = 0.01f;
   }
@@ -228,14 +229,14 @@ public class RAPTPitchExtractor {
   }
 
   /*
- * READ_SIZE: length of input data frame in sec to read
- * DP_CIRCULAR: determines the initial size of DP circular buffer in sec
- * DP_HIST: stored frame history in second before checking for common path
- *      DP_CIRCULAR > READ_SIZE, DP_CIRCULAR at least 2 times of DP_HIST
- * DP_LIMIT: in case no convergence is found, DP frames of DP_LIMIT secs
- *      are kept before output is forced by simply picking the lowest cost
- *      path
- */
+   * READ_SIZE: length of input data frame in sec to read
+   * DP_CIRCULAR: determines the initial size of DP circular buffer in sec
+   * DP_HIST: stored frame history in second before checking for common path
+   *      DP_CIRCULAR > READ_SIZE, DP_CIRCULAR at least 2 times of DP_HIST
+   * DP_LIMIT: in case no convergence is found, DP frames of DP_LIMIT secs
+   *      are kept before output is forced by simply picking the lowest cost
+   *      path
+   */
   public static float READ_SIZE = 0.2f;
   public static float DP_CIRCULAR = 1.5f;
   public static float DP_HIST = 0.5f;
@@ -243,13 +244,13 @@ public class RAPTPitchExtractor {
 
   public static float FLT_MAX = Float.MAX_VALUE;
 
-  int wReuse = 0;  /* number of windows seen before resued */
+  int wReuse = 0; /* number of windows seen before resued */
   WindowStat[] windstat = null;
 
   // Member variables for the RAPT algorithm
-  protected DPFrame headF = null;   // Current frame in the circular buffer
-  protected DPFrame tailF = null;   // Frame where tracks start
-  protected DPFrame cmpthF = null;  // the starting frame of converged paths to backtrack
+  protected DPFrame headF = null; // Current frame in the circular buffer
+  protected DPFrame tailF = null; // Frame where tracks start
+  protected DPFrame cmpthF = null; // the starting frame of converged paths to backtrack
 
   int[] pcands = null;
 
@@ -292,7 +293,6 @@ public class RAPTPitchExtractor {
   }
 
   int initDP(double freq, Params par, long[] buffsize, long[] sdstep) {
-
     int nframes;
     int stat_wsize, agap, ind, downpatch;
 
@@ -312,7 +312,7 @@ public class RAPTPitchExtractor {
     stop = round(freq / par.minF0);
 
     nlags = stop - start + 1;
-    ncomp = size + stop + 1;  // number of samples necessary for xcorr
+    ncomp = size + stop + 1; // number of samples necessary for xcorr
 
     maxpeaks = (short) (2 + (nlags / 2));
     ln2 = (float) Math.log(2);
@@ -371,10 +371,9 @@ public class RAPTPitchExtractor {
       windstat = new WindowStat[agap / step];
     }
 
-//    System.err.println("done with initialization:");
-//    System.err.format(" size_cir_buffer:%d  xcorr frame size:%d start lag:%d nlags:%d\n",
-//        size_circ_buf, size, start, nlags);
-
+    //    System.err.println("done with initialization:");
+    //    System.err.format(" size_cir_buffer:%d  xcorr frame size:%d start lag:%d nlags:%d\n",
+    //        size_circ_buf, size, start, nlags);
 
     num_active_frames = 0;
     first = true;
@@ -390,10 +389,9 @@ public class RAPTPitchExtractor {
     }
   }
 
-  public int dpF0(float[] fdata, int buff_size, int sdstep, double freq, Params par,
-                  float[] f0p, float[] vuvp, float[] rms_speech, float[] ackpkp, int[] vecsize,
-                  boolean last_time) throws
-      AuToBIException {
+  public int dpF0(float[] fdata, int buff_size, int sdstep, double freq, Params par, float[] f0p,
+      float[] vuvp, float[] rms_speech, float[] ackpkp, int[] vecsize, boolean last_time)
+      throws AuToBIException {
     float[] sta, rms_ratio, dsdata;
     float ttemp, ftemp, ft1, ferr, err, errmin;
     int j, k, loc1, loc2;
@@ -413,7 +411,8 @@ public class RAPTPitchExtractor {
       dsdata = fdata;
     } else {
       samsds[0] = ((nframes - 1) * step + ncomp) / decimate;
-      if (samsds[0] < 1) return 1;
+      if (samsds[0] < 1)
+        return 1;
 
       dsdata = downsample(fdata, buff_size, sdstep, freq, samsds, decimate, first, last_time);
 
@@ -429,7 +428,7 @@ public class RAPTPitchExtractor {
     rms_ratio = stat.rms_ratio;
 
     /***********************************************************************/
-        /* MAIN FUNDAMENTAL FREQUENCY ESTIMATION LOOP */
+    /* MAIN FUNDAMENTAL FREQUENCY ESTIMATION LOOP */
     /***********************************************************************/
 
     // advance to the next frame
@@ -455,12 +454,12 @@ public class RAPTPitchExtractor {
         tailF.prev = frm;
       }
       headF.rms = stat.rms[i];
-      getFastCands(fdata, dsdata, i, step, size, decimate, start, nlags, engref, maxloc, maxval, headF.cp, peaks, locs,
-          ncand, par);
+      getFastCands(fdata, dsdata, i, step, size, decimate, start, nlags, engref, maxloc, maxval,
+          headF.cp, peaks, locs, ncand, par);
 
       // move peak and location arrays into DP structure.
       int idx = 0;
-      for (j = 0; j < ncand[0]; j++) {// possibly this?
+      for (j = 0; j < ncand[0]; j++) { // possibly this?
         headF.dp.pvals[idx] = peaks[idx];
         headF.dp.locs[idx] = locs[idx];
         idx++;
@@ -476,27 +475,27 @@ public class RAPTPitchExtractor {
         ftemp = 1.0f - ((float) locs[j] * lagwt);
         headF.dp.mpvals[j] = 1.0f - (peaks[j] * ftemp);
       }
-      ncand[0]++;			/* include the unvoiced candidate */
+      ncand[0]++; /* include the unvoiced candidate */
       headF.dp.ncands = ncand[0];
 
-//      System.err.format(" - initial DP values -\n");
-//      System.err.format(" - ncands:%d -\n", headF.dp.ncands);
-//      for (j = 0; j < ncand[0]; j++) {
-//        System.err.format(" - %d - mpvals: %.4f pvals: %.4f locs: %d\n",
-//            j, headF.dp.mpvals[j], headF.dp.pvals[j], headF.dp.locs[j]);
-//      }
+      //      System.err.format(" - initial DP values -\n");
+      //      System.err.format(" - ncands:%d -\n", headF.dp.ncands);
+      //      for (j = 0; j < ncand[0]; j++) {
+      //        System.err.format(" - %d - mpvals: %.4f pvals: %.4f locs: %d\n",
+      //            j, headF.dp.mpvals[j], headF.dp.pvals[j], headF.dp.locs[j]);
+      //      }
 
       ncandp = headF.prev.dp.ncands;
-//      System.err.format("Debugging DP score.  ncandp: %d\n", ncandp);
+      //      System.err.format("Debugging DP score.  ncandp: %d\n", ncandp);
       for (k = 0; k < ncand[0]; k++) {
-//        System.err.format("  -- %d \n", k);
+        //        System.err.format("  -- %d \n", k);
         minloc = 0;
         errmin = FLT_MAX;
-        if ((loc2 = headF.dp.locs[k]) > 0) {  // current is voiced
-//          System.err.format("  -- current is voiced \n");
+        if ((loc2 = headF.dp.locs[k]) > 0) { // current is voiced
+          //          System.err.format("  -- current is voiced \n");
           for (j = 0; j < ncandp; j++) {
             loc1 = headF.prev.dp.locs[j];
-            if (loc1 > 0) {  // prev was voiced
+            if (loc1 > 0) { // prev was voiced
               ftemp = (float) Math.log(((double) loc2) / loc1);
               ttemp = Math.abs(ftemp);
               ft1 = fdouble + Math.abs(ftemp + ln2);
@@ -508,17 +507,17 @@ public class RAPTPitchExtractor {
                 ttemp = ft1;
               }
               ferr = ttemp * freqwt;
-            } else {  // prev was unvoiced
+            } else { // prev was unvoiced
               ferr = tcost + (tfact_s * sta[i]) + (tfact_a / rms_ratio[i]);
             }
-            err = ferr + headF.prev.dp.dpvals[j];   // accumulate previous error.
+            err = ferr + headF.prev.dp.dpvals[j]; // accumulate previous error.
             if (err < errmin) {
               errmin = err;
               minloc = j;
             }
           }
-        } else {  // current is unvoiced.
-          for (j = 0; j < ncandp; j++) {  // for each previous candidate
+        } else { // current is unvoiced.
+          for (j = 0; j < ncandp; j++) { // for each previous candidate
             // get voicing cost
             if (headF.prev.dp.locs[j] > 0) { // prev was voiced
               ferr = tcost + (tfact_s * sta[i]) + (tfact_a * rms_ratio[i]);
@@ -545,7 +544,8 @@ public class RAPTPitchExtractor {
       if (i < nframes - 1) {
         headF = headF.next;
       }
-//      System.err.format("%d engref:%10.0f max:%7.5f loc:%4d\n", i, engref[0], maxval[0], maxloc[0]);
+      //      System.err.format("%d engref:%10.0f max:%7.5f loc:%4d\n", i, engref[0], maxval[0],
+      //      maxloc[0]);
     } // end for i.
 
     // done propagating dp structure for the current set of sampled data.
@@ -574,7 +574,6 @@ public class RAPTPitchExtractor {
         pcands[k] = frm.dp.prept[k];
       }
 
-
       if (last_time) { // input data was exhausted force final outputs
         cmpthF = headF;
       } else {
@@ -583,7 +582,7 @@ public class RAPTPitchExtractor {
         while (true) {
           frm = frm.prev;
           checkpath_done = true;
-          for (k = 1; k < num_paths; k++) {  // check for convergence.
+          for (k = 1; k < num_paths; k++) { // check for convergence.
             if (pcands[0] != pcands[k]) {
               checkpath_done = false;
             }
@@ -598,7 +597,7 @@ public class RAPTPitchExtractor {
             break;
           }
           if (frm == tailF) { // used all available data
-            if (num_active_frames < size_frame_out) {   // delay some more?
+            if (num_active_frames < size_frame_out) { // delay some more?
               checkpath_done = false;
               cmpthF = null;
             } else { // force best guess output
@@ -612,7 +611,7 @@ public class RAPTPitchExtractor {
 
       // Backtracking from cmpthF (best cand) to tailf
       int i = 0;
-      frm = cmpthF;  // start where convergence was found
+      frm = cmpthF; // start where convergence was found
       while (frm != tailF.prev && checkpath_done) {
         if (i == output_buf_size) {
           output_buf_size *= 2;
@@ -624,7 +623,7 @@ public class RAPTPitchExtractor {
         rms_speech[i] = frm.rms;
         acpkp[i] = frm.dp.pvals[best_cand];
         loc1 = frm.dp.locs[best_cand];
-        vuvp[i] = 1.0f;  // why always 1.0?
+        vuvp[i] = 1.0f; // why always 1.0?
         best_cand = frm.dp.prept[best_cand];
         ftemp = loc1;
 
@@ -633,7 +632,7 @@ public class RAPTPitchExtractor {
             float cormax, cprev, cnext, den;
             j = loc1 - start;
             cormax = frm.cp.correl[j];
-            cprev = frm.cp.correl[j + 1];  // AR these seem inverted. but not worth changing for now.
+            cprev = frm.cp.correl[j + 1]; // AR these seem inverted. but not worth changing for now.
             cnext = frm.cp.correl[j - 1];
 
             den = (float) (2.0 * (cprev + cnext - (2 * cormax)));
@@ -663,11 +662,9 @@ public class RAPTPitchExtractor {
     return 0;
   }
 
-  public void getFastCands(float[] fdata, float[] fdsdata, int ind, int step, int size, int dec, int start, int nlags,
-                           float[] engref, int[] maxloc, float[] maxval, Cross cp, float[] peaks, int[] locs,
-                           int[] ncand, Params par) {
-
-
+  public void getFastCands(float[] fdata, float[] fdsdata, int ind, int step, int size, int dec,
+      int start, int nlags, float[] engref, int[] maxloc, float[] maxval, Cross cp, float[] peaks,
+      int[] locs, int[] ncand, Params par) {
     int decind, decstart, decnlags, decsize, i, j;
     float lag_wt;
 
@@ -679,22 +676,22 @@ public class RAPTPitchExtractor {
 
     lag_wt = par.lag_weight / nlags;
     decnlags = 1 + (nlags / dec);
-    if ((decstart = start / dec) < 1) decstart = 1;
+    if ((decstart = start / dec) < 1)
+      decstart = 1;
 
     decind = (ind * step) / dec;
     decsize = 1 + (size / dec);
     corp = cp.correl;
 
-
     crossf(fdsdata, decind, decsize, decstart, decnlags, engref, maxloc, maxval, corp);
 
     // Confirm corp is consistent.
-//    for (int idx = 0; idx < corp.length; idx++) {
-//      System.err.format(" i:%d corp[i]:%.5f\n", idx, corp[idx]);
-//    }
+    //    for (int idx = 0; idx < corp.length; idx++) {
+    //      System.err.format(" i:%d corp[i]:%.5f\n", idx, corp[idx]);
+    //    }
 
-    cp.maxloc = maxloc[0];	/* location of maximum in correlation */
-    cp.maxval = maxval[0];	/* max. correlation value (found at maxloc) */
+    cp.maxloc = maxloc[0]; /* location of maximum in correlation */
+    cp.maxval = maxval[0]; /* max. correlation value (found at maxloc) */
     cp.rms = (float) Math.sqrt(engref[0] / size); /* rms in reference window */
     cp.firstlag = decstart;
 
@@ -708,17 +705,15 @@ public class RAPTPitchExtractor {
       peaks[pe] = yp[0] * (1.0f - (lag_wt * locs[lp])); /* refined amplitude */
     }
 
-    if (ncand[0] >= par.n_cands) {	/* need to prune candidates? */
+    if (ncand[0] >= par.n_cands) { /* need to prune candidates? */
       int loc, locm, lt;
       float smaxval;
       int pem;
       int outer, inner, lim;
       for (outer = 0, lim = par.n_cands - 1; outer < lim; outer++)
-        for (inner = ncand[0] - 1 - outer,
-                 pe = ncand[0] - 1, pem = pe - 1,
-                 loc = ncand[0] - 1, locm = loc - 1;
-             inner-- > 0;
-             pe--, pem--, loc--, locm--)
+        for (inner = ncand[0] - 1 - outer, pe = ncand[0] - 1, pem = pe - 1, loc = ncand[0] - 1,
+            locm = loc - 1;
+             inner-- > 0; pe--, pem--, loc--, locm--)
           if ((smaxval = peaks[pe]) > peaks[pem]) {
             peaks[pe] = peaks[pem];
             peaks[pem] = smaxval;
@@ -726,32 +721,30 @@ public class RAPTPitchExtractor {
             locs[loc] = locs[locm];
             locs[locm] = lt;
           }
-      ncand[0] = par.n_cands - 1;  /* leave room for the unvoiced hypothesis */
+      ncand[0] = par.n_cands - 1; /* leave room for the unvoiced hypothesis */
     }
-    crossfi(fdata, (ind * step), size, start, nlags, 7, engref, maxloc,
-        maxval, corp, locs, ncand[0]);
+    crossfi(
+        fdata, (ind * step), size, start, nlags, 7, engref, maxloc, maxval, corp, locs, ncand[0]);
 
     // Confirm corp is consistent.
-//    for (int idx = 0; idx < corp.length; idx++) {
-//      System.err.format(" post crossfi i:%d corp[i]:%.5f\n", idx, corp[idx]);
-//    }
+    //    for (int idx = 0; idx < corp.length; idx++) {
+    //      System.err.format(" post crossfi i:%d corp[i]:%.5f\n", idx, corp[idx]);
+    //    }
 
-    cp.maxloc = maxloc[0];	/* location of maximum in correlation */
-    cp.maxval = maxval[0];	/* max. correlation value (found at maxloc) */
+    cp.maxloc = maxloc[0]; /* location of maximum in correlation */
+    cp.maxval = maxval[0]; /* max. correlation value (found at maxloc) */
     cp.rms = (float) Math.sqrt(engref[0] / size); /* rms in reference window */
     cp.firstlag = start;
     get_cand(cp, peaks, locs, nlags, ncand, par.cand_thresh); /* return high peaks in xcorr */
-    if (ncand[0] >= par.n_cands) {	/* need to prune candidates again? */
+    if (ncand[0] >= par.n_cands) { /* need to prune candidates again? */
       int loc, locm, lt;
       float smaxval;
       int pem;
       int outer, inner, lim;
       for (outer = 0, lim = par.n_cands - 1; outer < lim; outer++) {
-        for (inner = ncand[0] - 1 - outer,
-                 pe = ncand[0] - 1, pem = pe - 1,
-                 loc = ncand[0] - 1, locm = loc - 1;
-             inner-- > 0;
-             pe--, pem--, loc--, locm--)
+        for (inner = ncand[0] - 1 - outer, pe = ncand[0] - 1, pem = pe - 1, loc = ncand[0] - 1,
+            locm = loc - 1;
+             inner-- > 0; pe--, pem--, loc--, locm--)
           if ((smaxval = peaks[pe]) > peaks[pem]) {
             peaks[pe] = peaks[pem];
             peaks[pem] = smaxval;
@@ -760,9 +753,8 @@ public class RAPTPitchExtractor {
             locs[locm] = lt;
           }
       }
-      ncand[0] = par.n_cands - 1;  /* leave room for the unvoiced hypothesis */
+      ncand[0] = par.n_cands - 1; /* leave room for the unvoiced hypothesis */
     }
-
   }
 
   float[] dbdata = null;
@@ -791,8 +783,8 @@ public class RAPTPitchExtractor {
    * nlocs is the number of correlation patches to compute.
    */
 
-  void crossfi(float[] data, int doff, int size, int start0, int nlags0, int nlags, float[] engref, int[] maxloc,
-               float[] maxval, float[] correl, int[] locs, int nlocs) {
+  void crossfi(float[] data, int doff, int size, int start0, int nlags0, int nlags, float[] engref,
+      int[] maxloc, float[] maxval, float[] correl, int[] locs, int nlocs) {
     float sum, st;
     int j;
     int dbi, di, ci;
@@ -806,21 +798,19 @@ public class RAPTPitchExtractor {
       dbdata = new float[total];
       dbsize = total;
     }
-    for (engr = 0.0f, j = size, di = doff; j-- > 0; )
-      engr += data[di++];
+    for (engr = 0.0f, j = size, di = doff; j-- > 0;) engr += data[di++];
     engr /= size;
 
-    for (j = size + nlags0 + start0, dbi = 0, di = doff; j-- > 0; ) {
+    for (j = size + nlags0 + start0, dbi = 0, di = doff; j-- > 0;) {
       dbdata[dbi++] = data[di++] - engr;
     }
 
-  /* Zero the correlation output array to avoid confusing the peak
-     picker (since all lags will not be computed). */
-    for (ci = 0, i = nlags0; i-- > 0; )
-      correl[ci++] = 0.f;
+    /* Zero the correlation output array to avoid confusing the peak
+       picker (since all lags will not be computed). */
+    for (ci = 0, i = nlags0; i-- > 0;) correl[ci++] = 0.f;
 
-  /* compute energy in reference window */
-    for (j = size, dbi = 0, sum = 0.0f; j-- > 0; ) {
+    /* compute energy in reference window */
+    for (j = size, dbi = 0, sum = 0.0f; j-- > 0;) {
       st = dbdata[dbi++];
       sum += st * st;
     }
@@ -836,20 +826,20 @@ public class RAPTPitchExtractor {
           start = start0;
         }
         ci = start - start0;
-      /* compute energy at first requested lag */
-        for (j = size, dbi = start, sum = 0.0f; j-- > 0; ) {
+        /* compute energy at first requested lag */
+        for (j = size, dbi = start, sum = 0.0f; j-- > 0;) {
           st = dbdata[dbi++];
           sum += st * st;
         }
         engc = sum;
 
-      /* COMPUTE CORRELATIONS AT ALL REQUESTED LAGS */
+        /* COMPUTE CORRELATIONS AT ALL REQUESTED LAGS */
         for (i = 0; i < nlags; i++) {
-          int dds, ds;                                      // dbdata +
-          for (j = size, sum = 0.0f, dbi = 0, dds = ds = i + start; j-- > 0; )
+          int dds, ds; // dbdata +
+          for (j = size, sum = 0.0f, dbi = 0, dds = ds = i + start; j-- > 0;)
             sum += dbdata[dbi++] * dbdata[ds++];
           if (engc < 1.0) {
-            engc = 1.0;		/* in case of roundoff error */
+            engc = 1.0; /* in case of roundoff error */
           }
           correl[ci++] = t = (float) (sum / Math.sqrt(10000.0 + (engc * engr)));
           engc -= (double) (dbdata[dds] * dbdata[dds]);
@@ -868,7 +858,6 @@ public class RAPTPitchExtractor {
     }
   }
 
-
   /**
    * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
    * Return a sequence based on the normalized crosscorrelation of the signal
@@ -884,8 +873,7 @@ public class RAPTPitchExtractor {
    * correl is the array of nlags cross-correlation coefficients (-1.0 to 1.0)
    */
   public void crossf(float[] data, int doff, int size, int start, int nlags, float[] engref,
-                     int[] maxloc, float[] maxval, float[] correl) {
-
+      int[] maxloc, float[] maxval, float[] correl) {
     int j;
     int ds, dds;
     int di, dbi, ci;
@@ -893,59 +881,58 @@ public class RAPTPitchExtractor {
     double engc;
     int i, iloc, total;
 
-  /* Compute mean in reference window and subtract this from the
-     entire sequence.  This doesn't do too much damage to the data
-     sequenced for the purposes of F0 estimation and removes the need for
-     more principled (and costly) low-cut filtering. */
+    /* Compute mean in reference window and subtract this from the
+       entire sequence.  This doesn't do too much damage to the data
+       sequenced for the purposes of F0 estimation and removes the need for
+       more principled (and costly) low-cut filtering. */
     if ((total = size + start + nlags) > dbsize) {
       // Reallocate if we need to.
       dbdata = new float[total];
       dbsize = total;
     }
-    for (engr = 0.0f, j = size, di = 0; j-- > 0; ) {
+    for (engr = 0.0f, j = size, di = 0; j-- > 0;) {
       engr += data[doff + di++];
     }
     engr /= size;
-    for (j = size + nlags + start, dbi = 0, di = 0; j-- > 0; ) {
+    for (j = size + nlags + start, dbi = 0, di = 0; j-- > 0;) {
       dbdata[dbi++] = data[doff + di++] - engr;
     }
 
-  /* Compute energy in reference window. */
-    for (j = size, dbi = 0, sum = 0.0f; j-- > 0; ) {
+    /* Compute energy in reference window. */
+    for (j = size, dbi = 0, sum = 0.0f; j-- > 0;) {
       st = dbdata[dbi++];
       sum += st * st;
     }
 
     engref[0] = engr = sum;
-    if (engr > 0.0) {    /* If there is any signal energy to work with... */
-    /* Compute energy at the first requested lag. */
-      for (j = size, dbi = start, sum = 0.0f; j-- > 0; ) {
+    if (engr > 0.0) { /* If there is any signal energy to work with... */
+      /* Compute energy at the first requested lag. */
+      for (j = size, dbi = start, sum = 0.0f; j-- > 0;) {
         st = dbdata[dbi++];
         sum += st * st;
       }
       engc = sum;
 
-    /* COMPUTE CORRELATIONS AT ALL OTHER REQUESTED LAGS. */
+      /* COMPUTE CORRELATIONS AT ALL OTHER REQUESTED LAGS. */
       for (i = 0, ci = 0, amax = 0.0f, iloc = -1; i < nlags; i++) {
-        for (j = size, sum = 0.0f, dbi = 0, dds = ds = i + start; j-- > 0; )
+        for (j = size, sum = 0.0f, dbi = 0, dds = ds = i + start; j-- > 0;)
           sum += dbdata[dbi++] * dbdata[ds++];
         correl[ci++] = t = (float) (sum / Math.sqrt(engc * engr)); /* output norm. CC */
         engc -= (double) (dbdata[dds] * dbdata[dds]); /* adjust norm. energy for next lag */
         if ((engc += (double) (dbdata[ds] * dbdata[ds])) < 1.0) {
-          engc = 1.0;		/* (hack: in case of roundoff error) */
+          engc = 1.0; /* (hack: in case of roundoff error) */
         }
-        if (t > amax) {		/* Find abs. max. as we go. */
+        if (t > amax) { /* Find abs. max. as we go. */
           amax = t;
           iloc = i + start;
         }
       }
       maxloc[0] = iloc;
       maxval[0] = amax;
-    } else {	/* No energy in signal; fake reasonable return vals. */
+    } else { /* No energy in signal; fake reasonable return vals. */
       maxloc[0] = 0;
       maxval[0] = 0.0f;
-      for (i = 0; i < nlags; i++)
-        correl[i] = 0;
+      for (i = 0; i < nlags; i++) correl[i] = 0;
     }
   }
 
@@ -955,7 +942,6 @@ public class RAPTPitchExtractor {
    * vicinity to estimate the "true" peak.
    */
   public static void peak(float[] y, int idx, float[] xp, float[] yp) {
-
     float a, c;
 
     a = (float) ((y[2 + idx] - y[1 + idx]) + (.5 * (y[idx] - y[2 + idx])));
@@ -973,8 +959,8 @@ public class RAPTPitchExtractor {
    * /* Get likely candidates for F0 peaks.
    */
 
-  public static void get_cand(Cross cross, float[] peak, int[] loc, int nlags, int[] ncand, float cand_thresh) {
-
+  public static void get_cand(
+      Cross cross, float[] peak, int[] loc, int nlags, int[] ncand, float cand_thresh) {
     int i, lastl, t_idx;
     float o, p, q, clip;
     int r_idx, s_idx;
@@ -985,26 +971,25 @@ public class RAPTPitchExtractor {
     lastl = nlags - 2;
     start = cross.firstlag;
 
-    r_idx = 0;  // cross.correl
-    s_idx = 0;  // peak
-    t_idx = 0;  // loc
+    r_idx = 0; // cross.correl
+    s_idx = 0; // peak
+    t_idx = 0; // loc
 
-    o = cross.correl[r_idx++];			/* first point */
-    q = cross.correl[r_idx++];	    /* middle point */
+    o = cross.correl[r_idx++]; /* first point */
+    q = cross.correl[r_idx++]; /* middle point */
     p = cross.correl[r_idx++];
     ncan = 0;
     for (i = 1; i < lastl; i++, o = q, q = p, p = cross.correl[r_idx++]) {
-      if ((q > clip) &&		/* is this a high enough value? */
+      if ((q > clip) && /* is this a high enough value? */
           (q >= p) && (q >= o)) { /* NOTE: this finds SHOULDERS and PLATEAUS
                                    as well as peaks (is this a good idea?) */
-        peak[s_idx++] = q;		/* record the peak value */
-        loc[t_idx++] = i + start;	/* and its location */
-        ncan++;			/* count number of peaks found */
+        peak[s_idx++] = q; /* record the peak value */
+        loc[t_idx++] = i + start; /* and its location */
+        ncan++; /* count number of peaks found */
       }
     }
     ncand[0] = ncan;
   }
-
 
   /**
    * stationarity parameters -
@@ -1021,13 +1006,11 @@ public class RAPTPitchExtractor {
   public float[] b = new float[2048];
   public float[] foutput = null;
 
-  public int[] ncoeff = new int[]{127};
+  public int[] ncoeff = new int[] {127};
   public int ncoefft = 0;
 
-  public float[] downsample(float[] input, int buff_size, int state_idx, double freq, int[] samsds /* scalar */,
-                            int decimate,
-                            boolean first, boolean last_time) {
-
+  public float[] downsample(float[] input, int buff_size, int state_idx, double freq,
+      int[] samsds /* scalar */, int decimate, boolean first, boolean last_time) {
     float beta;
     int init;
 
@@ -1042,8 +1025,7 @@ public class RAPTPitchExtractor {
         beta = .5f / decimate;
 
         foutput = new float[nbuff];
-        for (int i = 0; i < nbuff; i++)
-          foutput[i] = 0.0f;
+        for (int i = 0; i < nbuff; i++) foutput[i] = 0.0f;
 
         if (!lc_lin_fir(beta, ncoeff, b)) {
           AuToBIUtils.error("Problems computing interpolation filter.");
@@ -1105,8 +1087,8 @@ public class RAPTPitchExtractor {
     return true;
   }
 
-  public boolean downsamp(float[] input, float[] output, int insize, int[] outsize, int state_idx, int decimate,
-                          int ncoefft, float[] b, int init) {
+  public boolean downsamp(float[] input, float[] output, int insize, int[] outsize, int state_idx,
+      int decimate, int ncoefft, float[] b, int init) {
     if (input != null && output != null) {
       doFFIR(input, insize, output, outsize, state_idx, ncoefft, b, false, decimate, init);
       return true;
@@ -1115,7 +1097,6 @@ public class RAPTPitchExtractor {
       return false;
     }
   }
-
 
   int FFIR_fsize = 0;
   float[] FFIR_co = null;
@@ -1148,9 +1129,8 @@ public class RAPTPitchExtractor {
    * @param skip      number of samples to skip when downsampling
    * @param init      Is the beginning of the signal is already loaded? Is the end?
    */
-  public void doFFIR(float[] input, int insize, float[] output, int[] outsize, int state_idx, int ncoef, float[] fc,
-                     boolean invert, int skip, int init) {
-
+  public void doFFIR(float[] input, int insize, float[] output, int[] outsize, int state_idx,
+      int ncoef, float[] fc, boolean invert, int skip, int init) {
     // Reallocate static FIR filter parameters.
     if (ncoef > FFIR_fsize) {
       int ful_ffir_size = (ncoef + 1) * 2;
@@ -1208,28 +1188,27 @@ public class RAPTPitchExtractor {
       int dp2_coidx = 0;
       int dp3_memidx = skip;
       sum = 0.0f;
-      for (int j = k - skip; j-- > 0; ) {
-
+      for (int j = k - skip; j-- > 0;) {
         sum += FFIR_co[dp2_coidx++] * FFIR_mem[dp1_memidx];
         FFIR_mem[dp1_memidx++] = FFIR_mem[dp3_memidx++];
       }
 
-      for (int j = skip; j-- > 0; ) {/* new data to memory */
+      for (int j = skip; j-- > 0;) { /* new data to memory */
         sum += FFIR_co[dp2_coidx++] * FFIR_mem[dp1_memidx];
         FFIR_mem[dp1_memidx++] = input[in_idx++];
       }
       output[out_idx++] = (sum < 0.0) ? sum - 0.5f : sum + 0.5f;
     }
 
-    if ((init & 2) != 0) {  // we're at the end, and there are still some samples left.
+    if ((init & 2) != 0) { // we're at the end, and there are still some samples left.
       resid = insize - outsize[0] * skip;
 
-      for (int l = resid / skip; l-- > 0; ) {
+      for (int l = resid / skip; l-- > 0;) {
         dp1_memidx = 0;
         int dp2_coidx = 0;
         int dp3_memidx = skip;
         sum = 0.0f;
-        for (int j = k - skip; j-- > 0; ) {
+        for (int j = k - skip; j-- > 0;) {
           sum += FFIR_co[dp2_coidx++] * FFIR_mem[dp1_memidx];
           FFIR_mem[dp1_memidx++] = FFIR_mem[dp3_memidx++];
         }
@@ -1238,19 +1217,17 @@ public class RAPTPitchExtractor {
         output[out_idx++] = (sum < 0.0) ? sum - 0.5f : sum + 0.5f;
         outsize[0]++;
       }
-    } else {  // we're not at the end, let's keep some (ncoef-1) of the signal in "state"
+    } else { // we're not at the end, let's keep some (ncoef-1) of the signal in "state"
       int dp3_inidx = state_idx - ncoef + 1;
       int s_idx = 0;
-      for (int l = ncoef - 1; l-- > 0; ) {
+      for (int l = ncoef - 1; l-- > 0;) {
         FFIR_state[s_idx++] = input[dp3_inidx++];
       }
     }
   }
 
-
-  public Stat getStationarity(float[] fdata, int fidx, double freq, int buff_size, int nframes, int frame_step,
-                              boolean first) throws AuToBIException {
-
+  public Stat getStationarity(float[] fdata, int fidx, double freq, int buff_size, int nframes,
+      int frame_step, boolean first) throws AuToBIException {
     // AR: may need a representation of fdata that can be indexed before 0.
 
     /* static */
@@ -1260,9 +1237,9 @@ public class RAPTPitchExtractor {
     int p, q, r, datend; // indices into fdata
     int ind, i, j, m, size, order, agap, w_type = 3;
 
-    agap = (int) (STAT_AINT * freq);   // number of frames in the analysis interval
-    size = (int) (STAT_WSIZE * freq);  // number of frames in a window
-    ind = (agap - size) / 2;           // starting index
+    agap = (int) (STAT_AINT * freq); // number of frames in the analysis interval
+    size = (int) (STAT_WSIZE * freq); // number of frames in a window
+    ind = (agap - size) / 2; // starting index
 
     // initialize stat and memory space
     if (nframes_old < nframes || stat == null || first) {
@@ -1275,8 +1252,8 @@ public class RAPTPitchExtractor {
       return stat;
     }
 
-    q = fidx + ind;             // index into fdata   AR: what if ind is negative???
-    datend = fidx + buff_size;  // index into fdata
+    q = fidx + ind; // index into fdata   AR: what if ind is negative???
+    datend = fidx + buff_size; // index into fdata
 
     if ((order = (int) (2.0 + (freq / 1000.0))) > BIGSORD) {
       order = BIGSORD;
@@ -1295,14 +1272,15 @@ public class RAPTPitchExtractor {
         if (first) {
           if ((p < fidx) && (q >= fidx) && (q + size <= datend)) {
             stat.stat[j] = getSimilarity(order, size, fdata, -1, q, j, preemp, stab, w_type, true);
-          } else {  // either q is starting too early, or datend is too short.
+          } else { // either q is starting too early, or datend is too short.
             stat.rms[j] = 0;
             stat.stat[j] = 0.1f * 0.2f; // a big transition
-            stat.rms_ratio[j] = 1.0f;   // no amplitude change.
+            stat.rms_ratio[j] = 1.0f; // no amplitude change.
           }
         } else {
           if ((p < fidx) && (q + size <= datend)) {
-            stat.stat[j] = getSimilarity(order, size, mem, 0, (mem.length / 2) + ind, j, preemp, stab, w_type, false);
+            stat.stat[j] = getSimilarity(
+                order, size, mem, 0, (mem.length / 2) + ind, j, preemp, stab, w_type, false);
             // Prepare the next frame.
             if (p + frame_step < fidx) {
               for (m = 0; m < (mem.length - frame_step); m++) {
@@ -1319,15 +1297,15 @@ public class RAPTPitchExtractor {
     }
 
     // last frame, prepare for next call, by filling the first half of mem
-    for (j = (mem.length / 2) - 1, p = fidx + (nframes * frame_step) - 1; j >= 0 && p >= fidx; j--) {
+    for (j = (mem.length / 2) - 1, p = fidx + (nframes * frame_step) - 1; j >= 0 && p >= fidx;
+         j--) {
       mem[j] = fdata[p--];
     }
     return stat;
   }
 
-  public float getSimilarity(int order, int size, float[] data, int dprev, int dcur, int statidx, float preemp,
-                             float stab, int w_type, boolean init) throws AuToBIException {
-
+  public float getSimilarity(int order, int size, float[] data, int dprev, int dcur, int statidx,
+      float preemp, float stab, int w_type, boolean init) throws AuToBIException {
     float[] rho1 = new float[BIGSORD + 1];
     float[] rho3 = new float[BIGSORD + 1];
     float[] a1 = new float[BIGSORD + 1];
@@ -1376,8 +1354,7 @@ public class RAPTPitchExtractor {
 
     if (wReuse > 0) {
       wstat = windstat[0];
-      for (i = 0; i <= order; i++)
-        rho[i] = wstat.rho[i];
+      for (i = 0; i <= order; i++) rho[i] = wstat.rho[i];
       err[0] = wstat.err;
       rms[0] = wstat.rms;
       return true;
@@ -1391,21 +1368,18 @@ public class RAPTPitchExtractor {
   public int saveWindowStat(float[] rho, int order, float err, float rms) {
     int i, j;
 
-    if (wReuse > 1) {               /* push down the stack */
+    if (wReuse > 1) { /* push down the stack */
       for (j = 1; j < wReuse; j++) {
-        for (i = 0; i <= order; i++)
-          windstat[j - 1].rho[i] = windstat[j].rho[i];
+        for (i = 0; i <= order; i++) windstat[j - 1].rho[i] = windstat[j].rho[i];
         windstat[j - 1].err = windstat[j].err;
         windstat[j - 1].rms = windstat[j].rms;
       }
-      for (i = 0; i <= order; i++)
-        windstat[wReuse - 1].rho[i] = rho[i]; /*save*/
+      for (i = 0; i <= order; i++) windstat[wReuse - 1].rho[i] = rho[i]; /*save*/
       windstat[wReuse - 1].err = err;
       windstat[wReuse - 1].rms = rms;
       return 1;
     } else if (wReuse == 1) {
-      for (i = 0; i <= order; i++)
-        windstat[0].rho[i] = rho[i];  /* save */
+      for (i = 0; i <= order; i++) windstat[0].rho[i] = rho[i]; /* save */
       windstat[0].err = err;
       windstat[0].rms = rms;
       return 1;
@@ -1428,14 +1402,12 @@ public class RAPTPitchExtractor {
 
     int i, j;
 
-    for (s = 1.f, i = p; i-- > 0; ap_idx++)
-      s += a[ap_idx] * a[ap_idx];
+    for (s = 1.f, i = p; i-- > 0; ap_idx++) s += a[ap_idx] * a[ap_idx];
 
     c[0] = s;
     for (i = 1; i <= p; i++) {
       s = a[i - 1];
-      for (a0_idx = 0, ap_idx = i, j = p - i; j-- > 0; )
-        s += (a[a0_idx++] * a[ap_idx++]);
+      for (a0_idx = 0, ap_idx = i, j = p - i; j-- > 0;) s += (a[a0_idx++] * a[ap_idx++]);
       b[b_idx++] = (float) (2. * s);
     }
   }
@@ -1453,8 +1425,7 @@ public class RAPTPitchExtractor {
 
     int r_idx = 0;
     int b_idx = 0;
-    for (s = c[0]; p-- > 0; )
-      s += r[r_offset + r_idx++] * b[b_idx++];
+    for (s = c[0]; p-- > 0;) s += r[r_offset + r_idx++] * b[b_idx++];
 
     return (s / gain[0]);
   }
@@ -1503,10 +1474,9 @@ public class RAPTPitchExtractor {
     return window(din, 0, dout, n, 0.f, type);
   }
 
-  public boolean xlpc(int lpc_ord, float lpc_stabl, int wsize, float[] data, int didx, float[] lpca, float[] ar,
-                      float[] lpck, float normerr[] /* scalar */, float rms[], float preemp, int type) throws
-      AuToBIException {
-
+  public boolean xlpc(int lpc_ord, float lpc_stabl, int wsize, float[] data, int didx, float[] lpca,
+      float[] ar, float[] lpck, float normerr[] /* scalar */, float rms[], float preemp, int type)
+      throws AuToBIException {
     float[] rho = new float[BIGSORD + 1];
     float[] k = new float[BIGSORD];
     float[] a = new float[BIGSORD + 1];
@@ -1516,8 +1486,8 @@ public class RAPTPitchExtractor {
     en[0] = 1f;
     float wfact = 1f;
 
-
-    if ((wsize <= 0) || (data == null) || (lpc_ord > BIGSORD)) return false;
+    if ((wsize <= 0) || (data == null) || (lpc_ord > BIGSORD))
+      return false;
     if (nwind != wsize) {
       if (dwind != null) {
         // resize array to fit.
@@ -1530,13 +1500,16 @@ public class RAPTPitchExtractor {
     }
 
     window(data, didx, dwind, wsize, preemp, type);
-    if (ar != null) r = rho;
-    if (lpca != null) lpca = a;
+    if (ar != null)
+      r = rho;
+    if (lpca != null)
+      lpca = a;
     xautoc(wsize, dwind, lpc_ord, r, en);
 
-    if (lpc_stabl > 1) {  // add a little to the diagonal
+    if (lpc_stabl > 1) { // add a little to the diagonal
       float ffact = (float) (1 / (1 + Math.exp((-lpc_stabl / 20) * Math.log(10))));
-      if (r == null || r.length < lpc_ord) throw new AuToBIException("Problem with LPC calculation.");
+      if (r == null || r.length < lpc_ord)
+        throw new AuToBIException("Problem with LPC calculation.");
       for (int i = 1; i <= lpc_ord; i++) rho[i] = ffact * r[i];
       rho[0] = r[0];
       r = rho;
@@ -1546,40 +1519,41 @@ public class RAPTPitchExtractor {
 
     switch (type) {
       case 0:
-        wfact = 1f;         // rectangular
+        wfact = 1f; // rectangular
         break;
       case 1:
-        wfact = 0.630397f;  // Hamming
+        wfact = 0.630397f; // Hamming
         break;
       case 2:
-        wfact = 0.443149f;  // (0.5 - 0.5*cos)^4
+        wfact = 0.443149f; // (0.5 - 0.5*cos)^4
         break;
       case 3:
-        wfact = 0.612372f;  // Hanning
+        wfact = 0.612372f; // Hanning
         break;
     }
     assert lpca != null;
     lpca[0] = 1f;
 
     // Java hacks to return multiple optional values
-    if (rms != null) rms[0] = en[0] / wfact;
-    if (normerr != null) normerr[0] = er[0];
+    if (rms != null)
+      rms[0] = en[0] / wfact;
+    if (normerr != null)
+      normerr[0] = er[0];
     return true;
   }
 
   public boolean window(float[] din, int didx, float[] dout, int n, float preemp, int type) {
-
     switch (type) {
-      case 0:  // rectangular
+      case 0: // rectangular
         xrwindow(din, didx, dout, n, preemp);
         break;
-      case 1:  // Hamming
+      case 1: // Hamming
         xhamwindow(din, didx, dout, n, preemp);
         break;
-      case 2:  // cos^4
+      case 2: // cos^4
         xcwindow(din, didx, dout, n, preemp);
         break;
-      case 3:  // Hanning
+      case 3: // Hanning
         xhanwindow(din, didx, dout, n, preemp);
         break;
       default:
@@ -1721,14 +1695,13 @@ public class RAPTPitchExtractor {
    * The rms is returned in e.
    */
   public void xautoc(int wsize, float[] s, int p, float[] r, float[] e /* scalar*/) {
-
     float sum, sum0 = 0;
     for (int j = 0; j < wsize; j++) {
       sum = s[j];
       sum0 += sum * sum;
     }
     r[0] = 1f;
-    if (sum0 == 0.0f) {  // no energy.  fake low-energy white noise autocorr
+    if (sum0 == 0.0f) { // no energy.  fake low-energy white noise autocorr
       e[0] = 1.0f;
       for (int i = 1; i <= p; i++) {
         r[i] = 0.0f;
@@ -1754,7 +1727,6 @@ public class RAPTPitchExtractor {
    * (i.e. a[0] is assumed to be = +1.)
    */
   public void xdurbin(float[] r, float[] k, float[] a, int p, float[] ex /*scalar*/) {
-
     float[] b = new float[BIGSORD];
     float e = r[0];
     k[0] = -r[1] / e;
@@ -1777,7 +1749,6 @@ public class RAPTPitchExtractor {
 
     ex[0] = e;
   }
-
 
   int global_count = 0;
 
@@ -1816,7 +1787,7 @@ public class RAPTPitchExtractor {
     long[] buffsize = new long[1], sdstep = new long[1];
     int initd = initDP(sf, par, buffsize, sdstep);
 
-    double t0 = par.wind_dur / 2;   // Initial time is the center of the first window.
+    double t0 = par.wind_dur / 2; // Initial time is the center of the first window.
     if (initd > 0 || buffsize[0] > Integer.MAX_VALUE || sdstep[0] > Integer.MAX_VALUE) {
       throw new AuToBIException("Problem with DP initialization.");
     }
@@ -1837,13 +1808,14 @@ public class RAPTPitchExtractor {
     ArrayList<Double> f0 = new ArrayList<Double>();
     ArrayList<Double> vuv = new ArrayList<Double>();
     while (true) {
-
       done = ((actsize < buffsize[0]) || (total_samples == buffsize[0]));
 
       loadData(wav, fdata, ndone, actsize);
 
       global_count++;
-      if (dpF0(fdata, (int) actsize, (int) sdstep[0], sf, par, f0p, vuvp, rms_speech, acpkp, vecsize, done) != 0) {
+      if (dpF0(fdata, (int) actsize, (int) sdstep[0], sf, par, f0p, vuvp, rms_speech, acpkp,
+              vecsize, done)
+          != 0) {
         System.out.println("dpF0 failed, but you can't see the error.");
       }
 
@@ -1853,7 +1825,8 @@ public class RAPTPitchExtractor {
         vuv.add((double) vuvp[i]);
       }
 
-      if (done) break;
+      if (done)
+        break;
 
       ndone += sdstep[0];
       actsize = Math.min(buffsize[0], length - ndone);
@@ -1867,8 +1840,8 @@ public class RAPTPitchExtractor {
     // put f0p into a PitchContour object.
     // TODO: put vuvp into pitchContour.
 
-    // The pitch extractor will calculate extra frames based on padded noise at the end of the audio.
-    // only output the frames corresponding to the original file.
+    // The pitch extractor will calculate extra frames based on padded noise at the end of the
+    // audio. only output the frames corresponding to the original file.
     PitchContour out = new PitchContour(t0, par.frame_step, Math.min(fnum, f0.size()));
     for (int i = 0; i < Math.min(fnum, f0.size()); i++) {
       if (f0.get(i) > 0) {
@@ -1893,11 +1866,13 @@ public class RAPTPitchExtractor {
       // AR: this is a kind of crappy way to convert back to the raw sample.
       if (i + pos < wav.getNumSamples()) {
         fdata[i] = (float) wav.getSample(0, i + pos) * (1 << (wav.sampleSize - 1));
-      } else { // Pad the end of fdata with some extra noise to enable analysis at the end of the file
+      } else { // Pad the end of fdata with some extra noise to enable analysis at the end of the
+               // file
         fdata[i] = 0.0f;
       }
 
-      // Add gaussian noise.  According to RAPT documentation and paper, this provides some noise robustness.
+      // Add gaussian noise.  According to RAPT documentation and paper, this provides some noise
+      // robustness.
       fdata[i] += rand.nextGaussian() * 50;
     }
   }
@@ -1916,7 +1891,6 @@ public class RAPTPitchExtractor {
     WavReader reader = new WavReader();
     WavData wav;
     try {
-
       if (args.length > 1) {
         wav = reader.read(soundIn, Double.parseDouble(args[1]), Double.parseDouble(args[2]));
       } else {
@@ -1934,9 +1908,8 @@ public class RAPTPitchExtractor {
       System.out.println("pitch points:" + pitch.size());
 
       for (int i = 0; i < pitch.size(); ++i) {
-        System.out
-            .println(
-                "point[" + i + "]: " + pitch.get(i) + " -- " + pitch.timeFromIndex(i) + ":" + pitch.getStrength(i));
+        System.out.println("point[" + i + "]: " + pitch.get(i) + " -- " + pitch.timeFromIndex(i)
+            + ":" + pitch.getStrength(i));
       }
       System.out.println(wav.getDuration());
     } catch (AuToBIException e) {

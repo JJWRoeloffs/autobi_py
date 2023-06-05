@@ -19,17 +19,16 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.SpeakerNormalizationParameter;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for NormalizationParameterFeatureExtractor
@@ -62,8 +61,8 @@ public class NormalizationParameterFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeatures() {
     Word w = new Word(0, 1, "word");
-    w.setAttribute("f0", new Contour(0, .1, new double[]{10, 11, 12, 13}));
-    w.setAttribute("I", new Contour(0, .1, new double[]{0, 1, 2, 3}));
+    w.setAttribute("f0", new Contour(0, .1, new double[] {10, 11, 12, 13}));
+    w.setAttribute("I", new Contour(0, .1, new double[] {0, 1, 2, 3}));
     regions.add(w);
 
     try {
@@ -77,15 +76,17 @@ public class NormalizationParameterFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeaturesCorrectlyOnMatch() {
     Word w = new Word(0, 1, "word");
-    w.setAttribute("f0", new Contour(0, .1, new double[]{10, 11, 12, 13}));
-    w.setAttribute("I", new Contour(0, .1, new double[]{0, 1, 2, 3}));
+    w.setAttribute("f0", new Contour(0, .1, new double[] {10, 11, 12, 13}));
+    w.setAttribute("I", new Contour(0, .1, new double[] {0, 1, 2, 3}));
     regions.add(w);
 
     try {
       fe.extractFeatures(regions);
-      SpeakerNormalizationParameter snp = (SpeakerNormalizationParameter) w.getAttribute("spkrNormParams");
-      assertEquals("f0: mean 11.5 - stdev 1.2909944487358056\n" +
-          "I: mean 1.5 - stdev 1.2909944487358056", snp.toString());
+      SpeakerNormalizationParameter snp =
+          (SpeakerNormalizationParameter) w.getAttribute("spkrNormParams");
+      assertEquals("f0: mean 11.5 - stdev 1.2909944487358056\n"
+              + "I: mean 1.5 - stdev 1.2909944487358056",
+          snp.toString());
     } catch (FeatureExtractorException e) {
       fail();
     }
@@ -94,7 +95,7 @@ public class NormalizationParameterFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFailsGracefullyWithNoPitch() {
     Word w = new Word(0, 1, "word");
-    w.setAttribute("I", new Contour(0, .1, new double[]{0, 1, 2, 3}));
+    w.setAttribute("I", new Contour(0, .1, new double[] {0, 1, 2, 3}));
     regions.add(w);
 
     try {
@@ -108,7 +109,7 @@ public class NormalizationParameterFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFailsGracefullyWithNoIntensity() {
     Word w = new Word(0, 1, "word");
-    w.setAttribute("f0", new Contour(0, .1, new double[]{0, 1, 2, 3}));
+    w.setAttribute("f0", new Contour(0, .1, new double[] {0, 1, 2, 3}));
     regions.add(w);
 
     try {

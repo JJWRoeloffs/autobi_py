@@ -20,19 +20,17 @@
 
 package edu.cuny.qc.speech.AuToBI.util;
 
-import edu.cuny.qc.speech.AuToBI.io.FormattedFile;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Test;
-
-import java.util.List;
-
 import static org.junit.Assert.*;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import edu.cuny.qc.speech.AuToBI.io.FormattedFile;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for edu.cuny.qc.speech.AuToBI.util.AuToBIUtilsTest
  */
 public class AuToBIReaderUtilsTest {
-
   @Test
   public void testRemoveTabsAndTrim() {
     String s = "   this is a test    ";
@@ -51,7 +49,8 @@ public class AuToBIReaderUtilsTest {
   // public void testGlobFormattedFilesWithFormat() {
   //   String pattern = TEST_DIR + "/*.wav";
 
-  //   List<FormattedFile> files = AuToBIReaderUtils.globFormattedFiles(pattern, FormattedFile.Format.BURNC);
+  //   List<FormattedFile> files = AuToBIReaderUtils.globFormattedFiles(pattern,
+  //   FormattedFile.Format.BURNC);
 
   //   assertTrue(files.size() > 0);
   //   for (FormattedFile f : files) {
@@ -70,5 +69,4 @@ public class AuToBIReaderUtilsTest {
   //     assertEquals(FormattedFile.Format.TEXTGRID, f.getFormat());
   //   }
   // }
-
 }

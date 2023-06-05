@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,7 +28,6 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
 import java.util.List;
 
 /**
@@ -33,12 +35,13 @@ import java.util.List;
  * <p/>
  * This has typically been used on f0 contours and called "Tonal Center of Gravity" or ToCG.
  * <p/>
- * Here we allow any contour -- intensity, spectral tilt, etc -- to be processed using the same notion.
+ * Here we allow any contour -- intensity, spectral tilt, etc -- to be processed using the same
+ * notion.
  */
 @SuppressWarnings("unchecked")
 public class ContourCenterOfGravityFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "cog";
-  private String attribute_name;       // the contour attribute name
+  private String attribute_name; // the contour attribute name
 
   public ContourCenterOfGravityFeatureExtractor(String attribute_name) {
     this.attribute_name = attribute_name;
@@ -69,7 +72,8 @@ public class ContourCenterOfGravityFeatureExtractor extends FeatureExtractor {
           denom += tvp.second;
         }
         if (denom != 0.0) {
-          r.setAttribute("cog[" + attribute_name + "]", ((num / denom) - r.getStart()) / r.getDuration());
+          r.setAttribute(
+              "cog[" + attribute_name + "]", ((num / denom) - r.getStart()) / r.getDuration());
         }
       }
     }

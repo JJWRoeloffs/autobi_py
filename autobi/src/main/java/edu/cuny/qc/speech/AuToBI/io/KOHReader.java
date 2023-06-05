@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -26,13 +29,11 @@ package edu.cuny.qc.speech.AuToBI.io;
 
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class KOHReader extends AuToBIWordReader {
-
   private String filename;
 
   public KOHReader(String filename) {
@@ -42,9 +43,9 @@ public class KOHReader extends AuToBIWordReader {
   /**
    * Reads word boundaries and tobi labels from a koh formatted file.
    * <p/>
-   * (1)occ_start_time (2)leaf_name (3)occ_index (4)context (5)vec_num_of_start (6)vec_num_of_end (7)occ_steps
-   * (8)start_pitch (9)end_pitch (10)dur_leaf_name (11)en_leaf_name (12)lexeme (13)syllable (14)pitch accent
-   * (15)HiF0_val (16)phrase accent and boundary tone (17)break index
+   * (1)occ_start_time (2)leaf_name (3)occ_index (4)context (5)vec_num_of_start (6)vec_num_of_end
+   * (7)occ_steps (8)start_pitch (9)end_pitch (10)dur_leaf_name (11)en_leaf_name (12)lexeme
+   * (13)syllable (14)pitch accent (15)HiF0_val (16)phrase accent and boundary tone (17)break index
    *
    * @return a list of words
    * @throws IOException     if there is a problem with the file reading
@@ -52,7 +53,6 @@ public class KOHReader extends AuToBIWordReader {
    */
   @Override
   public List<Word> readWords() throws IOException, AuToBIException {
-
     AuToBIFileReader reader = new AuToBIFileReader(filename);
 
     List<Word> words = new ArrayList<Word>();
@@ -78,7 +78,8 @@ public class KOHReader extends AuToBIWordReader {
             w.setPhraseAccent(phrase_accent_label.trim());
 
             if (phrase_accent.contains("%")) {
-              String boundary_tone = phrase_accent.substring(phrase_accent.indexOf("-") + 1, phrase_accent.length());
+              String boundary_tone =
+                  phrase_accent.substring(phrase_accent.indexOf("-") + 1, phrase_accent.length());
               if (boundary_tone.trim().length() > 0) {
                 w.setBoundaryTone(boundary_tone.trim());
               }

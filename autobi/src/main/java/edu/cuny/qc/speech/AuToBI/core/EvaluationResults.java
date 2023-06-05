@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,23 +27,22 @@
 package edu.cuny.qc.speech.AuToBI.core;
 
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
 import java.util.Collection;
 
 /**
  * The results from an evaluation -- without storing instances
  */
 public class EvaluationResults {
-  private String[] classNames;         // an array of class labels
-  private double[][] confusionMatrix;  // the confusion matrix
-
+  private String[] classNames; // an array of class labels
+  private double[][] confusionMatrix; // the confusion matrix
 
   /**
    * Constructs a new EvaluationResults object
    *
    * @param classNames      the class names
    * @param confusionMatrix the confusion matrix
-   * @throws AuToBIException if there are inconsistencies between the length of class names and confusion matrix
+   * @throws AuToBIException if there are inconsistencies between the length of class names and
+   *     confusion matrix
    */
   public EvaluationResults(String[] classNames, double[][] confusionMatrix) throws AuToBIException {
     if (classNames.length != confusionMatrix.length) {
@@ -57,7 +59,8 @@ public class EvaluationResults {
   }
 
   /**
-   * Constructs an empty EvalutionResults object with a confusion matrix set up to handle results for class names.
+   * Constructs an empty EvalutionResults object with a confusion matrix set up to handle results
+   * for class names.
    *
    * @param class_names the classes
    */
@@ -81,7 +84,8 @@ public class EvaluationResults {
   }
 
   /**
-   * Constructs an empty EvalutionResults object with a confusion matrix set up to handle results for class names.
+   * Constructs an empty EvalutionResults object with a confusion matrix set up to handle results
+   * for class names.
    *
    * @param class_names the classes
    */
@@ -135,7 +139,8 @@ public class EvaluationResults {
   public void add(EvaluationResults results) throws AuToBIException {
     for (String true_class : results.classNames) {
       for (String hyp_class : results.classNames) {
-        this.addInstances(hyp_class, true_class, results.getInstances(hyp_class, true_class).intValue());
+        this.addInstances(
+            hyp_class, true_class, results.getInstances(hyp_class, true_class).intValue());
       }
     }
   }
@@ -331,7 +336,8 @@ public class EvaluationResults {
    * @throws AuToBIException if the class_name is invalid.
    */
   public double getFalseNegativeRate(String class_name) throws AuToBIException {
-    double false_negatives = getNumClassInstances(class_name) - getInstances(class_name, class_name);
+    double false_negatives =
+        getNumClassInstances(class_name) - getInstances(class_name, class_name);
     double positive_instances = getNumClassInstances(class_name);
 
     if (positive_instances == 0) {
@@ -343,8 +349,8 @@ public class EvaluationResults {
   /**
    * Return the "balanced error rate" of the contingency matrix.
    * <p/>
-   * This is a little bit of a misnomer -- it's actually unweighted average (inverse) recall. But that's the term coined
-   * in Read and Cox 2007
+   * This is a little bit of a misnomer -- it's actually unweighted average (inverse) recall. But
+   * that's the term coined in Read and Cox 2007
    *
    * @return BER value
    */
@@ -372,8 +378,8 @@ public class EvaluationResults {
     for (String class_x : getClassNames()) {
       for (String class_y : getClassNames()) {
         try {
-          if (getNumClassInstances(class_x) > 0 && getNumClassifiedAs(class_y) > 0 &&
-              getInstances(class_x, class_y) > 0) {
+          if (getNumClassInstances(class_x) > 0 && getNumClassifiedAs(class_y) > 0
+              && getInstances(class_x, class_y) > 0) {
             Double p_xy = getInstances(class_x, class_y) / getNumInstances();
             Double p_x = getNumClassInstances(class_x).doubleValue() / getNumInstances();
             Double p_y = getNumClassifiedAs(class_y).doubleValue() / getNumInstances();

@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,13 +27,14 @@
 package edu.cuny.qc.speech.AuToBI.core;
 
 /**
- * PitchContour operates like a standard Contour object for the purposes of storing f0 values, but includes another
- * aligned stream of information to access the voicing confidence from the pitch tracking algorithm.
+ * PitchContour operates like a standard Contour object for the purposes of storing f0 values, but
+ * includes another aligned stream of information to access the voicing confidence from the pitch
+ * tracking algorithm.
  *
  * @see edu.cuny.qc.speech.AuToBI.RAPTPitchExtractor
  */
 public class PitchContour extends Contour {
-  protected double[] strengths;  //
+  protected double[] strengths; //
 
   /**
    * Constructs a new pitch contour at starting time x0, frame delta, dx containing, values
@@ -71,8 +75,8 @@ public class PitchContour extends Contour {
    * <p/>
    * This will overwrite the value currently associated with that time.
    * <p/>
-   * Be careful, two distinct times can be mapped to the same index in the contour.  This can lead to accidentally
-   * overwriting a contour value if the time steps are not consistent.
+   * Be careful, two distinct times can be mapped to the same index in the contour.  This can lead
+   * to accidentally overwriting a contour value if the time steps are not consistent.
    *
    * @param time  the time
    * @param value the value

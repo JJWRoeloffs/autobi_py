@@ -19,14 +19,13 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.*;
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.*;
 
+import edu.cuny.qc.speech.AuToBI.core.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for NormalizationParameterFeatureExtractor
@@ -59,7 +58,7 @@ public class NormalizedContourFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeatures() {
     Word w = new Word(0, 1, "word");
-    w.setAttribute("f0", new Contour(0, .1, new double[]{10, 11, 12, 13}));
+    w.setAttribute("f0", new Contour(0, .1, new double[] {10, 11, 12, 13}));
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter();
     snp.insertPitch(10);
     snp.insertPitch(11);
@@ -79,7 +78,7 @@ public class NormalizedContourFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
     Word w = new Word(0, 1, "word");
-    w.setAttribute("f0", new Contour(0, .1, new double[]{10, 11, 12, 13}));
+    w.setAttribute("f0", new Contour(0, .1, new double[] {10, 11, 12, 13}));
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter();
     snp.insertPitch(10);
     snp.insertPitch(11);
@@ -124,7 +123,7 @@ public class NormalizedContourFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFailsGracefullyWithNoSNP() {
     Word w = new Word(0, 1, "word");
-    w.setAttribute("f0", new Contour(0, .1, new double[]{10, 11, 12, 13}));
+    w.setAttribute("f0", new Contour(0, .1, new double[] {10, 11, 12, 13}));
     regions.add(w);
 
     try {
@@ -143,10 +142,9 @@ public class NormalizedContourFeatureExtractorTest {
     snp.insertPitch(12);
     snp.insertPitch(13);
 
-
     Word w = new Word(0, 0.5, "word");
     Word w2 = new Word(0.5, 1, "word");
-    Contour c = new Contour(0, .25, new double[]{10, 11, 12, 13});
+    Contour c = new Contour(0, .25, new double[] {10, 11, 12, 13});
     w.setAttribute("f0", c);
     w.setAttribute("normparams", snp);
     w2.setAttribute("f0", c);

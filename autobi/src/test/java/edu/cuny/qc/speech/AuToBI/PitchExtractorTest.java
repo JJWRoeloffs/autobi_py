@@ -19,87 +19,85 @@
  */
 package edu.cuny.qc.speech.AuToBI;
 
-import edu.cuny.qc.speech.AuToBI.core.*;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import edu.cuny.qc.speech.AuToBI.io.WavReader;
-import org.junit.Test;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import edu.cuny.qc.speech.AuToBI.core.*;
+import edu.cuny.qc.speech.AuToBI.io.WavReader;
+import java.io.IOException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import org.junit.Test;
 
 /**
  * Test class for PitchExtractor.
  */
 public class PitchExtractorTest {
+  @Test
+  public void testPitchExtractorRunsWithoutException() {
+    String inFile = ResourcePath.getResourcePath("test.wav");
+    WavReader reader = new WavReader();
+    WavData inWave = null;
+    try {
+      inWave = reader.read(inFile);
+    } catch (UnsupportedAudioFileException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (AuToBIException e) {
+      e.printStackTrace();
+    }
+    PitchExtractor pe = new PitchExtractor(inWave);
+    try {
+      Contour c = pe.soundToPitch();
+    } catch (AuToBIException e) {
+      fail();
+    }
+  }
 
-	@Test
-	public void testPitchExtractorRunsWithoutException() {
-		String inFile = ResourcePath.getResourcePath("test.wav");
-		WavReader reader = new WavReader();
-		WavData inWave = null;
-		try {
-			inWave = reader.read(inFile);
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (AuToBIException e) {
-			e.printStackTrace();
-		}
-		PitchExtractor pe = new PitchExtractor(inWave);
-		try {
-			Contour c = pe.soundToPitch();
-		} catch (AuToBIException e) {
-			fail();
-		}
-	}
+  @Test
+  public void testPitchExtractorGeneratesAReasonableNumberOfPitchFrames() {
+    String inFile = ResourcePath.getResourcePath("test.wav");
+    WavReader reader = new WavReader();
+    WavData inWave = null;
+    try {
+      inWave = reader.read(inFile);
+    } catch (UnsupportedAudioFileException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (AuToBIException e) {
+      e.printStackTrace();
+    }
+    PitchExtractor pe = new PitchExtractor(inWave);
+    try {
+      Contour c = pe.soundToPitch();
+      assertEquals(c.size(), (inWave.getDuration() - 2 * c.getStart()) / c.getStep() + 1, 0.5);
+    } catch (AuToBIException e) {
+      fail();
+    }
+  }
 
-	@Test
-	public void testPitchExtractorGeneratesAReasonableNumberOfPitchFrames() {
-		String inFile = ResourcePath.getResourcePath("test.wav");
-		WavReader reader = new WavReader();
-		WavData inWave = null;
-		try {
-			inWave = reader.read(inFile);
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (AuToBIException e) {
-			e.printStackTrace();
-		}
-		PitchExtractor pe = new PitchExtractor(inWave);
-		try {
-			Contour c = pe.soundToPitch();
-			assertEquals(c.size(), (inWave.getDuration() - 2 * c.getStart()) / c.getStep() + 1, 0.5);
-		} catch (AuToBIException e) {
-			fail();
-		}
-	}
-
-	@Test
-	public void testPitchExtractorGeneratesCorrectLengthsWithEmptyFrames() {
-		String inFile = ResourcePath.getResourcePath("test.zero.wav");
-		WavReader reader = new WavReader();
-		WavData inWave = null;
-		try {
-			inWave = reader.read(inFile);
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (AuToBIException e) {
-			e.printStackTrace();
-		}
-		PitchExtractor pe = new PitchExtractor(inWave);
-		try {
-			Contour c = pe.soundToPitch();
-			assertEquals(c.size(), (inWave.getDuration() - 2 * c.getStart()) / c.getStep() + 1, 0.5);
-		} catch (AuToBIException e) {
-			fail();
-		}
-	}
+  @Test
+  public void testPitchExtractorGeneratesCorrectLengthsWithEmptyFrames() {
+    String inFile = ResourcePath.getResourcePath("test.zero.wav");
+    WavReader reader = new WavReader();
+    WavData inWave = null;
+    try {
+      inWave = reader.read(inFile);
+    } catch (UnsupportedAudioFileException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (AuToBIException e) {
+      e.printStackTrace();
+    }
+    PitchExtractor pe = new PitchExtractor(inWave);
+    try {
+      Contour c = pe.soundToPitch();
+      assertEquals(c.size(), (inWave.getDuration() - 2 * c.getStart()) / c.getStep() + 1, 0.5);
+    } catch (AuToBIException e) {
+      fail();
+    }
+  }
 }

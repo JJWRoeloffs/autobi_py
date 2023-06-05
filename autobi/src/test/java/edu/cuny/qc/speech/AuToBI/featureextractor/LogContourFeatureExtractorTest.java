@@ -19,17 +19,16 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Contour;
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.core.Contour;
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for LogContourFeatureExtractor
@@ -37,7 +36,6 @@ import static junit.framework.Assert.fail;
  * @see edu.cuny.qc.speech.AuToBI.featureextractor.IntonationalPhraseBoundaryFeatureExtractor
  */
 public class LogContourFeatureExtractorTest {
-
   @Test
   public void testConstructorSetsExtractedFeaturesCorrectly() {
     LogContourFeatureExtractor fe = new LogContourFeatureExtractor("I");
@@ -60,7 +58,7 @@ public class LogContourFeatureExtractorTest {
 
     List<Region> regions = new ArrayList<Region>();
     Word w = new Word(0, 1, "testing");
-    w.setAttribute("I", new Contour(0, 0.01, new double[]{0.1, 0.5}));
+    w.setAttribute("I", new Contour(0, 0.01, new double[] {0.1, 0.5}));
     regions.add(w);
 
     try {
@@ -69,7 +67,6 @@ public class LogContourFeatureExtractorTest {
     } catch (FeatureExtractorException e) {
       fail();
     }
-
   }
 
   @Test
@@ -78,7 +75,7 @@ public class LogContourFeatureExtractorTest {
 
     List<Region> regions = new ArrayList<Region>();
     Word w = new Word(0, 1, "testing");
-    w.setAttribute("I", new Contour(0, 0.01, new double[]{0.1, 0.5}));
+    w.setAttribute("I", new Contour(0, 0.01, new double[] {0.1, 0.5}));
     regions.add(w);
 
     try {
@@ -96,7 +93,7 @@ public class LogContourFeatureExtractorTest {
   public void testExtractFeaturesAssignsTheSameObjectToSubsequentRegions() {
     LogContourFeatureExtractor fe = new LogContourFeatureExtractor("I");
 
-    Contour c = new Contour(0, 0.01, new double[]{0.1, 0.5});
+    Contour c = new Contour(0, 0.01, new double[] {0.1, 0.5});
     List<Region> regions = new ArrayList<Region>();
     Word w = new Word(0, .5, "testing");
     Word w2 = new Word(0.5, 1, "testing");

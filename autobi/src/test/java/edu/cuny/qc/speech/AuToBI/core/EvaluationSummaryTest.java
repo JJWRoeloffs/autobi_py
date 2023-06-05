@@ -19,21 +19,19 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import junit.framework.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+import junit.framework.Assert;
+import org.junit.Test;
+
 /**
- * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this template use File |
- * Settings | File Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this
+ * template use File | Settings | File Templates.
  */
 public class EvaluationSummaryTest {
-
   @Test
   public void testEmptyConstructor() {
     EvaluationSummary es = new EvaluationSummary();
@@ -42,8 +40,8 @@ public class EvaluationSummaryTest {
   @Test
   public void testOneEvalConstructor() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -56,8 +54,8 @@ public class EvaluationSummaryTest {
   @Test
   public void testAdd() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -73,10 +71,10 @@ public class EvaluationSummaryTest {
     EvaluationResults eval = null;
     EvaluationResults eval2 = null;
     try {
-      eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
-      eval2 = new EvaluationResults(new String[]{"two", "three"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
+      eval2 = new EvaluationResults(
+          new String[] {"two", "three"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
     } catch (AuToBIException e) {
       fail();
     }
@@ -96,10 +94,9 @@ public class EvaluationSummaryTest {
     EvaluationResults eval = null;
     EvaluationResults eval2 = null;
     try {
-      eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
-      eval2 = new EvaluationResults(new String[]{"two"},
-          new double[][]{{1.0}});
+      eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
+      eval2 = new EvaluationResults(new String[] {"two"}, new double[][] {{1.0}});
     } catch (AuToBIException e) {
       fail();
     }
@@ -117,11 +114,11 @@ public class EvaluationSummaryTest {
   @Test
   public void testGetAccuracy() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
-      EvaluationResults eval2 = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{3.0, 1.0}, {1.0, 3.0}});
+      EvaluationResults eval2 = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{3.0, 1.0}, {1.0, 3.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -135,11 +132,11 @@ public class EvaluationSummaryTest {
   @Test
   public void testGetStdevAccuracy() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
-      EvaluationResults eval2 = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{3.0, 1.0}, {1.0, 3.0}});
+      EvaluationResults eval2 = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{3.0, 1.0}, {1.0, 3.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -153,11 +150,11 @@ public class EvaluationSummaryTest {
   @Test
   public void testGetFMeasure() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
-      EvaluationResults eval2 = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{3.0, 1.0}, {1.0, 3.0}});
+      EvaluationResults eval2 = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{3.0, 1.0}, {1.0, 3.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -171,11 +168,11 @@ public class EvaluationSummaryTest {
   @Test
   public void testGetPrecision() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
-      EvaluationResults eval2 = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{3.0, 1.0}, {1.0, 3.0}});
+      EvaluationResults eval2 = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{3.0, 1.0}, {1.0, 3.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -189,11 +186,11 @@ public class EvaluationSummaryTest {
   @Test
   public void testGetRecall() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
-      EvaluationResults eval2 = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{3.0, 1.0}, {1.0, 3.0}});
+      EvaluationResults eval2 = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{3.0, 1.0}, {1.0, 3.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -207,11 +204,11 @@ public class EvaluationSummaryTest {
   @Test
   public void testGetMeanMutualInformation() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
-      EvaluationResults eval2 = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{3.0, 1.0}, {1.0, 3.0}});
+      EvaluationResults eval2 = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{3.0, 1.0}, {1.0, 3.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -225,11 +222,11 @@ public class EvaluationSummaryTest {
   @Test
   public void testGetNumClassInstances() {
     try {
-      EvaluationResults eval = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{1.0, 1.0}, {1.0, 1.0}});
+      EvaluationResults eval = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{1.0, 1.0}, {1.0, 1.0}});
 
-      EvaluationResults eval2 = new EvaluationResults(new String[]{"one", "two"},
-          new double[][]{{3.0, 1.0}, {1.0, 3.0}});
+      EvaluationResults eval2 = new EvaluationResults(
+          new String[] {"one", "two"}, new double[][] {{3.0, 1.0}, {1.0, 3.0}});
 
       EvaluationSummary es = new EvaluationSummary(eval);
 
@@ -240,4 +237,3 @@ public class EvaluationSummaryTest {
     }
   }
 }
-

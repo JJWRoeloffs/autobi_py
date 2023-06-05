@@ -19,23 +19,21 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import junit.framework.Assert;
-import org.junit.Test;
-import weka.classifiers.Evaluation;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+import junit.framework.Assert;
+import org.junit.Test;
+import weka.classifiers.Evaluation;
+
 /**
- * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this template use File |
- * Settings | File Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this
+ * template use File | Settings | File Templates.
  */
 public class EvaluationResultsTest {
-
   @Test
   public void testConstructorWithListClassNames() {
     List<String> classes = new ArrayList<String>();
@@ -49,7 +47,7 @@ public class EvaluationResultsTest {
 
   @Test
   public void testConstructorWithArrayClassNames() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
     EvaluationResults eval = new EvaluationResults(classes);
 
@@ -58,9 +56,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testConstructorWithContingencyMatrix() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {1.0, 0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {1.0, 0.0}};
 
     EvaluationResults eval = null;
     try {
@@ -73,9 +71,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testConstructorWithContingencyMatrixFailsWithBadClassLengths() {
-    String[] classes = new String[]{"one"};
+    String[] classes = new String[] {"one"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {1.0, 0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {1.0, 0.0}};
 
     EvaluationResults eval = null;
     try {
@@ -88,9 +86,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testConstructorWithContingencyMatrixFailsWithNonSquareCM() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {0.0}};
 
     EvaluationResults eval = null;
     try {
@@ -103,9 +101,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetClassNames() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {1.0, 0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {1.0, 0.0}};
 
     EvaluationResults eval = null;
     try {
@@ -120,9 +118,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testAddInstance() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {1.0, 0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {1.0, 0.0}};
 
     EvaluationResults eval = null;
     try {
@@ -138,15 +136,15 @@ public class EvaluationResultsTest {
 
   @Test
   public void testAddTwoEvaluationResults() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {1.0, 0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {1.0, 0.0}};
 
     EvaluationResults eval = null;
     try {
       eval = new EvaluationResults(classes, cm);
 
-      double[][] cm_b = new double[][]{{1.0, 1.0}, {1.0, 1.0}};
+      double[][] cm_b = new double[][] {{1.0, 1.0}, {1.0, 1.0}};
       EvaluationResults eval_b = new EvaluationResults(classes, cm_b);
 
       eval.add(eval_b);
@@ -159,16 +157,16 @@ public class EvaluationResultsTest {
 
   @Test
   public void testAddTwoEvaluationResultsFailsWhenClassesAreNotAvailable() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {1.0, 0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {1.0, 0.0}};
 
     EvaluationResults eval = null;
     try {
       eval = new EvaluationResults(classes, cm);
 
-      double[][] cm_b = new double[][]{{1.0, 1.0}, {1.0, 1.0}};
-      EvaluationResults eval_b = new EvaluationResults(new String[]{"two", "three"}, cm_b);
+      double[][] cm_b = new double[][] {{1.0, 1.0}, {1.0, 1.0}};
+      EvaluationResults eval_b = new EvaluationResults(new String[] {"two", "three"}, cm_b);
 
       eval.add(eval_b);
 
@@ -180,9 +178,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testAddMultipleInstances() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {1.0, 0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {1.0, 0.0}};
 
     EvaluationResults eval = null;
     try {
@@ -196,12 +194,11 @@ public class EvaluationResultsTest {
     }
   }
 
-
   @Test
   public void testGetInstancesWithBadClassName() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.1}, {1.0, 0.0}};
+    double[][] cm = new double[][] {{0.0, 0.1}, {1.0, 0.0}};
 
     EvaluationResults eval = null;
     try {
@@ -216,9 +213,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetNumCorrrect() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{2.0, 0.1}, {1.0, 5.0}};
+    double[][] cm = new double[][] {{2.0, 0.1}, {1.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -232,9 +229,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetPrecision() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{2.0, 1.0}, {2.0, 5.0}};
+    double[][] cm = new double[][] {{2.0, 1.0}, {2.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -248,9 +245,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetPrecisionWorksIfNoneClassified() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 1.0}, {0.0, 5.0}};
+    double[][] cm = new double[][] {{0.0, 1.0}, {0.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -264,9 +261,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetRecall() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{2.0, 1.0}, {2.0, 5.0}};
+    double[][] cm = new double[][] {{2.0, 1.0}, {2.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -278,12 +275,11 @@ public class EvaluationResultsTest {
     }
   }
 
-
   @Test
   public void testGetRecallWorksWithEmptyClasses() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.0}, {2.0, 5.0}};
+    double[][] cm = new double[][] {{0.0, 0.0}, {2.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -297,9 +293,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetFMeasure() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{2.0, 1.0}, {2.0, 5.0}};
+    double[][] cm = new double[][] {{2.0, 1.0}, {2.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -313,9 +309,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetFMeasureWorksWithPotentialZeroDenominator() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.0}, {0.0, 5.0}};
+    double[][] cm = new double[][] {{0.0, 0.0}, {0.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -329,9 +325,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetFalsePositiveRate() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{2.0, 1.0}, {2.0, 5.0}};
+    double[][] cm = new double[][] {{2.0, 1.0}, {2.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -345,9 +341,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetFalseNegativeRate() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{2.0, 1.0}, {2.0, 5.0}};
+    double[][] cm = new double[][] {{2.0, 1.0}, {2.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -361,9 +357,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetFalseNegativeRateWorksWithZeroPositiveInstances() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{0.0, 0.0}, {2.0, 5.0}};
+    double[][] cm = new double[][] {{0.0, 0.0}, {2.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -377,9 +373,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetBalancedErrorRate() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{1.0, 2.0}, {2.0, 5.0}};
+    double[][] cm = new double[][] {{1.0, 2.0}, {2.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -393,9 +389,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetMutualInformationWithCorrectClassification() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{1.0, 0.0}, {0.0, 5.0}};
+    double[][] cm = new double[][] {{1.0, 0.0}, {0.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -409,9 +405,9 @@ public class EvaluationResultsTest {
 
   @Test
   public void testGetMutualInformationWithIncorrectClassification() {
-    String[] classes = new String[]{"one", "two"};
+    String[] classes = new String[] {"one", "two"};
 
-    double[][] cm = new double[][]{{5.0, 5.0}, {5.0, 5.0}};
+    double[][] cm = new double[][] {{5.0, 5.0}, {5.0, 5.0}};
 
     EvaluationResults eval = null;
     try {
@@ -423,4 +419,3 @@ public class EvaluationResultsTest {
     }
   }
 }
-

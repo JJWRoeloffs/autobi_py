@@ -20,15 +20,14 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Test class for AuToBIWordReader

@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,16 +28,15 @@ package edu.cuny.qc.speech.AuToBI.featureset;
 
 import edu.cuny.qc.speech.AuToBI.core.ContextDesc;
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * SpectrumPADFeatureSet describes the features that are required for generating pitch accent detection (PAD) hypotheses
- * based on energy information and spectral tilt from a specific frequency region.
+ * SpectrumPADFeatureSet describes the features that are required for generating pitch accent
+ * detection (PAD) hypotheses based on energy information and spectral tilt from a specific
+ * frequency region.
  */
 public class SpectrumPADFeatureSet extends FeatureSet {
-
   /**
    * Constructs a new SpectrumPADFeatureSet for a given spectral region specified in bark.
    *
@@ -43,8 +45,8 @@ public class SpectrumPADFeatureSet extends FeatureSet {
    */
   public SpectrumPADFeatureSet(int low, int high) {
     super();
-    for (String acoustic : new String[]{"bark", "bark_tilt"}) {
-      for (String agg : new String[]{"max", "mean", "stdev", "zMax"}) {
+    for (String acoustic : new String[] {"bark", "bark_tilt"}) {
+      for (String agg : new String[] {"max", "mean", "stdev", "zMax"}) {
         insertRequiredFeature(acoustic + "_" + low + "_" + high + "__" + agg);
       }
     }
@@ -59,9 +61,10 @@ public class SpectrumPADFeatureSet extends FeatureSet {
     contexts.add(new ContextDesc("f1b0", 1, 0));
     contexts.add(new ContextDesc("f1b1", 1, 1));
     for (ContextDesc context : contexts) {
-      for (String acoustic : new String[]{"bark", "bark_tilt"}) {
-        for (String agg : new String[]{"zMax", "zMean"}) {
-          insertRequiredFeature(acoustic + "_" + low + "_" + high + "_" + context.getLabel() + "__" + agg);
+      for (String acoustic : new String[] {"bark", "bark_tilt"}) {
+        for (String agg : new String[] {"zMax", "zMean"}) {
+          insertRequiredFeature(
+              acoustic + "_" + low + "_" + high + "_" + context.getLabel() + "__" + agg);
         }
       }
     }

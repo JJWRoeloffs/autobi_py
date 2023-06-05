@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,10 +28,9 @@ package edu.cuny.qc.speech.AuToBI.core;
 
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * AuToBIParameters stores and provides access to command line arguments sent to AuToBI.
@@ -127,7 +129,8 @@ public class AuToBIParameters {
   /**
    * Get the value of a boolean parameter
    * <p/>
-   * This will raise a warning if a parameter that has not been set as boolean is interpreted as such.
+   * This will raise a warning if a parameter that has not been set as boolean is interpreted as
+   * such.
    *
    * @param parameter_name the parameter name
    * @param default_value  a default value if the parameter was not set.
@@ -135,8 +138,10 @@ public class AuToBIParameters {
    */
   public Boolean booleanParameter(String parameter_name, Boolean default_value) {
     try {
-      if (getParameter(parameter_name).equalsIgnoreCase("true")) return true;
-      if (getParameter(parameter_name).equalsIgnoreCase("false")) return false;
+      if (getParameter(parameter_name).equalsIgnoreCase("true"))
+        return true;
+      if (getParameter(parameter_name).equalsIgnoreCase("false"))
+        return false;
     } catch (AuToBIException e) {
       return default_value;
     }

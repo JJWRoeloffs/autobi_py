@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,12 +30,21 @@ package edu.cuny.qc.speech.AuToBI.io;
 /**
  * FormattedFile associates an enumerated type describing the formatting of the prosodic annotation.
  * <p/>
- * This allows multiple format extensions (like TextGrid) to be associated with a variety of styles of annotation
- * formatting.
+ * This allows multiple format extensions (like TextGrid) to be associated with a variety of styles
+ * of annotation formatting.
  */
 public class FormattedFile {
   public static enum Format {
-    TEXTGRID, CPROM, BURNC, SIMPLE_WORD, SWB_NXT, BUCKEYE, KOH, CONS_GZ, DUR, POSTING_LIST,
+    TEXTGRID,
+    CPROM,
+    BURNC,
+    SIMPLE_WORD,
+    SWB_NXT,
+    BUCKEYE,
+    KOH,
+    CONS_GZ,
+    DUR,
+    POSTING_LIST,
     RHAPSODIE
   }
 
@@ -44,8 +56,8 @@ public class FormattedFile {
    * <p/>
    * The file format is determined by the extension of the filename.
    * <p/>
-   * Note, however, that multiple formats can use the same extension.  For example, there are many ways to use a
-   * TextGrid to encode information.
+   * Note, however, that multiple formats can use the same extension.  For example, there are many
+   * ways to use a TextGrid to encode information.
    *
    * @param filename the filename
    */
@@ -58,7 +70,8 @@ public class FormattedFile {
       this.format = FormattedFile.Format.BURNC;
     } else if (filestem.matches("s\\d\\d\\d\\d[ab].words")) {
       this.format = Format.BUCKEYE;
-    } else if (filename.toLowerCase().endsWith("words") || filename.toLowerCase().endsWith(".txt")) {
+    } else if (filename.toLowerCase().endsWith("words")
+        || filename.toLowerCase().endsWith(".txt")) {
       this.format = FormattedFile.Format.SIMPLE_WORD;
     } else if (filename.toLowerCase().endsWith("terminals.xml")) {
       this.format = FormattedFile.Format.SWB_NXT;
@@ -102,4 +115,3 @@ public class FormattedFile {
     return format;
   }
 }
-

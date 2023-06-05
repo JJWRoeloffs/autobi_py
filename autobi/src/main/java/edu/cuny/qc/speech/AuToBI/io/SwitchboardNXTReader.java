@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -28,17 +31,16 @@ import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.util.AlignmentUtils;
 import edu.cuny.qc.speech.AuToBI.util.WordReaderUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA. User: andrew Date: 2/18/12 Time: 9:28 AM To change this template use File | Settings | File
- * Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: 2/18/12 Time: 9:28 AM To change this template use
+ * File | Settings | File Templates.
  */
 public class SwitchboardNXTReader extends AuToBIWordReader {
-  private String filestem;  // the base filestem containing word offset data
+  private String filestem; // the base filestem containing word offset data
 
   /**
    * Constructs a new SwitchboardNXTReader.
@@ -60,7 +62,6 @@ public class SwitchboardNXTReader extends AuToBIWordReader {
    */
   @Override
   public List<Word> readWords() throws IOException, AuToBIException {
-
     NXTTier words_tier = new NXTTier();
     NXTTier accent_tier = new NXTTier();
     NXTTier breaks_tier = new NXTTier();
@@ -75,8 +76,9 @@ public class SwitchboardNXTReader extends AuToBIWordReader {
 
     List<Region> break_indices = new ArrayList<Region>();
     for (Region r : breaks_tier.getRegions()) {
-      if (r.getLabel().startsWith("0") || r.getLabel().startsWith("1") || r.getLabel().startsWith("2") ||
-          r.getLabel().startsWith("3") || r.getLabel().startsWith("4")) {
+      if (r.getLabel().startsWith("0") || r.getLabel().startsWith("1")
+          || r.getLabel().startsWith("2") || r.getLabel().startsWith("3")
+          || r.getLabel().startsWith("4")) {
         break_indices.add(r);
       }
     }

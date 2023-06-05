@@ -10,14 +10,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -29,26 +32,21 @@ import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Pair;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * EMSyllabifier is an Expectation-Maximization based pseudosyllabification routine.  This was developed at Dan Ellis's
- * LabROSA at Columbia University and described in "Stylization of Pitch with Syllable-based Linear Segments" by Suman
- * Ravuri and Dan Ellis, ICASSP 2008.  The method implemented here was described via personal communication with Dan
- * Ellis and differs from
- * the approach described in this paper.
- * <p/>
- * The approach here is as follows: seed a Gaussian every 100ms, with a
- * (100ms)^2 variance, then do EM re-estimation from there.  Then prune
- * out any highly-overlapped Gaussian that is weaker than its immediate
- * neighbor (unlikely to be separate syllables), and all Gaussians with peak values smaller than 5% of the
- * largest (silence).
+ * EMSyllabifier is an Expectation-Maximization based pseudosyllabification routine.  This was
+ * developed at Dan Ellis's LabROSA at Columbia University and described in "Stylization of Pitch
+ * with Syllable-based Linear Segments" by Suman Ravuri and Dan Ellis, ICASSP 2008.  The method
+ * implemented here was described via personal communication with Dan Ellis and differs from the
+ * approach described in this paper. <p/> The approach here is as follows: seed a Gaussian every
+ * 100ms, with a (100ms)^2 variance, then do EM re-estimation from there.  Then prune out any
+ * highly-overlapped Gaussian that is weaker than its immediate neighbor (unlikely to be separate
+ * syllables), and all Gaussians with peak values smaller than 5% of the largest (silence).
  */
 public class EMSyllabifier extends Syllabifier {
-
   private double thresh = 0.1;
 
   @Override
@@ -100,12 +98,12 @@ public class EMSyllabifier extends Syllabifier {
    * @return intersection x-coordinate
    */
   public double intersection(GMMComponent m1, GMMComponent m2) {
-
     if (m1.variance == m2.variance) {
       // Equal variances require a different calculation.
       if (m1.weight != m2.weight) {
-        return (2 * m1.variance * (Math.log(m2.weight) - Math.log(m1.weight)) + m1.mean * m1.mean - m2.mean * m2.mean) /
-            (2.0 * (m1.mean - m2.mean));
+        return (2 * m1.variance * (Math.log(m2.weight) - Math.log(m1.weight)) + m1.mean * m1.mean
+                   - m2.mean * m2.mean)
+            / (2.0 * (m1.mean - m2.mean));
       } else {
         return (m1.mean + m2.mean) / 2;
       }
@@ -129,13 +127,12 @@ public class EMSyllabifier extends Syllabifier {
       w2 = m1.weight;
     }
 
-
     // Closed form solution for the intersection of two gaussians.
     double denom = v1 - v2;
     double a = (v2 * u1 - v1 * u2) / denom;
-    double b =
-        (2 * v1 * v2 * (Math.log(w2 * Math.sqrt(v1)) - Math.log(w1 * Math.sqrt(v2))) + v2 * u1 * u1 - v1 * u2 * u2) /
-            denom;
+    double b = (2 * v1 * v2 * (Math.log(w2 * Math.sqrt(v1)) - Math.log(w1 * Math.sqrt(v2)))
+                   + v2 * u1 * u1 - v1 * u2 * u2)
+        / denom;
 
     double xp = Math.sqrt(b + a * a) - a;
     double xm = -Math.sqrt(b + a * a) - a;
@@ -158,7 +155,8 @@ public class EMSyllabifier extends Syllabifier {
     int i = 0;
     while (i < components.size() - 1) {
       if (overlapping(components.get(i), components.get(i + 1))) {
-        if (components.get(i).weight * components.get(i).n > components.get(i + 1).weight * components.get(i + 1).n) {
+        if (components.get(i).weight * components.get(i).n
+            > components.get(i + 1).weight * components.get(i + 1).n) {
           components.remove(i + 1);
         } else {
           components.remove(i);
@@ -185,8 +183,8 @@ public class EMSyllabifier extends Syllabifier {
     mm1.weight = mm1.weight * mm1.n;
     mm2.weight = mm2.weight * mm2.n;
     double x = intersection(mm1, mm2);
-    if (Double.isNaN(x) || x < mm1.mean + thresh * Math.sqrt(mm1.variance) ||
-        x > mm2.mean - thresh * Math.sqrt(mm2.variance)) {
+    if (Double.isNaN(x) || x < mm1.mean + thresh * Math.sqrt(mm1.variance)
+        || x > mm2.mean - thresh * Math.sqrt(mm2.variance)) {
       return true;
     }
     return false;
@@ -209,7 +207,6 @@ public class EMSyllabifier extends Syllabifier {
       }
     }
   }
-
 
   /**
    * Fits the mixture components to a contour using EM.
@@ -275,8 +272,9 @@ public class EMSyllabifier extends Syllabifier {
     // TODO: limit the scope of components to check for each j.
     // This takes N*K where N is the number of points, and K is the number of components.
     // However, most responsibilities approach zero.
-    // Since the components are linearly ordered we can stop checking the components once one falls below an epsilon.
-    // Also, we can start checking components at the component where the previous frame was first above some epsilon
+    // Since the components are linearly ordered we can stop checking the components once one falls
+    // below an epsilon. Also, we can start checking components at the component where the previous
+    // frame was first above some epsilon
     for (int j = 0; j < intensity.size(); ++j) {
       double total = 0.;
       for (int i = 0; i < components.size(); ++i) {

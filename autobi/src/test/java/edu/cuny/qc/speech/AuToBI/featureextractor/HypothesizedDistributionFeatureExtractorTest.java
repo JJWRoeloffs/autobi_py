@@ -19,17 +19,16 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
-import edu.cuny.qc.speech.AuToBI.core.*;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
+import edu.cuny.qc.speech.AuToBI.core.*;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test class for HypothesizedDistributionFeatureExtractor
@@ -37,7 +36,6 @@ import static org.junit.Assert.fail;
  * @see HypothesizedDistributionFeatureExtractor
  */
 public class HypothesizedDistributionFeatureExtractorTest {
-
   @Test
   public void testConstructorSetsExtractedFeaturesCorrectly() {
     HypothesizedDistributionFeatureExtractor fe =
@@ -49,7 +47,6 @@ public class HypothesizedDistributionFeatureExtractorTest {
 
   @Test
   public void testConstructorSetsRequiredFeaturesCorrectly() {
-
     FeatureSet fs = new FeatureSet();
     fs.insertRequiredFeature("required_one");
     fs.insertRequiredFeature("required_two");
@@ -60,14 +57,11 @@ public class HypothesizedDistributionFeatureExtractorTest {
     assertEquals(2, fe.getRequiredFeatures().size());
     assertTrue(fe.getRequiredFeatures().contains("required_one"));
     assertTrue(fe.getRequiredFeatures().contains("required_two"));
-
   }
 
   @Test
   public void testConstructorExtractsFeaturesWithMockConstructor() {
-
     AuToBIClassifier c = new AuToBIClassifier() {
-
       @Override
       public Distribution distributionForInstance(Word testing_point) throws Exception {
         Distribution d = new Distribution();
@@ -77,8 +71,7 @@ public class HypothesizedDistributionFeatureExtractorTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -103,9 +96,7 @@ public class HypothesizedDistributionFeatureExtractorTest {
 
   @Test
   public void testConstructorExtractsFeaturesCorrectlyWithMockConstructor() {
-
     AuToBIClassifier c = new AuToBIClassifier() {
-
       @Override
       public Distribution distributionForInstance(Word testing_point) throws Exception {
         Distribution d = new Distribution();
@@ -115,8 +106,7 @@ public class HypothesizedDistributionFeatureExtractorTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -140,5 +130,4 @@ public class HypothesizedDistributionFeatureExtractorTest {
       fail();
     }
   }
-
 }

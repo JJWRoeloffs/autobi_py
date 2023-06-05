@@ -19,20 +19,19 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.*;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import edu.cuny.qc.speech.AuToBI.io.WavReader;
-import junit.framework.Assert;
-import org.junit.Test;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertTrue;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import edu.cuny.qc.speech.AuToBI.core.*;
+import edu.cuny.qc.speech.AuToBI.io.WavReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import junit.framework.Assert;
+import org.junit.Test;
 
 /**
  * Test class for IntensityFeatureExtractor
@@ -40,123 +39,121 @@ import static org.junit.Assert.assertTrue;
  * @see IntensityFeatureExtractor
  */
 public class IntensityFeatureExtractorTest {
+  @Test
+  public void testConstructorSetsExtractedFeaturesCorrectly() {
+    IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
 
-	@Test
-	public void testConstructorSetsExtractedFeaturesCorrectly() {
-		IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
+    assertEquals(1, fe.getExtractedFeatures().size());
+    assertTrue(fe.getExtractedFeatures().contains("I"));
+  }
 
-		assertEquals(1, fe.getExtractedFeatures().size());
-		assertTrue(fe.getExtractedFeatures().contains("I"));
-	}
+  @Test
+  public void testConstructorSetsRequiredFeaturesCorrectly() {
+    IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
 
-	@Test
-	public void testConstructorSetsRequiredFeaturesCorrectly() {
-		IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
+    assertEquals(1, fe.getRequiredFeatures().size());
+    assertTrue(fe.getRequiredFeatures().contains("wav"));
+  }
 
-		assertEquals(1, fe.getRequiredFeatures().size());
-		assertTrue(fe.getRequiredFeatures().contains("wav"));
-	}
+  @Test
+  public void testExtractFeaturesExtractsFeatures() {
+    IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
 
-	@Test
-	public void testExtractFeaturesExtractsFeatures() {
-		IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
+    List<Region> regions = new ArrayList<Region>();
+    Word w = new Word(0.0, 1.0, "test");
+    regions.add(w);
 
-		List<Region> regions = new ArrayList<Region>();
-		Word w = new Word(0.0, 1.0, "test");
-		regions.add(w);
+    WavReader reader = new WavReader();
 
-		WavReader reader = new WavReader();
+    WavData wav = null;
+    try {
+      wav = reader.read(ResourcePath.getResourcePath("test.wav"));
+    } catch (UnsupportedAudioFileException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (AuToBIException e) {
+      e.printStackTrace();
+    }
+    w.setAttribute("wav", wav);
 
-		WavData wav = null;
-		try {
-			wav = reader.read(ResourcePath.getResourcePath("test.wav"));
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (AuToBIException e) {
-			e.printStackTrace();
-		}
-		w.setAttribute("wav", wav);
+    try {
+      fe.extractFeatures(regions);
+      assertTrue(w.hasAttribute("I"));
+    } catch (FeatureExtractorException e) {
+      e.printStackTrace();
+    }
+  }
 
-		try {
-			fe.extractFeatures(regions);
-			assertTrue(w.hasAttribute("I"));
-		} catch (FeatureExtractorException e) {
-			e.printStackTrace();
-		}
-	}
+  @Test
+  public void testExtractFeaturesExtractsFeaturesCorrectly() {
+    IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
 
-	@Test
-	public void testExtractFeaturesExtractsFeaturesCorrectly() {
+    List<Region> regions = new ArrayList<Region>();
+    Word w = new Word(0.0, 1.0, "test");
+    regions.add(w);
+    WavReader reader = new WavReader();
 
-		IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
+    WavData wav = null;
+    try {
+      wav = reader.read(ResourcePath.getResourcePath("test.wav"));
+    } catch (UnsupportedAudioFileException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (AuToBIException e) {
+      e.printStackTrace();
+    }
+    w.setAttribute("wav", wav);
 
-		List<Region> regions = new ArrayList<Region>();
-		Word w = new Word(0.0, 1.0, "test");
-		regions.add(w);
-		WavReader reader = new WavReader();
+    try {
+      fe.extractFeatures(regions);
+      Contour c = (Contour) w.getAttribute("I");
+      assertEquals(97, c.size());
+      assertEquals(0.01, c.getStep(), 0.0001);
+      assertEquals(0.02, c.getStart(), 0.0001);
+      // Assume that the intensity extraction algorithm is tested in
+      // IntensityExtractor.
+      // Here we'll make sure that the generated contour passes some sanity checks.
+    } catch (FeatureExtractorException e) {
+      e.printStackTrace();
+    }
+  }
 
-		WavData wav = null;
-		try {
-			wav = reader.read(ResourcePath.getResourcePath("test.wav"));
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (AuToBIException e) {
-			e.printStackTrace();
-		}
-		w.setAttribute("wav", wav);
+  @Test
+  public void testExtractFeaturesAssignsTheSameObjectToSubsequentRegions() {
+    IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
 
-		try {
-			fe.extractFeatures(regions);
-			Contour c = (Contour) w.getAttribute("I");
-			assertEquals(97, c.size());
-			assertEquals(0.01, c.getStep(), 0.0001);
-			assertEquals(0.02, c.getStart(), 0.0001);
-			// Assume that the intensity extraction algorithm is tested in
-			// IntensityExtractor.
-			// Here we'll make sure that the generated contour passes some sanity checks.
-		} catch (FeatureExtractorException e) {
-			e.printStackTrace();
-		}
-	}
+    List<Region> regions = new ArrayList<Region>();
 
-	@Test
-	public void testExtractFeaturesAssignsTheSameObjectToSubsequentRegions() {
-		IntensityFeatureExtractor fe = new IntensityFeatureExtractor();
+    Word w = new Word(0.25, 0.50, "word");
+    Word w2 = new Word(0.50, 0.75, "word");
+    w.setAccent("H*");
+    w2.setAccent("H*");
+    regions.add(w);
+    regions.add(w2);
 
-		List<Region> regions = new ArrayList<Region>();
+    WavReader reader = new WavReader();
 
-		Word w = new Word(0.25, 0.50, "word");
-		Word w2 = new Word(0.50, 0.75, "word");
-		w.setAccent("H*");
-		w2.setAccent("H*");
-		regions.add(w);
-		regions.add(w2);
-
-		WavReader reader = new WavReader();
-
-		WavData wav = null;
-		try {
-			wav = reader.read(ResourcePath.getResourcePath("test.wav"));
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (AuToBIException e) {
-			e.printStackTrace();
-		}
-		w.setAttribute("wav", wav);
-		w2.setAttribute("wav", wav);
-		try {
-			fe.extractFeatures(regions);
-			Contour c = (Contour) w.getAttribute("I");
-			Contour c2 = (Contour) w2.getAttribute("I");
-			Assert.assertTrue(c == c2);
-		} catch (FeatureExtractorException e) {
-			fail();
-		}
-	}
+    WavData wav = null;
+    try {
+      wav = reader.read(ResourcePath.getResourcePath("test.wav"));
+    } catch (UnsupportedAudioFileException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (AuToBIException e) {
+      e.printStackTrace();
+    }
+    w.setAttribute("wav", wav);
+    w2.setAttribute("wav", wav);
+    try {
+      fe.extractFeatures(regions);
+      Contour c = (Contour) w.getAttribute("I");
+      Contour c2 = (Contour) w2.getAttribute("I");
+      Assert.assertTrue(c == c2);
+    } catch (FeatureExtractorException e) {
+      fail();
+    }
+  }
 }

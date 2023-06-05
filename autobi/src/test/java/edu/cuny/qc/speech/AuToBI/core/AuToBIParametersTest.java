@@ -19,9 +19,9 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
  * Test Class for Aggregation.
@@ -29,8 +29,6 @@ import static org.junit.Assert.*;
  * @see Aggregation
  */
 public class AuToBIParametersTest {
-
-
   @Test
   public void testGetAndSetParameters() {
     AuToBIParameters params = new AuToBIParameters();
@@ -63,7 +61,6 @@ public class AuToBIParametersTest {
     params.setParameter("test_param", "one");
 
     assertEquals("one", params.getOptionalParameter("test_param"));
-
   }
 
   @Test
@@ -73,7 +70,6 @@ public class AuToBIParametersTest {
     assertNull(params.getOptionalParameter("test_param"));
   }
 
-
   @Test
   public void testGetAndSetOptionalParametersWithDefault() {
     AuToBIParameters params = new AuToBIParameters();
@@ -81,7 +77,6 @@ public class AuToBIParametersTest {
     params.setParameter("test_param", "one");
 
     assertEquals("one", params.getOptionalParameter("test_param", "two"));
-
   }
 
   @Test
@@ -131,8 +126,7 @@ public class AuToBIParametersTest {
 
   @Test
   public void testReadParametersParsesParameters() {
-
-    String[] parameters = new String[]{"-test=go"};
+    String[] parameters = new String[] {"-test=go"};
     AuToBIParameters params = new AuToBIParameters();
 
     params.readParameters(parameters);
@@ -146,7 +140,7 @@ public class AuToBIParametersTest {
 
   @Test
   public void testReadParametersParsesBooleanParameters() {
-    String[] parameters = new String[]{"-test"};
+    String[] parameters = new String[] {"-test"};
     AuToBIParameters params = new AuToBIParameters();
 
     params.readParameters(parameters);
@@ -155,13 +149,10 @@ public class AuToBIParametersTest {
 
   @Test
   public void testReadParametersIgnoresFieldsWOHyphen() {
-    String[] parameters = new String[]{"test"};
+    String[] parameters = new String[] {"test"};
     AuToBIParameters params = new AuToBIParameters();
 
     params.readParameters(parameters);
     assertFalse(params.hasParameter("test"));
   }
 }
-
-
-

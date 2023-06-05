@@ -19,10 +19,10 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+
+import org.junit.Test;
 
 /**
  * Test class for TiltParameters.
@@ -39,7 +39,7 @@ public class TiltParametersTest {
 
   @Test
   public void testContourConstructor() {
-    Contour c = new Contour(0.0, 1.0, new double[]{1.0, 2.0, 3.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {1.0, 2.0, 3.0});
 
     TiltParameters tp = new TiltParameters(c);
     assertEquals(1.0, tp.getTilt());
@@ -47,7 +47,7 @@ public class TiltParametersTest {
 
   @Test
   public void testCalculateTiltOnEmptyContour() {
-    Contour c = new Contour(0.0, 1.0, new double[]{});
+    Contour c = new Contour(0.0, 1.0, new double[] {});
 
     TiltParameters tp = new TiltParameters();
     tp.calculateTilt(c);
@@ -63,7 +63,7 @@ public class TiltParametersTest {
 
   @Test
   public void testGetDurationTiltRising() {
-    Contour c = new Contour(0.0, 1.0, new double[]{1.0, 2.0, 3.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {1.0, 2.0, 3.0});
 
     TiltParameters tp = new TiltParameters(c);
     assertEquals(1.0, tp.getDurationTilt());
@@ -71,7 +71,7 @@ public class TiltParametersTest {
 
   @Test
   public void testGetAmplitudeTiltRising() {
-    Contour c = new Contour(0.0, 1.0, new double[]{1.0, 2.0, 3.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {1.0, 2.0, 3.0});
 
     TiltParameters tp = new TiltParameters(c);
     assertEquals(1.0, tp.getAmplitudeTilt());
@@ -79,7 +79,7 @@ public class TiltParametersTest {
 
   @Test
   public void testGetTiltRising() {
-    Contour c = new Contour(0.0, 1.0, new double[]{1.0, 2.0, 3.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {1.0, 2.0, 3.0});
 
     TiltParameters tp = new TiltParameters(c);
 
@@ -88,7 +88,7 @@ public class TiltParametersTest {
 
   @Test
   public void testGetDurationTiltFalling() {
-    Contour c = new Contour(0.0, 1.0, new double[]{3.0, 2.0, 1.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {3.0, 2.0, 1.0});
 
     TiltParameters tp = new TiltParameters(c);
     assertEquals(-1.0, tp.getDurationTilt());
@@ -96,7 +96,7 @@ public class TiltParametersTest {
 
   @Test
   public void testGetAmplitudeTiltFalling() {
-    Contour c = new Contour(0.0, 1.0, new double[]{3.0, 2.0, 1.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {3.0, 2.0, 1.0});
 
     TiltParameters tp = new TiltParameters(c);
     assertEquals(-1.0, tp.getAmplitudeTilt());
@@ -104,17 +104,16 @@ public class TiltParametersTest {
 
   @Test
   public void testGetTiltFalling() {
-    Contour c = new Contour(0.0, 1.0, new double[]{3.0, 2.0, 1.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {3.0, 2.0, 1.0});
 
     TiltParameters tp = new TiltParameters(c);
 
     assertEquals(-1.0, tp.getTilt());
   }
 
-
   @Test
   public void testGetDurationTiltPeak() {
-    Contour c = new Contour(0.0, 1.0, new double[]{3.0, 4.0, 1.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {3.0, 4.0, 1.0});
 
     TiltParameters tp = new TiltParameters(c);
     assertEquals(0.0, tp.getDurationTilt());
@@ -122,7 +121,7 @@ public class TiltParametersTest {
 
   @Test
   public void testGetAmplitudeTiltPeak() {
-    Contour c = new Contour(0.0, 1.0, new double[]{3.0, 4.0, 1.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {3.0, 4.0, 1.0});
 
     TiltParameters tp = new TiltParameters(c);
     assertEquals(-0.5, tp.getAmplitudeTilt(), 0.0001);
@@ -130,12 +129,10 @@ public class TiltParametersTest {
 
   @Test
   public void testGetTiltPeak() {
-    Contour c = new Contour(0.0, 1.0, new double[]{3.0, 4.0, 1.0});
+    Contour c = new Contour(0.0, 1.0, new double[] {3.0, 4.0, 1.0});
 
     TiltParameters tp = new TiltParameters(c);
 
     assertEquals(-0.25, tp.getTilt(), 0.0001);
   }
-
-
 }

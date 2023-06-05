@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -32,28 +35,28 @@ import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
 import edu.cuny.qc.speech.AuToBI.featureextractor.IntensityFeatureExtractor;
 import edu.cuny.qc.speech.AuToBI.util.AlignmentUtils;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * PseudosyllableWordReader uses the AuToBIWordReader mechanisms to generate "word" boundaries using acoustic based
- * pseudosyllabification from a wav file.
- * <p/>
- * The syllabified is based on the approach described in Villing et al. (2004) Automatic Blind Syllable Segmentation for
- * Continuous Speech In: Irish Signals and Systems Conference 2004, 30 June - 2 July 2004, Queens University, Belfast.
+ * PseudosyllableWordReader uses the AuToBIWordReader mechanisms to generate "word" boundaries using
+ * acoustic based pseudosyllabification from a wav file. <p/> The syllabified is based on the
+ * approach described in Villing et al. (2004) Automatic Blind Syllable Segmentation for Continuous
+ * Speech In: Irish Signals and Systems Conference 2004, 30 June - 2 July 2004, Queens University,
+ * Belfast.
  *
  * @see edu.cuny.qc.speech.AuToBI.core.syllabifier.Syllabifier
  * @see AuToBIWordReader
  */
 public class PseudosyllableWordReader extends AuToBIWordReader {
-  private WavData wav_data;   // the audio material to base the segmentation on
-  private double threshold;   // the silence threshold in mean dB in the region
-  private FormattedFile annotation_file;  // A file containing ToBI annotations.
+  private WavData wav_data; // the audio material to base the segmentation on
+  private double threshold; // the silence threshold in mean dB in the region
+  private FormattedFile annotation_file; // A file containing ToBI annotations.
 
   /**
-   * Constructs a new PseudosyllableWordReader based on audio data, wav_data, and a silence threshold, threshold.
+   * Constructs a new PseudosyllableWordReader based on audio data, wav_data, and a silence
+   * threshold, threshold.
    *
    * @param wav_data  source audio material.
    * @param threshold the silence threshold in mean dB
@@ -65,7 +68,8 @@ public class PseudosyllableWordReader extends AuToBIWordReader {
   }
 
   /**
-   * Constructs a new PseudosyllableWordReader based on audio data, wav_data, and a default silence threshold of 10dB.
+   * Constructs a new PseudosyllableWordReader based on audio data, wav_data, and a default silence
+   * threshold of 10dB.
    *
    * @param wav_data source audio material.
    */
@@ -76,7 +80,8 @@ public class PseudosyllableWordReader extends AuToBIWordReader {
   }
 
   /**
-   * Constructs a new PseudosyllableWordReader based on audio data, wav_data, and a default silence threshold of 10dB.
+   * Constructs a new PseudosyllableWordReader based on audio data, wav_data, and a default silence
+   * threshold of 10dB.
    *
    * @param wav_data source audio material.
    */
@@ -103,7 +108,6 @@ public class PseudosyllableWordReader extends AuToBIWordReader {
   public void setThreshold(double threshold) {
     this.threshold = threshold;
   }
-
 
   @Override
   public List<Word> readWords() throws IOException, AuToBIException {
@@ -138,7 +142,8 @@ public class PseudosyllableWordReader extends AuToBIWordReader {
     }
 
     if (annotation_file != null) {
-      // TODO: make this less hacky.  Refactor the Annotation reading from the word segment reading for all readers.
+      // TODO: make this less hacky.  Refactor the Annotation reading from the word segment reading
+      // for all readers.
       if (annotation_file.format == FormattedFile.Format.BURNC) {
         BURNCReader reader = new BURNCReader(annotation_file.getFilename().replace(".ala", ""));
         List<Region> tones = reader.readTones();
@@ -155,7 +160,8 @@ public class PseudosyllableWordReader extends AuToBIWordReader {
         AlignmentUtils.copyToBITonesByTime(words, tones_tier.getRegions());
         AlignmentUtils.copyToBIBreaksByTime(words, breaks_tier.getRegions());
       } else {
-        AuToBIUtils.error("Cannot read annotations from formats other than TextGrid or BURNC .ala files.");
+        AuToBIUtils.error(
+            "Cannot read annotations from formats other than TextGrid or BURNC .ala files.");
       }
     }
     return words;

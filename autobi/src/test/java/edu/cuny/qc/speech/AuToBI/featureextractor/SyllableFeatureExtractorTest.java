@@ -51,7 +51,8 @@
 //   public void setUp() {
 //     regions = new ArrayList<Region>();
 //     try {
-//       fe = new SyllableFeatureExtractor("phones", ResourcePath.getResourcePath("testlexicon.txt"));
+//       fe = new SyllableFeatureExtractor("phones",
+//       ResourcePath.getResourcePath("testlexicon.txt"));
 //     } catch (IOException e) {
 //       fail();
 //     }

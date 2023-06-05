@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,16 +30,13 @@ import com.google.common.collect.HashBiMap;
 import de.bwaldvogel.liblinear.*;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.util.ClassifierUtils;
-
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * LibLinearClassifier is a wrapper around a liblinear classifier with class based weights.
  */
 public class LibLinearClassifier extends AuToBIClassifier {
-
   private final SolverType solver;
   private final double C;
   private final double eps;
@@ -81,8 +81,7 @@ public class LibLinearClassifier extends AuToBIClassifier {
     double h = Linear.predictProbability(classifier, instance, prob_estimates);
 
     Distribution d = new Distribution();
-    for (int i = 0; i < class_values.length; ++i)
-      d.put(class_values[i], prob_estimates[i]);
+    for (int i = 0; i < class_values.length; ++i) d.put(class_values[i], prob_estimates[i]);
 
     return d;
   }
@@ -126,8 +125,8 @@ public class LibLinearClassifier extends AuToBIClassifier {
     if (class_weighting) {
       // calculate and set weights
       Map<String, Double> map =
-          ClassBasedWeightFunctionTrainer.getClassWeightMapping(feature_set.getDataPoints(), class_attribute,
-              ClassBasedWeightFunctionTrainer.WeightType.LINEAR);
+          ClassBasedWeightFunctionTrainer.getClassWeightMapping(feature_set.getDataPoints(),
+              class_attribute, ClassBasedWeightFunctionTrainer.WeightType.LINEAR);
 
       double[] weights = new double[class_values.length];
       int[] labels = new int[class_values.length];
@@ -142,7 +141,6 @@ public class LibLinearClassifier extends AuToBIClassifier {
 
     classifier = Linear.train(problem, parameter);
   }
-
 
   @Override
   public AuToBIClassifier newInstance() {

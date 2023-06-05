@@ -1,7 +1,7 @@
 /*  PitchAccentClassifierCollectionGenerator.java
 
     Copyright (c) 2009-2014 Andrew Rosenberg
-    
+
         This file is part of the AuToBI prosodic analysis package.
 
     AuToBI is free software: you can redistribute it and/or modify
@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,21 +30,18 @@ import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import edu.cuny.qc.speech.AuToBI.util.ClassifierUtils;
-
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
- * PitchAccentCalssifierCollectionGenerator has the task of reading a set of PitchAccentClassifiers and constructing
- * and serializing a PitchAccentClassifierCollection object.
- * <p/>
- * This is a useful utility function when stitching together ensemble members that have been trained in distinct
+ * PitchAccentCalssifierCollectionGenerator has the task of reading a set of PitchAccentClassifiers
+ * and constructing and serializing a PitchAccentClassifierCollection object. <p/> This is a useful
+ * utility function when stitching together ensemble members that have been trained in distinct
  * executions. However, it should be made more general to support any ensemble.
  */
 public class PitchAccentClassifierCollectionGenerator {
-
   public static void main(String[] args) {
     AuToBI autobi = new AuToBI();
     autobi.init(args);

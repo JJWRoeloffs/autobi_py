@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -28,20 +31,19 @@ import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
 /**
  * AuToBITask is a wrapper object to hold information about AuToBI classification tasks.
  * <p/>
- * This information includes, the feature name that will store the prediction, the gold standard label, a trained
- * classifier, and an empty associated featureset describing the features required to execute this task.
+ * This information includes, the feature name that will store the prediction, the gold standard
+ * label, a trained classifier, and an empty associated featureset describing the features required
+ * to execute this task.
  */
 public class AuToBITask {
-
-  private String trueFeature;           // The feature name to store the gold standard label
-  private String hypFeature;            // The feature name to store the hypothesized label
-  private String confFeature;           // A feature to store the confidence score in
-  private String distFeature;           // A feature to store a distribution of confidence scores in
-  private AuToBIClassifier classifier;  // A classifier associated with this task
-  private String defaultValue;          // A default value for the classification
+  private String trueFeature; // The feature name to store the gold standard label
+  private String hypFeature; // The feature name to store the hypothesized label
+  private String confFeature; // A feature to store the confidence score in
+  private String distFeature; // A feature to store a distribution of confidence scores in
+  private AuToBIClassifier classifier; // A classifier associated with this task
+  private String defaultValue; // A default value for the classification
   private FeatureSet featureSet;
   // An empty feature set describing the feature structure for this classification task
-
 
   /**
    * Get the feature name holding the gold standard label
@@ -60,7 +62,6 @@ public class AuToBITask {
   public void setTrueFeature(String true_feature) {
     trueFeature = true_feature;
   }
-
 
   /**
    * Gets the feature name holding the hypothesized feature.

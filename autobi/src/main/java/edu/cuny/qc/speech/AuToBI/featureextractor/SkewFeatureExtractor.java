@@ -9,32 +9,32 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
-
+import edu.cuny.qc.speech.AuToBI.core.Region;
 import java.util.List;
 
 /**
- * SkewFeatureExtractor calculates skew coefficients over each region.  Skew coefficients are calculated based on Paul
- * Taylor's Tilt parameterizations. They are used to calculate the offset between the tilt of pitch and intensity
- * contours.
- * <p/>
- * If the two contours are aligned the skew is zero.  If the pitch contour is left skewed, the skew values are negative,
- * and vice versa.
+ * SkewFeatureExtractor calculates skew coefficients over each region.  Skew coefficients are
+ * calculated based on Paul Taylor's Tilt parameterizations. They are used to calculate the offset
+ * between the tilt of pitch and intensity contours. <p/> If the two contours are aligned the skew
+ * is zero.  If the pitch contour is left skewed, the skew values are negative, and vice versa.
  *
  * @see TiltFeatureExtractor
  * @see edu.cuny.qc.speech.AuToBI.core.TiltParameters
@@ -66,17 +66,20 @@ public class SkewFeatureExtractor extends FeatureExtractor {
    * Calculates skew features from each region.
    *
    * @param regions The regions to extract features from.
-   * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException should never happen
+   * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException should never
+   *     happen
    */
   @Override
   public void extractFeatures(List regions) throws FeatureExtractorException {
     for (Region r : (List<Region>) regions) {
-      if (r.hasAttribute("tiltAmp[" + f1 + "]") && r.hasAttribute("tiltDur[" + f1 + "]") &&
-          r.hasAttribute("tiltAmp[" + f2 + "]") && r.hasAttribute("tiltDur[" + f2 + "]")) {
+      if (r.hasAttribute("tiltAmp[" + f1 + "]") && r.hasAttribute("tiltDur[" + f1 + "]")
+          && r.hasAttribute("tiltAmp[" + f2 + "]") && r.hasAttribute("tiltDur[" + f2 + "]")) {
         r.setAttribute("skewAmp[" + f1 + "," + f2 + "]",
-            ((Double) r.getAttribute("tiltAmp[" + f1 + "]")) - ((Double) r.getAttribute("tiltAmp[" + f2 + "]")));
+            ((Double) r.getAttribute("tiltAmp[" + f1 + "]"))
+                - ((Double) r.getAttribute("tiltAmp[" + f2 + "]")));
         r.setAttribute("skewDur[" + f1 + "," + f2 + "]",
-            ((Double) r.getAttribute("tiltDur[" + f1 + "]")) - ((Double) r.getAttribute("tiltDur[" + f2 + "]")));
+            ((Double) r.getAttribute("tiltDur[" + f1 + "]"))
+                - ((Double) r.getAttribute("tiltDur[" + f2 + "]")));
       }
     }
   }

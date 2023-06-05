@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -30,8 +33,8 @@ import edu.cuny.qc.speech.AuToBI.core.Contour;
  * QuantizedContourModel is a sequential multinomial model of a quantized contour.
  */
 public class QuantizedContourModel {
-  public ContourQuantizer cq;  // A quantizer.
-  public ConditionalDistribution[] time_models;  // The component time aligned models.
+  public ContourQuantizer cq; // A quantizer.
+  public ConditionalDistribution[] time_models; // The component time aligned models.
 
   /**
    * Constructs a new QuantizedContourModel.
@@ -58,7 +61,8 @@ public class QuantizedContourModel {
     String prev_value = "";
     for (int i = 0; i < quantized.length; ++i) {
       String value = Integer.toString(quantized[i]);
-      if (time_models[i].containsKey(prev_value) && time_models[i].get(prev_value).containsKey(value)) {
+      if (time_models[i].containsKey(prev_value)
+          && time_models[i].get(prev_value).containsKey(value)) {
         log_p += Math.log(time_models[i].get(prev_value).get(value));
       } else {
         log_p = -Double.MAX_VALUE;

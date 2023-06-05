@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -28,30 +31,29 @@ import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
 import edu.cuny.qc.speech.AuToBI.util.SignalProcessingUtils;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
 
 /**
  * Implements Kornel Laskowski et al.'s Fundamental Frequency Variation (FFV) Features.
  * <p/>
  */
 public class FFVExtractor {
-
-  private double tsep;  // the separation between the two windows (in seconds)
-  private double tint;  // the length of the internal window (in seconds)
-  private double text;  // the length of the external window (in seconds)
+  private double tsep; // the separation between the two windows (in seconds)
+  private double tint; // the length of the internal window (in seconds)
+  private double text; // the length of the external window (in seconds)
   private double tstep; // ffv frame size (in seconds)
 
   private static final int FFT_COEFS = 512;
   private double[][] filterbank; // filterbank parameters
-  private boolean[] filterbank_mask; // a mask determining if any of the filterbank entries are nonzero
+  private boolean[] filterbank_mask; // a mask determining if any of the filterbank entries are
+                                     // nonzero
 
   /**
    * Constructs a new FFVCalculator with appropriate parameters.
@@ -128,7 +130,8 @@ public class FFVExtractor {
   }
 
   /**
-   * Applies each filter in the N element filterbank. Returns an N element vector of the filtered signal.
+   * Applies each filter in the N element filterbank. Returns an N element vector of the filtered
+   * signal.
    *
    * @param signal     the signal
    * @param filterbank the filterbank
@@ -164,10 +167,9 @@ public class FFVExtractor {
   /**
    * Constructs the asymmetrical FFV window function.
    * <p/>
-   * The FFV comparison compares two windowed signals, where the window function is a half hamming window and a half
-   * hann window, where the length of the two half windows are not necessarily equal.
-   * <p/>
-   * <p/>
+   * The FFV comparison compares two windowed signals, where the window function is a half hamming
+   * window and a half hann window, where the length of the two half windows are not necessarily
+   * equal. <p/> <p/>
    * |---- ext ---------|---- int ----|
    * Hamming             Hann
    *
@@ -186,7 +188,6 @@ public class FFVExtractor {
     return out;
   }
 
-
   /**
    * Converts a time to a sample index.
    * <p/>
@@ -199,7 +200,6 @@ public class FFVExtractor {
   private int timeToSample(double time, float sampleRate) {
     return (int) Math.floor(time * sampleRate);
   }
-
 
   /**
    * Calculates the FFV spectrum given two windowed power spectra.
@@ -215,8 +215,8 @@ public class FFVExtractor {
     double[] ffv = new double[n];
 
     for (int r = -n / 2; r < n / 2; r++) {
-
-      // This frame won't be used in the filterbanked calculation, so skip it. (improves runtime by about 3x)
+      // This frame won't be used in the filterbanked calculation, so skip it. (improves runtime by
+      // about 3x)
       // TODO: allow a user to generate the full FFV spectrum, not only the filterbanked version.
       if (!filterbank_mask[r + n / 2]) {
         ffv[r + n / 2] = 0.;
@@ -228,16 +228,15 @@ public class FFVExtractor {
       double num = 0;
       double denom_l = 0;
       double denom_r = 0;
-      if (r < 0) {  // contraction (squeeze the right frame)
+      if (r < 0) { // contraction (squeeze the right frame)
         for (int k = 0; k < n; k++) {
-
           double right = interpolate(r_pow, rho, k);
           num += Math.sqrt(l_pow[k]) * right;
 
           denom_l += l_pow[k];
           denom_r += right * right;
         }
-      } else {  // dilation (squeeze the left frame)
+      } else { // dilation (squeeze the left frame)
         for (int k = 0; k < n; k++) {
           double left = interpolate(l_pow, rho, k);
           num += left * Math.sqrt(r_pow[k]);
@@ -266,7 +265,7 @@ public class FFVExtractor {
     int high_idx = (int) Math.ceil(rho_k);
     double alpha = rho_k - low_idx;
 
-    return (1 - alpha) * Math.sqrt(pow[low_idx]) + (alpha) * Math.sqrt(pow[high_idx]);
+    return (1 - alpha) * Math.sqrt(pow[low_idx]) + (alpha) *Math.sqrt(pow[high_idx]);
   }
 
   /**
@@ -360,18 +359,17 @@ public class FFVExtractor {
       }
     }
 
-
     WavReader reader = new WavReader();
     WavData wav;
     try {
-
       long startTime = System.currentTimeMillis();
 
-//        if (args.length > 1) {
-//        wav = reader.read(soundIn, Double.parseDouble(args[1]), Double.parseDouble(args[2]));
-//      } else {
+      //        if (args.length > 1) {
+      //        wav = reader.read(soundIn, Double.parseDouble(args[1]),
+      //        Double.parseDouble(args[2]));
+      //      } else {
       wav = reader.read(soundIn);
-//      }
+      //      }
       System.out.println(wav.sampleRate);
       System.out.println(wav.sampleSize);
       System.out.println(wav.getFrameSize());
@@ -380,8 +378,8 @@ public class FFVExtractor {
 
       /*
       ./ffv --tfra 0.01 --fs 16000 -tint 0.011 --text 0.015 --tsep 0.01 --fbFileName filterbank.ffv
-      /Users/andrew/code/AuToBI/release/test_data/bdc-test.wav /Users/andrew/code/AuToBI/release/test_data/bdc-test
-      .wav.txt
+      /Users/andrew/code/AuToBI/release/test_data/bdc-test.wav
+      /Users/andrew/code/AuToBI/release/test_data/bdc-test .wav.txt
        */
 
       FFVExtractor ffvc = new FFVExtractor(0.01, 0.01, 0.011, 0.015);
@@ -408,7 +406,7 @@ public class FFVExtractor {
       long endTime = System.currentTimeMillis();
 
       System.out.println("That took " + (endTime - startTime) / 1000.0 + " seconds");
-//
+      //
     } catch (AuToBIException e) {
       e.printStackTrace();
     }

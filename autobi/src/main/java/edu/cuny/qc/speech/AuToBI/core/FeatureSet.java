@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,31 +30,26 @@ import com.google.common.collect.HashBiMap;
 import edu.cuny.qc.speech.AuToBI.io.AuToBIFileWriter;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import edu.cuny.qc.speech.AuToBI.util.ClassifierUtils;
-
-import java.util.*;
-import java.io.Serializable;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.*;
 
 /**
- * FeatureSet objects are responsible for maintaining information about the features required for a classification
- * task.
- * <p/>
- * For a given task, the required features are described.  An AuToBI object uses these required features to drive the
- * appropriate feature extraction routines.
- * <p/>
- * FeatureSets also maintain a list of data points.  This allows everything about a data set to be serialized for later
- * processing.
+ * FeatureSet objects are responsible for maintaining information about the features required for a
+ * classification task. <p/> For a given task, the required features are described.  An AuToBI
+ * object uses these required features to drive the appropriate feature extraction routines. <p/>
+ * FeatureSets also maintain a list of data points.  This allows everything about a data set to be
+ * serialized for later processing.
  *
  * @see edu.cuny.qc.speech.AuToBI.AuToBI
  */
 public class FeatureSet implements Serializable {
   private static final long serialVersionUID = 20120110L;
 
-  protected Map<String, Integer> required_features;  // The required feature names
-  protected Set<Feature> features;          // The extracted feature objects
-  protected List<Word> data_points;         // Associated data points
-  protected String class_attribute;         // The name of the class attribute (if any)
-
+  protected Map<String, Integer> required_features; // The required feature names
+  protected Set<Feature> features; // The extracted feature objects
+  protected List<Word> data_points; // Associated data points
+  protected String class_attribute; // The name of the class attribute (if any)
 
   /**
    * Constructs an empty FeatureSet.
@@ -77,7 +75,6 @@ public class FeatureSet implements Serializable {
     newfs.class_attribute = this.getClassAttribute();
     return newfs;
   }
-
 
   /**
    * Retrieves the associated data points.
@@ -107,8 +104,7 @@ public class FeatureSet implements Serializable {
    */
   public List<String> getFeatureNames() {
     ArrayList<String> names = new ArrayList<String>();
-    for (Feature f : features)
-      names.add(f.getName());
+    for (Feature f : features) names.add(f.getName());
 
     return names;
   }
@@ -163,7 +159,8 @@ public class FeatureSet implements Serializable {
    * Confirms that data points is not null.
    */
   private void checkDataPoints() {
-    if (data_points == null) data_points = new ArrayList<Word>();
+    if (data_points == null)
+      data_points = new ArrayList<Word>();
   }
 
   /**
@@ -189,10 +186,9 @@ public class FeatureSet implements Serializable {
   /**
    * Constructs the set of features from the list of required features.
    * <p/>
-   * Note: feature names that start with "nominal_" are treated as nominal features.  Valid nominal values are
-   * constructed from all values represented in the associated data points.
-   * <p/>
-   * The class attribute is always treated as a nominal feature.
+   * Note: feature names that start with "nominal_" are treated as nominal features.  Valid nominal
+   * values are constructed from all values represented in the associated data points. <p/> The
+   * class attribute is always treated as a nominal feature.
    */
   public void constructFeatures() {
     features.clear();
@@ -244,8 +240,9 @@ public class FeatureSet implements Serializable {
    */
   public void removeRequiredFeature(String feature_name) {
     if (data_points != null && data_points.size() > 0) {
-      //TODO: figure out the best way to do this.
-      AuToBIUtils.error("Cannot remove a required feature from a FeatureSet that has associated data points..");
+      // TODO: figure out the best way to do this.
+      AuToBIUtils.error(
+          "Cannot remove a required feature from a FeatureSet that has associated data points..");
     }
     if (required_features.containsKey(feature_name)) {
       // The class attribute is stored at index 0
@@ -281,14 +278,14 @@ public class FeatureSet implements Serializable {
    * <p/>
    * The arff format is read by the weka machine learning toolkit.
    * <p/>
-   * A description of the format can be found at the following URL: http://www.cs.waikato.ac.nz/~ml/weka/arff.html
+   * A description of the format can be found at the following URL:
+   * http://www.cs.waikato.ac.nz/~ml/weka/arff.html
    *
    * @param arff_file     the name of the destination arff file
    * @param relation_name a description of the relation, a required arff field
    * @throws IOException if there is a problem writing to the file.
    */
-  public void writeArff(String arff_file, String relation_name) throws
-      IOException {
+  public void writeArff(String arff_file, String relation_name) throws IOException {
     AuToBIFileWriter writer = new AuToBIFileWriter(arff_file);
 
     writer.write("@relation ");
@@ -309,14 +306,15 @@ public class FeatureSet implements Serializable {
   public void writeLibLinear(String filename) throws AuToBIException, IOException {
     String class_attribute = this.getClassAttribute();
     Set<String> class_values = getFeature(class_attribute).getNominalValues();
-    double[] labels = ClassifierUtils.convertFeatureSetToLibLinearLabels(this,
-        class_values.toArray(new String[class_values.size()]));
+    double[] labels = ClassifierUtils.convertFeatureSetToLibLinearLabels(
+        this, class_values.toArray(new String[class_values.size()]));
 
     HashMap<String, Aggregation> norm_map = ClassifierUtils.generateNormParams(this);
     HashBiMap<Feature, Integer> feature_map = ClassifierUtils.generateFeatureMap(this);
 
     de.bwaldvogel.liblinear.Feature[][] data = ClassifierUtils.normalizeLibLinearFeatures(
-        ClassifierUtils.convertFeatureSetToLibLinearFeatures(this), feature_map.inverse(), norm_map);
+        ClassifierUtils.convertFeatureSetToLibLinearFeatures(this), feature_map.inverse(),
+        norm_map);
 
     AuToBIFileWriter writer = new AuToBIFileWriter(filename);
     for (int i = 0; i < labels.length; i++) {
@@ -361,7 +359,6 @@ public class FeatureSet implements Serializable {
     writer.close();
   }
 
-
   /**
    * Build the arff attribute section based on the list of features contained in this feature set
    * <p/>
@@ -373,14 +370,13 @@ public class FeatureSet implements Serializable {
     StringBuilder attrString = new StringBuilder();
 
     for (Feature f : this.features) {
-
       attrString.append("@attribute ");
-      attrString.append(f.getName().replace(",", "_"));  // commas are not allowed in in attribute names
+      attrString.append(
+          f.getName().replace(",", "_")); // commas are not allowed in in attribute names
       if (f.isNominal()) {
         if (f.getNominalValues().isEmpty()) {
-          AuToBIUtils
-              .warn(
-                  " Warning: empty nominal values for feature:" + f.getName() + ". Try Generating Arff _Data_ first.");
+          AuToBIUtils.warn(" Warning: empty nominal values for feature:" + f.getName()
+              + ". Try Generating Arff _Data_ first.");
         }
 
         attrString.append(" {");
@@ -422,8 +418,7 @@ public class FeatureSet implements Serializable {
           first = false;
         }
         if (r.getAttribute(f.getName()) == null) {
-          AuToBIUtils.debug("missing attribute:" + f.getName() + " on word:" +
-              r.toString());
+          AuToBIUtils.debug("missing attribute:" + f.getName() + " on word:" + r.toString());
 
           // Weka's arff standard uses the question mark (?) to indicate missing values
           sb.append("?");
@@ -445,7 +440,6 @@ public class FeatureSet implements Serializable {
     return sb.toString();
   }
 
-
   /**
    * Writes a csv header line via the provided writer.
    *
@@ -464,7 +458,6 @@ public class FeatureSet implements Serializable {
   protected String generateCSVHeader() {
     return AuToBIUtils.join(getFeatureNames(), ",") + "\n";
   }
-
 
   /**
    * Sets the class attribute.

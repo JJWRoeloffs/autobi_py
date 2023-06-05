@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,9 +28,7 @@ package edu.cuny.qc.speech.AuToBI.io;
 
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIReaderUtils;
-
 import java.io.IOException;
-
 
 /**
  * TextGridTier is a Tier object tailored to the format of TextGrid tiers.
@@ -35,7 +36,6 @@ import java.io.IOException;
  * @see Tier
  */
 public class TextGridTier extends Tier {
-
   /**
    * Reads the information from the reader into the Tier regions, and sets the name of the tier.
    * <p/>
@@ -46,7 +46,8 @@ public class TextGridTier extends Tier {
    * @throws IOException                  if there is an input output problem
    * @throws TextGridSyntaxErrorException If there is a formatting problem
    */
-  public boolean readTier(AuToBIFileReader reader) throws TextGridSyntaxErrorException, IOException {
+  public boolean readTier(AuToBIFileReader reader)
+      throws TextGridSyntaxErrorException, IOException {
     String line;
     while ((line = reader.readLine()) != null) {
       line = AuToBIReaderUtils.removeTabsAndTrim(line);
@@ -66,7 +67,8 @@ public class TextGridTier extends Tier {
           throw new TextGridSyntaxErrorException("Found point label in interval tier.");
         }
         addPoint(reader);
-      } else if (line.matches("intervals\\s+\\[[\\d]+\\]:") || line.matches("intervals:\\s+\\[[\\d]+\\]")) {
+      } else if (line.matches("intervals\\s+\\[[\\d]+\\]:")
+          || line.matches("intervals:\\s+\\[[\\d]+\\]")) {
         if (is_point_tier) {
           throw new TextGridSyntaxErrorException("Found interval label in point tier.");
         }

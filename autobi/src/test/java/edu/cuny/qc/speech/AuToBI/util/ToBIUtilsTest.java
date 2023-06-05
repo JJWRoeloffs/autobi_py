@@ -19,23 +19,21 @@
  */
 package edu.cuny.qc.speech.AuToBI.util;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Tests for ToBIUtils utility methods.
  */
 public class ToBIUtilsTest {
-
   @Test
   public void testSetIntermediatePhraseBoundary() {
     List<Word> words = new ArrayList<Word>();
@@ -108,7 +106,6 @@ public class ToBIUtilsTest {
     assertEquals("INTONATIONAL_BOUNDARY", w2.getAttribute("boundary"));
   }
 
-
   @Test
   public void testSetIntonationalPhraseBoundary() {
     List<Word> words = new ArrayList<Word>();
@@ -162,7 +159,6 @@ public class ToBIUtilsTest {
     assertEquals("NONBOUNDARY", w1.getAttribute("boundary"));
     assertEquals("INTONATIONAL_BOUNDARY", w2.getAttribute("boundary"));
   }
-
 
   @Test
   public void testSetPhraseAccentBoundaryTone() {
@@ -306,7 +302,6 @@ public class ToBIUtilsTest {
 
     Word w2 = new Word(0, 1, "two");
 
-
     words.add(w1);
     words.add(w2);
 
@@ -345,7 +340,6 @@ public class ToBIUtilsTest {
 
     Word w3 = new Word(0, 1, "three");
 
-
     words.add(w1);
     words.add(w2);
     words.add(w3);
@@ -360,7 +354,6 @@ public class ToBIUtilsTest {
     assertEquals("3", w3.getBreakBefore());
     assertEquals("1", w3.getBreakAfter());
   }
-
 
   @Test
   public void testCheckToBIAnnotationThrowsAnErrorBoundaryToneWithoutBreakIndex() {
@@ -403,7 +396,6 @@ public class ToBIUtilsTest {
       // Expected.
     }
   }
-
 
   @Test
   public void testCheckToBIAnnotationMultiplePhrases() {

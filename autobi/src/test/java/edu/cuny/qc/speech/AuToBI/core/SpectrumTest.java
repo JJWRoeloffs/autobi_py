@@ -19,12 +19,12 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 /**
  * Test class for Spectrum.
@@ -32,7 +32,6 @@ import static org.junit.Assert.fail;
  * @see Spectrum
  */
 public class SpectrumTest {
-
   @Test
   public void testStartTime() {
     double[][] data = new double[20][10];
@@ -114,7 +113,7 @@ public class SpectrumTest {
     }
     Spectrum s = new Spectrum(data, 1.0, 0.01, 10);
 
-    assertArrayEquals(new double[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, s.get(7), 0.0001);
+    assertArrayEquals(new double[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, s.get(7), 0.0001);
   }
 
   @Test
@@ -208,7 +207,6 @@ public class SpectrumTest {
       fail();
     }
   }
-
 
   @Test
   public void testGetSliceGetsCorrectNumberOfFramesWithUnderhang() {
@@ -305,7 +303,7 @@ public class SpectrumTest {
 
     try {
       double[] power = s.getPower(false);
-      assertArrayEquals(new double[]{45.0, 45.0, 45.0, 45.0, 45.0}, power, 0.0001);
+      assertArrayEquals(new double[] {45.0, 45.0, 45.0, 45.0, 45.0}, power, 0.0001);
     } catch (AuToBIException e) {
       e.printStackTrace();
     }
@@ -325,7 +323,8 @@ public class SpectrumTest {
 
     try {
       double[] power = s.getPower(true);
-      assertArrayEquals(new double[]{Math.log(45.0), Math.log(45.0), Math.log(45.0), Math.log(45.0), Math.log(45.0)},
+      assertArrayEquals(new double[] {Math.log(45.0), Math.log(45.0), Math.log(45.0),
+                            Math.log(45.0), Math.log(45.0)},
           power, 0.0001);
     } catch (AuToBIException e) {
       e.printStackTrace();
@@ -346,7 +345,7 @@ public class SpectrumTest {
 
     try {
       double[] power = s.getPowerInBand(0.0, 5000, false);
-      assertArrayEquals(new double[]{45.0, 45.0, 45.0, 45.0, 45.0}, power, 0.0001);
+      assertArrayEquals(new double[] {45.0, 45.0, 45.0, 45.0, 45.0}, power, 0.0001);
     } catch (AuToBIException e) {
       e.printStackTrace();
     }
@@ -366,7 +365,7 @@ public class SpectrumTest {
 
     try {
       double[] power = s.getPowerInBand(15, 34, false);
-      assertArrayEquals(new double[]{5.0, 5.0, 5.0, 5.0, 5.0}, power, 0.0001);
+      assertArrayEquals(new double[] {5.0, 5.0, 5.0, 5.0, 5.0}, power, 0.0001);
     } catch (AuToBIException e) {
       e.printStackTrace();
     }
@@ -386,8 +385,9 @@ public class SpectrumTest {
 
     try {
       double[] power = s.getPowerInBand(15, 34, true);
-      assertArrayEquals(new double[]{Math.log(5.0), Math.log(5.0), Math.log(5.0), Math.log(5.0), Math.log(5.0)}, power,
-          0.0001);
+      assertArrayEquals(
+          new double[] {Math.log(5.0), Math.log(5.0), Math.log(5.0), Math.log(5.0), Math.log(5.0)},
+          power, 0.0001);
     } catch (AuToBIException e) {
       e.printStackTrace();
     }
@@ -407,7 +407,7 @@ public class SpectrumTest {
 
     try {
       double[] power = s.getPowerInBand(-15, 34, false);
-      assertArrayEquals(new double[]{6.0, 6.0, 6.0, 6.0, 6.0}, power, 0.0001);
+      assertArrayEquals(new double[] {6.0, 6.0, 6.0, 6.0, 6.0}, power, 0.0001);
     } catch (AuToBIException e) {
       e.printStackTrace();
     }
@@ -427,7 +427,7 @@ public class SpectrumTest {
 
     try {
       double[] power = s.getPowerInBand(75, 340, false);
-      assertArrayEquals(new double[]{17.0, 17.0, 17.0, 17.0, 17.0}, power, 0.0001);
+      assertArrayEquals(new double[] {17.0, 17.0, 17.0, 17.0, 17.0}, power, 0.0001);
     } catch (AuToBIException e) {
       e.printStackTrace();
     }
@@ -509,6 +509,5 @@ public class SpectrumTest {
     Contour tilt = s.getSpectralTiltContour();
     assertEquals(5, tilt.size());
     assertEquals(0.025998492074700428, tilt.get(0));
-
   }
 }

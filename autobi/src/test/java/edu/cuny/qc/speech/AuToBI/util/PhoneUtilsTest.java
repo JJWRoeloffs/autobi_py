@@ -19,23 +19,21 @@
  */
 package edu.cuny.qc.speech.AuToBI.util;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.SpeakerNormalizationParameter;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
- * Created by IntelliJ IDEA. User: andrew Date: 1/4/11 Time: 10:30 AM To change this template use File | Settings | File
- * Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: 1/4/11 Time: 10:30 AM To change this template use
+ * File | Settings | File Templates.
  */
 public class PhoneUtilsTest {
-
   @Test
   public void testIsVowelTrue() {
     assertTrue(PhoneUtils.isVowel("A"));
@@ -70,6 +68,4 @@ public class PhoneUtilsTest {
   public void testIsVowelEmpty() {
     assertFalse(PhoneUtils.isVowel(""));
   }
-
-
 }

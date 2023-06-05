@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,12 +28,11 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
 import edu.cuny.qc.speech.AuToBI.core.Region;
-
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA. User: andrew Date: 7/24/12 Time: 11:13 AM To change this template use File | Settings |
- * File Templates.
+ * Created with IntelliJ IDEA. User: andrew Date: 7/24/12 Time: 11:13 AM To change this template use
+ * File | Settings | File Templates.
  */
 @SuppressWarnings("unchecked")
 public class RatioFeatureExtractor extends FeatureExtractor {
@@ -53,7 +55,8 @@ public class RatioFeatureExtractor extends FeatureExtractor {
     for (Region r : (List<Region>) regions) {
       if (r.hasAttribute(f1) && r.hasAttribute(f2)) {
         double value = ((Double) r.getAttribute(f1)) / ((Double) r.getAttribute(f2));
-        r.setAttribute(moniker + "[" + f1 + "," + f2 + "]", Math.max(Math.min(value, MAX_VALUE), -MAX_VALUE));
+        r.setAttribute(
+            moniker + "[" + f1 + "," + f2 + "]", Math.max(Math.min(value, MAX_VALUE), -MAX_VALUE));
       }
     }
   }

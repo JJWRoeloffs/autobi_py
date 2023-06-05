@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -26,13 +29,11 @@ package edu.cuny.qc.speech.AuToBI.io;
 
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
-
-import javax.sound.sampled.*;
-
-import java.io.File;
-import java.io.IOException;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import javax.sound.sampled.*;
 
 /**
  * WavReader is used to read Wave files from into memory.
@@ -55,31 +56,32 @@ public class WavReader {
     if (!file.exists()) {
       throw new AuToBIException("Wav file does not exist: " + filename);
     }
-    AudioInputStream soundIn = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
+    AudioInputStream soundIn =
+        AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
 
     return read(soundIn);
   }
 
   /**
-   * Constructs a WavData object from the wav file pointed to by filename with specified start and end times.  The
-   * original time information is *not* preserved.
-   * <p/>
-   * Note AuToBI currently only supports 16bit wave files.
+   * Constructs a WavData object from the wav file pointed to by filename with specified start and
+   * end times.  The original time information is *not* preserved. <p/> Note AuToBI currently only
+   * supports 16bit wave files.
    *
    * @param filename the filename to read
    * @return The wav data stored in the file.
    * @throws IOException                                    if there is a file reading problem
-   * @throws UnsupportedAudioFileException                  if there is a problem with the audio file format
+   * @throws UnsupportedAudioFileException                  if there is a problem with the audio
+   *     file format
    * @throws edu.cuny.qc.speech.AuToBI.core.AuToBIException if the file is not 16 bit
    */
   public WavData read(String filename, Double start, Double end)
       throws UnsupportedAudioFileException, IOException, AuToBIException {
     File file = new File(filename);
-    AudioInputStream soundIn = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
+    AudioInputStream soundIn =
+        AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
 
     return read(soundIn, start, end);
   }
-
 
   /**
    * Reads an entire wave file from an AudioInputStream
@@ -91,7 +93,6 @@ public class WavReader {
   public WavData read(AudioInputStream stream) throws AuToBIException {
     return read(stream, 0.0, null);
   }
-
 
   /**
    * Reads the data from an AudioInputStream.
@@ -124,9 +125,8 @@ public class WavReader {
       int end_sample = ((int) Math.ceil(end * stream.getFormat().getFrameRate()));
       int length = end_sample - start_sample;
 
-
-      // TODO: read directly into data.samples.  there's no reason to read everything into bytes just to convert it to
-      // sample.  It'd be a lot more efficient to read in smaller blocks.
+      // TODO: read directly into data.samples.  there's no reason to read everything into bytes
+      // just to convert it to sample.  It'd be a lot more efficient to read in smaller blocks.
       bytes = new byte[length * stream.getFormat().getFrameSize()];
 
       try {
@@ -137,10 +137,9 @@ public class WavReader {
       }
     }
 
-
-    // Wave files are by default little endian.  Currently does not support big endian formatted wave files.
-    // Convert endian-ness of raw data to sample data
-    // Currently only supports 16-bit raw_samples
+    // Wave files are by default little endian.  Currently does not support big endian formatted
+    // wave files. Convert endian-ness of raw data to sample data Currently only supports 16-bit
+    // raw_samples
     data.samples = new double[data.numberOfChannels][bytes.length / (2 * data.numberOfChannels)];
 
     int i = 0;

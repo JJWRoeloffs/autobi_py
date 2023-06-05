@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -28,12 +31,11 @@ import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
 import edu.cuny.qc.speech.AuToBI.io.*;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import edu.cuny.qc.speech.AuToBI.util.WordReaderUtils;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * FeatureSetPropagator allows for multithreading in reading data sets and extracting features.
@@ -66,7 +68,8 @@ public class FeatureSetPropagator implements Callable<FeatureSet> {
         }
       } catch (AuToBIException e) {
         // A misisng wav file is a problem if you're looking for it.
-        throw new AuToBIException("Problem reading wave file, " + wav_filename + " -- " + e.getMessage());
+        throw new AuToBIException(
+            "Problem reading wave file, " + wav_filename + " -- " + e.getMessage());
       }
       AuToBIUtils.log("Reading words from: " + filename);
       AuToBIWordReader reader;
@@ -90,7 +93,8 @@ public class FeatureSetPropagator implements Callable<FeatureSet> {
         for (Word w : current_fs.getDataPoints()) {
           Set<String> attrs = w.getAttributeNames();
           for (String attr : attrs) {
-            if (!current_fs.getRequiredFeatures().contains(attr) && !attr.equals(current_fs.getClassAttribute())) {
+            if (!current_fs.getRequiredFeatures().contains(attr)
+                && !attr.equals(current_fs.getClassAttribute())) {
               w.removeAttribute(attr);
             }
           }
@@ -112,5 +116,4 @@ public class FeatureSetPropagator implements Callable<FeatureSet> {
 
     return null;
   }
-
 }

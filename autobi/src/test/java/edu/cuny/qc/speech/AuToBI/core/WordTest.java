@@ -19,10 +19,10 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.*;
 import static org.junit.Assert.assertNotSame;
+
+import org.junit.Test;
 
 /**
  * Test class for Word.

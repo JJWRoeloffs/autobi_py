@@ -9,25 +9,26 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
  */
 
-
 package edu.cuny.qc.speech.AuToBI.io;
 
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +36,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Contains and reads information from NXT Annotation of the Switchboard Corpus.  NXT annotations are stored in xml.
- * <p/>
- * Currently, we only use a subset of these annotations.  Rather than performing a full xml parse, pull out only the
- * relevant information relating to ToBI tone annotations and word breaks.
+ * Contains and reads information from NXT Annotation of the Switchboard Corpus.  NXT annotations
+ * are stored in xml. <p/> Currently, we only use a subset of these annotations.  Rather than
+ * performing a full xml parse, pull out only the relevant information relating to ToBI tone
+ * annotations and word breaks.
  */
 public class NXTTier extends Tier {
-
   /**
    * Reads the information from the reader into the Tier regions.
    *
@@ -120,7 +120,6 @@ public class NXTTier extends Tier {
     Matcher accent_line_m = accent_line_p.matcher(line);
 
     if (accent_line_m.find()) {
-
       Pattern start_p = Pattern.compile("nite:start=\"(.*?)\"");
       Pattern end_p = Pattern.compile("nite:end=\"(.*?)\"");
 
@@ -141,7 +140,6 @@ public class NXTTier extends Tier {
     Matcher wordline_m = wordline_p.matcher(line);
 
     if (wordline_m.find()) {
-
       Pattern start_p = Pattern.compile("nite:start=\"(.*?)\"");
       Pattern end_p = Pattern.compile("nite:end=\"(.*?)\"");
       Pattern word_p = Pattern.compile("orth=\"(.*?)\"");
@@ -150,13 +148,15 @@ public class NXTTier extends Tier {
       Matcher end_m = end_p.matcher(wordline_m.group());
       Matcher word_m = word_p.matcher(wordline_m.group());
 
-      // Start and end times can be "n/a" when a word is not complete, as in "don't" being partitioned into two words
-      // "do" and "n't"
-      // Start and end times are "non-aligned" when a word was unable to be aligned to time.
-      if (start_m.find() && end_m.find() && word_m.find() && !start_m.group(1).equals("non-aligned")) {
-
-        double start_time = start_m.group(1).equals("n/a") ? Double.NaN : Double.parseDouble(start_m.group(1));
-        double end_time = end_m.group(1).equals("n/a") ? Double.NaN : Double.parseDouble(end_m.group(1));
+      // Start and end times can be "n/a" when a word is not complete, as in "don't" being
+      // partitioned into two words "do" and "n't" Start and end times are "non-aligned" when a word
+      // was unable to be aligned to time.
+      if (start_m.find() && end_m.find() && word_m.find()
+          && !start_m.group(1).equals("non-aligned")) {
+        double start_time =
+            start_m.group(1).equals("n/a") ? Double.NaN : Double.parseDouble(start_m.group(1));
+        double end_time =
+            end_m.group(1).equals("n/a") ? Double.NaN : Double.parseDouble(end_m.group(1));
         return new Word(start_time, end_time, word_m.group(1));
       }
     }
@@ -168,7 +168,6 @@ public class NXTTier extends Tier {
     Matcher puncline_m = puncline_p.matcher(line);
 
     if (puncline_m.find()) {
-
       Pattern punc_p = Pattern.compile(">(.*?)<");
       Matcher punc_m = punc_p.matcher(puncline_m.group());
 

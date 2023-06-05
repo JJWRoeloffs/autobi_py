@@ -19,11 +19,11 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.*;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotSame;
+
+import org.junit.Test;
 
 /**
  * Test class for WavData.
@@ -42,7 +42,7 @@ public class WavDataTest {
   public void testGetDuration() {
     WavData wav = new WavData();
     wav.sampleRate = (float) 100;
-    wav.samples = new double[][]{{0.0, 1.0, 2.0}};
+    wav.samples = new double[][] {{0.0, 1.0, 2.0}};
 
     assertEquals(0.03, wav.getDuration(), 0.0001);
   }
@@ -51,7 +51,7 @@ public class WavDataTest {
   public void testGetFrameSize() {
     WavData wav = new WavData();
     wav.sampleRate = (float) 100;
-    wav.samples = new double[][]{{0.0, 1.0, 2.0}};
+    wav.samples = new double[][] {{0.0, 1.0, 2.0}};
 
     assertEquals(0.01, wav.getFrameSize(), 0.0001);
   }
@@ -60,7 +60,7 @@ public class WavDataTest {
   public void testGetNumSamples() {
     WavData wav = new WavData();
     wav.sampleRate = (float) 100;
-    wav.samples = new double[][]{{0.0, 1.0, 2.0}};
+    wav.samples = new double[][] {{0.0, 1.0, 2.0}};
 
     assertEquals(3, wav.getNumSamples());
   }
@@ -69,7 +69,7 @@ public class WavDataTest {
   public void testGetSample() {
     WavData wav = new WavData();
     wav.sampleRate = (float) 100;
-    wav.samples = new double[][]{{0.0, 1.0, 2.0}};
+    wav.samples = new double[][] {{0.0, 1.0, 2.0}};
 
     assertEquals(2.0, wav.getSample(0, 2));
   }
@@ -78,9 +78,9 @@ public class WavDataTest {
   public void testGetSamples() {
     WavData wav = new WavData();
     wav.sampleRate = (float) 100;
-    wav.samples = new double[][]{{0.0, 1.0, 2.0}};
+    wav.samples = new double[][] {{0.0, 1.0, 2.0}};
 
-    assertArrayEquals(new double[]{0.0, 1.0, 2.0}, wav.getSamples(0), 0.0001);
+    assertArrayEquals(new double[] {0.0, 1.0, 2.0}, wav.getSamples(0), 0.0001);
   }
 
   @Test

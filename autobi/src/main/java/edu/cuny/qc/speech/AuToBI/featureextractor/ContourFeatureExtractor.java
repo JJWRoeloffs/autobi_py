@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -26,28 +29,26 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ContourExtractor extracts a set of standard aggregations from a Contour.
  * <p/>
- * These include, mean, min, max, standard deviation, the z-score of the maximum, and the relative location of the
- * min and max.
- * <p/>
- * (The name of this class could stand to be changed.  It was named when there were relatively few features
- * extracted over a contour.  Now there are many.)
+ * These include, mean, min, max, standard deviation, the z-score of the maximum, and the relative
+ * location of the min and max. <p/> (The name of this class could stand to be changed.  It was
+ * named when there were relatively few features extracted over a contour.  Now there are many.)
  */
 public class ContourFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "mean,max,min,stdev,zMax,maxLocation,minLocation";
 
-  protected String attribute_name;  // the name of the feature name to analyze
+  protected String attribute_name; // the name of the feature name to analyze
 
   /**
    * Constructs a new ContourFeatureExtractor with associated values and attribute name.
    * <p/>
-   * The attribute name often matches the the stored SpeakerNormalizationParameter identifiers, e.g. "f0"
+   * The attribute name often matches the the stored SpeakerNormalizationParameter identifiers, e.g.
+   * "f0"
    *
    * @param attribute_name the attribute_name
    */
@@ -58,8 +59,7 @@ public class ContourFeatureExtractor extends FeatureExtractor {
   /**
    * Constructs a new empty ContourFeatureExtractor.
    */
-  public ContourFeatureExtractor() {
-  }
+  public ContourFeatureExtractor() {}
 
   /**
    * Sets the attribute name and registers extracted features to match the new name.
@@ -116,8 +116,8 @@ public class ContourFeatureExtractor extends FeatureExtractor {
       AuToBIUtils.warn("region doesn't have attribute: " + attribute_name);
       return;
     }
-    Contour contour =
-        ContourUtils.getSubContour((Contour) region.getAttribute(attribute_name), region.getStart(), region.getEnd());
+    Contour contour = ContourUtils.getSubContour(
+        (Contour) region.getAttribute(attribute_name), region.getStart(), region.getEnd());
     double max_location = region.getStart();
     Aggregation agg = new Aggregation();
     for (Pair<Double, Double> tvp : contour) {
@@ -145,7 +145,6 @@ public class ContourFeatureExtractor extends FeatureExtractor {
       } else {
         region.setAttribute("zMax[" + attribute_name + "]", (agg.getMax() - mean) / stdev);
       }
-
 
       max_location -= region.getStart();
       max_location = Math.min(Math.max(max_location, 0.0), duration);

@@ -19,9 +19,9 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
  * Test Class for ConditionalDistribution.
@@ -29,7 +29,6 @@ import static org.junit.Assert.*;
  * @see edu.cuny.qc.speech.AuToBI.core.ConditionalDistribution
  */
 public class ConditionalDistributionTest {
-
   @Test
   public void testConstruction() {
     ConditionalDistribution cd = new ConditionalDistribution();
@@ -64,7 +63,6 @@ public class ConditionalDistributionTest {
     assertEquals(2, cd.get("one").size());
     assertEquals(4.0, cd.get("one").get("a"), 0.0001);
   }
-
 
   @Test
   public void testNormalize() {
@@ -107,8 +105,4 @@ public class ConditionalDistributionTest {
     // With zero mass, normalization should not change the value.
     assertEquals(0.0, cd.get("one").get("a"), 0.0001);
   }
-
 }
-
-
-

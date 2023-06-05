@@ -19,13 +19,13 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import edu.cuny.qc.speech.AuToBI.featureextractor.NormalizedContourFeatureExtractor;
-import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-import org.junit.Test;
-
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import edu.cuny.qc.speech.AuToBI.featureextractor.NormalizedContourFeatureExtractor;
+import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
+import org.junit.Test;
 
 /**
  * Test class for Contour.
@@ -33,7 +33,6 @@ import static org.junit.Assert.assertTrue;
  * @see Contour
  */
 public class ContourTest {
-
   @Test
   public void testConstructor() {
     Contour c = new Contour(0.0, 0.001, 6);
@@ -42,14 +41,14 @@ public class ContourTest {
 
   @Test
   public void testConstructorWithValues() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(0.0, 0.001, values);
     assertEquals(6, c.size());
   }
 
   @Test
   public void testTimeFromIndex() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     assertEquals(2.002, c.timeFromIndex(2), 0.00001);
@@ -57,7 +56,7 @@ public class ContourTest {
 
   @Test
   public void testIndexFromTime() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     assertEquals(4, c.indexFromTime(2.004));
@@ -65,7 +64,7 @@ public class ContourTest {
 
   @Test
   public void testGet() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     assertEquals(0.4, c.get(2.004), 0.0001);
@@ -73,7 +72,7 @@ public class ContourTest {
 
   @Test
   public void testGetPair() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     Pair<Double, Double> pair = c.getPair(2);
@@ -83,7 +82,7 @@ public class ContourTest {
 
   @Test
   public void testGetPairOutOfRange() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     Pair<Double, Double> pair = c.getPair(8);
@@ -92,7 +91,7 @@ public class ContourTest {
 
   @Test
   public void testGetOutOfRange() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     assertTrue(Double.isNaN(c.get(10)));
@@ -100,7 +99,7 @@ public class ContourTest {
 
   @Test
   public void testSetAboveRange() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     c.set(7, 0.7);
@@ -110,7 +109,7 @@ public class ContourTest {
 
   @Test
   public void testSetEmpty() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     c.setEmpty(2);
@@ -119,7 +118,7 @@ public class ContourTest {
 
   @Test
   public void testSetEmptyByTime() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     c.setEmpty(2.002);
@@ -128,7 +127,7 @@ public class ContourTest {
 
   @Test
   public void testContentSize() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
 
     Contour c = new Contour(2.0, 0.001, values);
     c.setEmpty(2);
@@ -137,9 +136,8 @@ public class ContourTest {
 
   @Test
   public void testContourForEach() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(2.0, 0.001, values);
-
 
     int i = 0;
     for (Pair<Double, Double> tvp : c) {
@@ -152,7 +150,7 @@ public class ContourTest {
 
   @Test
   public void testContourForEachSkipsEmptyEntries() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(2.0, 0.001, values);
 
     c.setEmpty(2);

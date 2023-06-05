@@ -19,12 +19,12 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 /**
  * Test class for SubWord.
@@ -78,6 +78,8 @@ public class SubWordTest {
     SubWord sw = new SubWord(0.0, 1.0, "test");
     Word w = new Word(-1.0, 5.0, "test_word");
     sw.setWord(w);
-    assertEquals("test [0.0, 1.0] (null)[null, null] within test_word [-1.0, 5.0] (null)[null, null]", sw.toString());
+    assertEquals(
+        "test [0.0, 1.0] (null)[null, null] within test_word [-1.0, 5.0] (null)[null, null]",
+        sw.toString());
   }
 }

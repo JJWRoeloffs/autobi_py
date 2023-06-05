@@ -22,28 +22,25 @@ package edu.cuny.qc.speech.AuToBI;
 
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
-import jnt.FFT.RealDoubleFFT_Radix2;
-import org.apache.commons.math3.stat.descriptive.rank.Percentile;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import jnt.FFT.RealDoubleFFT_Radix2;
+import org.apache.commons.math3.stat.descriptive.rank.Percentile;
 
 /**
- * A class to extract Pitch from WavData using Paul Boersma's Sound_to_Pitch algorithm included in Praat.
- * <p/>
- * PitchExtractor can be used as a stand alone, entry point class or as an object within code.
- * <p/>
- * The main function reads a wave file and generates prints a listing of the pitch information to the console.
+ * A class to extract Pitch from WavData using Paul Boersma's Sound_to_Pitch algorithm included in
+ * Praat. <p/> PitchExtractor can be used as a stand alone, entry point class or as an object within
+ * code. <p/> The main function reads a wave file and generates prints a listing of the pitch
+ * information to the console.
  */
 @Deprecated
 public class PitchExtractor extends SampledDataAnalyzer {
-
   private final static int NUM_VALUE_INTERPOLATE_NEAREST = 0;
   private final static int NUM_VALUE_INTERPOLATE_LINEAR = 1;
   private final static int NUM_VALUE_INTERPOLATE_CUBIC = 2;
@@ -95,12 +92,11 @@ public class PitchExtractor extends SampledDataAnalyzer {
   }
 
   /**
-   * Calls getPitch with no paramters, automatically setting the min and max values for more precise estimation.
-   * <p/>
-   * This is based on the DeLooze and Rauzy (Automatic Detection and Prediction of Topic Changes
-   * Through Automatic Detection of Register variations and Pause Duration. De Looze and Rauzy. 2009)
-   * It's usefulness was described by The importance of optimal parameter setting for pitch extraction. 2010. Acoustical
-   * Society of America. Evanini, Lai and Zechner.
+   * Calls getPitch with no paramters, automatically setting the min and max values for more precise
+   * estimation. <p/> This is based on the DeLooze and Rauzy (Automatic Detection and Prediction of
+   * Topic Changes Through Automatic Detection of Register variations and Pause Duration. De Looze
+   * and Rauzy. 2009) It's usefulness was described by The importance of optimal parameter setting
+   * for pitch extraction. 2010. Acoustical Society of America. Evanini, Lai and Zechner.
    */
   public Contour soundToPitchTwoPass() throws AuToBIException {
     // initial min and max values.
@@ -121,8 +117,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
   }
 
   /**
-   * A Java implementation of Paul Boersma's pitch extraction algorithm. Implemented in Praat, and called by To
-   * Pitch(ac)...
+   * A Java implementation of Paul Boersma's pitch extraction algorithm. Implemented in Praat, and
+   * called by To Pitch(ac)...
    *
    * @param time_step            The time step to extract pitch values at
    * @param min_pitch            The minimum valid pitch
@@ -138,14 +134,14 @@ public class PitchExtractor extends SampledDataAnalyzer {
    * @throws AuToBIException if there's a problem
    */
   public Contour soundToPitchAc(double time_step, double min_pitch, double periods_per_window,
-                                int max_candidates, double silence_thresh,
-                                double voicing_thresh, double octave_cost, double octave_jump_cost,
-                                double voiced_unvoiced_cost, double max_pitch) throws AuToBIException {
+      int max_candidates, double silence_thresh, double voicing_thresh, double octave_cost,
+      double octave_jump_cost, double voiced_unvoiced_cost, double max_pitch)
+      throws AuToBIException {
     double duration;
     double t0;
     int i, j;
-    double dt_window;   /* Window length in seconds. */
-    int nsamp_window, halfnsamp_window;   /* Number of samples per window. */
+    double dt_window; /* Window length in seconds. */
+    int nsamp_window, halfnsamp_window; /* Number of samples per window. */
     int nFrames;
     int maximumLag;
     int iframe, nsampFFT;
@@ -155,38 +151,41 @@ public class PitchExtractor extends SampledDataAnalyzer {
     double windowR[];
     double globalPeak;
     double interpolation_depth;
-    int nsamp_period, halfnsamp_period;   /* Number of samples in longest period. */
+    int nsamp_period, halfnsamp_period; /* Number of samples in longest period. */
     int brent_ixmax, brent_depth;
 
-    if (max_candidates < max_pitch / min_pitch) max_candidates = (int) Math.floor(max_pitch / min_pitch);
+    if (max_candidates < max_pitch / min_pitch)
+      max_candidates = (int) Math.floor(max_pitch / min_pitch);
 
     if (time_step <= 0.0) {
-      time_step = periods_per_window / min_pitch / 4.0;   /* e.g. 3 periods, 75 Hz: 10 milliseconds. */
+      time_step =
+          periods_per_window / min_pitch / 4.0; /* e.g. 3 periods, 75 Hz: 10 milliseconds. */
     }
-
 
     // Exclusively implementing the AC_HANNING case
     brent_depth = NUM_PEAK_INTERPOLATE_SINC70;
     interpolation_depth = 0.5;
     duration = wav.getDuration();
     if (min_pitch < periods_per_window / duration) {
-      throw new AuToBIException("For this Sound, the parameter 'minimum pitch' may not be less than " +
-          (periods_per_window / duration) + " Hz.");
+      throw new AuToBIException(
+          "For this Sound, the parameter 'minimum pitch' may not be less than "
+          + (periods_per_window / duration) + " Hz.");
     }
 
     /*
-    * Determine the number of samples in the longest period.
-    * We need this to compute the local mean of the sound (looking one period in both directions),
-    * and to compute the local peak of the sound (looking half a period in both directions).
-    */
+     * Determine the number of samples in the longest period.
+     * We need this to compute the local mean of the sound (looking one period in both directions),
+     * and to compute the local peak of the sound (looking half a period in both directions).
+     */
     nsamp_period = (int) Math.floor(1 / wav.getFrameSize() / min_pitch);
     halfnsamp_period = nsamp_period / 2 + 1;
 
-    if (max_pitch > 0.5 / wav.getFrameSize()) max_pitch = 0.5 / wav.getFrameSize();
+    if (max_pitch > 0.5 / wav.getFrameSize())
+      max_pitch = 0.5 / wav.getFrameSize();
 
     /*
-    * Determine window length in seconds and in samples.
-    */
+     * Determine window length in seconds and in samples.
+     */
     dt_window = periods_per_window / min_pitch;
     nsamp_window = (int) Math.floor(dt_window / wav.getFrameSize());
     halfnsamp_window = nsamp_window / 2 - 1;
@@ -196,10 +195,11 @@ public class PitchExtractor extends SampledDataAnalyzer {
     nsamp_window = halfnsamp_window * 2;
 
     /*
-    * Determine the maximum lag.
-    */
+     * Determine the maximum lag.
+     */
     maximumLag = (int) (Math.floor(nsamp_window / periods_per_window) + 2);
-    if (maximumLag > nsamp_window) maximumLag = nsamp_window;
+    if (maximumLag > nsamp_window)
+      maximumLag = nsamp_window;
 
     if (wav.getDuration() < dt_window) {
       throw new AuToBIException("Wav data is shorter than pitch analysis window.");
@@ -210,13 +210,13 @@ public class PitchExtractor extends SampledDataAnalyzer {
     t0 = pair.second;
 
     /*
-    * Create the resulting pitch contour.
-    */
+     * Create the resulting pitch contour.
+     */
     Contour pitch = new Contour(t0, time_step, nFrames);
 
     /*
-    * Compute the global absolute peak for determination of silence threshold.
-    */
+     * Compute the global absolute peak for determination of silence threshold.
+     */
     globalPeak = 0.0;
     for (int channel = 0; channel < wav.numberOfChannels; ++channel) {
       double mean = 0.0;
@@ -226,7 +226,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
       mean /= wav.getNumSamples();
       for (i = 0; i < wav.getNumSamples(); ++i) {
         double value = Math.abs(wav.getSample(channel, i) - mean);
-        if (value > globalPeak) globalPeak = value;
+        if (value > globalPeak)
+          globalPeak = value;
       }
     }
     if (globalPeak == 0.0) {
@@ -234,17 +235,17 @@ public class PitchExtractor extends SampledDataAnalyzer {
     }
 
     /*
-    * Compute the number of samples needed for doing FFT.
-    * To avoid edge effects, we have to append zeroes to the window.
-    * The maximum lag considered for maxima is maximumLag.
-    * The maximum lag used in interpolation is nsamp_window * interpolation_depth.
-    */
+     * Compute the number of samples needed for doing FFT.
+     * To avoid edge effects, we have to append zeroes to the window.
+     * The maximum lag considered for maxima is maximumLag.
+     * The maximum lag used in interpolation is nsamp_window * interpolation_depth.
+     */
     nsampFFT = 1;
     while (nsampFFT < nsamp_window * (1 + interpolation_depth)) nsampFFT *= 2;
 
     /*
-    * Create buffers for autocorrelation analysis.
-    */
+     * Create buffers for autocorrelation analysis.
+     */
     frame = new double[wav.numberOfChannels][nsampFFT];
 
     windowR = new double[nsampFFT];
@@ -257,8 +258,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
     }
 
     /*
-    * Compute the normalized autocorrelation of the window.
-    */
+     * Compute the normalized autocorrelation of the window.
+     */
     for (i = 0; i < nsamp_window; i++) {
       windowR[i] = window[i];
     }
@@ -284,20 +285,17 @@ public class PitchExtractor extends SampledDataAnalyzer {
     }
     window_fft.inverse(windowR);
 
-
     for (i = 1; i < nsamp_window; i++) {
-      windowR[i] = windowR[i] / windowR[0];   /* Normalize. */
+      windowR[i] = windowR[i] / windowR[0]; /* Normalize. */
     }
     windowR[0] = 1.0;
 
     brent_ixmax = (int) (nsamp_window * interpolation_depth);
     int[] imax = new int[max_candidates];
 
-
     // Start to calculate pitch
     ArrayList<PitchFrame> pitchFrames = new ArrayList<PitchFrame>();
     for (iframe = 0; iframe < nFrames; iframe++) {
-
       // It's unclear to me what Sound_to_Pitch.c:224 means
       //  Pitch_Frame pitchFrame = & thy frame [iframe];
       // it seems as though there are two 'frame' variables.
@@ -314,8 +312,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
       double localMean[] = new double[wav.numberOfChannels];
       for (int channel = 0; channel < wav.numberOfChannels; ++channel) {
         /*
-        * Compute the local mean; look one longest period to both sides.
-        */
+         * Compute the local mean; look one longest period to both sides.
+         */
         startSample = Math.max(0, rightSample - nsamp_period);
         endSample = Math.min(wav.getNumSamples(), leftSample + nsamp_period);
 
@@ -326,54 +324,54 @@ public class PitchExtractor extends SampledDataAnalyzer {
         localMean[channel] /= 2 * nsamp_period;
 
         /*
-        * Copy a window to a frame and subtract the local mean.
-        * We are going to kill the DC component before windowing.
-        */
+         * Copy a window to a frame and subtract the local mean.
+         * We are going to kill the DC component before windowing.
+         */
         startSample = Math.max(0, rightSample - halfnsamp_window);
-        //endSample = Math.min(wav.getNumSamples()-1, leftSample + halfnsamp_window);
+        // endSample = Math.min(wav.getNumSamples()-1, leftSample + halfnsamp_window);
         for (j = 0, i = startSample; j < nsamp_window; j++)
           frame[channel][j] = (wav.getSample(channel, i++) - localMean[channel]) * window[j];
-        for (j = nsamp_window + 1; j < nsampFFT; j++)
-          frame[channel][j] = 0.0;
+        for (j = nsamp_window + 1; j < nsampFFT; j++) frame[channel][j] = 0.0;
       }
 
       /*
-      * Compute the local peak; look half a longest period to both sides.
-      */
+       * Compute the local peak; look half a longest period to both sides.
+       */
       localPeak = 0.0;
       if ((startSample = halfnsamp_window + 1 - halfnsamp_period) < 1) {
         startSample = 0;
       }
-      if ((endSample = halfnsamp_window + halfnsamp_period) > nsamp_window) endSample = nsamp_window;
+      if ((endSample = halfnsamp_window + halfnsamp_period) > nsamp_window)
+        endSample = nsamp_window;
 
       for (int channel = 0; channel < wav.numberOfChannels; ++channel) {
         for (j = startSample; j <= endSample; j++) {
           double value = Math.abs(frame[channel][j]);
-          if (value > localPeak) localPeak = value;
+          if (value > localPeak)
+            localPeak = value;
         }
       }
 
       pitchFrame.setIntensity(localPeak > globalPeak ? 1.0 : localPeak / globalPeak);
 
       /*
-      * The FFT of the autocorrelation is the power spectrum.
-      */
+       * The FFT of the autocorrelation is the power spectrum.
+       */
       for (i = 0; i < nsampFFT; i++) {
         ac[i] = 0.0;
       }
 
       for (int channel = 0; channel < wav.numberOfChannels; ++channel) {
-
         // FFT forward
         RealDoubleFFT_Radix2 frame_fft = new RealDoubleFFT_Radix2(nsampFFT);
         frame_fft.transform(frame[channel]);
-        ac[0] += frame[channel][0] * frame[channel][0];  /* DC component. */
+        ac[0] += frame[channel][0] * frame[channel][0]; /* DC component. */
         for (i = 1; i < nsampFFT - 1; ++i) {
           /* Power spectrum. */
           if (i <= nsampFFT / 2) {
             // The real part
-            ac[i] +=
-                frame[channel][i] * frame[channel][i] + frame[channel][nsampFFT - i] * frame[channel][nsampFFT - i];
+            ac[i] += frame[channel][i] * frame[channel][i]
+                + frame[channel][nsampFFT - i] * frame[channel][nsampFFT - i];
           }
         }
       }
@@ -382,9 +380,9 @@ public class PitchExtractor extends SampledDataAnalyzer {
       ac_fft.inverse(ac);
 
       /*
-      * Normalize the autocorrelation to the value with zero lag,
-      * and divide it by the normalized autocorrelation of the window.
-      */
+       * Normalize the autocorrelation to the value with zero lag,
+       * and divide it by the normalized autocorrelation of the window.
+       */
       NegativeSymmetricList r = new NegativeSymmetricList();
       r.add(1.0);
       for (i = 0; i < brent_ixmax; i++) {
@@ -392,50 +390,52 @@ public class PitchExtractor extends SampledDataAnalyzer {
       }
 
       /*
-      * Register the first candidate, which is always present: voicelessness.
-      */
+       * Register the first candidate, which is always present: voicelessness.
+       */
       pitchFrame.addCandidate();
-      pitchFrame.getCandidate(0).frequency = 0.0;  // Voiceless: always present.
+      pitchFrame.getCandidate(0).frequency = 0.0; // Voiceless: always present.
       pitchFrame.getCandidate(0).strength = 0.0;
 
       /*
-      * Shortcut: absolute silence is always voiceless.
-      * Go to next frame.
-      */
+       * Shortcut: absolute silence is always voiceless.
+       * Go to next frame.
+       */
       if (localPeak == 0) {
         pitchFrames.add(pitchFrame);
         continue;
       }
 
       /*
-      * Find the strongest maxima of the correlation of this frame,
-      * and register them as candidates.
-      */
+       * Find the strongest maxima of the correlation of this frame,
+       * and register them as candidates.
+       */
       imax[1] = 0;
       for (i = 1; i < maximumLag && i < brent_ixmax; i++) {
         if (r.get(i) > 0.5 * voicing_thresh && /* Not too unvoiced? */
-            r.get(i) > r.get(i - 1) && r.get(i) >= r.get(i + 1))   /* Maximum? */ {
+            r.get(i) > r.get(i - 1) && r.get(i) >= r.get(i + 1)) /* Maximum? */ {
           int place = 0;
 
           /*
-          * Use parabolic interpolation for first estimate of frequency,
-          * and sin(x)/x interpolation to compute the strengths of this frequency.
-          */
-          double dr = 0.5 * (r.get(i + 1) - r.get(i - 1)), d2r = 2 * r.get(i) - r.get(i - 1) - r.get(i + 1);
+           * Use parabolic interpolation for first estimate of frequency,
+           * and sin(x)/x interpolation to compute the strengths of this frequency.
+           */
+          double dr = 0.5 * (r.get(i + 1) - r.get(i - 1)),
+                 d2r = 2 * r.get(i) - r.get(i - 1) - r.get(i + 1);
 
           double frequencyOfMaximum = 1.0 / wav.getFrameSize() / (i + dr / d2r);
           int offset = -brent_ixmax - 1;
           double strengthOfMaximum = /* method & 1 ? */
-              interpolateSinc(r, offset, brent_ixmax - offset, 1.0 / wav.getFrameSize() / frequencyOfMaximum - offset,
-                  30)
+              interpolateSinc(r, offset, brent_ixmax - offset,
+                  1.0 / wav.getFrameSize() / frequencyOfMaximum - offset, 30)
               /* : r [i] + 0.5 * dr * dr / d2r */;
 
           /* High values due to short windows are to be reflected around 1. */
-          if (strengthOfMaximum > 1.0) strengthOfMaximum = 1.0 / strengthOfMaximum;
+          if (strengthOfMaximum > 1.0)
+            strengthOfMaximum = 1.0 / strengthOfMaximum;
 
           /*
-          * Find a place for this maximum.
-          */
+           * Find a place for this maximum.
+           */
           if (pitchFrame.getNumCandidates() < max_candidates) { /* Is there still a free place? */
             place = pitchFrame.getNumCandidates();
             pitchFrame.addCandidate();
@@ -446,17 +446,18 @@ public class PitchExtractor extends SampledDataAnalyzer {
             for (iweak = 1; iweak < max_candidates; ++iweak) {
               /* High frequencies are to be favoured */
               /* if we want to analyze a perfectly periodic signal correctly. */
-              double localStrength = pitchFrame.getCandidate(iweak).strength - octave_cost *
-                  Math.log(min_pitch / pitchFrame
-                      .getCandidate(iweak)
-                      .frequency) / Math.log(2);
+              double localStrength = pitchFrame.getCandidate(iweak).strength
+                  - octave_cost * Math.log(min_pitch / pitchFrame.getCandidate(iweak).frequency)
+                      / Math.log(2);
               if (localStrength < weakest) {
                 weakest = localStrength;
                 place = iweak;
               }
             }
             /* If this maximum is weaker than the weakest candidate so far, give it no place. */
-            if (strengthOfMaximum - octave_cost * Math.log(min_pitch / frequencyOfMaximum) / Math.log(2) <= weakest) {
+            if (strengthOfMaximum
+                    - octave_cost * Math.log(min_pitch / frequencyOfMaximum) / Math.log(2)
+                <= weakest) {
               place = -1;
             }
           }
@@ -469,18 +470,19 @@ public class PitchExtractor extends SampledDataAnalyzer {
         }
       }
       /*
-      * Second pass: for extra precision, maximize sin(x)/x interpolation ('sinc').
-      */
+       * Second pass: for extra precision, maximize sin(x)/x interpolation ('sinc').
+       */
       for (i = 1; i < pitchFrame.getNumCandidates(); i++) {
         if (pitchFrame.getCandidate(i).frequency > 0.0) {
           double xmid;
           double ymid;
           int offset = -brent_ixmax - 1;
 
-          Pair<Double, Double> max_results = improveMaximum(r, offset, brent_ixmax - offset, imax[i] - offset,
-              pitchFrame.getCandidate(i).frequency >
-                  0.3 / wav.getFrameSize() ? NUM_PEAK_INTERPOLATE_SINC700 :
-                  brent_depth);
+          Pair<Double, Double> max_results =
+              improveMaximum(r, offset, brent_ixmax - offset, imax[i] - offset,
+                  pitchFrame.getCandidate(i).frequency > 0.3 / wav.getFrameSize()
+                      ? NUM_PEAK_INTERPOLATE_SINC700
+                      : brent_depth);
 
           ymid = max_results.first;
           xmid = max_results.second;
@@ -488,29 +490,31 @@ public class PitchExtractor extends SampledDataAnalyzer {
           xmid += offset;
           pitchFrame.getCandidate(i).frequency = 1.0 / wav.getFrameSize() / xmid;
 
-          if (ymid > 1.0) ymid = 1.0 / ymid;
+          if (ymid > 1.0)
+            ymid = 1.0 / ymid;
           pitchFrame.getCandidate(i).strength = ymid;
         }
       }
       pitchFrames.add(pitchFrame);
-    }   /* Next frame. */
+    } /* Next frame. */
 
     // Use path finding with constraints to find the lowest cost path through pitch candidates
-    pitch = pathFinder(pitchFrames, silence_thresh, voicing_thresh, octave_cost, octave_jump_cost, voiced_unvoiced_cost,
-        max_pitch, max_candidates, time_step, t0);
+    pitch = pathFinder(pitchFrames, silence_thresh, voicing_thresh, octave_cost, octave_jump_cost,
+        voiced_unvoiced_cost, max_pitch, max_candidates, time_step, t0);
 
     return pitch;
   }
 
   /**
-   * Identify the lowest cost path through the PitchFrames given the supplied costs.  The result is a sequence of pitch
-   * values corresponding to this lowest cost path through the candidates.
+   * Identify the lowest cost path through the PitchFrames given the supplied costs.  The result is
+   * a sequence of pitch values corresponding to this lowest cost path through the candidates.
    *
    * @param pitchFrames        The pitch frames with candidate frequencies and strengths
    * @param silenceThresh      a threshold to determine if a frame is silent or not
    * @param voicingThresh      a threshold to determine if a frame contains voicing or not.
    * @param octaveCost         a cost associated with a frequency an octave from the maximum pitch
-   * @param octaveJumpCost     a cost associated with being an octave from the previous frame -- pitch halving and
+   * @param octaveJumpCost     a cost associated with being an octave from the previous frame --
+   *     pitch halving and
    *                           doubling
    * @param voicedUnvoicedCost the cost for converting from voiced to unvoiced
    * @param maxPitch           The maximum pitch value
@@ -520,9 +524,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
    * @return The most likely path through the pitch candidates.
    */
   private PitchContour pathFinder(ArrayList<PitchFrame> pitchFrames, double silenceThresh,
-                                  double voicingThresh, double octaveCost, double octaveJumpCost,
-                                  double voicedUnvoicedCost, double maxPitch, int max_candidates,
-                                  double time_step, double t0) {
+      double voicingThresh, double octaveCost, double octaveJumpCost, double voicedUnvoicedCost,
+      double maxPitch, int max_candidates, double time_step, double t0) {
     PitchContour pitch = new PitchContour(t0, time_step, pitchFrames.size());
     int place;
     double maximum, value;
@@ -538,15 +541,15 @@ public class PitchExtractor extends SampledDataAnalyzer {
 
     for (int iframe = 0; iframe < pitchFrames.size(); iframe++) {
       PitchFrame frame = pitchFrames.get(iframe);
-      double unvoicedStrength = silenceThresh <= 0 ? 0 :
-          2 - frame.getIntensity() / (silenceThresh / (1 + voicingThresh));
+      double unvoicedStrength =
+          silenceThresh <= 0 ? 0 : 2 - frame.getIntensity() / (silenceThresh / (1 + voicingThresh));
       unvoicedStrength = voicingThresh + (unvoicedStrength > 0 ? unvoicedStrength : 0);
       for (int icand = 0; icand < frame.getNumCandidates(); ++icand) {
         PitchCandidate candidate = frame.getCandidate(icand);
         boolean voiceless = candidate.frequency == 0 || candidate.frequency > maxPitch;
-        delta[iframe][icand] = voiceless ? unvoicedStrength :
-            candidate.strength -
-                octaveCost * Math.log(maxPitch / candidate.frequency) / Math.log(2);
+        delta[iframe][icand] = voiceless ? unvoicedStrength
+                                         : candidate.strength
+                - octaveCost * Math.log(maxPitch / candidate.frequency) / Math.log(2);
       }
     }
 
@@ -571,15 +574,16 @@ public class PitchExtractor extends SampledDataAnalyzer {
           boolean currentVoiceless = f2 <= 0 || f2 >= maxPitch;
           if (currentVoiceless) {
             if (previousVoiceless) {
-              transitionCost = 0;   // both voiceless
+              transitionCost = 0; // both voiceless
             } else {
-              transitionCost = voicedUnvoicedCost;   // voiced-to-unvoiced transition
+              transitionCost = voicedUnvoicedCost; // voiced-to-unvoiced transition
             }
           } else {
             if (previousVoiceless) {
-              transitionCost = voicedUnvoicedCost;   // unvoiced-to-voiced transition
+              transitionCost = voicedUnvoicedCost; // unvoiced-to-voiced transition
             } else {
-              transitionCost = octaveJumpCost * Math.abs(Math.log(f1 / f2) / Math.log(2));   // both voiced
+              transitionCost =
+                  octaveJumpCost * Math.abs(Math.log(f1 / f2) / Math.log(2)); // both voiced
             }
           }
           value = prevDelta[icand1] - transitionCost + curDelta[icand2];
@@ -596,7 +600,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
     /* Find the end of the most probable path. */
     place = 0;
     maximum = delta[pitchFrames.size() - 1][place];
-    for (int icand = 1; icand < pitchFrames.get(pitchFrames.size() - 1).getNumCandidates(); icand++) {
+    for (int icand = 1; icand < pitchFrames.get(pitchFrames.size() - 1).getNumCandidates();
+         icand++) {
       if (delta[pitchFrames.size() - 1][icand] > maximum) {
         place = icand;
         maximum = delta[pitchFrames.size() - 1][place];
@@ -633,11 +638,12 @@ public class PitchExtractor extends SampledDataAnalyzer {
    * @param nx            The size of the window to analyse to find a new maximum
    * @param ixmid         The index of the current maximum.
    * @param interpolation The interpolation strategy
-   * @return a pair containing the new maximum value and its corresponding index in the x domain -- which may not
+   * @return a pair containing the new maximum value and its corresponding index in the x domain --
+   *     which may not
    * correspond to a valid index.
    */
-  private Pair<Double, Double> improveMaximum(NegativeSymmetricList r, int offset, int nx, int ixmid,
-                                              int interpolation) {
+  private Pair<Double, Double> improveMaximum(
+      NegativeSymmetricList r, int offset, int nx, int ixmid, int interpolation) {
     if (ixmid <= 0) {
       double ixmid_real = 0;
       return new Pair<Double, Double>(r.get(offset), ixmid_real);
@@ -652,18 +658,19 @@ public class PitchExtractor extends SampledDataAnalyzer {
 
     if (interpolation == NUM_PEAK_INTERPOLATE_PARABOLIC) {
       double dy = 0.5 * (r.get(ixmid + 1 + offset) - r.get(ixmid - 1 + offset));
-      double d2y = 2 * r.get(ixmid + offset) - r.get(ixmid - 1 + offset) - r.get(ixmid + 1 + offset);
+      double d2y =
+          2 * r.get(ixmid + offset) - r.get(ixmid - 1 + offset) - r.get(ixmid + 1 + offset);
       double ixmid_real = ixmid + dy / d2y;
       return new Pair<Double, Double>(r.get(ixmid) + 0.5 * dy * dy / d2y, ixmid_real);
     }
 
     // Sinc interpolation
     int depth = interpolation == NUM_PEAK_INTERPOLATE_SINC70 ? 70 : 700;
-    Pair<Double, Double> brent_results = minimizeBrent(r, offset, depth, nx, ixmid - 1, ixmid + 1, 1e-10);
+    Pair<Double, Double> brent_results =
+        minimizeBrent(r, offset, depth, nx, ixmid - 1, ixmid + 1, 1e-10);
     double ixmid_real = brent_results.first;
     return new Pair<Double, Double>(-brent_results.second, ixmid_real);
   }
-
 
   /**
    * Use Brent's method to minimize the sinc interpolation function.
@@ -677,9 +684,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
    * @param tol    a numerical tolerance term
    * @return a new minimum paired by the x value and the y value.
    */
-  private Pair<Double, Double> minimizeBrent(NegativeSymmetricList r, int offset, int depth, int ixmax, double a,
-                                             double b, double tol) {
-
+  private Pair<Double, Double> minimizeBrent(
+      NegativeSymmetricList r, int offset, int depth, int ixmax, double a, double b, double tol) {
     final double NUM_goldenSection = 0.6180339887498948482045868343656381177203;
     final double epsilon = 0.00001;
     double x, v, fv, w, fw;
@@ -734,9 +740,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
            If p/q is too large then the golden section procedure can
            reduce [a,b] range.
         */
-        if (Math.abs(p) < Math.abs(new_step * q) &&
-            p > q * (a - x + 2 * tol_act) &&
-            p < q * (b - x - 2 * tol_act)) {
+        if (Math.abs(p) < Math.abs(new_step * q) && p > q * (a - x + 2 * tol_act)
+            && p < q * (b - x - 2 * tol_act)) {
           new_step = p / q;
         }
       }
@@ -747,7 +752,7 @@ public class PitchExtractor extends SampledDataAnalyzer {
       }
 
       /* Obtain the next approximation to min	and reduce the enveloping range */
-      double t = x + new_step;    /* Tentative point for the min	*/
+      double t = x + new_step; /* Tentative point for the min	*/
       double ft = improve_evaluate(t, r, offset, ixmax, depth);
 
       /*
@@ -791,7 +796,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
   }
 
   /**
-   * Improve the maximum value using sinewave interpolation rather than identifying the maximum value in the array r.
+   * Improve the maximum value using sinewave interpolation rather than identifying the maximum
+   * value in the array r.
    *
    * @param x      the index of the current maximum
    * @param r      the array containing the data
@@ -800,7 +806,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
    * @param depth  the maximum depth of the interpolation.
    * @return the new maximal value
    */
-  private double improve_evaluate(double x, NegativeSymmetricList r, int offset, int ixmax, int depth) {
+  private double improve_evaluate(
+      double x, NegativeSymmetricList r, int offset, int ixmax, int depth) {
     double y = interpolateSinc(r, offset, ixmax, x, depth);
     return -y;
   }
@@ -820,22 +827,32 @@ public class PitchExtractor extends SampledDataAnalyzer {
     double result = 0.0, a, halfsina, aa, daa, cosaa, sinaa, cosdaa, sindaa;
 
     // Simple interpolation cases.
-    if (nx < 1) return Double.NaN;
-    if (x > nx) return r.get(nx + offset);
-    if (x < 0) return r.get(offset);
-    if (x == midleft) return r.get(midleft + offset);
+    if (nx < 1)
+      return Double.NaN;
+    if (x > nx)
+      return r.get(nx + offset);
+    if (x < 0)
+      return r.get(offset);
+    if (x == midleft)
+      return r.get(midleft + offset);
     /* 1 < x < nx && x not integer: interpolate. */
-    if (depth > midright - 1) depth = midright - 1;
-    if (depth > nx - midleft) depth = nx - midleft;
-    if (depth <= NUM_VALUE_INTERPOLATE_NEAREST) return r.get((int) Math.floor(x + 0.5));
+    if (depth > midright - 1)
+      depth = midright - 1;
+    if (depth > nx - midleft)
+      depth = nx - midleft;
+    if (depth <= NUM_VALUE_INTERPOLATE_NEAREST)
+      return r.get((int) Math.floor(x + 0.5));
     if (depth == NUM_VALUE_INTERPOLATE_LINEAR) {
-      return r.get(midleft + offset) + (x - midleft) * (r.get(midright + offset) - r.get(midleft + offset));
+      return r.get(midleft + offset)
+          + (x - midleft) * (r.get(midright + offset) - r.get(midleft + offset));
     }
     if (depth == NUM_VALUE_INTERPOLATE_CUBIC) {
       double yl = r.get(midleft + offset), yr = r.get(midright + offset);
-      double dyl = 0.5 * (yr - r.get(midleft - 1 + offset)), dyr = 0.5 * (r.get(midright + 1 + offset) - yl);
+      double dyl = 0.5 * (yr - r.get(midleft - 1 + offset)),
+             dyr = 0.5 * (r.get(midright + 1 + offset) - yl);
       double fil = x - midleft, fir = midright - x;
-      return yl * fir + yr * fil - fil * fir * (0.5 * (dyr - dyl) + (fil - 0.5) * (dyl + dyr - 2 * (yr - yl)));
+      return yl * fir + yr * fil
+          - fil * fir * (0.5 * (dyr - dyl) + (fil - 0.5) * (dyl + dyr - 2 * (yr - yl)));
     }
 
     left = midright - depth;
@@ -892,7 +909,6 @@ public class PitchExtractor extends SampledDataAnalyzer {
     WavReader reader = new WavReader();
     WavData wav;
     try {
-
       if (args.length > 1) {
         wav = reader.read(soundIn, Double.parseDouble(args[1]), Double.parseDouble(args[2]));
       } else {
@@ -910,9 +926,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
       System.out.println("pitch points:" + pitch.size());
 
       for (int i = 0; i < pitch.size(); ++i) {
-        System.out
-            .println(
-                "point[" + i + "]: " + pitch.get(i) + " -- " + pitch.timeFromIndex(i) + ":" + pitch.getStrength(i));
+        System.out.println("point[" + i + "]: " + pitch.get(i) + " -- " + pitch.timeFromIndex(i)
+            + ":" + pitch.getStrength(i));
       }
     } catch (AuToBIException e) {
       e.printStackTrace();

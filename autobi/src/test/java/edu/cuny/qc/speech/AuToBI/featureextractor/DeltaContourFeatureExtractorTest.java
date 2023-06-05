@@ -19,18 +19,17 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Contour;
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.core.Contour;
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import org.junit.Test;
 
 /**
  * Test class for DeltaContourFeatureExtractor
@@ -38,7 +37,6 @@ import static org.junit.Assert.fail;
  * @see edu.cuny.qc.speech.AuToBI.featureextractor.DeltaContourFeatureExtractor
  */
 public class DeltaContourFeatureExtractorTest {
-
   @Test
   public void testExtractFeaturesWorksWithNullFeature() {
     try {
@@ -59,7 +57,7 @@ public class DeltaContourFeatureExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 1, "test");
-      w.setAttribute("test_attribute", new Contour(0.0, 1.0, new double[]{}));
+      w.setAttribute("test_attribute", new Contour(0.0, 1.0, new double[] {}));
       regions.add(w);
 
       DeltaContourFeatureExtractor fe = new DeltaContourFeatureExtractor("test_attribute");
@@ -98,7 +96,7 @@ public class DeltaContourFeatureExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 1, "test");
-      w.setAttribute("attr", new Contour(0.0, 0.01, new double[]{0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
+      w.setAttribute("attr", new Contour(0.0, 0.01, new double[] {0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
       regions.add(w);
 
       DeltaContourFeatureExtractor fe = new DeltaContourFeatureExtractor("attr");
@@ -117,7 +115,7 @@ public class DeltaContourFeatureExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 1, "test");
-      w.setAttribute("attr", new Contour(0.0, 0.01, new double[]{0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
+      w.setAttribute("attr", new Contour(0.0, 0.01, new double[] {0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
       regions.add(w);
 
       DeltaContourFeatureExtractor fe = new DeltaContourFeatureExtractor("attr");
@@ -147,7 +145,7 @@ public class DeltaContourFeatureExtractorTest {
     List<Region> regions = new ArrayList<Region>();
     Word w = new Word(0, 1, "test");
     Word w2 = new Word(0, 1, "test");
-    Contour c = new Contour(0.0, 0.01, new double[]{0.1, 0.2, 0.3, 0.2, 0.4, 0.1});
+    Contour c = new Contour(0.0, 0.01, new double[] {0.1, 0.2, 0.3, 0.2, 0.4, 0.1});
     w.setAttribute("attr", c);
     w2.setAttribute("attr", c);
     regions.add(w);
@@ -162,6 +160,5 @@ public class DeltaContourFeatureExtractorTest {
     } catch (FeatureExtractorException e) {
       fail();
     }
-
   }
 }

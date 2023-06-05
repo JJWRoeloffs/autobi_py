@@ -33,8 +33,7 @@ public class MockClassifier extends AuToBIClassifier {
   }
 
   @Override
-  public void train(FeatureSet feature_set) throws Exception {
-  }
+  public void train(FeatureSet feature_set) throws Exception {}
 
   @Override
   public AuToBIClassifier newInstance() {

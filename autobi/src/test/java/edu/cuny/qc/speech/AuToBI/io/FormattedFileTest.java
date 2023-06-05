@@ -20,9 +20,9 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 /**
  * Test class for FormattedFile
@@ -31,7 +31,6 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("unchecked")
 public class FormattedFileTest {
-
   @Test
   public void testConstructsTextGridFile() {
     FormattedFile ff = new FormattedFile("blah.TextGrid");

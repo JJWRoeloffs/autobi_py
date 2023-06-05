@@ -19,17 +19,16 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.SpeakerNormalizationParameter;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for SpeakerNormalizationParameterFeatureExtractor
@@ -63,8 +62,8 @@ public class SpeakerNormalizationParameterFeatureExtractorTest {
   public void testExtractFeaturesExtractsFeatures() {
     Word w = new Word(0, 1, "test");
     w.setAttribute("speaker_id", "spkr1");
-    w.setAttribute("I", new Contour(0, 0.1, new double[]{1, 2, 3, 4, 5}));
-    w.setAttribute("f0", new Contour(0, 0.1, new double[]{11, 12, 13, 14, 15}));
+    w.setAttribute("I", new Contour(0, 0.1, new double[] {1, 2, 3, 4, 5}));
+    w.setAttribute("f0", new Contour(0, 0.1, new double[] {11, 12, 13, 14, 15}));
     regions.add(w);
 
     try {
@@ -79,16 +78,19 @@ public class SpeakerNormalizationParameterFeatureExtractorTest {
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
     Word w = new Word(0, 1, "test");
     w.setAttribute("speaker_id", "spkr1");
-    w.setAttribute("I", new Contour(0, 0.1, new double[]{1, 2, 3, 4, 5}));
-    w.setAttribute("f0", new Contour(0, 0.1, new double[]{11, 12, 13, 14, 15}));
+    w.setAttribute("I", new Contour(0, 0.1, new double[] {1, 2, 3, 4, 5}));
+    w.setAttribute("f0", new Contour(0, 0.1, new double[] {11, 12, 13, 14, 15}));
     regions.add(w);
 
     try {
       fe.extractFeatures(regions);
-      SpeakerNormalizationParameter norm_params = (SpeakerNormalizationParameter) w.getAttribute("dest");
-      // TODO: Fix this test when SpeakerNormalizationParameters get a getter method for easier inspection.
-      assertEquals("f0: mean 13.0 - stdev 1.5811388300841898\n" +
-          "I: mean 3.0 - stdev 1.5811388300841898", norm_params.toString());
+      SpeakerNormalizationParameter norm_params =
+          (SpeakerNormalizationParameter) w.getAttribute("dest");
+      // TODO: Fix this test when SpeakerNormalizationParameters get a getter method for easier
+      // inspection.
+      assertEquals("f0: mean 13.0 - stdev 1.5811388300841898\n"
+              + "I: mean 3.0 - stdev 1.5811388300841898",
+          norm_params.toString());
     } catch (FeatureExtractorException e) {
       fail();
     }

@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -78,23 +81,26 @@ public class WordReaderUtils {
     switch (file.getFormat()) {
       case TEXTGRID:
         reader = new TextGridReader(filename, params.getOptionalParameter("words_tier_name"),
-            params.getOptionalParameter("tones_tier_name"), params.getOptionalParameter("breaks_tier_name"),
+            params.getOptionalParameter("tones_tier_name"),
+            params.getOptionalParameter("breaks_tier_name"),
             params.getOptionalParameter("charset"));
 
         break;
       case CPROM:
-        reader = new CPromTextGridReader(filename, "words", "delivery", "UTF16", params.booleanParameter(
-            "cprom_include_secondary", true));
+        reader = new CPromTextGridReader(filename, "words", "delivery", "UTF16",
+            params.booleanParameter("cprom_include_secondary", true));
         break;
       case RHAPSODIE:
-        reader = new RhapsodieTextGridReader(filename, params.getOptionalParameter("words_tier_name", "syllabe"),
-            "pseudo-ToBI", params.getOptionalParameter("charset"));
+        reader = new RhapsodieTextGridReader(filename,
+            params.getOptionalParameter("words_tier_name", "syllabe"), "pseudo-ToBI",
+            params.getOptionalParameter("charset"));
         break;
       case BURNC:
         reader = new BURNCReader(filename.replace(".ala", ""));
         break;
       case SIMPLE_WORD:
-        if (params.hasParameter("ortho_idx") && params.hasParameter("start_idx") && params.hasParameter("end_idx")) {
+        if (params.hasParameter("ortho_idx") && params.hasParameter("start_idx")
+            && params.hasParameter("end_idx")) {
           reader = new SimpleWordReader(filename, params.getOptionalParameter("charset"),
               Integer.parseInt(params.getOptionalParameter("ortho_idx")),
               Integer.parseInt(params.getOptionalParameter("start_idx")),

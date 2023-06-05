@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,7 +30,6 @@ import edu.cuny.qc.speech.AuToBI.IntensityExtractor;
 import edu.cuny.qc.speech.AuToBI.RAPTPitchExtractor;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,15 +37,15 @@ import java.util.List;
 /**
  * PitchFeatureExtractor extracts pitch information from a given WavData object.
  * <p/>
- * v1.4 PitchFeatureExtractor has changed to attach full pitch contours to each region rather than cutting down to size
- * This is a more effective route to extracting context.
+ * v1.4 PitchFeatureExtractor has changed to attach full pitch contours to each region rather than
+ * cutting down to size This is a more effective route to extracting context.
  */
 @SuppressWarnings("ALL")
 public class FFVFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "f0";
 
-  private String feature_name;  // the name of the feature to hold pitch information
-  private double threshold;     // the intensity threshold to determine silence.
+  private String feature_name; // the name of the feature to hold pitch information
+  private double threshold; // the intensity threshold to determine silence.
 
   @Deprecated
   public FFVFeatureExtractor(String feature_name) {
@@ -81,7 +83,6 @@ public class FFVFeatureExtractor extends FeatureExtractor {
 
   @Override
   public void extractFeatures(List regions) throws FeatureExtractorException {
-
     try {
       // Identify all regions which are associated with each wav data.
       HashMap<WavData, List<Region>> wave_region_map = new HashMap<WavData, List<Region>>();
@@ -96,7 +97,7 @@ public class FFVFeatureExtractor extends FeatureExtractor {
       }
 
       for (WavData wav : wave_region_map.keySet()) {
-//        PitchExtractor extractor = new PitchExtractor(wav);
+        //        PitchExtractor extractor = new PitchExtractor(wav);
         RAPTPitchExtractor extractor = new RAPTPitchExtractor();
         Contour pitch_contour = extractor.getPitch(wav);
         if (!Double.isNaN(threshold)) {
@@ -110,7 +111,8 @@ public class FFVFeatureExtractor extends FeatureExtractor {
         // Specific aggregate feature extractors will access the points that are needed.
         for (Region r : wave_region_map.get(wav)) {
           r.setAttribute(feature_name, pitch_contour);
-//          Contour c = ContourUtils.getSubContour(pitch_contour, r.getStart(), r.getEnd());
+          //          Contour c = ContourUtils.getSubContour(pitch_contour, r.getStart(),
+          //          r.getEnd());
         }
       }
     } catch (AuToBIException e) {

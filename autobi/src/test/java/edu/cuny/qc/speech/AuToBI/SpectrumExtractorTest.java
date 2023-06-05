@@ -19,23 +19,21 @@
  */
 package edu.cuny.qc.speech.AuToBI;
 
+import static org.junit.Assert.fail;
+
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Spectrum;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
-import org.junit.Test;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
-
-import static org.junit.Assert.fail;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import org.junit.Test;
 
 /**
  * Test class for PitchExtractor.
  */
 public class SpectrumExtractorTest {
-
   @Test
   public void testPitchExtractorRunsWithoutException() {
     String inFile = ResourcePath.getResourcePath("test.wav");

@@ -19,15 +19,14 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for PitchAccentTypeFeatureExtractor

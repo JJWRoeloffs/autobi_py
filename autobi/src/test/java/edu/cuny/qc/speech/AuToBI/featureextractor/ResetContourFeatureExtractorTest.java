@@ -18,19 +18,19 @@
     along with AuToBI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Some tests are commented out becaues they appear to be reading from file in a way that is not possible
+// Some tests are commented out becaues they appear to be reading from file in a way that is not
+// possible
 // TODO: figure out why
 
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.*;
-import org.junit.Before;
-import org.junit.Test;
+import static junit.framework.Assert.*;
 
+import edu.cuny.qc.speech.AuToBI.core.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for ResetContourFeatureExtractor
@@ -42,7 +42,6 @@ public class ResetContourFeatureExtractorTest {
   private List<Region> regions;
   private String contour_feature;
   private String subregion_feature;
-
 
   @Before
   public void setUp() throws Exception {
@@ -62,7 +61,8 @@ public class ResetContourFeatureExtractorTest {
   public void testConstructorSetsExtractedFeaturesCorrectlyWithSubregion() {
     fe = new ResetContourFeatureExtractor(contour_feature, subregion_feature);
     assertEquals(1, fe.getExtractedFeatures().size());
-    assertTrue(fe.getExtractedFeatures().contains("reset[" + contour_feature + "," + subregion_feature + "]"));
+    assertTrue(fe.getExtractedFeatures().contains(
+        "reset[" + contour_feature + "," + subregion_feature + "]"));
   }
 
   @Test
@@ -86,9 +86,9 @@ public class ResetContourFeatureExtractorTest {
     fe = new ResetContourFeatureExtractor(contour_feature);
 
     Word w = new Word(0, 1, "test");
-    w.setAttribute("contour", new Contour(0, 0.1, new double[]{0, 1, 2, 3, 4}));
+    w.setAttribute("contour", new Contour(0, 0.1, new double[] {0, 1, 2, 3, 4}));
     Word w2 = new Word(1, 2, "test2");
-    w2.setAttribute("contour", new Contour(1, 0.1, new double[]{10, 11, 12, 13, 14}));
+    w2.setAttribute("contour", new Contour(1, 0.1, new double[] {10, 11, 12, 13, 14}));
     regions.add(w);
     regions.add(w2);
 
@@ -106,9 +106,9 @@ public class ResetContourFeatureExtractorTest {
     fe = new ResetContourFeatureExtractor(contour_feature);
 
     Word w = new Word(0, 1, "test");
-    w.setAttribute("contour", new Contour(0, 0.1, new double[]{0, 1, 2, 3, 4}));
+    w.setAttribute("contour", new Contour(0, 0.1, new double[] {0, 1, 2, 3, 4}));
     Word w2 = new Word(1, 2, "test2");
-    w2.setAttribute("contour", new Contour(1, 0.1, new double[]{10, 11, 12, 13, 14}));
+    w2.setAttribute("contour", new Contour(1, 0.1, new double[] {10, 11, 12, 13, 14}));
     regions.add(w);
     regions.add(w2);
 

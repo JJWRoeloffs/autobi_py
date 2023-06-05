@@ -19,18 +19,17 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Contour;
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.core.Contour;
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for SubregionContourFeatureExtractor
@@ -38,14 +37,14 @@ import static org.junit.Assert.fail;
  * @see edu.cuny.qc.speech.AuToBI.featureextractor.SubregionContourExtractor
  */
 public class SubregionContourExtractorTest {
-
   @Test
   public void testExtractFeaturesWorksWithNullFeature() {
     try {
       List<Region> regions = new ArrayList<Region>();
       regions.add(new Word(0, 1, "test"));
 
-      SubregionContourExtractor sce = new SubregionContourExtractor("test_contour", "test_attribute");
+      SubregionContourExtractor sce =
+          new SubregionContourExtractor("test_contour", "test_attribute");
       sce.extractFeatures(regions);
     } catch (NullPointerException e) {
       fail();
@@ -59,7 +58,7 @@ public class SubregionContourExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 1, "test");
-      w.setAttribute("test_contour", new Contour(0.0, 1.0, new double[]{}));
+      w.setAttribute("test_contour", new Contour(0.0, 1.0, new double[] {}));
       w.setAttribute("test_region", new Region(0.4, 0.6, "subregion"));
       regions.add(w);
 
@@ -77,7 +76,7 @@ public class SubregionContourExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 1, "test");
-      w.setAttribute("test_contour", new Contour(0.0, 1.0, new double[]{}));
+      w.setAttribute("test_contour", new Contour(0.0, 1.0, new double[] {}));
       w.setAttribute("test_region", null);
       regions.add(w);
 
@@ -105,7 +104,8 @@ public class SubregionContourExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 1, "test");
-      w.setAttribute("contour", new Contour(0.0, 0.01, new double[]{0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
+      w.setAttribute(
+          "contour", new Contour(0.0, 0.01, new double[] {0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
       w.setAttribute("region", new Region(0.015, 0.035));
       regions.add(w);
 
@@ -125,7 +125,8 @@ public class SubregionContourExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 2, "test");
-      w.setAttribute("contour", new Contour(0.0, 0.01, new double[]{0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
+      w.setAttribute(
+          "contour", new Contour(0.0, 0.01, new double[] {0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
       w.setAttribute("region", new Region(0.015, 0.035));
       regions.add(w);
 

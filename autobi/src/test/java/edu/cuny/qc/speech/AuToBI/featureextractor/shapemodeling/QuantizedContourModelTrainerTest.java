@@ -19,15 +19,14 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.ConditionalDistribution;
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Pair;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * A Test class for QuantizedContourModelTrainer.
@@ -47,9 +46,9 @@ public class QuantizedContourModelTrainerTest {
   @Test
   public void testIdentifyLimitsNoOmit() {
     QuantizedContourModelTrainer trainer = new QuantizedContourModelTrainer(5, 2, 0.0);
-    Contour c = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5});
-    Contour c1 = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5});
-    Contour c2 = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5});
+    Contour c = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5});
+    Contour c1 = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5});
+    Contour c2 = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5});
     List<Contour> contours = new ArrayList<Contour>();
     contours.add(c);
     contours.add(c1);
@@ -64,9 +63,9 @@ public class QuantizedContourModelTrainerTest {
   public void testIdentifyLimits() {
     // Omitting the top and bottom 20% is pretty extreme, but it works for a test
     QuantizedContourModelTrainer trainer = new QuantizedContourModelTrainer(5, 2, 0.2);
-    Contour c = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.2, 0.3, 0.4});
-    Contour c1 = new Contour(2.0, 0.001, new double[]{-10.0, 0.1, 0.2, 0.3, 0.7});
-    Contour c2 = new Contour(2.0, 0.001, new double[]{-50.0, 0.1, 0.2, 0.3, 1.4});
+    Contour c = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.2, 0.3, 0.4});
+    Contour c1 = new Contour(2.0, 0.001, new double[] {-10.0, 0.1, 0.2, 0.3, 0.7});
+    Contour c2 = new Contour(2.0, 0.001, new double[] {-50.0, 0.1, 0.2, 0.3, 1.4});
     List<Contour> contours = new ArrayList<Contour>();
     contours.add(c);
     contours.add(c1);
@@ -80,9 +79,9 @@ public class QuantizedContourModelTrainerTest {
   @Test
   public void testTrainProducedCorrectModelSize() {
     QuantizedContourModelTrainer trainer = new QuantizedContourModelTrainer(5, 2, 0.2);
-    Contour c = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.1, 0.1, 0.4});
-    Contour c1 = new Contour(2.0, 0.001, new double[]{-10.0, 0.2, 0.2, 0.2, 0.7});
-    Contour c2 = new Contour(2.0, 0.001, new double[]{-50.0, 0.3, 0.3, 0.3, 1.4});
+    Contour c = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.1, 0.1, 0.4});
+    Contour c1 = new Contour(2.0, 0.001, new double[] {-10.0, 0.2, 0.2, 0.2, 0.7});
+    Contour c2 = new Contour(2.0, 0.001, new double[] {-50.0, 0.3, 0.3, 0.3, 1.4});
     List<Contour> contours = new ArrayList<Contour>();
     contours.add(c);
     contours.add(c1);
@@ -96,9 +95,9 @@ public class QuantizedContourModelTrainerTest {
   @Test
   public void testTrainProducedCorrectModels() {
     QuantizedContourModelTrainer trainer = new QuantizedContourModelTrainer(5, 2, 0.2);
-    Contour c = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.1, 0.1, 0.4});
-    Contour c1 = new Contour(2.0, 0.001, new double[]{-10.0, 0.2, 0.2, 0.2, 0.7});
-    Contour c2 = new Contour(2.0, 0.001, new double[]{-50.0, 0.3, 0.3, 0.3, 1.4});
+    Contour c = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.1, 0.1, 0.4});
+    Contour c1 = new Contour(2.0, 0.001, new double[] {-10.0, 0.2, 0.2, 0.2, 0.7});
+    Contour c2 = new Contour(2.0, 0.001, new double[] {-50.0, 0.3, 0.3, 0.3, 1.4});
     List<Contour> contours = new ArrayList<Contour>();
     contours.add(c);
     contours.add(c1);
@@ -132,9 +131,5 @@ public class QuantizedContourModelTrainerTest {
     assertEquals(1.0, cd.get("0").get("1"), 0.00001);
     assertTrue(cd.containsKey("1"));
     assertEquals(1.0, cd.get("1").get("1"), 0.00001);
-
-
   }
 }
-
-

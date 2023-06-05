@@ -20,14 +20,12 @@
 
 package edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling;
 
-import edu.cuny.qc.speech.AuToBI.core.Contour;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
+import edu.cuny.qc.speech.AuToBI.core.Contour;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * A Test class for Quantized contour models.
@@ -35,14 +33,12 @@ import static org.junit.Assert.*;
  * @see QuantizedContourModel
  */
 public class QuantizedContourModelTest {
-
   @Test
   public void testEvaluateContour() {
-
     QuantizedContourModelTrainer trainer = new QuantizedContourModelTrainer(5, 2, 0.2);
-    Contour c = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.1, 0.1, 0.4});
-    Contour c1 = new Contour(2.0, 0.001, new double[]{-10.0, 0.2, 0.2, 0.2, 0.7});
-    Contour c2 = new Contour(2.0, 0.001, new double[]{-50.0, 0.3, 0.3, 0.3, 1.4});
+    Contour c = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.1, 0.1, 0.4});
+    Contour c1 = new Contour(2.0, 0.001, new double[] {-10.0, 0.2, 0.2, 0.2, 0.7});
+    Contour c2 = new Contour(2.0, 0.001, new double[] {-50.0, 0.3, 0.3, 0.3, 1.4});
     List<Contour> contours = new ArrayList<Contour>();
     contours.add(c);
     contours.add(c1);
@@ -53,11 +49,11 @@ public class QuantizedContourModelTest {
     try {
       double log_p = qcm.evaluateContour(c2);
 
-      double expected = Math.log(1.0) + Math.log(0.66666) + Math.log(1.0) + Math.log(1.0) + Math.log(1.0);
+      double expected =
+          Math.log(1.0) + Math.log(0.66666) + Math.log(1.0) + Math.log(1.0) + Math.log(1.0);
       assertEquals(expected, log_p, 0.0001);
     } catch (ContourQuantizerException e) {
       e.printStackTrace();
     }
-
   }
 }

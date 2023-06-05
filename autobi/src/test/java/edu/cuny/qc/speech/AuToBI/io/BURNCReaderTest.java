@@ -18,7 +18,7 @@
     along with AuToBI.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// This test is skipped because it uses an unconventional input path type 
+// This test is skipped because it uses an unconventional input path type
 // that is hard to mock with the proper resource management
 
 // package edu.cuny.qc.speech.AuToBI.io;

@@ -19,13 +19,12 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  * Test Class for Aggregation.
@@ -33,7 +32,6 @@ import static org.junit.Assert.assertEquals;
  * @see edu.cuny.qc.speech.AuToBI.core.Aggregation
  */
 public class AggregationTest {
-
   @Test
   public void testCreateEmptyAggregation() {
     Aggregation agg = new Aggregation();
@@ -183,5 +181,3 @@ public class AggregationTest {
     assertEquals(3.6055512, agg.getRMS(), 0.0001);
   }
 }
-
-

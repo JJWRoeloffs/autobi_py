@@ -1,7 +1,7 @@
 /*  ResetTimeValuePairFeatureExtractor.java
 
     Copyright (c) 2009-2014 Andrew Rosenberg
-    
+
   This file is part of the AuToBI prosodic analysis package.
 
   AuToBI is free software: you can redistribute it and/or modify
@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,33 +28,32 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ResetContourFeatureExtractor identifes the change of a contour across region boundaries.
  * <p/>
- * This feature extractor assumes the presence of previously extracted subregions identifying the region of analysis to
- * calculate the amount of change across the boundary.
- * <p/>
- * The reset feature calculates the difference between the mean value of a current region and the mean value of another.
- * This can be calculated over the full region, or a previously identified subregion that is stored as an
- * "van_subregion" (right-most), "trail_subregion" (left-most) attribute on subsequent regions.
+ * This feature extractor assumes the presence of previously extracted subregions identifying the
+ * region of analysis to calculate the amount of change across the boundary. <p/> The reset feature
+ * calculates the difference between the mean value of a current region and the mean value of
+ * another. This can be calculated over the full region, or a previously identified subregion that
+ * is stored as an "van_subregion" (right-most), "trail_subregion" (left-most) attribute on
+ * subsequent regions.
  *
  * @see SubregionResetFeatureExtractor
  */
 @SuppressWarnings("unchecked")
 public class ResetContourFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "reset";
-  private String feature_name;       // the prefix of the stored feature name
-  private String subregion_name;     // the name of the subregion
+  private String feature_name; // the prefix of the stored feature name
+  private String subregion_name; // the name of the subregion
 
   /**
    * Constructs a new ResetContourFeatureExtractor.
    * <p/>
-   * The reset feature is stored in "<feature_name>_<subregion_name>_reset" or "<feature_name>_reset" if no subregion is
-   * specified.
+   * The reset feature is stored in "<feature_name>_<subregion_name>_reset" or
+   * "<feature_name>_reset" if no subregion is specified.
    *
    * @param feature_name   the prefix of the stored feature name
    * @param subregion_name the name of the subregion feature
@@ -89,8 +91,8 @@ public class ResetContourFeatureExtractor extends FeatureExtractor {
   /**
    * Extracts reset feature over the contour for each region.
    * <p/>
-   * If the subregion name is null or an empty string, the full region will be used as the domain to calculate reset
-   * over.
+   * If the subregion name is null or an empty string, the full region will be used as the domain to
+   * calculate reset over.
    *
    * @param regions The regions to analyze.
    * @throws FeatureExtractorException if any region doesn't have a valid subregion.
@@ -111,13 +113,15 @@ public class ResetContourFeatureExtractor extends FeatureExtractor {
         if (r.hasAttribute(van_subregion_name)) {
           van_subregions.add((Region) r.getAttribute(van_subregion_name));
         } else {
-          throw new FeatureExtractorException("Region, " + r + ", has no subregion: " + van_subregion_name);
+          throw new FeatureExtractorException(
+              "Region, " + r + ", has no subregion: " + van_subregion_name);
         }
 
         if (r.hasAttribute(trail_subregion_name)) {
           trail_subregions.add((Region) r.getAttribute(trail_subregion_name));
         } else {
-          throw new FeatureExtractorException("Region, " + r + ", has no subregion: " + trail_subregion_name);
+          throw new FeatureExtractorException(
+              "Region, " + r + ", has no subregion: " + trail_subregion_name);
         }
       }
 

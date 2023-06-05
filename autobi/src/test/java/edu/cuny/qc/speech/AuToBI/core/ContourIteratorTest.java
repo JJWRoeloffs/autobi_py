@@ -19,20 +19,19 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
+
 /**
- * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this template use File |
- * Settings | File Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this
+ * template use File | Settings | File Templates.
  */
 public class ContourIteratorTest {
-
   @Test
   public void testConstructorInitialization() {
-    Contour c = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5});
+    Contour c = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5});
     ContourIterator ci = new ContourIterator(c);
 
     assertTrue(ci.hasNext());
@@ -40,10 +39,9 @@ public class ContourIteratorTest {
 
   @Test
   public void testIteration() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(2.0, 0.001, values);
     ContourIterator ci = new ContourIterator(c);
-
 
     int i = 0;
     while (ci.hasNext()) {
@@ -57,7 +55,7 @@ public class ContourIteratorTest {
 
   @Test
   public void testHasNextSkipsEmptyEntries() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(2.0, 0.001, values);
     ContourIterator ci = new ContourIterator(c);
 
@@ -81,7 +79,7 @@ public class ContourIteratorTest {
 
   @Test
   public void testNextEmptyEntries() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(2.0, 0.001, values);
     ContourIterator ci = new ContourIterator(c);
 
@@ -105,7 +103,7 @@ public class ContourIteratorTest {
 
   @Test
   public void testRemove() {
-    double[] values = new double[]{0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
+    double[] values = new double[] {0.0, 0.1, 0.2, 0.3, 0.4, 0.5};
     Contour c = new Contour(2.0, 0.001, values);
     ContourIterator ci = new ContourIterator(c);
 
@@ -115,5 +113,4 @@ public class ContourIteratorTest {
 
     assertTrue(c.isEmpty(2));
   }
-
 }

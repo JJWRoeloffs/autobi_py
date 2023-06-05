@@ -19,18 +19,17 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.junit.Test;
+
 /**
- * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this template use File |
- * Settings | File Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this
+ * template use File | Settings | File Templates.
  */
 public class DistributionTest {
-
   @Test
   public void testAdd() {
     Distribution d = new Distribution();

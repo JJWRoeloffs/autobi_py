@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -30,16 +33,16 @@ import java.util.Arrays;
  * <p/>
  * Data is stored at an evenly sampled interval.
  * <p/>
- * Data is retrieved by requesting a time or index into the contour.  This can be done manually or using an iterator to
- * iterate over the whole contour.  The iterator returns a pair of time and value information.
- * <p/>
- * Empty entries can be placed in the contour.  When iterating, these entries are skipped.
+ * Data is retrieved by requesting a time or index into the contour.  This can be done manually or
+ * using an iterator to iterate over the whole contour.  The iterator returns a pair of time and
+ * value information. <p/> Empty entries can be placed in the contour.  When iterating, these
+ * entries are skipped.
  */
 public class Contour implements Iterable<Pair<Double, Double>> {
-  protected double x0;        // The starting time
-  protected double dx;        // The time step
-  protected int n;            // The number of steps in the contour
-  protected double[] values;  // The values of the contour
+  protected double x0; // The starting time
+  protected double dx; // The time step
+  protected int n; // The number of steps in the contour
+  protected double[] values; // The values of the contour
 
   protected int num_empty;
   protected boolean[] empty_values;
@@ -143,8 +146,8 @@ public class Contour implements Iterable<Pair<Double, Double>> {
   /**
    * Calculates the time associated with an index.
    * <p/>
-   * The associated time is the lower bound of the bin associated with the index.  That is, with a time step of 1s, the
-   * time associated with index 0 is 0.0s, not 0.5s.
+   * The associated time is the lower bound of the bin associated with the index.  That is, with a
+   * time step of 1s, the time associated with index 0 is 0.0s, not 0.5s.
    *
    * @param index the index.
    * @return the time
@@ -185,8 +188,8 @@ public class Contour implements Iterable<Pair<Double, Double>> {
    * <p/>
    * This will overwrite the value currently associated with that time.
    * <p/>
-   * Be careful, two distinct times can be mapped to the same index in the contour.  This can lead to accidentally
-   * overwriting a contour value if the time steps are not consistent.
+   * Be careful, two distinct times can be mapped to the same index in the contour.  This can lead
+   * to accidentally overwriting a contour value if the time steps are not consistent.
    *
    * @param time  the time
    * @param value the value
@@ -241,8 +244,8 @@ public class Contour implements Iterable<Pair<Double, Double>> {
   /**
    * Sets the value associated with a time to be empty.
    * <p/>
-   * Be careful, two distinct times can be mapped to the same index in the contour.  This can lead to accidentally
-   * overwriting a contour value if the time steps are not consistent.
+   * Be careful, two distinct times can be mapped to the same index in the contour.  This can lead
+   * to accidentally overwriting a contour value if the time steps are not consistent.
    *
    * @param time the time
    */
@@ -294,7 +297,6 @@ public class Contour implements Iterable<Pair<Double, Double>> {
     }
     return new Pair<Double, Double>(timeFromIndex(i), values[i]);
   }
-
 
   /**
    * Returns the number of non-empty values in the Contour.

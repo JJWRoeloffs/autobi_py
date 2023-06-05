@@ -19,17 +19,16 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Spectrum;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for SpectrumBandFeatureExtractor
@@ -62,7 +61,9 @@ public class SpectrumBandFeatureExtractorTest {
   public void testExtractFeaturesExtractsFeatures() {
     Word w = new Word(0, 1, "test");
     w.setAttribute("spectrum",
-        new Spectrum(new double[][]{{1, 2, 3, 4, 5, 6, 7, 8, 9}, {11, 12, 13, 14, 15, 16, 17, 18, 19}}, 0, 0.1, 100));
+        new Spectrum(
+            new double[][] {{1, 2, 3, 4, 5, 6, 7, 8, 9}, {11, 12, 13, 14, 15, 16, 17, 18, 19}}, 0,
+            0.1, 100));
     regions.add(w);
 
     try {
@@ -77,7 +78,9 @@ public class SpectrumBandFeatureExtractorTest {
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
     Word w = new Word(0, 1, "test");
     w.setAttribute("spectrum",
-        new Spectrum(new double[][]{{1, 2, 3, 4, 5, 6, 7, 8, 9}, {11, 12, 13, 14, 15, 16, 17, 18, 19}}, 0, 0.1, 100));
+        new Spectrum(
+            new double[][] {{1, 2, 3, 4, 5, 6, 7, 8, 9}, {11, 12, 13, 14, 15, 16, 17, 18, 19}}, 0,
+            0.1, 100));
     regions.add(w);
 
     try {

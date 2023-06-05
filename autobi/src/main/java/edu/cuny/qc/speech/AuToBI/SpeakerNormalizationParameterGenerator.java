@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -26,30 +29,30 @@ package edu.cuny.qc.speech.AuToBI;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.*;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
- * SpeakerNormalizationParameterGenerator is a tool to construct speaker normalization parameters given a set of wav
- * files.
+ * SpeakerNormalizationParameterGenerator is a tool to construct speaker normalization parameters
+ * given a set of wav files.
  */
 public class SpeakerNormalizationParameterGenerator {
-
   public SpeakerNormalizationParameter generateNormalizationParameters(List<WavData> wavs) {
     return generateNormalizationParameter(wavs, "");
   }
 
   /**
-   * Generates new speaker normalization parameters based on a set of wav files from a given speaker.
+   * Generates new speaker normalization parameters based on a set of wav files from a given
+   * speaker.
    *
    * @param wavs       the wave data to generate normalization data from
    * @param speaker_id an identifier for the speaker
    * @return the SpeakernNormalizationParameter
    */
-  public SpeakerNormalizationParameter generateNormalizationParameter(List<WavData> wavs, String speaker_id) {
+  public SpeakerNormalizationParameter generateNormalizationParameter(
+      List<WavData> wavs, String speaker_id) {
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter(speaker_id);
     extendSpeakerNormalizationParameter(wavs, snp);
     return snp;
@@ -61,7 +64,8 @@ public class SpeakerNormalizationParameterGenerator {
    * @param wavs the wav data to add to the normalization data
    * @param snp  the existing parameters to add to
    */
-  private void extendSpeakerNormalizationParameter(List<WavData> wavs, SpeakerNormalizationParameter snp) {
+  private void extendSpeakerNormalizationParameter(
+      List<WavData> wavs, SpeakerNormalizationParameter snp) {
     for (WavData wav : wavs) {
       RAPTPitchExtractor pe = new RAPTPitchExtractor();
 
@@ -108,13 +112,16 @@ public class SpeakerNormalizationParameterGenerator {
   }
 
   /**
-   * Generates a SpeakerNormalizationParameter object from a single WavData object, and a corresponding speaker_id.
+   * Generates a SpeakerNormalizationParameter object from a single WavData object, and a
+   * corresponding speaker_id.
    *
    * @param wav        the wave data to analyze
    * @param speaker_id the speaker id.
-   * @return a SpeakerNormalizationParameter object containing parameters based on a single wave file
+   * @return a SpeakerNormalizationParameter object containing parameters based on a single wave
+   *     file
    */
-  public SpeakerNormalizationParameter generateNormalizationParameter(WavData wav, String speaker_id) {
+  public SpeakerNormalizationParameter generateNormalizationParameter(
+      WavData wav, String speaker_id) {
     List<WavData> list = new ArrayList<WavData>();
     list.add(wav);
     return generateNormalizationParameter(list, speaker_id);

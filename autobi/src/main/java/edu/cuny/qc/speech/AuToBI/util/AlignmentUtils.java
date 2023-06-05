@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -26,7 +29,6 @@ package edu.cuny.qc.speech.AuToBI.util;
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -37,7 +39,6 @@ import java.util.ListIterator;
  * This is used for aligning annotations as well as acoustic and other information to regions.
  */
 public class AlignmentUtils {
-
   /**
    * Copies the ToBI tones to the words.
    *
@@ -50,7 +51,6 @@ public class AlignmentUtils {
     String partial_accent = null;
 
     while (tone_idx < tones.size() && word_idx < words.size()) {
-
       Region tone = tones.get(tone_idx);
       Word word = words.get(word_idx);
 
@@ -64,10 +64,8 @@ public class AlignmentUtils {
         if ((tone_data[0] == null) && (tone_data[1] == null) && (tone_data[2] == null)) {
           if (!(tone.getLabel().equals("HiF0") || tone.getLabel().equals("%H"))) {
             AuToBIUtils.warn("Label, " + tone.getLabel()
-                +
-                ", doesn't match any pattern (accent_pattern, phrase_accent_pattern, " +
-                "boundary_tone_pattern). Word reference: "
-                + word);
+                + ", doesn't match any pattern (accent_pattern, phrase_accent_pattern, "
+                + "boundary_tone_pattern). Word reference: " + word);
           }
         }
 
@@ -77,10 +75,12 @@ public class AlignmentUtils {
               if (tone_data[0].endsWith("+")) {
                 partial_accent = tone_data[0];
               } else {
-                AuToBIUtils.warn("Multiply accented word, " + word + ". Only keeping the first accent.");
+                AuToBIUtils.warn(
+                    "Multiply accented word, " + word + ". Only keeping the first accent.");
               }
             } else {
-              AuToBIUtils.warn("Multiply accented word, " + word + ". Only keeping the first accent.");
+              AuToBIUtils.warn(
+                  "Multiply accented word, " + word + ". Only keeping the first accent.");
             }
           } else {
             if (partial_accent == null) {
@@ -88,21 +88,23 @@ public class AlignmentUtils {
                 partial_accent = tone_data[0];
               } else {
                 if (tone_data[0].startsWith("+")) {
-                  AuToBIUtils.warn("Unexpected partial accent tone, " + tone_data[0] +
-                      ", that does not follow a preceding partial accent annotation  Word reference: " + word);
+                  AuToBIUtils.warn("Unexpected partial accent tone, " + tone_data[0]
+                      + ", that does not follow a preceding partial accent annotation  Word reference: "
+                      + word);
                 }
                 word.setAccent(ToBIUtils.getPitchAccent(tone_data[0]));
                 word.setAccentTime(tone.getStart());
               }
             } else {
               if (tone_data[0].startsWith("+")) {
-                word.setAccent(ToBIUtils.getPitchAccent(partial_accent + tone_data[0].substring(1)));
+                word.setAccent(
+                    ToBIUtils.getPitchAccent(partial_accent + tone_data[0].substring(1)));
                 word.setAccentTime(tone.getStart());
                 partial_accent = null;
               } else {
-                AuToBIUtils.warn(
-                    "Partial accent tone, " + partial_accent + ", follows unexpected tone annotation, " + tone_data[0] +
-                        " Word reference: " + word);
+                AuToBIUtils.warn("Partial accent tone, " + partial_accent
+                    + ", follows unexpected tone annotation, " + tone_data[0]
+                    + " Word reference: " + word);
                 if (tone_data[0].endsWith("+")) {
                   partial_accent = tone_data[0];
                 } else {
@@ -117,7 +119,8 @@ public class AlignmentUtils {
 
         if (tone_data[1] != null) {
           if (word.hasPhraseAccent()) {
-            AuToBIUtils.warn("Word, " + word + ", contains two phrase accents. Only keeping the first accent.");
+            AuToBIUtils.warn(
+                "Word, " + word + ", contains two phrase accents. Only keeping the first accent.");
           } else {
             word.setPhraseAccent(tone_data[1]);
           }
@@ -125,7 +128,8 @@ public class AlignmentUtils {
 
         if (tone_data[2] != null) {
           if (word.hasBoundaryTone()) {
-            AuToBIUtils.warn("Word, " + word + ", contains two boundary tones. Only keeping the first accent.");
+            AuToBIUtils.warn(
+                "Word, " + word + ", contains two boundary tones. Only keeping the first accent.");
           } else {
             word.setBoundaryTone(tone_data[2]);
           }
@@ -135,19 +139,21 @@ public class AlignmentUtils {
     }
 
     if (tone_idx != tones.size()) {
-      AuToBIUtils.warn("Tones were present after the end of the words. These have not been aligned to any data.");
+      AuToBIUtils.warn(
+          "Tones were present after the end of the words. These have not been aligned to any data.");
     }
   }
 
   /**
    * Copies a list of breaks to associated words.
    * <p/>
-   * Requires that the number of breaks and words are equal for alignment.  This can cause a problem for some
-   * annotations which (erroneously) label silence with a break index.
+   * Requires that the number of breaks and words are equal for alignment.  This can cause a problem
+   * for some annotations which (erroneously) label silence with a break index.
    *
    * @param words  The list of words
    * @param breaks The list of breaks
-   * @throws edu.cuny.qc.speech.AuToBI.core.AuToBIException If there is an unqual number of breaks and words
+   * @throws edu.cuny.qc.speech.AuToBI.core.AuToBIException If there is an unqual number of breaks
+   *     and words
    */
   public static void copyToBIBreaks(List<Word> words, List<Region> breaks) throws AuToBIException {
     String previous_break = null;
@@ -167,11 +173,9 @@ public class AlignmentUtils {
   /**
    * Copies a list of breaks to associated words.
    * <p/>
-   * Requires that the breaks and words sorted by time. If a word does not have a break within its boundaries, it is
-   * assumed to be a break index of '1'.
-   * <p/>
-   * Note: This should only be used where there is a strong trust that the annotation is correctly aligned with
-   * segmetnal annotations.
+   * Requires that the breaks and words sorted by time. If a word does not have a break within its
+   * boundaries, it is assumed to be a break index of '1'. <p/> Note: This should only be used where
+   * there is a strong trust that the annotation is correctly aligned with segmetnal annotations.
    *
    * @param words  The list of words
    * @param breaks The list of breaks
@@ -182,7 +186,6 @@ public class AlignmentUtils {
     String previous_break = "na";
 
     while (break_idx < breaks.size() && word_idx < words.size()) {
-
       Region b = breaks.get(break_idx);
       Word word = words.get(word_idx);
 
@@ -200,7 +203,8 @@ public class AlignmentUtils {
         word.setBreakBefore(previous_break);
         String current_break = breaks.get(break_idx).getLabel();
         word.setBreakAfter(current_break);
-        if ((current_break.startsWith("3") || current_break.startsWith("4")) && !word.hasPhraseAccent()) {
+        if ((current_break.startsWith("3") || current_break.startsWith("4"))
+            && !word.hasPhraseAccent()) {
           word.setPhraseAccent("X-");
         }
         if (current_break.startsWith("4") && !word.hasBoundaryTone()) {
@@ -224,15 +228,15 @@ public class AlignmentUtils {
   /**
    * Copies a list of ToBI tones to words based on their index.
    * <p/>
-   * That is, the i-th phrase ending tone is aligned to the i-th phrase, regardless of the annotation time.
-   * <p/>
-   * Accents are aligned to words based on time.
+   * That is, the i-th phrase ending tone is aligned to the i-th phrase, regardless of the
+   * annotation time. <p/> Accents are aligned to words based on time.
    *
    * @param words the list of words
    * @param tones the list of tones
    * @throws AuToBIException If there is an alignment problem
    */
-  public static void copyToBITonesByIndex(List<Word> words, List<Region> tones) throws AuToBIException {
+  public static void copyToBITonesByIndex(List<Word> words, List<Region> tones)
+      throws AuToBIException {
     List<String> phrase_accents = new ArrayList<String>();
     List<String> boundary_tones = new ArrayList<String>();
 
@@ -246,7 +250,8 @@ public class AlignmentUtils {
           throw new AuToBIException(toneRegion + " contains an empty tone.");
         }
 
-        // Common idiosyncracies in the Boston University Radio News Corpus, that are not in the ToBI standard.
+        // Common idiosyncracies in the Boston University Radio News Corpus, that are not in the
+        // ToBI standard.
         if (toneRegion.getLabel().equals("X%?") || toneRegion.getLabel().equals("%?")) {
           toneRegion.setLabel("X-?X%?");
         }
@@ -267,7 +272,8 @@ public class AlignmentUtils {
           }
         } else {
           if (word.isAccented()) {
-            AuToBIUtils.warn("Multiply accented word, " + word + ". Only keeping the first accent.");
+            AuToBIUtils.warn(
+                "Multiply accented word, " + word + ". Only keeping the first accent.");
           } else {
             word.setAccent(tone);
             word.setAccentTime(toneRegion.getStart());
@@ -316,7 +322,6 @@ public class AlignmentUtils {
     }
   }
 
-
   /**
    * Retrieves the next region in the list following a particular time.
    * <p/>
@@ -327,9 +332,10 @@ public class AlignmentUtils {
    * @return the first region that starts after the time.
    */
   protected static Region getNextRegionBeforeTime(double time, ListIterator<Region> iter) {
-    if (!iter.hasNext()) return null;
+    if (!iter.hasNext())
+      return null;
 
-    Double epsilon = 0.005;// To deal with Double precision errors.
+    Double epsilon = 0.005; // To deal with Double precision errors.
     Region region = iter.next();
     if (region.getStart() > time + epsilon) {
       iter.previous();

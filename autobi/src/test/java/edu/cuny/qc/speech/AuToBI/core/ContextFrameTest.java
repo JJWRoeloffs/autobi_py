@@ -19,16 +19,15 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test Class for ContextFrame.
@@ -36,7 +35,6 @@ import static org.junit.Assert.fail;
  * @see ContextFrame
  */
 public class ContextFrameTest {
-
   @Test
   public void testIncrementWorksWithNullAttributes() {
     List<Region> words = new ArrayList<Region>();
@@ -88,11 +86,11 @@ public class ContextFrameTest {
     Word w3 = new Word(2, 3, "three");
     Word w4 = new Word(3, 4, "four");
     Word w5 = new Word(4, 5, "five");
-    w1.setAttribute("feature", new Contour(0, 0.5, new double[]{1.0, 1.0}));
-    w2.setAttribute("feature", new Contour(1, 0.5, new double[]{2.0, 2.0}));
-    w3.setAttribute("feature", new Contour(2, 0.5, new double[]{3.0, 3.0}));
-    w4.setAttribute("feature", new Contour(3, 0.5, new double[]{4.0, 4.0}));
-    w5.setAttribute("feature", new Contour(4, 0.5, new double[]{5.0, 5.0}));
+    w1.setAttribute("feature", new Contour(0, 0.5, new double[] {1.0, 1.0}));
+    w2.setAttribute("feature", new Contour(1, 0.5, new double[] {2.0, 2.0}));
+    w3.setAttribute("feature", new Contour(2, 0.5, new double[] {3.0, 3.0}));
+    w4.setAttribute("feature", new Contour(3, 0.5, new double[] {4.0, 4.0}));
+    w5.setAttribute("feature", new Contour(4, 0.5, new double[] {5.0, 5.0}));
     words.add(w1);
     words.add(w2);
     words.add(w3);
@@ -103,7 +101,6 @@ public class ContextFrameTest {
 
     frame.init();
   }
-
 
   @Test
   public void testIncrementToTheEnd() {
@@ -145,11 +142,11 @@ public class ContextFrameTest {
     Word w3 = new Word(2, 3, "three");
     Word w4 = new Word(3, 4, "four");
     Word w5 = new Word(4, 5, "five");
-    w1.setAttribute("feature", new Contour(0, 0.5, new double[]{1.0, 1.0}));
-    w2.setAttribute("feature", new Contour(1, 0.5, new double[]{2.0, 2.0}));
-    w3.setAttribute("feature", new Contour(2, 0.5, new double[]{3.0, 3.0}));
-    w4.setAttribute("feature", new Contour(3, 0.5, new double[]{4.0, 4.0}));
-    w5.setAttribute("feature", new Contour(4, 0.5, new double[]{5.0, 5.0}));
+    w1.setAttribute("feature", new Contour(0, 0.5, new double[] {1.0, 1.0}));
+    w2.setAttribute("feature", new Contour(1, 0.5, new double[] {2.0, 2.0}));
+    w3.setAttribute("feature", new Contour(2, 0.5, new double[] {3.0, 3.0}));
+    w4.setAttribute("feature", new Contour(3, 0.5, new double[] {4.0, 4.0}));
+    w5.setAttribute("feature", new Contour(4, 0.5, new double[] {5.0, 5.0}));
     words.add(w1);
     words.add(w2);
     words.add(w3);
@@ -209,11 +206,11 @@ public class ContextFrameTest {
     Word w3 = new Word(2, 3, "three");
     Word w4 = new Word(3, 4, "four");
     Word w5 = new Word(4, 5, "five");
-    w1.setAttribute("feature", new Contour(0, 0.5, new double[]{1.0, 1.0}));
-    w2.setAttribute("feature", new Contour(1, 0.5, new double[]{2.0, 2.0}));
-    w3.setAttribute("feature", new Contour(2, 0.5, new double[]{3.0, 3.0}));
-    w4.setAttribute("feature", new Contour(3, 0.5, new double[]{4.0, 4.0}));
-    w5.setAttribute("feature", new Contour(4, 0.5, new double[]{5.0, 5.0}));
+    w1.setAttribute("feature", new Contour(0, 0.5, new double[] {1.0, 1.0}));
+    w2.setAttribute("feature", new Contour(1, 0.5, new double[] {2.0, 2.0}));
+    w3.setAttribute("feature", new Contour(2, 0.5, new double[] {3.0, 3.0}));
+    w4.setAttribute("feature", new Contour(3, 0.5, new double[] {4.0, 4.0}));
+    w5.setAttribute("feature", new Contour(4, 0.5, new double[] {5.0, 5.0}));
     words.add(w1);
     words.add(w2);
     words.add(w3);
@@ -281,11 +278,11 @@ public class ContextFrameTest {
     Word w3 = new Word(2, 3, "three");
     Word w4 = new Word(3, 4, "four");
     Word w5 = new Word(4, 5, "five");
-    w1.setAttribute("feature", new Contour(0, 0.5, new double[]{1.0, 1.0}));
-    w2.setAttribute("feature", new Contour(1, 0.5, new double[]{2.0, 2.0}));
-    w3.setAttribute("feature", new Contour(2, 0.5, new double[]{3.0, 3.0}));
-    w4.setAttribute("feature", new Contour(3, 0.5, new double[]{4.0, 4.0}));
-    w5.setAttribute("feature", new Contour(4, 0.5, new double[]{5.0, 5.0}));
+    w1.setAttribute("feature", new Contour(0, 0.5, new double[] {1.0, 1.0}));
+    w2.setAttribute("feature", new Contour(1, 0.5, new double[] {2.0, 2.0}));
+    w3.setAttribute("feature", new Contour(2, 0.5, new double[] {3.0, 3.0}));
+    w4.setAttribute("feature", new Contour(3, 0.5, new double[] {4.0, 4.0}));
+    w5.setAttribute("feature", new Contour(4, 0.5, new double[] {5.0, 5.0}));
     words.add(w1);
     words.add(w2);
     words.add(w3);
@@ -361,11 +358,11 @@ public class ContextFrameTest {
     Word w3 = new Word(2, 3, "three");
     Word w4 = new Word(3, 4, "four");
     Word w5 = new Word(4, 5, "five");
-    w1.setAttribute("feature", new Contour(0, 0.5, new double[]{1.0, 1.0}));
-    w2.setAttribute("feature", new Contour(1, 0.5, new double[]{2.0, 2.0}));
-    w3.setAttribute("feature", new Contour(2, 0.5, new double[]{3.0, 3.0}));
-    w4.setAttribute("feature", new Contour(3, 0.5, new double[]{4.0, 4.0}));
-    w5.setAttribute("feature", new Contour(4, 0.5, new double[]{5.0, 5.0}));
+    w1.setAttribute("feature", new Contour(0, 0.5, new double[] {1.0, 1.0}));
+    w2.setAttribute("feature", new Contour(1, 0.5, new double[] {2.0, 2.0}));
+    w3.setAttribute("feature", new Contour(2, 0.5, new double[] {3.0, 3.0}));
+    w4.setAttribute("feature", new Contour(3, 0.5, new double[] {4.0, 4.0}));
+    w5.setAttribute("feature", new Contour(4, 0.5, new double[] {5.0, 5.0}));
     words.add(w1);
     words.add(w2);
     words.add(w3);
@@ -441,11 +438,11 @@ public class ContextFrameTest {
     Word w3 = new Word(2, 3, "three");
     Word w4 = new Word(3, 4, "four");
     Word w5 = new Word(4, 5, "five");
-    w1.setAttribute("feature", new Contour(0, 0.5, new double[]{1.0, 1.0}));
-    w2.setAttribute("feature", new Contour(1, 0.5, new double[]{2.0, 2.0}));
-    w3.setAttribute("feature", new Contour(2, 0.5, new double[]{3.0, 3.0}));
-    w4.setAttribute("feature", new Contour(3, 0.5, new double[]{4.0, 4.0}));
-    w5.setAttribute("feature", new Contour(4, 0.5, new double[]{5.0, 5.0}));
+    w1.setAttribute("feature", new Contour(0, 0.5, new double[] {1.0, 1.0}));
+    w2.setAttribute("feature", new Contour(1, 0.5, new double[] {2.0, 2.0}));
+    w3.setAttribute("feature", new Contour(2, 0.5, new double[] {3.0, 3.0}));
+    w4.setAttribute("feature", new Contour(3, 0.5, new double[] {4.0, 4.0}));
+    w5.setAttribute("feature", new Contour(4, 0.5, new double[] {5.0, 5.0}));
     words.add(w1);
     words.add(w2);
     words.add(w3);
@@ -521,11 +518,11 @@ public class ContextFrameTest {
     Word w3 = new Word(2, 3, "three");
     Word w4 = new Word(3, 4, "four");
     Word w5 = new Word(4, 5, "five");
-    w1.setAttribute("feature", new Contour(0, 0.5, new double[]{1.0, 1.0}));
-    w2.setAttribute("feature", new Contour(1, 0.5, new double[]{2.0, 2.0}));
-    w3.setAttribute("feature", new Contour(2, 0.5, new double[]{1.0, 1.0}));
-    w4.setAttribute("feature", new Contour(3, 0.5, new double[]{0.0, 0.0}));
-    w5.setAttribute("feature", new Contour(4, 0.5, new double[]{5.0, 5.0}));
+    w1.setAttribute("feature", new Contour(0, 0.5, new double[] {1.0, 1.0}));
+    w2.setAttribute("feature", new Contour(1, 0.5, new double[] {2.0, 2.0}));
+    w3.setAttribute("feature", new Contour(2, 0.5, new double[] {1.0, 1.0}));
+    w4.setAttribute("feature", new Contour(3, 0.5, new double[] {0.0, 0.0}));
+    w5.setAttribute("feature", new Contour(4, 0.5, new double[] {5.0, 5.0}));
     words.add(w1);
     words.add(w2);
     words.add(w3);
@@ -601,11 +598,11 @@ public class ContextFrameTest {
     Word w3 = new Word(2, 3, "three");
     Word w4 = new Word(3, 4, "four");
     Word w5 = new Word(4, 5, "five");
-    w1.setAttribute("feature", new Contour(0, 0.5, new double[]{1.0, 1.0}));
-    w2.setAttribute("feature", new Contour(1, 0.5, new double[]{2.0, 2.0}));
-    w3.setAttribute("feature", new Contour(2, 0.5, new double[]{1.0, 1.0}));
-    w4.setAttribute("feature", new Contour(3, 0.5, new double[]{-1.0, -1.0}));
-    w5.setAttribute("feature", new Contour(4, 0.5, new double[]{5.0, 5.0}));
+    w1.setAttribute("feature", new Contour(0, 0.5, new double[] {1.0, 1.0}));
+    w2.setAttribute("feature", new Contour(1, 0.5, new double[] {2.0, 2.0}));
+    w3.setAttribute("feature", new Contour(2, 0.5, new double[] {1.0, 1.0}));
+    w4.setAttribute("feature", new Contour(3, 0.5, new double[] {-1.0, -1.0}));
+    w5.setAttribute("feature", new Contour(4, 0.5, new double[] {5.0, 5.0}));
     words.add(w1);
     words.add(w2);
     words.add(w3);

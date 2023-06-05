@@ -19,11 +19,11 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import org.junit.Test;
 
 /**
  * Test Class for ContextDesc.
@@ -31,7 +31,6 @@ import static org.junit.Assert.fail;
  * @see ContextDesc
  */
 public class ContextDescTest {
-
   @Test
   public void testConstruction() {
     ContextDesc cd = new ContextDesc("label", 1, 2);
@@ -99,6 +98,3 @@ public class ContextDescTest {
     assertTrue(thrown);
   }
 }
-
-
-

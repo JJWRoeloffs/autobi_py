@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,9 +27,8 @@
 package edu.cuny.qc.speech.AuToBI.core;
 
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
-import java.util.*;
 import java.io.Serializable;
+import java.util.*;
 
 /**
  * The Feature class stores information about extracted features.
@@ -37,11 +39,11 @@ import java.io.Serializable;
  */
 public class Feature implements Comparable, Serializable {
   private static final long serialVersionUID = 6410344724558496458L;
-  private String name;                          // the feature name
-  private LinkedHashSet<String> nominalValues;  // the nominal values
+  private String name; // the feature name
+  private LinkedHashSet<String> nominalValues; // the nominal values
   public static final int STRING_LIST = 0;
   public static final int CSV_FORMAT = 1;
-  private boolean isString;                     // is the feature a string
+  private boolean isString; // is the feature a string
 
   /**
    * Constructs a new feature.
@@ -84,7 +86,8 @@ public class Feature implements Comparable, Serializable {
    * Compares two Features against each other by their names
    *
    * @param o the compared object
-   * @return 0 if they match, -1 if this feature has an earlier name than the compared object, 1 if a later name
+   * @return 0 if they match, -1 if this feature has an earlier name than the compared object, 1 if
+   *     a later name
    */
   public int compareTo(Object o) {
     if (o instanceof Feature) {
@@ -120,7 +123,6 @@ public class Feature implements Comparable, Serializable {
   public boolean isNominal() {
     return (nominalValues != null);
   }
-
 
   /**
    * Adds a new nominal value.
@@ -219,7 +221,8 @@ public class Feature implements Comparable, Serializable {
   public int getNominalIndex(String value) {
     int i = 0;
     for (String nominalValue : nominalValues) {
-      if (nominalValue.equals(value)) return i;
+      if (nominalValue.equals(value))
+        return i;
       i++;
     }
     return -1;

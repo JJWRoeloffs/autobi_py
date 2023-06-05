@@ -19,11 +19,11 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import junit.framework.Assert;
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+
+import junit.framework.Assert;
+import org.junit.Test;
 
 /**
  * Tests for PitchCandidate
@@ -78,4 +78,3 @@ public class PitchFrameTest {
     assertEquals(pc, pf.getCandidate(0));
   }
 }
-

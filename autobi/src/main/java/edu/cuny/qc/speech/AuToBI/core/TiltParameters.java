@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -28,18 +31,16 @@ import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
 /**
  * Paul Taylor's Tilt Intonation Model parameters.
  * <p/>
- * The goal is to model "intonational events".  Intonational Events are identified independently from the TILT
- * parameterization. Following identification the shape of a pitch excursion is modeled via the tilt parameters.
- * <p/>
- * There is an assumption that each intonational event contains zero or one rises followed by zero or one falls in its
- * pitch contour.  The tilt parameters model the size of this rise as well as its position within the intonational
- * event.  After describing these separately, the two values tilt_amp and tilt_dur are combined into a single tilt
- * value.
- * <p/>
- * See citation:
- * <p/>
- * \@misc{ taylor-tilt, author = "P. Taylor", title = "The Tilt Intonation Model", text = "P. Taylor. The Tilt
- * Intonation Model. ICSLP98, this volume.", url = "citeseer.ist.psu.edu/taylor98tilt.html" }
+ * The goal is to model "intonational events".  Intonational Events are identified independently
+ * from the TILT parameterization. Following identification the shape of a pitch excursion is
+ * modeled via the tilt parameters. <p/> There is an assumption that each intonational event
+ * contains zero or one rises followed by zero or one falls in its pitch contour.  The tilt
+ * parameters model the size of this rise as well as its position within the intonational event.
+ * After describing these separately, the two values tilt_amp and tilt_dur are combined into a
+ * single tilt value. <p/> See citation: <p/>
+ * \@misc{ taylor-tilt, author = "P. Taylor", title = "The Tilt Intonation Model", text = "P.
+ * Taylor. The Tilt Intonation Model. ICSLP98, this volume.", url =
+ * "citeseer.ist.psu.edu/taylor98tilt.html" }
  */
 public class TiltParameters {
   private double amplitude_rise = 0.0;
@@ -50,8 +51,7 @@ public class TiltParameters {
   /**
    * Constructs a new empty TileParameters object.
    */
-  public TiltParameters() {
-  }
+  public TiltParameters() {}
 
   /**
    * Constructs a new TiltParameters object that parameterizes the contour represented by data
@@ -77,9 +77,10 @@ public class TiltParameters {
    * @return the amplitude component
    */
   public Double getAmplitudeTilt() {
-    if (Math.abs(amplitude_rise) + Math.abs(amplitude_fall) == 0) return 0.0;
-    return (Math.abs(amplitude_rise) - Math.abs(amplitude_fall)) /
-        (Math.abs(amplitude_rise) + Math.abs(amplitude_fall));
+    if (Math.abs(amplitude_rise) + Math.abs(amplitude_fall) == 0)
+      return 0.0;
+    return (Math.abs(amplitude_rise) - Math.abs(amplitude_fall))
+        / (Math.abs(amplitude_rise) + Math.abs(amplitude_fall));
   }
 
   /**
@@ -88,15 +89,18 @@ public class TiltParameters {
    * @return the duration component
    */
   public Double getDurationTilt() {
-    if (Math.abs(duration_rise) + Math.abs(duration_fall) == 0) return 0.0;
-    return (Math.abs(duration_rise) - Math.abs(duration_fall)) / (Math.abs(duration_rise) + Math.abs(duration_fall));
+    if (Math.abs(duration_rise) + Math.abs(duration_fall) == 0)
+      return 0.0;
+    return (Math.abs(duration_rise) - Math.abs(duration_fall))
+        / (Math.abs(duration_rise) + Math.abs(duration_fall));
   }
 
   /**
    * Calculate tilt parameters based on the supplied time value pairs
    * <p/>
-   * Tilt makes the assumption that the data that it is modeling consists of a single rise and a single fall.  While
-   * either the rise or fall may be null, the modeling behavior is undefined under data with multiple local maxima.
+   * Tilt makes the assumption that the data that it is modeling consists of a single rise and a
+   * single fall.  While either the rise or fall may be null, the modeling behavior is undefined
+   * under data with multiple local maxima.
    *
    * @param data the contour to calculate tilt over
    */

@@ -19,18 +19,17 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.*;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for PseudosyllableFeatureExtractor
@@ -110,7 +109,8 @@ public class PseudosyllableFeatureExtractorTest {
       // Don't worry about the specific region, but make sure that there is overlap.
       // Different pseudosyllabification algorithms will yield different hypotheses here
       // this test shouldn't break if the internal algorithms is modified.
-      assertTrue("Syllable does not overlap the word", syl.getEnd() > w.getStart() && syl.getStart() < w.getEnd());
+      assertTrue("Syllable does not overlap the word",
+          syl.getEnd() > w.getStart() && syl.getStart() < w.getEnd());
     } catch (FeatureExtractorException e) {
       fail();
     }

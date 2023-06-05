@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -32,19 +35,19 @@ import edu.cuny.qc.speech.AuToBI.core.Word;
 /**
  * SpectralPitchAccentDetector is an ensemble classifier.
  * <p/>
- * The only operation this class performs is the weighted majority voting of externally trained classifiers.
- * <p/>
- * A set of classifiers trained using SpectrumPADTrainer and CorrectionSpectrumPADTrainer are responsible for
- * generating the individual predictions and correction hypotheses.  The corrections are applied and voting calculations
- * are made.
+ * The only operation this class performs is the weighted majority voting of externally trained
+ * classifiers. <p/> A set of classifiers trained using SpectrumPADTrainer and
+ * CorrectionSpectrumPADTrainer are responsible for generating the individual predictions and
+ * correction hypotheses.  The corrections are applied and voting calculations are made.
  */
 public class SpectralPitchAccentDetector extends AuToBIClassifier {
-
   // Patterns of features used in the voting calculation.
   private final String prediction_pattern = "nominal_bark_##LOW##_##HIGH##__prediction";
-  private final String prediction_confidence_pattern = "bark_##LOW##_##HIGH##__prediction_confidence";
+  private final String prediction_confidence_pattern =
+      "bark_##LOW##_##HIGH##__prediction_confidence";
   private final String correction_pattern = "nominal_bark_##LOW##_##HIGH##__correction_prediction";
-  private final String correction_confidence_pattern = "bark_##LOW##_##HIGH##__correction_prediction_confidence";
+  private final String correction_confidence_pattern =
+      "bark_##LOW##_##HIGH##__correction_prediction_confidence";
 
   // The label of the positive class
   private final String positive_class = "ACCENTED";
@@ -57,7 +60,8 @@ public class SpectralPitchAccentDetector extends AuToBIClassifier {
   private int high_bark;
 
   /**
-   * Constructs a new SpectralPitchAccentDetector to calculate a corrected weighted majority voting decision.
+   * Constructs a new SpectralPitchAccentDetector to calculate a corrected weighted majority voting
+   * decision.
    *
    * @param high the high bark index.
    */
@@ -66,7 +70,8 @@ public class SpectralPitchAccentDetector extends AuToBIClassifier {
   }
 
   /**
-   * Calculates the distribution from a weighted sum of votes from each corrected spectral classifier
+   * Calculates the distribution from a weighted sum of votes from each corrected spectral
+   * classifier
    *
    * @param testing_point The point to evaluate
    * @return the hypothesized distribution
@@ -76,14 +81,15 @@ public class SpectralPitchAccentDetector extends AuToBIClassifier {
     Distribution dist = new Distribution();
     for (int low = 0; low < high_bark; ++low) {
       for (int high = low + 1; high <= high_bark; ++high) {
-        String prediction_attr =
-            prediction_pattern.replace("##LOW##", Integer.toString(low)).replace("##HIGH##", Integer.toString(high));
+        String prediction_attr = prediction_pattern.replace("##LOW##", Integer.toString(low))
+                                     .replace("##HIGH##", Integer.toString(high));
         String conf_attr = prediction_confidence_pattern.replace("##LOW##", Integer.toString(low))
-            .replace("##HIGH##", Integer.toString(high));
-        String correction_attr =
-            correction_pattern.replace("##LOW##", Integer.toString(low)).replace("##HIGH##", Integer.toString(high));
-        String correction_conf_attr = correction_confidence_pattern.replace("##LOW##", Integer.toString(low))
-            .replace("##HIGH##", Integer.toString(high));
+                               .replace("##HIGH##", Integer.toString(high));
+        String correction_attr = correction_pattern.replace("##LOW##", Integer.toString(low))
+                                     .replace("##HIGH##", Integer.toString(high));
+        String correction_conf_attr =
+            correction_confidence_pattern.replace("##LOW##", Integer.toString(low))
+                .replace("##HIGH##", Integer.toString(high));
 
         double positive_conf;
         double correct_conf;
@@ -103,7 +109,8 @@ public class SpectralPitchAccentDetector extends AuToBIClassifier {
           correct_conf = 1 - (Double) testing_point.getAttribute(correction_conf_attr);
         }
 
-        double overall_conf = positive_conf * correct_conf + (1 - positive_conf) * (1 - correct_conf);
+        double overall_conf =
+            positive_conf * correct_conf + (1 - positive_conf) * (1 - correct_conf);
 
         dist.add(positive_class, overall_conf);
         dist.add(negative_class, 1 - overall_conf);
@@ -116,8 +123,8 @@ public class SpectralPitchAccentDetector extends AuToBIClassifier {
   }
 
   /**
-   * SpectralPitchAccentDetector must be constructed from other trained classifiers.  This method always throws an
-   * Exception if its called.
+   * SpectralPitchAccentDetector must be constructed from other trained classifiers.  This method
+   * always throws an Exception if its called.
    *
    * @param feature_set The training data
    * @throws Exception every time its called.

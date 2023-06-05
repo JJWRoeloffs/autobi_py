@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -30,12 +33,12 @@ import java.util.Arrays;
  * WavData is used to store Wav file data.
  */
 public class WavData {
-  public double[][] samples;   // Normalized Audio Data
+  public double[][] samples; // Normalized Audio Data
   public int numberOfChannels; // Number of stored channels
-  public int sampleSize;       // Size of each sample in bits
-  public float sampleRate;     // Number of raw_samples per second.
-  public double t0;            // The time of the first sample.
-  private String filename;     // The filename containing the this audio data.
+  public int sampleSize; // Size of each sample in bits
+  public float sampleRate; // Number of raw_samples per second.
+  public double t0; // The time of the first sample.
+  private String filename; // The filename containing the this audio data.
 
   /**
    * Constructs a new WavData object with no data.
@@ -119,6 +122,7 @@ public class WavData {
    */
   public double[] getSamples(int channel, int start, int end) {
     // Takes a slice of the samples array with some simple bounds checking.
-    return Arrays.copyOfRange(samples[channel], Math.max(0, start), Math.min(samples[channel].length, end));
+    return Arrays.copyOfRange(
+        samples[channel], Math.max(0, start), Math.min(samples[channel].length, end));
   }
 }

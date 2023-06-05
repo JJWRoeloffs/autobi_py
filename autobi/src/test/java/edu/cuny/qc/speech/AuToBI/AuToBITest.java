@@ -19,17 +19,15 @@
  */
 package edu.cuny.qc.speech.AuToBI;
 
+import static org.junit.Assert.*;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
 import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
 import edu.cuny.qc.speech.AuToBI.classifier.MockClassifier;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
 import edu.cuny.qc.speech.AuToBI.featureset.*;
 import edu.cuny.qc.speech.AuToBI.io.FormattedFile;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -37,8 +35,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import org.junit.Before;
+import org.junit.Test;
 
 // Some tests have been commented out, as they appear to read from non-existant files
 
@@ -47,7 +46,6 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("unchecked")
 public class AuToBITest {
-
   public static class MockF0NoParamFeatureExtractor extends FeatureExtractor {
     public final static String moniker = "f0";
 
@@ -252,7 +250,6 @@ public class AuToBITest {
     assertFalse(autobi.getFeatureRegistry().containsKey("2"));
   }
 
-
   @Test
   public void testInitializeReferenceCounting() {
     // Set up Test Feature Extraction Configuration
@@ -262,16 +259,14 @@ public class AuToBITest {
 
     FeatureExtractor fe = new FeatureExtractor() {
       @Override
-      public void extractFeatures(List regions) throws FeatureExtractorException {
-      }
+      public void extractFeatures(List regions) throws FeatureExtractorException {}
     };
     fe.getExtractedFeatures().add("feature1");
     fe.getRequiredFeatures().add("feature2");
 
     FeatureExtractor fe2 = new FeatureExtractor() {
       @Override
-      public void extractFeatures(List regions) throws FeatureExtractorException {
-      }
+      public void extractFeatures(List regions) throws FeatureExtractorException {}
     };
     fe2.getExtractedFeatures().add("feature2");
 
@@ -290,7 +285,6 @@ public class AuToBITest {
 
   @Test
   public void testInitializeReferenceCountingTwoFeaturesExtractedByOneExtractor() {
-
     // Set up Test Feature Extraction Configuration
     FeatureSet fs = new FeatureSet();
     fs.setClassAttribute("feature1");
@@ -299,8 +293,7 @@ public class AuToBITest {
 
     FeatureExtractor fe = new FeatureExtractor() {
       @Override
-      public void extractFeatures(List regions) throws FeatureExtractorException {
-      }
+      public void extractFeatures(List regions) throws FeatureExtractorException {}
     };
     fe.getExtractedFeatures().add("feature1");
     fe.getExtractedFeatures().add("feature2");
@@ -308,8 +301,7 @@ public class AuToBITest {
 
     FeatureExtractor fe2 = new FeatureExtractor() {
       @Override
-      public void extractFeatures(List regions) throws FeatureExtractorException {
-      }
+      public void extractFeatures(List regions) throws FeatureExtractorException {}
     };
     fe2.getExtractedFeatures().add("feature3");
 
@@ -336,8 +328,7 @@ public class AuToBITest {
 
     FeatureExtractor fe = new FeatureExtractor() {
       @Override
-      public void extractFeatures(List regions) throws FeatureExtractorException {
-      }
+      public void extractFeatures(List regions) throws FeatureExtractorException {}
     };
     fe.getExtractedFeatures().add("feature1");
     fe.getRequiredFeatures().add("feature2");
@@ -466,16 +457,14 @@ public class AuToBITest {
 
     FeatureExtractor fe = new FeatureExtractor() {
       @Override
-      public void extractFeatures(List regions) throws FeatureExtractorException {
-      }
+      public void extractFeatures(List regions) throws FeatureExtractorException {}
     };
     fe.getExtractedFeatures().add("feature1");
     fe.getRequiredFeatures().add("feature2");
 
     FeatureExtractor fe2 = new FeatureExtractor() {
       @Override
-      public void extractFeatures(List regions) throws FeatureExtractorException {
-      }
+      public void extractFeatures(List regions) throws FeatureExtractorException {}
     };
     fe2.getExtractedFeatures().add("feature2");
 
@@ -494,22 +483,21 @@ public class AuToBITest {
     assertTrue(autobi.getMonikerMap().size() > 0);
   }
 
-
   @Test
   public void testInitSetsTrueBooleanParameter() {
-    autobi.init(new String[]{"-test_param=true"});
+    autobi.init(new String[] {"-test_param=true"});
     assertTrue(autobi.getBooleanParameter("test_param", false));
   }
 
   @Test
   public void testInitSetsFalseBooleanParameter() {
-    autobi.init(new String[]{"-test_param=false"});
+    autobi.init(new String[] {"-test_param=false"});
     assertFalse(autobi.getBooleanParameter("test_param", true));
   }
 
   @Test
   public void testInitSetsStringParameter() {
-    autobi.init(new String[]{"-test_param=hello"});
+    autobi.init(new String[] {"-test_param=hello"});
     try {
       assertEquals("hello", autobi.getParameter("test_param"));
     } catch (AuToBIException e) {
@@ -519,13 +507,13 @@ public class AuToBITest {
 
   @Test
   public void testGetOptionalParameterReturnsNull() {
-    autobi.init(new String[]{"-test_param=hello"});
+    autobi.init(new String[] {"-test_param=hello"});
     assertEquals(null, autobi.getOptionalParameter("no_such_parameter"));
   }
 
   @Test
   public void testInitSetsParameters() {
-    autobi.init(new String[]{"-test_param=hello"});
+    autobi.init(new String[] {"-test_param=hello"});
     assertTrue(autobi.hasParameter("test_param"));
   }
 
@@ -543,14 +531,25 @@ public class AuToBITest {
   public void testEvaluateTaskPerformanceWorksForValidTasks() {
     autobi.tasks = initializeMockTasks();
     try {
-      assertTrue(autobi.evaluateTaskPerformance("pitch_accent_detection", new FeatureSet()).length() > 0);
-      assertTrue(autobi.evaluateTaskPerformance("pitch_accent_classification", new FeatureSet()).length() > 0);
       assertTrue(
-          autobi.evaluateTaskPerformance("intonational_phrase_boundary_detection", new FeatureSet()).length() > 0);
+          autobi.evaluateTaskPerformance("pitch_accent_detection", new FeatureSet()).length() > 0);
       assertTrue(
-          autobi.evaluateTaskPerformance("intermediate_phrase_boundary_detection", new FeatureSet()).length() > 0);
-      assertTrue(autobi.evaluateTaskPerformance("boundary_tone_classification", new FeatureSet()).length() > 0);
-      assertTrue(autobi.evaluateTaskPerformance("phrase_accent_classification", new FeatureSet()).length() > 0);
+          autobi.evaluateTaskPerformance("pitch_accent_classification", new FeatureSet()).length()
+          > 0);
+      assertTrue(
+          autobi.evaluateTaskPerformance("intonational_phrase_boundary_detection", new FeatureSet())
+              .length()
+          > 0);
+      assertTrue(
+          autobi.evaluateTaskPerformance("intermediate_phrase_boundary_detection", new FeatureSet())
+              .length()
+          > 0);
+      assertTrue(
+          autobi.evaluateTaskPerformance("boundary_tone_classification", new FeatureSet()).length()
+          > 0);
+      assertTrue(
+          autobi.evaluateTaskPerformance("phrase_accent_classification", new FeatureSet()).length()
+          > 0);
     } catch (AuToBIException expected) {
       fail();
     }
@@ -695,7 +694,8 @@ public class AuToBITest {
       autobi.initializeFeatureRegistry(fs);
 
       List<FormattedFile> filenames = new ArrayList<FormattedFile>();
-      filenames.add(new FormattedFile(ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD));
+      filenames.add(new FormattedFile(
+          ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD));
       autobi.propagateFeatureSet(filenames, fs);
       for (Word w : fs.getDataPoints()) {
         // Only the one required feature, not the wav feature
@@ -729,7 +729,8 @@ public class AuToBITest {
       autobi.initializeFeatureRegistry(fs);
 
       List<FormattedFile> filenames = new ArrayList<FormattedFile>();
-      filenames.add(new FormattedFile(ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD));
+      filenames.add(new FormattedFile(
+          ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD));
       autobi.getParameters().setParameter("feature_preservation", "true");
       autobi.propagateFeatureSet(filenames, fs);
       for (Word w : fs.getDataPoints()) {
@@ -794,8 +795,8 @@ public class AuToBITest {
   //     autobi.getParameters().setParameter("attribute_omit", "late_start:NO");
 
   //     List<FormattedFile> filenames = new ArrayList<FormattedFile>();
-  //     filenames.add(new FormattedFile(ResourcePath.getResourcePath("test.txt"), FormattedFile.Format.SIMPLE_WORD));
-  //     autobi.propagateFeatureSet(filenames, fs);
+  //     filenames.add(new FormattedFile(ResourcePath.getResourcePath("test.txt"),
+  //     FormattedFile.Format.SIMPLE_WORD)); autobi.propagateFeatureSet(filenames, fs);
   //     assertEquals(2, fs.getDataPoints().size());
   //   } catch (AuToBIException e) {
   //     fail(e.getMessage());
@@ -831,7 +832,8 @@ public class AuToBITest {
     } catch (IOException e) {
       fail();
     }
-    autobi.getParameters().setParameter("pitch_accent_detector", ResourcePath.getResourcePath("pitch_accent_detection.classifier"));
+    autobi.getParameters().setParameter(
+        "pitch_accent_detector", ResourcePath.getResourcePath("pitch_accent_detection.classifier"));
     autobi.initializeAuToBITasks();
     assertEquals(1, autobi.tasks.size());
     assertTrue(autobi.tasks.containsKey("pitch_accent_detection"));
@@ -845,8 +847,8 @@ public class AuToBITest {
     } catch (IOException e) {
       fail();
     }
-    autobi.getParameters()
-        .setParameter("pitch_accent_classifier", ResourcePath.getResourcePath("pitch_accent_classification.classifier"));
+    autobi.getParameters().setParameter("pitch_accent_classifier",
+        ResourcePath.getResourcePath("pitch_accent_classification.classifier"));
     autobi.initializeAuToBITasks();
     assertEquals(1, autobi.tasks.size());
     assertTrue(autobi.tasks.containsKey("pitch_accent_classification"));
@@ -878,8 +880,8 @@ public class AuToBITest {
 
   @Test
   public void testInitializeAuToBITasksGeneratesPhraseAccentClassificationTask() {
-    autobi.getParameters()
-        .setParameter("phrase_accent_classifier", ResourcePath.getResourcePath("phrase_accent_classification.classifier"));
+    autobi.getParameters().setParameter("phrase_accent_classifier",
+        ResourcePath.getResourcePath("phrase_accent_classification.classifier"));
     autobi.initializeAuToBITasks();
     assertEquals(1, autobi.tasks.size());
     assertTrue(autobi.tasks.containsKey("phrase_accent_classification"));
@@ -887,8 +889,8 @@ public class AuToBITest {
 
   @Test
   public void testInitializeAuToBITasksGeneratesPABTTask() {
-    autobi.getParameters()
-        .setParameter("phrase_accent_boundary_tone_classifier", ResourcePath.getResourcePath("boundary_tone_classification.classifier"));
+    autobi.getParameters().setParameter("phrase_accent_boundary_tone_classifier",
+        ResourcePath.getResourcePath("boundary_tone_classification.classifier"));
     autobi.initializeAuToBITasks();
     assertEquals(1, autobi.tasks.size());
     assertTrue(autobi.tasks.containsKey("phrase_accent_boundary_tone_classification"));
@@ -896,8 +898,8 @@ public class AuToBITest {
 
   @Test
   public void testGenerateTextGridFileString() {
-    // TODO: this will require additional testing to make sure all of the task attributes are filtering through
-    // correctly
+    // TODO: this will require additional testing to make sure all of the task attributes are
+    // filtering through correctly
     autobi.tasks = initializeMockTasks();
     ArrayList<Word> words = new ArrayList<Word>();
     Word w = new Word(0, 1, "testing");
@@ -911,43 +913,44 @@ public class AuToBITest {
     // Approximate mergeAuToBIHypotheses
     w.setAttribute("hyp_pitch_accent", "ACCENTED");
     String text_grid = autobi.generateTextGridString(words);
-    assertEquals("File type = \"ooTextFile\"\n" +
-        "Object class = \"TextGrid\"\n" +
-        "xmin = 0\n" +
-        "xmax = 1.0\n" +
-        "tiers? <exists>\n" +
-        "size = 3\n" +
-        "item []:\n" +
-        "item [1]:\n" +
-        "class = \"IntervalTier\"\n" +
-        "name = \"words\"\n" +
-        "xmin = 0\n" +
-        "xmax = 1.0\n" +
-        "intervals: size = 1\n" +
-        "intervals [1]:\n" +
-        "xmin = 0.0\n" +
-        "xmax = 1.0\n" +
-        "text = \"testing\"\n" +
-        "item [2]:\n" +
-        "class = \"IntervalTier\"\n" +
-        "name = \"pitch_accent_hypothesis\"\n" +
-        "xmin = 0\n" +
-        "xmax = 1.0\n" +
-        "intervals: size = 1\n" +
-        "intervals [1]:\n" +
-        "xmin = 0.0\n" +
-        "xmax = 1.0\n" +
-        "text = \"ACCENTED\"\n" +
-        "item [3]:\n" +
-        "class = \"IntervalTier\"\n" +
-        "name = \"phrase_hypothesis\"\n" +
-        "xmin = 0\n" +
-        "xmax = 1.0\n" +
-        "intervals: size = 1\n" +
-        "intervals [1]:\n" +
-        "xmin = 0.0\n" +
-        "xmax = 1.0\n" +
-        "text = \"\"\n", text_grid);
+    assertEquals("File type = \"ooTextFile\"\n"
+            + "Object class = \"TextGrid\"\n"
+            + "xmin = 0\n"
+            + "xmax = 1.0\n"
+            + "tiers? <exists>\n"
+            + "size = 3\n"
+            + "item []:\n"
+            + "item [1]:\n"
+            + "class = \"IntervalTier\"\n"
+            + "name = \"words\"\n"
+            + "xmin = 0\n"
+            + "xmax = 1.0\n"
+            + "intervals: size = 1\n"
+            + "intervals [1]:\n"
+            + "xmin = 0.0\n"
+            + "xmax = 1.0\n"
+            + "text = \"testing\"\n"
+            + "item [2]:\n"
+            + "class = \"IntervalTier\"\n"
+            + "name = \"pitch_accent_hypothesis\"\n"
+            + "xmin = 0\n"
+            + "xmax = 1.0\n"
+            + "intervals: size = 1\n"
+            + "intervals [1]:\n"
+            + "xmin = 0.0\n"
+            + "xmax = 1.0\n"
+            + "text = \"ACCENTED\"\n"
+            + "item [3]:\n"
+            + "class = \"IntervalTier\"\n"
+            + "name = \"phrase_hypothesis\"\n"
+            + "xmin = 0\n"
+            + "xmax = 1.0\n"
+            + "intervals: size = 1\n"
+            + "intervals [1]:\n"
+            + "xmin = 0.0\n"
+            + "xmax = 1.0\n"
+            + "text = \"\"\n",
+        text_grid);
   }
 
   @Test
@@ -957,7 +960,8 @@ public class AuToBITest {
      * test_speaker,test.spkrnorm
      */
     try {
-      autobi.loadSpeakerNormalizationMapping(ResourcePath.getResourcePath("speaker_normalization_mapping.txt"));
+      autobi.loadSpeakerNormalizationMapping(
+          ResourcePath.getResourcePath("speaker_normalization_mapping.txt"));
 
       assertNotNull(autobi.getSpeakerNormParamFilename("test_speaker"));
       assertEquals("test.spkrnorm", autobi.getSpeakerNormParamFilename("test_speaker"));
@@ -981,11 +985,13 @@ public class AuToBITest {
    */
   private void writeMockClassifiersToTestDir(HashMap<String, AuToBITask> tasks) throws IOException {
     for (String task : tasks.keySet()) {
-      writeClassifierToFile(ResourcePath.getResourcePath(task + ".classifier"), tasks.get(task).getClassifier());
+      writeClassifierToFile(
+          ResourcePath.getResourcePath(task + ".classifier"), tasks.get(task).getClassifier());
     }
   }
 
-  private void writeClassifierToFile(String filename, AuToBIClassifier classifier) throws IOException {
+  private void writeClassifierToFile(String filename, AuToBIClassifier classifier)
+      throws IOException {
     FileOutputStream fos;
     ObjectOutputStream out;
     fos = new FileOutputStream(filename);

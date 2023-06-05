@@ -19,19 +19,18 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for SubregionWrappedFeatureExtractor
@@ -40,7 +39,6 @@ import static org.junit.Assert.fail;
  */
 @SuppressWarnings("unchecked")
 public class SubregionWrappedFeatureExtractorTest {
-
   private SubregionWrappedFeatureExtractor fe;
   private List<Region> regions;
 
@@ -175,7 +173,7 @@ public class SubregionWrappedFeatureExtractorTest {
     Word w = new Word(0, 1, "test_word");
     Region r = new Region(0.5, 0.75, "test_subregion");
     w.setAttribute("subregion", r);
-    w.setAttribute("sub_req", new Contour(0.4, 0.1, new double[]{1, 2, 3, 4, 5, 6}));
+    w.setAttribute("sub_req", new Contour(0.4, 0.1, new double[] {1, 2, 3, 4, 5, 6}));
     regions.add(w);
 
     try {

@@ -19,14 +19,13 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.*;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import edu.cuny.qc.speech.AuToBI.core.*;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for IntermediatePhraseBoundaryFeatureExtractor
@@ -34,8 +33,6 @@ import static org.junit.Assert.assertTrue;
  * @see edu.cuny.qc.speech.AuToBI.featureextractor.IntermediatePhraseBoundaryFeatureExtractor
  */
 public class IntermediatePhraseBoundaryFeatureExtractorTest {
-
-
   @Test
   public void testConstructorSetsExtractedFeaturesCorrectly() {
     IntermediatePhraseBoundaryFeatureExtractor fe =
@@ -74,8 +71,8 @@ public class IntermediatePhraseBoundaryFeatureExtractorTest {
 
   @Test
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
-
-    IntermediatePhraseBoundaryFeatureExtractor fe = new IntermediatePhraseBoundaryFeatureExtractor();
+    IntermediatePhraseBoundaryFeatureExtractor fe =
+        new IntermediatePhraseBoundaryFeatureExtractor();
 
     List<Region> regions = new ArrayList<Region>();
     Word w = new Word(0.0, 1.0, "test");

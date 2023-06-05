@@ -6,6 +6,7 @@ from py4j.java_gateway import JavaGateway
 
 from autobi.jar import JARPATH
 
+
 class TestJar:
     def test_jar_includes(self):
         assert isinstance(JARPATH, Path)

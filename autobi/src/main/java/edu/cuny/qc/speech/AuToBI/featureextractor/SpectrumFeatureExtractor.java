@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,31 +28,26 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.SpectrumExtractor;
 import edu.cuny.qc.speech.AuToBI.core.*;
-
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * SpectrumFeatureExtractor extracts a spectrum from a given WavData object.
  * <p/>
- * v1.4 SpectrumFeatureExtractor has changed to attach spectra to each region rather than cutting down to size
- * This is a more effective route to extracting context.
+ * v1.4 SpectrumFeatureExtractor has changed to attach spectra to each region rather than cutting
+ * down to size This is a more effective route to extracting context.
  */
 @SuppressWarnings("unchecked")
 public class SpectrumFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "spectrum";
-  private String feature_name;  // the name of the feature to hold pitch information
+  private String feature_name; // the name of the feature to hold pitch information
   private double frame_size; // The spectrum frame duration
   private double hamming_window; // The size of the hamming window used in the spectrum analysis
 
-
   /**
-   * Constructs a new SpectrumFeatureExtractor to process wav_data and store the resulting Spectrum objects on
-   * feature_name
-   * <p/>
-   * This uses a default frame size of 0.01s, and a hamming window of 0.02s.
-   * <p/>
-   * Deprecated as of 1.4.  The feature name is always the 'moniker', "spectrum".
+   * Constructs a new SpectrumFeatureExtractor to process wav_data and store the resulting Spectrum
+   * objects on feature_name <p/> This uses a default frame size of 0.01s, and a hamming window of
+   * 0.02s. <p/> Deprecated as of 1.4.  The feature name is always the 'moniker', "spectrum".
    *
    * @param feature_name the feature name
    */
@@ -115,12 +113,11 @@ public class SpectrumFeatureExtractor extends FeatureExtractor {
             Spectrum spectrum = extractor.getSpectrum(frame_size, hamming_window);
 
             if (spectrum == null) {
-              // AR: When writing tests, I couldn't get this case to fire. It seems unwise to remove this fail-safe
-              // though. If it happens during runtime, write a test for it.
+              // AR: When writing tests, I couldn't get this case to fire. It seems unwise to remove
+              // this fail-safe though. If it happens during runtime, write a test for it.
               throw new FeatureExtractorException(
-                  "Tried to extract the spectrum from segment with too few frames: " + r.getDuration() +
-                      " seconds. (" +
-                      wav.getNumSamples() + " frames)");
+                  "Tried to extract the spectrum from segment with too few frames: "
+                  + r.getDuration() + " seconds. (" + wav.getNumSamples() + " frames)");
             }
             r.setAttribute(feature_name, spectrum);
             cache.put(wav, spectrum);

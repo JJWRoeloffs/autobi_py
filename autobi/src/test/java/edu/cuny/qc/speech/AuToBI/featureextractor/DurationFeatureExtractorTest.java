@@ -19,15 +19,14 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
+
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for DurationFeatureExtractor
@@ -35,7 +34,6 @@ import static org.junit.Assert.*;
  * @see edu.cuny.qc.speech.AuToBI.featureextractor.DurationFeatureExtractor
  */
 public class DurationFeatureExtractorTest {
-
   @Test
   public void testSetAttributeNameCorrectlySetsExtractedFeatures() {
     DurationFeatureExtractor fe = new DurationFeatureExtractor();

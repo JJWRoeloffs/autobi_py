@@ -19,18 +19,17 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.*;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.*;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for PitchFeatureExtractor
@@ -118,7 +117,6 @@ public class PitchFeatureExtractorTest {
       fail();
     }
   }
-
 
   @Test
   public void testExtractFeaturesAssignsTheFullContour() {

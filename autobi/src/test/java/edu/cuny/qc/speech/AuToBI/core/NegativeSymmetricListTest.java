@@ -19,26 +19,23 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static junit.framework.Assert.*;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
- * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this template use File |
- * Settings | File Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this
+ * template use File | Settings | File Templates.
  */
 public class NegativeSymmetricListTest {
-
   @Test
   public void testGetAndSetZero() {
     NegativeSymmetricList list = new NegativeSymmetricList();
-    for (int i = 0; i < 6; ++i)
-      list.add(6.0);
+    for (int i = 0; i < 6; ++i) list.add(6.0);
     list.set(0, 5.0);
     assertEquals(5.0, list.get(0), 0.0001);
   }
@@ -46,8 +43,7 @@ public class NegativeSymmetricListTest {
   @Test
   public void testGetNegativeAndSetNegative() {
     NegativeSymmetricList list = new NegativeSymmetricList();
-    for (int i = 0; i < 6; ++i)
-      list.add(6.0);
+    for (int i = 0; i < 6; ++i) list.add(6.0);
 
     list.set(-4, 5.0);
     assertEquals(5.0, list.get(-4), 0.0001);
@@ -56,8 +52,7 @@ public class NegativeSymmetricListTest {
   @Test
   public void testGetPositiveAndSetNegative() {
     NegativeSymmetricList list = new NegativeSymmetricList();
-    for (int i = 0; i < 6; ++i)
-      list.add(6.0);
+    for (int i = 0; i < 6; ++i) list.add(6.0);
 
     list.set(-4, 5.0);
     assertEquals(5.0, list.get(4), 0.0001);
@@ -66,8 +61,7 @@ public class NegativeSymmetricListTest {
   @Test
   public void testGetNegativeAndSetPositive() {
     NegativeSymmetricList list = new NegativeSymmetricList();
-    for (int i = 0; i < 6; ++i)
-      list.add(6.0);
+    for (int i = 0; i < 6; ++i) list.add(6.0);
 
     list.set(4, 5.0);
     assertEquals(5.0, list.get(-4), 0.0001);
@@ -76,12 +70,9 @@ public class NegativeSymmetricListTest {
   @Test
   public void testGetPositiveAndSetPositive() {
     NegativeSymmetricList list = new NegativeSymmetricList();
-    for (int i = 0; i < 6; ++i)
-      list.add(6.0);
+    for (int i = 0; i < 6; ++i) list.add(6.0);
 
     list.set(4, 5.0);
     assertEquals(5.0, list.get(4), 0.0001);
   }
-
 }
-

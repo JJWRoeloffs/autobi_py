@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,17 +30,17 @@ import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Distribution;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-
 import java.util.*;
 
 /**
  * PartitionUtils is a set of static functions used for constructing partitions of data points.
  * <p/>
- * This contains the methods that are used in the construction of cross validation folds, and selecting data points that
- * match a particular attribute.  This latter functionality is useful for calculating corpus statistics.
+ * This contains the methods that are used in the construction of cross validation folds, and
+ * selecting data points that match a particular attribute.  This latter functionality is useful for
+ * calculating corpus statistics.
  */
 public class PartitionUtils {
-  private static Random rng = new Random();  // a random number generator.
+  private static Random rng = new Random(); // a random number generator.
 
   // Utility functions cannot be constructed.
   private PartitionUtils() {
@@ -70,14 +73,15 @@ public class PartitionUtils {
    * <p/>
    * This is commonly used for cross validation over filenames rather than sets of words.
    * <p/>
-   * The assignment is returns as a mapping between the string and the fold assignment which ranges between 0 and
-   * num_folds-1.
+   * The assignment is returns as a mapping between the string and the fold assignment which ranges
+   * between 0 and num_folds-1.
    *
    * @param strings   the strings
    * @param num_folds the number of generated folds
    * @return a map from strings to fold numbers
    */
-  public static HashMap<String, Integer> generateXValFoldAssignment(List<String> strings, int num_folds) {
+  public static HashMap<String, Integer> generateXValFoldAssignment(
+      List<String> strings, int num_folds) {
     HashMap<String, Integer> h = new HashMap<String, Integer>();
     for (String string : strings) {
       int j = rng.nextInt(num_folds);
@@ -89,18 +93,19 @@ public class PartitionUtils {
   /**
    * Assigns stratified cross validation fold numbers to the data points.
    * <p/>
-   * In stratified cross validation the class attribute distribution is (as closely as possible) reflected in each cross
-   * validation fold.
+   * In stratified cross validation the class attribute distribution is (as closely as possible)
+   * reflected in each cross validation fold.
    *
    * @param data_points     The data points.
    * @param feature_name    The feature to store the fold assignment on
    * @param num_folds       the numer of folds to construct
    * @param class_attribute the class attribute
-   * @throws edu.cuny.qc.speech.AuToBI.core.AuToBIException If there is a region that does not have an associated
+   * @throws edu.cuny.qc.speech.AuToBI.core.AuToBIException If there is a region that does not have
+   *     an associated
    * class attribute
    */
-  public static void assignStratifiedFoldNum(List<Word> data_points, String feature_name, Integer num_folds,
-                                             String class_attribute) throws AuToBIException {
+  public static void assignStratifiedFoldNum(List<Word> data_points, String feature_name,
+      Integer num_folds, String class_attribute) throws AuToBIException {
     Map<String, Integer> assigner = new HashMap<String, Integer>();
 
     for (Word r : data_points) {
@@ -117,16 +122,16 @@ public class PartitionUtils {
         }
         assigner.put(key, value);
       } else {
-        throw new AuToBIException(
-            "No class_attribute, " + class_attribute + ", feature assigned on Region: " + r.toString());
+        throw new AuToBIException("No class_attribute, " + class_attribute
+            + ", feature assigned on Region: " + r.toString());
       }
     }
   }
 
   /**
-   * Divides a list of data points into mutually exclusive lists of training and testing points The division is based on
-   * a fold feature indicating the test set assignment of the data point Those points whose fold assignment is equal to
-   * foldNum are placed in the testing set.
+   * Divides a list of data points into mutually exclusive lists of training and testing points The
+   * division is based on a fold feature indicating the test set assignment of the data point Those
+   * points whose fold assignment is equal to foldNum are placed in the testing set.
    *
    * @param dataPoints      The set of data points to be split
    * @param trainingPoints  The destination list for the training data
@@ -134,14 +139,15 @@ public class PartitionUtils {
    * @param foldNum         The cross validation fold number
    * @param foldFeatureName The attribute name specifying the xval assignment of the data point
    */
-  public static void splitData(List<Word> dataPoints, List<Word> trainingPoints, List<Word> testingPoints,
-                               Integer foldNum, String foldFeatureName) throws AuToBIException {
+  public static void splitData(List<Word> dataPoints, List<Word> trainingPoints,
+      List<Word> testingPoints, Integer foldNum, String foldFeatureName) throws AuToBIException {
     trainingPoints.clear();
     testingPoints.clear();
 
     for (Word word : dataPoints) {
       if (!word.hasAttribute(foldFeatureName)) {
-        throw new AuToBIException("Word does not have a fold assignment stored in feature: " + foldFeatureName);
+        throw new AuToBIException(
+            "Word does not have a fold assignment stored in feature: " + foldFeatureName);
       }
       if ((word.getAttribute(foldFeatureName)).equals(foldNum)) {
         testingPoints.add(word);
@@ -152,13 +158,10 @@ public class PartitionUtils {
   }
 
   /**
-   * Splits a list of strings into training and testing sets based on a previously generated fold assignment hash.
-   * <p/>
-   * Each string that has been assigned to the specified fold is included in the testing set, every other string is used
-   * in the training set.
-   * <p/>
-   * If fold_num is outside of the range used in the fold_assignment hash, every string will be assigned to the training
-   * set.
+   * Splits a list of strings into training and testing sets based on a previously generated fold
+   * assignment hash. <p/> Each string that has been assigned to the specified fold is included in
+   * the testing set, every other string is used in the training set. <p/> If fold_num is outside of
+   * the range used in the fold_assignment hash, every string will be assigned to the training set.
    *
    * @param strings          the initial set of strings
    * @param training_strings the strings assigned to the training set
@@ -166,8 +169,8 @@ public class PartitionUtils {
    * @param fold_assignment  the mapping from strings to folds
    * @param fold_num         the specified fold.
    */
-  public static void splitData(List<String> strings, List<String> training_strings, List<String> testing_strings,
-                               HashMap<String, Integer> fold_assignment, int fold_num) {
+  public static void splitData(List<String> strings, List<String> training_strings,
+      List<String> testing_strings, HashMap<String, Integer> fold_assignment, int fold_num) {
     training_strings.clear();
     testing_strings.clear();
 
@@ -188,8 +191,8 @@ public class PartitionUtils {
    * @param feature_value The value to filter
    * @return A list containing all data points that have feature_name equal to feature_value.
    */
-  public static List<Word> getAttributeMatchingWords(List<Word> data_points, String feature_name,
-                                                     Object feature_value) {
+  public static List<Word> getAttributeMatchingWords(
+      List<Word> data_points, String feature_name, Object feature_value) {
     List<Word> filtered_words = new ArrayList<Word>();
     for (Word w : data_points) {
       if (w.hasAttribute(feature_name) && w.getAttribute(feature_name).equals(feature_value)) {
@@ -206,7 +209,8 @@ public class PartitionUtils {
    * @param attribute   The attribute to generate a distribution of
    * @return A map of containing the distribution.
    */
-  public static Distribution generateAttributeDistribution(List<Word> data_points, String attribute) {
+  public static Distribution generateAttributeDistribution(
+      List<Word> data_points, String attribute) {
     Distribution class_histogram = new Distribution();
     for (Word w : data_points) {
       class_histogram.add(w.getAttribute(attribute).toString());
@@ -215,11 +219,9 @@ public class PartitionUtils {
   }
 
   /**
-   * Undersamples the data points of with majority class (as determined by class_attribute) down to the size of the
-   * next most
-   * represented class value
-   * <p/>
-   * If there are two majority classes, this operation does not effect the data points.
+   * Undersamples the data points of with majority class (as determined by class_attribute) down to
+   * the size of the next most represented class value <p/> If there are two majority classes, this
+   * operation does not effect the data points.
    *
    * @param data_points     The source set of data points to undersample.
    * @param class_attribute The attribute containing the class which determines the undersampling
@@ -250,7 +252,6 @@ public class PartitionUtils {
 
     Integer n = 0;
     for (Word w : data_points) {
-
       if (w.getAttribute(class_attribute).equals(majority_class)) {
         if (undersampled_points.size() < target_size) {
           undersampled_points.add(w);

@@ -19,15 +19,14 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for IntonationalPhraseBoundaryFeatureExtractor
@@ -35,8 +34,6 @@ import static org.junit.Assert.assertTrue;
  * @see IntonationalPhraseBoundaryFeatureExtractor
  */
 public class IntonationalPhraseBoundaryFeatureExtractorTest {
-
-
   @Test
   public void testConstructorSetsExtractedFeaturesCorrectly() {
     IntonationalPhraseBoundaryFeatureExtractor fe =
@@ -77,7 +74,6 @@ public class IntonationalPhraseBoundaryFeatureExtractorTest {
 
   @Test
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
-
     IntonationalPhraseBoundaryFeatureExtractor fe =
         new IntonationalPhraseBoundaryFeatureExtractor();
 

@@ -19,18 +19,17 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import org.junit.Test;
 
 /**
  * Test class for DifferenceFeatureExtractor
@@ -38,7 +37,6 @@ import static org.junit.Assert.fail;
  * @see DifferenceFeatureExtractor
  */
 public class DifferenceFeatureExtractorTest {
-
   @Test
   public void testExtractFeaturesWorksWithNullFeature() {
     try {

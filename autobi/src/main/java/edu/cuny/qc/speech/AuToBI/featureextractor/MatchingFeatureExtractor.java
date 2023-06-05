@@ -9,45 +9,46 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
-
+import edu.cuny.qc.speech.AuToBI.core.Region;
 import java.util.List;
 
 /**
- * MatchingFeatureExtractor extracts a feature that determines if two other features match, or differ.
- * <p/>
- * Currently, if two variables match the resulting feature value is "CORRECT" and if they differ it is "INCORRECT". This
- * decision was made because this feature extractor is typicaly used to compare predicted values to hypothesized values.
- * A reasonable extension to this will be to allow a user to specify the values for matching and differing feature
- * values.
+ * MatchingFeatureExtractor extracts a feature that determines if two other features match, or
+ * differ. <p/> Currently, if two variables match the resulting feature value is "CORRECT" and if
+ * they differ it is "INCORRECT". This decision was made because this feature extractor is typicaly
+ * used to compare predicted values to hypothesized values. A reasonable extension to this will be
+ * to allow a user to specify the values for matching and differing feature values.
  */
 @SuppressWarnings("unchecked")
 public class MatchingFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "matching";
 
-  private String feature1;     // One of the feature names
-  private String feature2;     // The second feature name
-  private String destination;  // Name for the destination variable.
+  private String feature1; // One of the feature names
+  private String feature2; // The second feature name
+  private String destination; // Name for the destination variable.
 
   /**
-   * Constructs a new MatchingFeatureExtractor to compare the values of two features, feature1, and feature2.
-   * <p/>
-   * The result "CORRECT" or "INCORRECT" is stored in a feature indicated by destination_feature.
+   * Constructs a new MatchingFeatureExtractor to compare the values of two features, feature1, and
+   * feature2. <p/> The result "CORRECT" or "INCORRECT" is stored in a feature indicated by
+   * destination_feature.
    *
    * @param feature1            The first feature
    * @param feature2            The second feature

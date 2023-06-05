@@ -19,26 +19,23 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import junit.framework.Assert;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+import junit.framework.Assert;
+import org.junit.Test;
+
 /**
- * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this template use File |
- * Settings | File Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: Dec 11, 2010 Time: 6:37:35 PM To change this
+ * template use File | Settings | File Templates.
  */
 public class FeatureTest {
-
   @Test
   public void testConstructor() {
-
     Feature f = new Feature("test");
     assertEquals("test", f.getName());
   }
@@ -59,7 +56,6 @@ public class FeatureTest {
 
   @Test
   public void testCompareToFeature() {
-
     Feature f1 = new Feature("test");
 
     Feature f2 = new Feature("second");
@@ -69,7 +65,6 @@ public class FeatureTest {
 
   @Test
   public void testCompareToString() {
-
     Feature f1 = new Feature("test");
 
     assertEquals(1, f1.compareTo("second"));
@@ -77,14 +72,12 @@ public class FeatureTest {
 
   @Test
   public void testCompareToOtherObjectFails() {
-
     Feature f1 = new Feature("test");
 
     try {
       assertEquals(1, f1.compareTo(1.0));
       fail();
     } catch (ClassCastException expected) {
-
     }
   }
 
@@ -114,7 +107,7 @@ public class FeatureTest {
   public void testAddNominalValuesArray() {
     Feature f1 = new Feature("test");
 
-    f1.addNominalValues(new String[]{"one", "two"});
+    f1.addNominalValues(new String[] {"one", "two"});
 
     assertEquals(2, f1.getNominalValues().size());
   }
@@ -136,10 +129,9 @@ public class FeatureTest {
   public void testSetNominalValuesArray() {
     Feature f1 = new Feature("test");
 
-    f1.setNominalValues(new String[]{"one", "two"});
+    f1.setNominalValues(new String[] {"one", "two"});
 
     assertEquals(2, f1.getNominalValues().size());
-
   }
 
   @Test
@@ -196,9 +188,7 @@ public class FeatureTest {
   public void testGetNominalValuesCSV() {
     Feature f1 = new Feature("test");
 
-    f1.setNominalValues(new String[]{"one", "two"});
+    f1.setNominalValues(new String[] {"one", "two"});
     assertEquals("one,two", f1.getNominalValuesCSV());
   }
-
 }
-

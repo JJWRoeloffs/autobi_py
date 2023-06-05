@@ -19,23 +19,23 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * Tests for PitchCandidate
  */
 public class SpeakerNormalizationParameterTest {
-
   @Test
   public void testEmptyConstructorInitialization() {
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter();
 
     assertEquals("", snp.getSpeakerId());
-    assertEquals("f0: mean 0.0 - stdev 0.0\n" +
-        "I: mean 0.0 - stdev 0.0", snp.toString());
+    assertEquals("f0: mean 0.0 - stdev 0.0\n"
+            + "I: mean 0.0 - stdev 0.0",
+        snp.toString());
   }
 
   @Test
@@ -43,8 +43,9 @@ public class SpeakerNormalizationParameterTest {
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter("speaker_test");
 
     assertEquals("speaker_test", snp.getSpeakerId());
-    assertEquals("f0: mean 0.0 - stdev 0.0\n" +
-        "I: mean 0.0 - stdev 0.0", snp.toString());
+    assertEquals("f0: mean 0.0 - stdev 0.0\n"
+            + "I: mean 0.0 - stdev 0.0",
+        snp.toString());
   }
 
   @Test
@@ -52,18 +53,20 @@ public class SpeakerNormalizationParameterTest {
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter();
 
     snp.insertPitch(1.0);
-    assertEquals("f0: mean 1.0 - stdev 0.0\n" +
-        "I: mean 0.0 - stdev 0.0", snp.toString());
+    assertEquals("f0: mean 1.0 - stdev 0.0\n"
+            + "I: mean 0.0 - stdev 0.0",
+        snp.toString());
   }
 
   @Test
   public void testInsertPitchContour() {
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter();
 
-    Contour p = new Contour(0.0, 1.0, new double[]{1.0, 2.0, 3.0});
+    Contour p = new Contour(0.0, 1.0, new double[] {1.0, 2.0, 3.0});
     snp.insertPitch(p);
-    assertEquals("f0: mean 2.0 - stdev 1.0\n" +
-        "I: mean 0.0 - stdev 0.0", snp.toString());
+    assertEquals("f0: mean 2.0 - stdev 1.0\n"
+            + "I: mean 0.0 - stdev 0.0",
+        snp.toString());
   }
 
   @Test
@@ -80,18 +83,20 @@ public class SpeakerNormalizationParameterTest {
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter();
 
     snp.insertIntensity(1.0);
-    assertEquals("f0: mean 0.0 - stdev 0.0\n" +
-        "I: mean 1.0 - stdev 0.0", snp.toString());
+    assertEquals("f0: mean 0.0 - stdev 0.0\n"
+            + "I: mean 1.0 - stdev 0.0",
+        snp.toString());
   }
 
   @Test
   public void testInsertIntensityContour() {
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter();
 
-    Contour i = new Contour(0.0, 1.0, new double[]{1.0, 2.0, 3.0});
+    Contour i = new Contour(0.0, 1.0, new double[] {1.0, 2.0, 3.0});
     snp.insertIntensity(i);
-    assertEquals("f0: mean 0.0 - stdev 0.0\n" +
-        "I: mean 2.0 - stdev 1.0", snp.toString());
+    assertEquals("f0: mean 0.0 - stdev 0.0\n"
+            + "I: mean 2.0 - stdev 1.0",
+        snp.toString());
   }
 
   @Test
@@ -122,4 +127,3 @@ public class SpeakerNormalizationParameterTest {
     assertEquals(0.0, snp.normalize("I", 3.0), 0.0001);
   }
 }
-

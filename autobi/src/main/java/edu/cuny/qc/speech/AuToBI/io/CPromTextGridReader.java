@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,7 +30,6 @@ package edu.cuny.qc.speech.AuToBI.io;
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -35,14 +37,13 @@ import java.util.List;
  * A TextGridReader to process the CProm format of prominence annotations.
  */
 public class CPromTextGridReader extends TextGridReader {
-
   private String prominence_tier_name; // the name of the prominence tier.
-  private Tier prominence_tier;  // A tier to store prominence annotations
+  private Tier prominence_tier; // A tier to store prominence annotations
   private Boolean include_secondary;
   // A flag dictating whether the "secondary" prominence should be considered as accented.
 
-  public CPromTextGridReader(String filename, String words_tier, String prominence_tier, String charsetName,
-                             Boolean include_secondary) {
+  public CPromTextGridReader(String filename, String words_tier, String prominence_tier,
+      String charsetName, Boolean include_secondary) {
     super(filename, words_tier, null, null, charsetName);
     this.prominence_tier_name = prominence_tier;
     this.include_secondary = include_secondary;
@@ -51,14 +52,10 @@ public class CPromTextGridReader extends TextGridReader {
   /**
    * Generates a list of words from the associated TextGrid file.
    * <p/>
-   * A list of words is generated, available ToBI information is aligned to them, and checked for consistency with the
-   * standard.
-   * <p/>
-   * This is the main entry point for this class.
-   * <p/>
-   * Typical Usage:
-   * <p/>
-   * TextGridReader reader = new TextGridReader(filename) List<Words> data_points = reader.readWords();
+   * A list of words is generated, available ToBI information is aligned to them, and checked for
+   * consistency with the standard. <p/> This is the main entry point for this class. <p/> Typical
+   * Usage: <p/> TextGridReader reader = new TextGridReader(filename) List<Words> data_points =
+   * reader.readWords();
    *
    * @return A list of words with from the TextGrid
    * @throws java.io.IOException if there is a reader problem
@@ -73,7 +70,7 @@ public class CPromTextGridReader extends TextGridReader {
     }
 
     Tier tier;
-    readTextGridTier(file_reader);  // Remove TextGrid header
+    readTextGridTier(file_reader); // Remove TextGrid header
     tier = readTextGridTier(file_reader);
     while (tier != null && tier.getName() != null) {
       if (words_tier_name != null) {

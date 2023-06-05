@@ -20,19 +20,17 @@
 
 package edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling;
 
-import edu.cuny.qc.speech.AuToBI.core.*;
-import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
-import junit.framework.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import edu.cuny.qc.speech.AuToBI.core.*;
+import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
+import java.util.ArrayList;
+import java.util.List;
+import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * A Test class for Quantized contour models.
@@ -43,14 +41,13 @@ public class QCMFeatureExtractorTest {
   private QCMFeatureExtractor fe;
   private List<Region> regions;
 
-
   @Before
   public void setUp() {
     regions = new ArrayList<Region>();
     QuantizedContourModelTrainer trainer = new QuantizedContourModelTrainer(5, 2, 0.2);
-    Contour c = new Contour(2.0, 0.001, new double[]{0.0, 0.1, 0.1, 0.1, 0.4});
-    Contour c1 = new Contour(2.0, 0.001, new double[]{-10.0, 0.2, 0.2, 0.2, 0.7});
-    Contour c2 = new Contour(2.0, 0.001, new double[]{-50.0, 0.3, 0.3, 0.3, 1.4});
+    Contour c = new Contour(2.0, 0.001, new double[] {0.0, 0.1, 0.1, 0.1, 0.4});
+    Contour c1 = new Contour(2.0, 0.001, new double[] {-10.0, 0.2, 0.2, 0.2, 0.7});
+    Contour c2 = new Contour(2.0, 0.001, new double[] {-50.0, 0.3, 0.3, 0.3, 1.4});
     List<Contour> contours = new ArrayList<Contour>();
     contours.add(c);
     contours.add(c1);
@@ -72,11 +69,10 @@ public class QCMFeatureExtractorTest {
     assertTrue(fe.getRequiredFeatures().contains("f0"));
   }
 
-
   @Test
   public void testExtractFeaturesExtractsFeatures() {
     Word w = new Word(0, 1, "test");
-    w.setAttribute("f0", new Contour(2.0, 0.001, new double[]{-50.0, 0.3, 0.3, 0.3, 1.4}));
+    w.setAttribute("f0", new Contour(2.0, 0.001, new double[] {-50.0, 0.3, 0.3, 0.3, 1.4}));
     regions.add(w);
 
     try {
@@ -90,12 +86,13 @@ public class QCMFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
     Word w = new Word(2.0, 2.41, "test");
-    w.setAttribute("f0", new Contour(2.0, 0.1, new double[]{-50.0, 0.3, 0.3, 0.3, 1.4}));
+    w.setAttribute("f0", new Contour(2.0, 0.1, new double[] {-50.0, 0.3, 0.3, 0.3, 1.4}));
     regions.add(w);
 
     try {
       fe.extractFeatures(regions);
-      double expected = Math.log(1.0) + Math.log(0.66666) + Math.log(1.0) + Math.log(1.0) + Math.log(1.0);
+      double expected =
+          Math.log(1.0) + Math.log(0.66666) + Math.log(1.0) + Math.log(1.0) + Math.log(1.0);
       assertEquals(expected, (Double) w.getAttribute("qcm_output"), 0.0001);
     } catch (FeatureExtractorException e) {
       fail();

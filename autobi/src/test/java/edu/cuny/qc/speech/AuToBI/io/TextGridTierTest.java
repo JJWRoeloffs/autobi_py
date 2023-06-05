@@ -20,23 +20,19 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for TextGridTier
  */
 public class TextGridTierTest {
-
   private TextGridTier t;
 
   @Before
@@ -48,7 +44,8 @@ public class TextGridTierTest {
   public void testAddPoint() {
     // This file contains a single point annotation
     try {
-      AuToBIFileReader reader = new AuToBIFileReader(ResourcePath.getResourcePath("point.TextGrid"));
+      AuToBIFileReader reader =
+          new AuToBIFileReader(ResourcePath.getResourcePath("point.TextGrid"));
 
       t.addPoint(reader);
 
@@ -69,7 +66,8 @@ public class TextGridTierTest {
   public void testAddInterval() {
     // This file contains a single interval annotation
     try {
-      AuToBIFileReader reader = new AuToBIFileReader(ResourcePath.getResourcePath("interval.TextGrid"));
+      AuToBIFileReader reader =
+          new AuToBIFileReader(ResourcePath.getResourcePath("interval.TextGrid"));
 
       t.addInterval(reader);
 
@@ -89,7 +87,8 @@ public class TextGridTierTest {
   @Test
   public void testReadIntervalTier() {
     try {
-      AuToBIFileReader reader = new AuToBIFileReader(ResourcePath.getResourcePath("interval_tier.TextGrid"));
+      AuToBIFileReader reader =
+          new AuToBIFileReader(ResourcePath.getResourcePath("interval_tier.TextGrid"));
 
       t.readTier(reader);
 
@@ -106,7 +105,8 @@ public class TextGridTierTest {
   @Test
   public void testReadPointTier() {
     try {
-      AuToBIFileReader reader = new AuToBIFileReader(ResourcePath.getResourcePath("point_tier.TextGrid"));
+      AuToBIFileReader reader =
+          new AuToBIFileReader(ResourcePath.getResourcePath("point_tier.TextGrid"));
 
       t.readTier(reader);
 

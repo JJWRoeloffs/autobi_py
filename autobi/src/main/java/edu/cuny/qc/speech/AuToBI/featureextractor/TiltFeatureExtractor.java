@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -26,7 +29,6 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
 import java.util.List;
 
 /**
@@ -38,7 +40,7 @@ import java.util.List;
 public class TiltFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "tilt,tiltAmp,tiltDur";
 
-  private String contour_feature;  // the Contour feature to analyze
+  private String contour_feature; // the Contour feature to analyze
 
   /**
    * Constructs a new TiltFeatureExtractor to calculate Tilt features using the given feature
@@ -58,7 +60,8 @@ public class TiltFeatureExtractor extends FeatureExtractor {
    * Calculates Tilt parameters for the contour referenced by contour_feature over each region.
    *
    * @param regions The regions to extract features from.
-   * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException should never happen.
+   * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException should never
+   *     happen.
    */
   @Override
   public void extractFeatures(List regions) throws FeatureExtractorException {
@@ -69,9 +72,8 @@ public class TiltFeatureExtractor extends FeatureExtractor {
       }
       TiltParameters tilt;
       try {
-        tilt =
-            new TiltParameters(ContourUtils.getSubContour((Contour) r.getAttribute(contour_feature), r.getStart(),
-                r.getEnd()));
+        tilt = new TiltParameters(ContourUtils.getSubContour(
+            (Contour) r.getAttribute(contour_feature), r.getStart(), r.getEnd()));
       } catch (AuToBIException e) {
         throw new FeatureExtractorException(e.getMessage());
       }

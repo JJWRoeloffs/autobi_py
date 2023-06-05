@@ -19,16 +19,15 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.ContextDesc;
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
 import edu.cuny.qc.speech.AuToBI.core.Region;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Test class for ContextNormalizedFeatureExtractor
@@ -36,7 +35,6 @@ import static org.junit.Assert.*;
  * @see ContextNormalizedFeatureExtractor
  */
 public class ContextNormalizedFeatureExtractorTest {
-
   @Test
   public void testRequiredAndExtractedAttributeNames() {
     FeatureExtractor fe =
@@ -117,12 +115,11 @@ public class ContextNormalizedFeatureExtractorTest {
     Region r = new Region(0.0, 0.0, "test");
     regions.add(r);
 
-    r.setAttribute("attr", new Contour(0, 1, new double[]{0.0, 0.0, 1.0, 2.0}));
+    r.setAttribute("attr", new Contour(0, 1, new double[] {0.0, 0.0, 1.0, 2.0}));
     r.setAttribute("min[attr]", 0.0);
     r.setAttribute("max[attr]", 2.0);
     r.setAttribute("mean[attr]", 0.5);
     r.setAttribute("stdev[attr]", 0.2);
-
 
     try {
       cnfe.extractFeatures(regions);
@@ -136,7 +133,6 @@ public class ContextNormalizedFeatureExtractorTest {
     }
   }
 
-
   @Test
   public void testExtractFeaturesExtractsContourBasedFeatures() {
     FeatureExtractor fe =
@@ -146,7 +142,7 @@ public class ContextNormalizedFeatureExtractorTest {
     Region r = new Region(0.0, 3.0, "test");
     regions.add(r);
 
-    r.setAttribute("attr", new Contour(0, 1, new double[]{0.0, 0.0, 1.0, 2.0}));
+    r.setAttribute("attr", new Contour(0, 1, new double[] {0.0, 0.0, 1.0, 2.0}));
     r.setAttribute("min[attr]", 0.0);
     r.setAttribute("max[attr]", 2.0);
     r.setAttribute("mean[attr]", 0.5);
@@ -171,7 +167,7 @@ public class ContextNormalizedFeatureExtractorTest {
     Region r = new Region(0.0, 3.0, "test");
     regions.add(r);
 
-    r.setAttribute("attr", new Contour(0, 1, new double[]{0.0, 0.0, 1.0, 2.0}));
+    r.setAttribute("attr", new Contour(0, 1, new double[] {0.0, 0.0, 1.0, 2.0}));
     r.setAttribute("min[attr]", 0.0);
     r.setAttribute("max[attr]", 2.0);
     r.setAttribute("mean[attr]", 0.5);

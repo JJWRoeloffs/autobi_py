@@ -19,19 +19,18 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
 import edu.cuny.qc.speech.AuToBI.core.Distribution;
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 /**
  * Test class for HypothesizedDistributionFeatureExtractor
@@ -39,7 +38,6 @@ import static org.junit.Assert.fail;
  * @see edu.cuny.qc.speech.AuToBI.featureextractor.HypothesizedDistributionFeatureExtractor
  */
 public class HypothesizedEventFeatureExtractorTest {
-
   @Test
   public void testConstructorSetsExtractedFeaturesCorrectly() {
     HypothesizedEventFeatureExtractor fe =
@@ -51,7 +49,6 @@ public class HypothesizedEventFeatureExtractorTest {
 
   @Test
   public void testConstructorSetsRequiredFeaturesCorrectly() {
-
     FeatureSet fs = new FeatureSet();
     fs.insertRequiredFeature("required_one");
     fs.insertRequiredFeature("required_two");
@@ -62,14 +59,11 @@ public class HypothesizedEventFeatureExtractorTest {
     assertEquals(2, fe.getRequiredFeatures().size());
     assertTrue(fe.getRequiredFeatures().contains("required_one"));
     assertTrue(fe.getRequiredFeatures().contains("required_two"));
-
   }
 
   @Test
   public void testConstructorExtractsFeaturesWithMockConstructor() {
-
     AuToBIClassifier c = new AuToBIClassifier() {
-
       @Override
       public Distribution distributionForInstance(Word testing_point) throws Exception {
         Distribution d = new Distribution();
@@ -79,8 +73,7 @@ public class HypothesizedEventFeatureExtractorTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -105,9 +98,7 @@ public class HypothesizedEventFeatureExtractorTest {
 
   @Test
   public void testConstructorExtractsFeaturesCorrectlyWithMockConstructor() {
-
     AuToBIClassifier c = new AuToBIClassifier() {
-
       @Override
       public Distribution distributionForInstance(Word testing_point) throws Exception {
         Distribution d = new Distribution();
@@ -117,8 +108,7 @@ public class HypothesizedEventFeatureExtractorTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -140,5 +130,4 @@ public class HypothesizedEventFeatureExtractorTest {
       fail();
     }
   }
-
 }

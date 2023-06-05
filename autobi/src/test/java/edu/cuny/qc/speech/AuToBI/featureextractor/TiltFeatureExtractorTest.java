@@ -19,18 +19,17 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Contour;
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertTrue;
+
+import edu.cuny.qc.speech.AuToBI.core.Contour;
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for TiltFeatureExtractor
@@ -39,7 +38,6 @@ import static org.junit.Assert.assertTrue;
  */
 @SuppressWarnings("unchecked")
 public class TiltFeatureExtractorTest {
-
   private TiltFeatureExtractor fe;
   private List<Region> regions;
 
@@ -66,7 +64,7 @@ public class TiltFeatureExtractorTest {
   @Test
   public void testExtractFeatureExtractsFeatures() {
     Word w = new Word(0, 1, "test");
-    w.setAttribute("contour", new Contour(0, 0.1, new double[]{3.0, 4.0, 1.0}));
+    w.setAttribute("contour", new Contour(0, 0.1, new double[] {3.0, 4.0, 1.0}));
     regions.add(w);
 
     try {
@@ -82,7 +80,7 @@ public class TiltFeatureExtractorTest {
   @Test
   public void testExtractFeatureExtractsFeaturesCorrectly() {
     Word w = new Word(0, 0.3, "test");
-    w.setAttribute("contour", new Contour(0, 0.1, new double[]{3.0, 4.0, 1.0}));
+    w.setAttribute("contour", new Contour(0, 0.1, new double[] {3.0, 4.0, 1.0}));
     regions.add(w);
 
     try {
@@ -97,7 +95,6 @@ public class TiltFeatureExtractorTest {
 
   @Test
   public void testExtractFeaturesFailsGracefullyOnNullContour() {
-
     Word w = new Word(0, 0.3, "test");
     regions.add(w);
 

@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -26,8 +29,8 @@ package edu.cuny.qc.speech.AuToBI.core;
 /**
  * Spectrum objects contain acoustic spectrum information.
  * <p/>
- * The spectrum is a three dimensional representation of acoustic energy, containing power indexed by time and
- * frequency.
+ * The spectrum is a three dimensional representation of acoustic energy, containing power indexed
+ * by time and frequency.
  */
 public class Spectrum {
   private double[][] data;
@@ -43,7 +46,8 @@ public class Spectrum {
    * @param frame_size      The size (in seconds) of each frame
    * @param freq_resolution the frequency resolution for the spectrum
    */
-  public Spectrum(double[][] data, double starting_time, double frame_size, double freq_resolution) {
+  public Spectrum(
+      double[][] data, double starting_time, double frame_size, double freq_resolution) {
     this.data = data;
     this.starting_time = starting_time;
     this.frame_size = frame_size;
@@ -86,7 +90,6 @@ public class Spectrum {
     return frame_size;
   }
 
-
   /**
    * Returns a specific power value in the Spectrum
    *
@@ -118,7 +121,8 @@ public class Spectrum {
    */
   public Spectrum getSlice(double time_1, double time_2) throws AuToBIException {
     if (time_1 >= time_2) {
-      throw new AuToBIException("Starting time is after ending time. (" + time_1 + " >= " + time_2 + ")");
+      throw new AuToBIException(
+          "Starting time is after ending time. (" + time_1 + " >= " + time_2 + ")");
     }
     if (data.length == 0) {
       return null;
@@ -129,7 +133,8 @@ public class Spectrum {
     int index_2 = (int) Math.ceil((time_2 - starting_time) / frame_size);
 
     if (index_1 >= data.length) {
-      return new Spectrum(new double[][]{}, index_1 * frame_size + starting_time, frame_size, freq_resolution);
+      return new Spectrum(
+          new double[][] {}, index_1* frame_size + starting_time, frame_size, freq_resolution);
     }
 
     index_1 = Math.max(0, index_1);
@@ -139,17 +144,17 @@ public class Spectrum {
 
     System.arraycopy(data, index_1, slice_data, 0, index_2 - index_1);
 
-    return new Spectrum(slice_data, index_1 * frame_size + starting_time, frame_size, freq_resolution);
+    return new Spectrum(
+        slice_data, index_1 * frame_size + starting_time, frame_size, freq_resolution);
   }
-
 
   /**
    * Retrieves an array of total power in the spectrum between two frequencies.
    * <p/>
    * Returns an array of doubles, one for each frame.
    * <p/>
-   * Note: this is total power, not power density.  To construct power density from this list normalize the power by
-   * Math.ceil(freq_2) - Math.floor(freq_1)
+   * Note: this is total power, not power density.  To construct power density from this list
+   * normalize the power by Math.ceil(freq_2) - Math.floor(freq_1)
    *
    * @param low_freq   The bottom frequency
    * @param high_freq  The top frequency
@@ -157,7 +162,8 @@ public class Spectrum {
    * @return An array of powers in a frequency band across the whole spectrum.
    * @throws AuToBIException if an invalid band is requested.
    */
-  public double[] getPowerInBand(double low_freq, double high_freq, boolean log_values) throws AuToBIException {
+  public double[] getPowerInBand(double low_freq, double high_freq, boolean log_values)
+      throws AuToBIException {
     if (low_freq > high_freq) {
       throw new AuToBIException(
           "Bottom frequency is greater than top frequency. (" + low_freq + " > " + high_freq + ")");
@@ -193,8 +199,8 @@ public class Spectrum {
    * <p/>
    * Returns an array of doubles, one for each frame.
    * <p/>
-   * Note: this is total power, not power density.  To construct power density from this list normalize the power by
-   * Math.ceil(freq_2) - Math.floor(freq_1)
+   * Note: this is total power, not power density.  To construct power density from this list
+   * normalize the power by Math.ceil(freq_2) - Math.floor(freq_1)
    *
    * @param log_values If true, return log power, else return raw power.
    * @return An array of powers in a frequency band across the whole spectrum.
@@ -217,8 +223,8 @@ public class Spectrum {
   /**
    * Retrieves a list of powers in a band as a Contour.
    * <p/>
-   * Note: this is total power, not power density.  To construct power density from this list normalize the power by
-   * Math.ceil(freq_2) - Math.floor(freq_1)
+   * Note: this is total power, not power density.  To construct power density from this list
+   * normalize the power by Math.ceil(freq_2) - Math.floor(freq_1)
    *
    * @param freq_1     The bottom frequency
    * @param freq_2     The top frequency
@@ -226,7 +232,8 @@ public class Spectrum {
    * @return An array of powers in a frequency band across the whole spectrum.
    * @throws AuToBIException if an invalid band is requested.
    */
-  public Contour getPowerContour(double freq_1, double freq_2, boolean log_values) throws AuToBIException {
+  public Contour getPowerContour(double freq_1, double freq_2, boolean log_values)
+      throws AuToBIException {
     double[] power = getPowerInBand(freq_1, freq_2, log_values);
 
     Contour power_contour = new Contour(starting_time, frame_size, power);
@@ -237,7 +244,8 @@ public class Spectrum {
   /**
    * Retrieves a list of power tilts in a band as a Contour.
    * <p/>
-   * Power tilt is calculated as the power within a particular frequency divided by the power in the whole frame
+   * Power tilt is calculated as the power within a particular frequency divided by the power in the
+   * whole frame
    *
    * @param freq_1     The bottom frequency
    * @param freq_2     The top frequency
@@ -245,7 +253,8 @@ public class Spectrum {
    * @return An array of powers in a frequency band across the whole spectrum.
    * @throws AuToBIException if an invalid band is requested.
    */
-  public Contour getPowerTiltContour(double freq_1, double freq_2, boolean log_values) throws AuToBIException {
+  public Contour getPowerTiltContour(double freq_1, double freq_2, boolean log_values)
+      throws AuToBIException {
     double[] power_band = getPowerInBand(freq_1, freq_2, log_values);
     double[] power = getPower(log_values);
 
@@ -293,7 +302,8 @@ public class Spectrum {
       double x = i * freq_resolution;
       double y = frame[i];
       if (log) {
-        if (y == 0) continue;
+        if (y == 0)
+          continue;
         y = Math.log(y);
       }
       s_x += x;

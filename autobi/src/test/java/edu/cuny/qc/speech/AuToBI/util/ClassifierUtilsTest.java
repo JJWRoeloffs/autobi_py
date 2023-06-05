@@ -19,28 +19,26 @@
  */
 package edu.cuny.qc.speech.AuToBI.util;
 
+import static org.junit.Assert.*;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
 import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
 import edu.cuny.qc.speech.AuToBI.classifier.MockClassifier;
 import edu.cuny.qc.speech.AuToBI.core.*;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.Test;
 import weka.core.Attribute;
 import weka.core.Instance;
 import weka.core.Instances;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
-
 /**
- * Created by IntelliJ IDEA. User: andrew Date: 1/4/11 Time: 10:30 AM To change this template use File | Settings | File
- * Templates.
+ * Created by IntelliJ IDEA. User: andrew Date: 1/4/11 Time: 10:30 AM To change this template use
+ * File | Settings | File Templates.
  */
 public class ClassifierUtilsTest {
-
   @Test
   public void testReadClassifierNoFile() {
     String filename = "THIS/IS/NOT/A/FILE";
@@ -121,13 +119,12 @@ public class ClassifierUtilsTest {
     }
   }
 
-
   @Test
   public void testGenerateWekaAttributesIsCorrectForNominalFeatures() {
     Set<Feature> s = new HashSet<Feature>();
 
     Feature f1 = new Feature("nominal feature");
-    f1.setNominalValues(new String[]{"one", "two"});
+    f1.setNominalValues(new String[] {"one", "two"});
     s.add(f1);
 
     try {
@@ -175,7 +172,6 @@ public class ClassifierUtilsTest {
     w2.setAttribute("true", "B");
     w2.setAttribute("hyp", "A");
 
-
     FeatureSet fs = new FeatureSet();
 
     fs.insertDataPoint(w1);
@@ -200,7 +196,6 @@ public class ClassifierUtilsTest {
 
     w2.setAttribute("true", "B");
     w2.setAttribute("hyp", "A");
-
 
     FeatureSet fs = new FeatureSet();
 
@@ -230,8 +225,7 @@ public class ClassifierUtilsTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -258,8 +252,7 @@ public class ClassifierUtilsTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -277,7 +270,6 @@ public class ClassifierUtilsTest {
     assertEquals("default", w1.getAttribute("hyp"));
   }
 
-
   @Test
   public void testGeneratePredictionsWithConfidence() {
     AuToBIClassifier c = new AuToBIClassifier() {
@@ -290,8 +282,7 @@ public class ClassifierUtilsTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -320,8 +311,7 @@ public class ClassifierUtilsTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -353,8 +343,7 @@ public class ClassifierUtilsTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -381,8 +370,7 @@ public class ClassifierUtilsTest {
       }
 
       @Override
-      public void train(FeatureSet feature_set) throws Exception {
-      }
+      public void train(FeatureSet feature_set) throws Exception {}
 
       @Override
       public AuToBIClassifier newInstance() {
@@ -402,14 +390,14 @@ public class ClassifierUtilsTest {
 
   @Test
   public void testGenerateEvaluationResultsFailsGracefullyWithNoTrueFeature() {
-
     FeatureSet fs = new FeatureSet();
     Word w = new Word(0, 1, "test");
     w.setAttribute("hyp_feature", "PREDICTED_VALUE");
     fs.insertDataPoint(w);
 
     try {
-      EvaluationResults eval = ClassifierUtils.generateEvaluationResults("hyp_feature", "true_feature", fs);
+      EvaluationResults eval =
+          ClassifierUtils.generateEvaluationResults("hyp_feature", "true_feature", fs);
       assertNotNull(eval);
     } catch (AuToBIException e) {
       fail();
@@ -420,14 +408,14 @@ public class ClassifierUtilsTest {
 
   @Test
   public void testGenerateEvaluationResultsFailsGracefullyWithNoHypFeature() {
-
     FeatureSet fs = new FeatureSet();
     Word w = new Word(0, 1, "test");
     w.setAttribute("true_feature", "PREDICTED_VALUE");
     fs.insertDataPoint(w);
 
     try {
-      EvaluationResults eval = ClassifierUtils.generateEvaluationResults("hyp_feature", "true_feature", fs);
+      EvaluationResults eval =
+          ClassifierUtils.generateEvaluationResults("hyp_feature", "true_feature", fs);
       assertNotNull(eval);
     } catch (AuToBIException e) {
       fail();

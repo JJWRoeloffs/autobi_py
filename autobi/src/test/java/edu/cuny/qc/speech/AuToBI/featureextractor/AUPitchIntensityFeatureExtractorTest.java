@@ -1,18 +1,17 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static junit.framework.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Region;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.*;
-
 /**
- * Created with IntelliJ IDEA. User: andrew Date: 7/14/12 Time: 5:16 PM To change this template use File | Settings |
- * File Templates.
+ * Created with IntelliJ IDEA. User: andrew Date: 7/14/12 Time: 5:16 PM To change this template use
+ * File | Settings | File Templates.
  */
 public class AUPitchIntensityFeatureExtractorTest {
   private AUPitchIntensityFeatureExtractor fe;
@@ -27,9 +26,10 @@ public class AUPitchIntensityFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeatures() {
     Region r = new Region(0, 1);
-    Contour c = new Contour(0, 0.1, new double[]{0., 1., 1., 2., 10., 10, 10., 11., 12., 1.});
+    Contour c = new Contour(0, 0.1, new double[] {0., 1., 1., 2., 10., 10, 10., 11., 12., 1.});
     r.setAttribute("f0", c);
-    Contour ic = new Contour(0, 0.1, new double[]{10., 10., 10., 10., 10., 20, 20., 20., 20., 20.});
+    Contour ic =
+        new Contour(0, 0.1, new double[] {10., 10., 10., 10., 10., 20, 20., 20., 20., 20.});
     r.setAttribute("I", ic);
     regions.add(r);
     try {
@@ -43,9 +43,10 @@ public class AUPitchIntensityFeatureExtractorTest {
   @Test
   public void testExtractFeatureRisingContourWorks() {
     Region r = new Region(0, 1);
-    Contour c = new Contour(0, 0.1, new double[]{0., 1., 1., 2., 10., 10, 10., 11., 12., 1.});
+    Contour c = new Contour(0, 0.1, new double[] {0., 1., 1., 2., 10., 10, 10., 11., 12., 1.});
     r.setAttribute("f0", c);
-    Contour ic = new Contour(0, 0.1, new double[]{10., 10., 10., 10., 10., 20, 20., 20., 20., 20.});
+    Contour ic =
+        new Contour(0, 0.1, new double[] {10., 10., 10., 10., 10., 20, 20., 20., 20., 20.});
     r.setAttribute("I", ic);
     regions.add(r);
     try {

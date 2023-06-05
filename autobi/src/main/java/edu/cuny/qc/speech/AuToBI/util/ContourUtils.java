@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,7 +27,6 @@
 package edu.cuny.qc.speech.AuToBI.util;
 
 import edu.cuny.qc.speech.AuToBI.core.*;
-
 import java.util.List;
 
 /**
@@ -34,7 +36,6 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 public class ContourUtils {
-
   // Utility classes cannot be constructed.
   private ContourUtils() {
     throw new AssertionError();
@@ -49,20 +50,22 @@ public class ContourUtils {
    * @param contour      The contour to align
    * @param feature_name The feature name to store the contour on the regions
    */
-  public static void assignValuesToOrderedRegions(List regions, Contour contour, String feature_name) {
+  public static void assignValuesToOrderedRegions(
+      List regions, Contour contour, String feature_name) {
     if (regions.size() == 0) {
       return;
     }
     int i = 0;
     Region current = (Region) regions.get(i);
-    Contour attr = new Contour(current.getStart(), contour.getStep(),
-        contour.indexFromTime(current.getDuration()) + 1);
+    Contour attr = new Contour(
+        current.getStart(), contour.getStep(), contour.indexFromTime(current.getDuration()) + 1);
     current.setAttribute(feature_name, attr);
 
     for (Pair<Double, Double> tvp : contour) {
       while (tvp.first > current.getEnd()) {
         i++;
-        if (i >= regions.size()) break;
+        if (i >= regions.size())
+          break;
         current = (Region) regions.get(i);
         attr = new Contour(current.getStart(), contour.getStep(),
             contour.indexFromTime(current.getDuration()) + 1);
@@ -90,7 +93,8 @@ public class ContourUtils {
    * @param regions      The regions to accept contour
    * @param contour      The contour to align
    * @param feature_name The feature name to store the contour on the regions
-   * @throws edu.cuny.qc.speech.AuToBI.core.AuToBIException If the start and end times of a region are inconsistent.
+   * @throws edu.cuny.qc.speech.AuToBI.core.AuToBIException If the start and end times of a region
+   *     are inconsistent.
    *                                                        (I.e., start > end)
    */
   public static void assignValuesToRegions(List regions, Contour contour, String feature_name)
@@ -111,10 +115,11 @@ public class ContourUtils {
    * @param subregions   The regions to accept values
    * @param regions      The regions to draw values from
    * @param feature_name The feature name of the values on the regions and subregions
-   * @throws AuToBIException If the start and end times of a region are inconsistent. (I.e., start > end)
+   * @throws AuToBIException If the start and end times of a region are inconsistent. (I.e., start >
+   *     end)
    */
-  public static void assignValuesToSubregions(List<Region> subregions, List regions, String feature_name)
-      throws AuToBIException {
+  public static void assignValuesToSubregions(
+      List<Region> subregions, List regions, String feature_name) throws AuToBIException {
     // Constructs a single contour that spans the whole list of regions.
     // To hold every value, use the smallest time step and lowest start time.
     double x0 = Double.MAX_VALUE;
@@ -152,7 +157,8 @@ public class ContourUtils {
    * @param contour the contour
    * @param start   the start time
    * @param end     the end time
-   * @return the subcontour of contour containing all values with time greater than start and less than end
+   * @return the subcontour of contour containing all values with time greater than start and less
+   *     than end
    * @throws AuToBIException if start is greater than end
    */
   public static Contour getSubContour(Contour contour, double start, double end)
@@ -163,11 +169,13 @@ public class ContourUtils {
     if (contour == null) {
       throw new AuToBIException("Null input Contour.");
     }
-    if (contour.size() == 0) return new Contour(start, contour.getStep(), 0);
+    if (contour.size() == 0)
+      return new Contour(start, contour.getStep(), 0);
     int start_idx = contour.indexFromTimeCeil(start);
     int end_idx = contour.indexFromTimeFloor(end);
 
-    Contour subcontour = new Contour(contour.timeFromIndex(start_idx), contour.getStep(), end_idx - start_idx + 1);
+    Contour subcontour =
+        new Contour(contour.timeFromIndex(start_idx), contour.getStep(), end_idx - start_idx + 1);
     for (int i = start_idx; i <= end_idx; ++i) {
       if (contour.isEmpty(i)) {
         subcontour.setEmpty(i - start_idx);
@@ -179,8 +187,8 @@ public class ContourUtils {
   }
 
   /**
-   * Return the index of the local minimum preceding (or including) idx. The minimum must be more than threshold below
-   * the starting point.
+   * Return the index of the local minimum preceding (or including) idx. The minimum must be more
+   * than threshold below the starting point.
    *
    * @param contour   The contour to analyze
    * @param idx       The starting index
@@ -195,11 +203,10 @@ public class ContourUtils {
       maximum_value = Math.max(previous_value, maximum_value);
 
       if (contour.get(i) > previous_value || contour.isEmpty(i)) {
-
         if (!rising && maximum_value - previous_value > threshold) {
           // Just passed a local minima or empty point.
-          // If the difference between the value of this minima is sufficiently lower that the maximum, return the index
-          // of the local minima
+          // If the difference between the value of this minima is sufficiently lower that the
+          // maximum, return the index of the local minima
           return i + 1;
         }
         rising = true;
@@ -222,8 +229,8 @@ public class ContourUtils {
   }
 
   /**
-   * Return the index of the next local minimum following idx.  The minimum must be more than threshold below the
-   * starting point
+   * Return the index of the next local minimum following idx.  The minimum must be more than
+   * threshold below the starting point
    *
    * @param contour   The contour to analyze
    * @param idx       The starting index
@@ -237,7 +244,6 @@ public class ContourUtils {
     for (int i = idx + 1; i < contour.size(); ++i) {
       maximum_value = Math.max(previous_value, maximum_value);
       if (contour.get(i) > previous_value || contour.isEmpty(i)) {
-
         // In a valley.  If the valley was sufficiently deep from previous peak, store the value.
         if (!rising && maximum_value - previous_value > threshold) {
           return i - 1;
@@ -280,16 +286,16 @@ public class ContourUtils {
   }
 
   /**
-   * Performs z-score, (x-mean) / stdev, normalization of the supplied values, using the parameters in norm_params.
+   * Performs z-score, (x-mean) / stdev, normalization of the supplied values, using the parameters
+   * in norm_params.
    *
    * @param values       The values to normalize
    * @param norm_params  the normalization parameters
    * @param feature_name The normalization feature
    * @return a normalized list of time value pairs
    */
-  public static Contour zScoreNormalizeContour(Contour values,
-                                               SpeakerNormalizationParameter norm_params,
-                                               String feature_name) {
+  public static Contour zScoreNormalizeContour(
+      Contour values, SpeakerNormalizationParameter norm_params, String feature_name) {
     Contour normalized_values = new Contour(values.getStart(), values.getStep(), values.size());
 
     for (int i = 0; i < values.size(); ++i) {
@@ -311,9 +317,8 @@ public class ContourUtils {
    * @param feature_name the normalization feature
    * @return a normalized contours
    */
-  public static Contour rangeNormalizeContour(Contour contour,
-                                              SpeakerNormalizationParameter norm_params,
-                                              String feature_name) {
+  public static Contour rangeNormalizeContour(
+      Contour contour, SpeakerNormalizationParameter norm_params, String feature_name) {
     Contour norm_c = new Contour(contour.getStart(), contour.getStep(), contour.size());
     for (int i = 0; i < contour.size(); ++i) {
       if (contour.isEmpty(i)) {
@@ -329,8 +334,9 @@ public class ContourUtils {
   /**
    * Generates a delta contour from raw data.
    * <p/>
-   * The resulting points are the first order difference of subsequent values.  This is calculated as x[t+1] - x[t-1].
-   * The delta contour has the same size as the original contour.  The values at the start and end are set to empty.
+   * The resulting points are the first order difference of subsequent values.  This is calculated
+   * as x[t+1] - x[t-1]. The delta contour has the same size as the original contour.  The values at
+   * the start and end are set to empty.
    *
    * @param x The initial values
    * @return The delta values
@@ -357,8 +363,8 @@ public class ContourUtils {
   /**
    * Linearly interpolates contour.
    * <p/>
-   * Only interpolates across non-silence regions as determined by an intensity contour over a threshold Also does not
-   * interpolate at edges of a contour
+   * Only interpolates across non-silence regions as determined by an intensity contour over a
+   * threshold Also does not interpolate at edges of a contour
    */
   public static Contour interpolate(Contour c, Contour intensity, double threshold) {
     Contour ic = new Contour(c.getStart(), c.getStep(), c.size());

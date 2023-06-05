@@ -20,23 +20,20 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
-import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
-import edu.cuny.qc.speech.AuToBI.core.WavData;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Test;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
+import edu.cuny.qc.speech.AuToBI.core.WavData;
+import java.io.IOException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import org.junit.Test;
 
 /**
  * Test class for edu.cuny.qc.speech.AuToBI.io.NXTTier
  */
 public class WavReaderTest {
-
   @Test
   public void testReadsWavFile() {
     WavReader reader = new WavReader();
@@ -54,7 +51,6 @@ public class WavReaderTest {
       fail(e.getMessage());
     }
   }
-
 
   @Test
   public void testReadsSectionOfWavFile() {

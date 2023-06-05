@@ -20,18 +20,17 @@
 
 package edu.cuny.qc.speech.AuToBI.util;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.AuToBI;
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.AuToBITask;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.featureset.*;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for edu.cuny.qc.speech.AuToBI.util.AuToBIUtilsTest
@@ -176,7 +175,8 @@ public class AuToBIUtilsTest {
   // @Test
   // public void testGlobSingleFile() {
   //   try {
-  //     String file = AuToBIUtils.globSingleFile(ResourcePath.getResourcePath("sineWithNoise.wav"));
+  //     String file =
+  //     AuToBIUtils.globSingleFile(ResourcePath.getResourcePath("sineWithNoise.wav"));
   //     assertEquals(ResourcePath.getResourcePath("sineWithNoise.wav"), file);
   //   } catch (AuToBIException e) {
   //     fail(e.getMessage());
@@ -479,7 +479,6 @@ public class AuToBIUtilsTest {
     assertEquals("L-H%", w.getAttribute("hyp_phrase_boundary"));
   }
 
-
   @Test
   public void testMergeAuToBIHypothesesPhraseAccentWithTRUEInterP() {
     Word w = new Word(0.0, 0.1, "hello");
@@ -647,7 +646,6 @@ public class AuToBIUtilsTest {
     assertEquals("f0[I,spectrum]", params.get(1));
     assertEquals("I[f0,spectrum]", params.get(2));
   }
-
 
   @Test
   public void testParseFeatureNameFailsOnMisMatchedBrackets() {

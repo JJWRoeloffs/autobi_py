@@ -8,14 +8,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -23,14 +26,14 @@
 
 package edu.cuny.qc.speech.AuToBI.util;
 
-import org.jtransforms.fft.DoubleFFT_1D;
 import java.util.stream.IntStream;
+import org.jtransforms.fft.DoubleFFT_1D;
 
 /**
  * A class to hold Signal Processing Utilities.
  * <p/>
- * AR: this is a very generic grouping of methods.  It will probably become necessary to move some of these out to
- * more specific utility classes.
+ * AR: this is a very generic grouping of methods.  It will probably become necessary to move some
+ * of these out to more specific utility classes.
  */
 public class SignalProcessingUtils {
   /**
@@ -45,22 +48,19 @@ public class SignalProcessingUtils {
    */
   public static double[] constructHanningWindow(int hanning_window_samples) {
     return IntStream.range(0, hanning_window_samples)
-      .mapToDouble(i -> 0.5 * (1 - Math.cos(2 * Math.PI * i / (hanning_window_samples - 1))))
-      .toArray();
+        .mapToDouble(i -> 0.5 * (1 - Math.cos(2 * Math.PI * i / (hanning_window_samples - 1))))
+        .toArray();
   }
 
   /**
-   * Constructs a half Hann window from 0 up to hanning_window_samples of a hanning_window_samples*2 window.
-   * <p/>
-   * This is usually used to convolve with a signal.
-   * <p/>
-   * Hann(x) = .5 * 1 - cos(2 pi (x / (N-1))
+   * Constructs a half Hann window from 0 up to hanning_window_samples of a hanning_window_samples*2
+   * window. <p/> This is usually used to convolve with a signal. <p/> Hann(x) = .5 * 1 - cos(2 pi
+   * (x / (N-1))
    *
    * @param hanning_window_samples The size of the hanning window
    * @return The convolution window
    */
   public static double[] constructHalfHanningWindow(int hanning_window_samples) {
-
     double[] window = new double[hanning_window_samples];
     for (int i = 0; i < hanning_window_samples; ++i) {
       double phase = i * 1.0 / hanning_window_samples;

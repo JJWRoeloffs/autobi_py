@@ -19,17 +19,16 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.Contour;
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.core.Contour;
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for ContourFeatureExtractor
@@ -37,7 +36,6 @@ import static org.junit.Assert.fail;
  * @see ContourFeatureExtractor
  */
 public class ContourFeatureExtractorTest {
-
   @Test
   public void testExtractFeaturesWorksWithNullFeature() {
     try {
@@ -58,7 +56,7 @@ public class ContourFeatureExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 1, "test");
-      w.setAttribute("test_attribute", new Contour(0.0, 1.0, new double[]{}));
+      w.setAttribute("test_attribute", new Contour(0.0, 1.0, new double[] {}));
       regions.add(w);
 
       ContourFeatureExtractor cfe = new ContourFeatureExtractor("test_attribute");
@@ -100,7 +98,7 @@ public class ContourFeatureExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 1, "test");
-      w.setAttribute("attr", new Contour(0.0, 0.01, new double[]{0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
+      w.setAttribute("attr", new Contour(0.0, 0.01, new double[] {0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
       regions.add(w);
 
       ContourFeatureExtractor cfe = new ContourFeatureExtractor("attr");
@@ -125,7 +123,7 @@ public class ContourFeatureExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 2, "test");
-      w.setAttribute("attr", new Contour(0.0, 0.01, new double[]{0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
+      w.setAttribute("attr", new Contour(0.0, 0.01, new double[] {0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
       regions.add(w);
 
       ContourFeatureExtractor cfe = new ContourFeatureExtractor("attr");
@@ -150,7 +148,7 @@ public class ContourFeatureExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 2, "test");
-      w.setAttribute("attr", new Contour(0.0, 0.01, new double[]{0.1, 0.1, 0.1, 0.1, 0.1, 0.1}));
+      w.setAttribute("attr", new Contour(0.0, 0.01, new double[] {0.1, 0.1, 0.1, 0.1, 0.1, 0.1}));
       regions.add(w);
 
       ContourFeatureExtractor cfe = new ContourFeatureExtractor("attr");
@@ -175,7 +173,7 @@ public class ContourFeatureExtractorTest {
     try {
       List<Region> regions = new ArrayList<Region>();
       Word w = new Word(0, 0.035, "test");
-      w.setAttribute("attr", new Contour(0.0, 0.01, new double[]{0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
+      w.setAttribute("attr", new Contour(0.0, 0.01, new double[] {0.1, 0.2, 0.3, 0.2, 0.4, 0.1}));
       regions.add(w);
 
       ContourFeatureExtractor cfe = new ContourFeatureExtractor("attr");

@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,27 +27,25 @@
 package edu.cuny.qc.speech.AuToBI.core;
 
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
-import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.List;
 import java.lang.Math;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
- * ContextFrame is used to slide a word based frame across a list of doubles (like a pitch or intensity contour).
- * <p/>
- * The frame is set at the start of a list of words and is incremented one word at a time.  At each points statistics
- * about the contour can be queried.
+ * ContextFrame is used to slide a word based frame across a list of doubles (like a pitch or
+ * intensity contour). <p/> The frame is set at the start of a list of words and is incremented one
+ * word at a time.  At each points statistics about the contour can be queried.
  */
 @SuppressWarnings("unchecked")
 public class ContextFrame {
-  protected List<Region> data;           // the word regions
+  protected List<Region> data; // the word regions
   protected LinkedList<Double> window; // the windowed contour
-  protected String feature_name;       // the feature that is analyzed
-  private Integer back;                // the amount of back context
-  private Integer front;               // the amount of forward context
-  private Integer current;             // current point in the word regions
-  private Aggregation agg;             // stores the aggregate values
+  protected String feature_name; // the feature that is analyzed
+  private Integer back; // the amount of back context
+  private Integer front; // the amount of forward context
+  private Integer current; // current point in the word regions
+  private Aggregation agg; // stores the aggregate values
 
   /**
    * Constructs a ContextFrame
@@ -78,16 +79,14 @@ public class ContextFrame {
         window.add(d);
         agg.insert(d);
       } else {
-        if ((data.get(i).getAttribute(feature_name) instanceof Contour) &&
-            (((Contour) data.get(i).getAttribute(feature_name)).size() > 0)) {
-
+        if ((data.get(i).getAttribute(feature_name) instanceof Contour)
+            && (((Contour) data.get(i).getAttribute(feature_name)).size() > 0)) {
           for (Pair<Double, Double> tvp : (Contour) data.get(i).getAttribute(feature_name)) {
             Double d = tvp.second;
 
             window.add(d);
             agg.insert(d);
           }
-
         }
       }
     }
@@ -105,7 +104,7 @@ public class ContextFrame {
       return;
     }
 
-    if (data.get(0).getAttribute(feature_name) instanceof Number) {// Remove trailing value
+    if (data.get(0).getAttribute(feature_name) instanceof Number) { // Remove trailing value
       if (window.size() > front + back) {
         Double d = window.removeFirst();
         agg.remove(d);
@@ -120,8 +119,10 @@ public class ContextFrame {
     } else if (data.get(0).getAttribute(feature_name) instanceof Contour) {
       // remove trailing values
       Integer points_to_remove = 0;
-      if (current - back - 1 >= 0 && data.get(current - back - 1).getAttribute(feature_name) instanceof Contour) {
-        points_to_remove = ((Contour) data.get(current - back - 1).getAttribute(feature_name)).contentSize();
+      if (current - back - 1 >= 0
+          && data.get(current - back - 1).getAttribute(feature_name) instanceof Contour) {
+        points_to_remove =
+            ((Contour) data.get(current - back - 1).getAttribute(feature_name)).contentSize();
       }
       for (int i = 0; i < Math.min(window.size(), points_to_remove); ++i) {
         Double d = window.removeFirst();
@@ -131,7 +132,8 @@ public class ContextFrame {
       // add van values
       if (current + front < data.size()) {
         if (data.get(current + front).getAttribute(feature_name) != null) {
-          for (Pair<Double, Double> tvp : (Contour) data.get(current + front).getAttribute(feature_name)) {
+          for (Pair<Double, Double> tvp :
+              (Contour) data.get(current + front).getAttribute(feature_name)) {
             Double d = tvp.second;
 
             window.add(d);
@@ -145,7 +147,8 @@ public class ContextFrame {
   /**
    * Returns the maximum value in the context frame
    * <p/>
-   * Note: this could be made more efficient by tracking the maximum value when it is added to the window
+   * Note: this could be made more efficient by tracking the maximum value when it is added to the
+   * window
    *
    * @return the maximum value
    */
@@ -153,8 +156,7 @@ public class ContextFrame {
     if (agg.getMax() != null && Double.isNaN(agg.getMax())) {
       Double max = -(Double.MAX_VALUE);
 
-      for (Double d : window)
-        max = Math.max(d, max);
+      for (Double d : window) max = Math.max(d, max);
       agg.setMax(max);
     }
 
@@ -164,7 +166,8 @@ public class ContextFrame {
   /**
    * Returns the minimum value in the window.
    * <p/>
-   * Note: this could be made more efficient by tracking the minimum value when it is added to the window
+   * Note: this could be made more efficient by tracking the minimum value when it is added to the
+   * window
    *
    * @return the minimum value
    */
@@ -172,8 +175,7 @@ public class ContextFrame {
     if (agg.getMax() != null && Double.isNaN(agg.getMin())) {
       Double min = Double.MAX_VALUE;
 
-      for (Double d : window)
-        min = Math.min(d, min);
+      for (Double d : window) min = Math.min(d, min);
       agg.setMin(min);
     }
 

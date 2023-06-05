@@ -20,22 +20,20 @@
 
 package edu.cuny.qc.speech.AuToBI.util;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  * Test class for edu.cuny.qc.speech.AuToBI.util.AuToBIUtilsTest
  */
 public class AlignmentUtilsTest {
-
   @Test
   public void testCopyToBITonesByTimePitchAccent() {
     List<Word> words = new ArrayList<Word>();
@@ -129,7 +127,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBIBreaksBreakAfter() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     words.add(w1);
@@ -153,7 +150,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBIBreaksBreakBefore() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     words.add(w1);
@@ -177,7 +173,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBIBreaksMismatch() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     words.add(w1);
@@ -189,7 +184,6 @@ public class AlignmentUtilsTest {
 
     breaks.add(b1);
 
-
     try {
       AlignmentUtils.copyToBIBreaks(words, breaks);
       fail();
@@ -200,7 +194,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBIBreaksByTimeAssignsBreaksToRegionsAfterTheLastBreak() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     words.add(w1);
@@ -227,7 +220,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBITonesByIndexWhenAlignedByTime() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     w1.setBreakAfter("1");
@@ -248,7 +240,6 @@ public class AlignmentUtilsTest {
     tones.add(t3);
     tones.add(t4);
 
-
     try {
       AlignmentUtils.copyToBITonesByIndex(words, tones);
       assertEquals("H*", w1.getAccent());
@@ -264,7 +255,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBITonesByIndexBURNCTones() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     w1.setBreakAfter("1");
@@ -293,7 +283,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBITonesByIndexBURNCTonesTwo() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     w1.setBreakAfter("1");
@@ -321,7 +310,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBITonesByIndexWhenAlignedByTimeCompoundPhraseEndingTone() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     w1.setBreakAfter("1");
@@ -340,7 +328,6 @@ public class AlignmentUtilsTest {
     tones.add(t2);
     tones.add(t3);
 
-
     try {
       AlignmentUtils.copyToBITonesByIndex(words, tones);
       assertEquals("H*", w1.getAccent());
@@ -356,7 +343,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBITonesByIndexWhenAlignedByTimeLateBoundaryTone() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     w1.setBreakAfter("1");
@@ -375,7 +361,6 @@ public class AlignmentUtilsTest {
     tones.add(t2);
     tones.add(t3);
 
-
     try {
       AlignmentUtils.copyToBITonesByIndex(words, tones);
       assertEquals("H*", w1.getAccent());
@@ -391,7 +376,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBITonesByIndexThrowsOnEmptyTone() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     w1.setBreakAfter("1");
@@ -410,7 +394,6 @@ public class AlignmentUtilsTest {
     tones.add(t2);
     tones.add(t3);
 
-
     try {
       AlignmentUtils.copyToBITonesByIndex(words, tones);
       fail();
@@ -421,7 +404,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBITonesByIndexThrowsOnMissingPhraseAccent() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     w1.setBreakAfter("1");
@@ -440,7 +422,6 @@ public class AlignmentUtilsTest {
     tones.add(t2);
     tones.add(t3);
 
-
     try {
       AlignmentUtils.copyToBITonesByIndex(words, tones);
       fail();
@@ -451,7 +432,6 @@ public class AlignmentUtilsTest {
 
   @Test
   public void testCopyToBITonesByIndexThrowsOnMissingBoundaryTone() {
-
     List<Word> words = new ArrayList<Word>();
     Word w1 = new Word(1, 2, "test");
     w1.setBreakAfter("1");
@@ -469,7 +449,6 @@ public class AlignmentUtilsTest {
     tones.add(t1);
     tones.add(t2);
     tones.add(t3);
-
 
     try {
       AlignmentUtils.copyToBITonesByIndex(words, tones);

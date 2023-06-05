@@ -2,8 +2,8 @@
 
     Copyright 2009-2014 Andrew Rosenberg
     An implementation of a technique described in
-      Villing et al. (2004) Automatic Blind Syllable Segmentation for Continuous Speech In: Irish Signals and Systems
-      Conference 2004, 30 June - 2 July 2004, Queens University, Belfast.
+      Villing et al. (2004) Automatic Blind Syllable Segmentation for Continuous Speech In: Irish
+ Signals and Systems Conference 2004, 30 June - 2 July 2004, Queens University, Belfast.
 
   This file is part of the AuToBI prosodic analysis package.
 
@@ -12,14 +12,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -30,49 +33,45 @@ import edu.cuny.qc.speech.AuToBI.core.Pair;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
-
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import java.io.File;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * A class to generate pseudosyllable hypotheses.
  * <p/>
- * This is based on a procedure described in Villing et al. (2004) Automatic Blind Syllable Segmentation for
- * Continuous Speech
- * In: Irish Signals and Systems Conference 2004, 30 June - 2 July 2004, Queens University, Belfast.
+ * This is based on a procedure described in Villing et al. (2004) Automatic Blind Syllable
+ * Segmentation for Continuous Speech In: Irish Signals and Systems Conference 2004, 30 June - 2
+ * July 2004, Queens University, Belfast.
  */
 public class VillingSyllabifier extends Syllabifier {
-
   /**
    * Generate pseudosyllable regions based on the Villing (2004) envelope based approach.
    * <p/>
    * Note: currently only works with 16kHz wav files.
    * <p/>
-   * Also worth observing, the second normalized envelope and 'cs' coefficients are described in the initial Villing
-   * paper,
-   * though are not used in the generation of bypotheses.  For completeness, the calculation of this envelope and
-   * coefficients are included in comments within this function.  If we find that there is a use for this information
-   * this will facilitate insertion of this information with minimal implementation.
+   * Also worth observing, the second normalized envelope and 'cs' coefficients are described in the
+   * initial Villing paper, though are not used in the generation of bypotheses.  For completeness,
+   * the calculation of this envelope and coefficients are included in comments within this
+   * function.  If we find that there is a use for this information this will facilitate insertion
+   * of this information with minimal implementation.
    *
    * @param wav WavData
    * @return A list of Regions containing syllable start and end times.
    */
   public List<Region> generatePseudosyllableRegions(WavData wav) {
-
     // Divide the signal into three channels using low pass filters.
-    // TODO: include coefficients for sampling rates other than 16k and include a selection for them. In order 8k,
-    // 22.05k, 44.1k
+    // TODO: include coefficients for sampling rates other than 16k and include a selection for
+    // them. In order 8k, 22.05k, 44.1k
     Pair<double[], double[]> yulewalk_coefs = getYuleWalkFilterCoefficients();
     Pair<double[], double[]> equal_loudness_filter = get150hzHighPassFilterCoefficients();
     Pair<double[], double[]> one_khz_lowpass_filter = get1khzLowPassFilterCoefficients();
     // Pair<double[], double[]> three_khz_lowpass_filter = get3khzLowPassFilterCoefficients();
     Pair<double[], double[]> smoothing_filter = getSmoothingFilterCoefficients();
-
 
     // Generate channel envelopes
     double[] signal = wav.getSamples(0);
@@ -80,7 +79,8 @@ public class VillingSyllabifier extends Syllabifier {
     double[] tmp = filter(yulewalk_coefs.first, yulewalk_coefs.second, signal);
     double[] wav_3 = filter(equal_loudness_filter.first, equal_loudness_filter.second, tmp);
     double[] wav_1 = filter(one_khz_lowpass_filter.first, one_khz_lowpass_filter.second, wav_3);
-    // double[] wav_2 = filter(three_khz_lowpass_filter.first, three_khz_lowpass_filter.second, wav_3);
+    // double[] wav_2 = filter(three_khz_lowpass_filter.first, three_khz_lowpass_filter.second,
+    // wav_3);
 
     // Generate envelope and onset velocities
     double[] env_1 = fullWaveRectification(wav_1);
@@ -90,14 +90,15 @@ public class VillingSyllabifier extends Syllabifier {
     env_3 = reverse(filter(smoothing_filter.first, smoothing_filter.second,
         reverse(filter(smoothing_filter.first, smoothing_filter.second, env_3))));
     // env_2 = reverse(filter(smoothing_filter.first, smoothing_filter.second,
-    //                        reverse(filter(smoothing_filter.first, smoothing_filter.second, env_2))));
+    //                        reverse(filter(smoothing_filter.first, smoothing_filter.second,
+    //                        env_2))));
     env_1 = reverse(filter(smoothing_filter.first, smoothing_filter.second,
         reverse(filter(smoothing_filter.first, smoothing_filter.second, env_1))));
 
     // Downsample to 100Hz
-    env_3 = downsample(env_3, (int) (wav.sampleRate / 100)); //160);
+    env_3 = downsample(env_3, (int) (wav.sampleRate / 100)); // 160);
     // env_2 = downsample(env_2, (int) (wav.sampleRate / 100));
-    env_1 = downsample(env_1, (int) (wav.sampleRate / 100));// 160);
+    env_1 = downsample(env_1, (int) (wav.sampleRate / 100)); // 160);
 
     env_3 = array_pow(env_3, 0.3);
     // env_2 = array_pow(env_2, 0.3);
@@ -105,7 +106,6 @@ public class VillingSyllabifier extends Syllabifier {
 
     // double[] norm_env_2 = array_div(env_2, env_3);
     double[] norm_env_1 = array_div(env_1, env_3);
-
 
     double[] env_vel = array_diff(env_3);
     double[] onset_vel = env_vel;
@@ -135,22 +135,21 @@ public class VillingSyllabifier extends Syllabifier {
 
     double[] boundary_scores = array_score(onset_vel, peaks_array, 0.01, 0.1);
 
-    //vowel scores
-    // ss score bounds were originally 0.6, 0.7
-    // new is 0.3 0.7
+    // vowel scores
+    //  ss score bounds were originally 0.6, 0.7
+    //  new is 0.3 0.7
     double[] ss = array_score(norm_env_1, end_array, 0.3, 0.7);
-//    double[] cs = array_score(norm_env_1, end_array, 0.85, 0.97);
+    //    double[] cs = array_score(norm_env_1, end_array, 0.85, 0.97);
     // vps score bounds were originally 0.01, 0.1
     // new is 0.001 0.1
     double[] vps = array_score(onset_vel, peaks_array, 0.001, 0.1);
 
     // Note: Including the cs score leads to the system to miss detecting sonorant
-    // word internal syllable boundaries (e.g. 'mama' as a two syllable word).  We find the performance to be
-    // significantly improved by omitting this scoring factor.
-    // As described in the original paper, vs should be calculated as follows.
+    // word internal syllable boundaries (e.g. 'mama' as a two syllable word).  We find the
+    // performance to be significantly improved by omitting this scoring factor. As described in the
+    // original paper, vs should be calculated as follows.
     //   double[] vs = array_times(ss, array_times(array_minus(1, cs), vps));
     double[] vs = array_times(ss, vps);
-
 
     // Convolve with a window y, y = -.5 at i=100 and y = -1 at i=10
     // This has the effect of suppressing smaller scores near larger ones.
@@ -193,10 +192,9 @@ public class VillingSyllabifier extends Syllabifier {
     for (int i = 0; i < syllables.size(); ++i) {
       Region r = syllables.get(i);
       double sum = 0;
-      int sf = (int) (r.getStart() * 100);  // convert to indices based on a 100kHz sr.
+      int sf = (int) (r.getStart() * 100); // convert to indices based on a 100kHz sr.
       int ef = (int) (r.getEnd() * 100);
-      for (int j = sf; j < ef; ++j)
-        sum += env_3[j];
+      for (int j = sf; j < ef; ++j) sum += env_3[j];
       e[i] = sum / (ef - sf);
       max_e = Math.max(e[i], max_e);
     }
@@ -230,7 +228,8 @@ public class VillingSyllabifier extends Syllabifier {
   }
 
   /**
-   * Returns true if the idx is within 100ms (1600 frames) but it not equal to one of the peak frames
+   * Returns true if the idx is within 100ms (1600 frames) but it not equal to one of the peak
+   * frames
    *
    * @param idx         the index to evaluate
    * @param peak_frames the list of frames to compare against
@@ -239,8 +238,8 @@ public class VillingSyllabifier extends Syllabifier {
   public boolean checkWindow(Integer idx, ArrayList<Integer> peak_frames) {
     boolean response = false;
     for (int i = 0; i < peak_frames.size(); ++i) {
-      if ((idx > peak_frames.get(i) - 1600 && idx < peak_frames.get(i)) ||
-          (idx < peak_frames.get(i) + 1600 && idx > peak_frames.get(i))) {
+      if ((idx > peak_frames.get(i) - 1600 && idx < peak_frames.get(i))
+          || (idx < peak_frames.get(i) + 1600 && idx > peak_frames.get(i))) {
         response = true;
       }
       if (idx.equals(peak_frames.get(i))) {
@@ -263,8 +262,8 @@ public class VillingSyllabifier extends Syllabifier {
    * @param onset_starts An ArrayList of onset_starts
    * @param onset_ends   An ArrayList of onset_ends
    */
-  public void identfyOnsets(double[] onset_vel, ArrayList<Integer> onset_peaks, ArrayList<Integer> onset_starts,
-                            ArrayList<Integer> onset_ends) {
+  public void identfyOnsets(double[] onset_vel, ArrayList<Integer> onset_peaks,
+      ArrayList<Integer> onset_starts, ArrayList<Integer> onset_ends) {
     double max = -Double.MAX_VALUE;
     int max_idx = -1;
     boolean in_peak = false;
@@ -303,7 +302,8 @@ public class VillingSyllabifier extends Syllabifier {
   /**
    * Calculates the first order difference of an array.
    * <p/>
-   * The resulting array contains n-1 elements corresponding to the difference between array[i+1] and array[i]
+   * The resulting array contains n-1 elements corresponding to the difference between array[i+1]
+   * and array[i]
    *
    * @param array the array
    * @return the difference array
@@ -439,20 +439,19 @@ public class VillingSyllabifier extends Syllabifier {
   /**
    * Returns Yule walker filtering coefficients.
    * <p/>
-   * This is based on an SPL equal loundess filter, then generating a 8-order filter coefficients using
-   * Yule-Walker equations.
+   * This is based on an SPL equal loundess filter, then generating a 8-order filter coefficients
+   * using Yule-Walker equations.
    *
    * @return yule walker filter coeffiencients, the first element is the numerator coefficients,
    * the second the denominator
    */
-  private Pair<double[], double[]> getYuleWalkFilterCoefficients
-  () {
-    double[] numerator = {0.5265, -0.0254, -0.2860, -0.1221, -0.0060, 0.1186, 0.0975, -0.0884, -0.0849};
+  private Pair<double[], double[]> getYuleWalkFilterCoefficients() {
+    double[] numerator = {
+        0.5265, -0.0254, -0.2860, -0.1221, -0.0060, 0.1186, 0.0975, -0.0884, -0.0849};
 
     double[] denominator = {1, -0.4667, 0.0691, -0.2148, -0.0706, 0.1136, 0.0974, -0.1088, 0.0437};
     return new Pair<double[], double[]>(numerator, denominator);
   }
-
 
   /**
    * Generates order 2 butterworth filter coefficients corresponding to a 150Hz high pass filter.
@@ -462,8 +461,7 @@ public class VillingSyllabifier extends Syllabifier {
    * @return butterworth filter coeffiencients, the first element is the numerator coefficients,
    * the second the denominator
    */
-  private Pair<double[], double[]> get150hzHighPassFilterCoefficients
-  () {
+  private Pair<double[], double[]> get150hzHighPassFilterCoefficients() {
     double[] numerator = {0.9592, -1.9184, 0.9592};
 
     double[] denominator = {1, -1.9167, 0.9201};
@@ -478,8 +476,7 @@ public class VillingSyllabifier extends Syllabifier {
    * @return butterworth filter coeffiencients, the first element is the numerator coefficients,
    * the second the denominator
    */
-  private Pair<double[], double[]> get1khzLowPassFilterCoefficients
-  () {
+  private Pair<double[], double[]> get1khzLowPassFilterCoefficients() {
     double[] numerator = {0.0300, 0.0599, 0.0300};
 
     double[] denominator = {1, -1.4542, 0.5741};
@@ -494,8 +491,7 @@ public class VillingSyllabifier extends Syllabifier {
    * @return butterworth filter coeffiencients, the first element is the numerator coefficients,
    * the second the denominator
    */
-  private Pair<double[], double[]> get3khzLowPassFilterCoefficients
-  () {
+  private Pair<double[], double[]> get3khzLowPassFilterCoefficients() {
     double[] numerator = {0.1867, 0.3734, 0.1867};
 
     double[] denominator = {1, -0.4629, 0.2097};
@@ -503,9 +499,8 @@ public class VillingSyllabifier extends Syllabifier {
   }
 
   /**
-   * Generate order 1 butterworth filter coefficients corresponding to a 12Hz low pass filter to smooth the envelope.
-   * <p/>
-   * Note: only appropriate if the sample rate is 16khz
+   * Generate order 1 butterworth filter coefficients corresponding to a 12Hz low pass filter to
+   * smooth the envelope. <p/> Note: only appropriate if the sample rate is 16khz
    *
    * @return butterworth filter coeffiencients, the first element is the numerator coefficients,
    * the second the denominator
@@ -517,16 +512,11 @@ public class VillingSyllabifier extends Syllabifier {
     return new Pair<double[], double[]>(numerator, denominator);
   }
 
-
   /**
-   * Filters the input signal using filter coefficients described in the numerator and denominator vectors.
-   * <p/>
-   * An implementation of MATLAB filter.m
-   * <p/>
-   * <p/>
-   * From MATLAB documentation: where x is the input, y the output, b the numerator and a the denominator
-   * <p/>
-   * y(n) = b(1)*x(n) + b(2)*x(n-1) + ... + b(nb+1)*x(n-nb)
+   * Filters the input signal using filter coefficients described in the numerator and denominator
+   * vectors. <p/> An implementation of MATLAB filter.m <p/> <p/> From MATLAB documentation: where x
+   * is the input, y the output, b the numerator and a the denominator <p/> y(n) = b(1)*x(n) +
+   * b(2)*x(n-1) + ... + b(nb+1)*x(n-nb)
    * - a(2)*y(n-1) - ... - a(na+1)*y(n-na)
    * <p/>
    * where n-1 is the filter order, which handles both FIR and IIR filters
@@ -566,11 +556,11 @@ public class VillingSyllabifier extends Syllabifier {
     return output;
   }
 
-
   /**
    * Scores an array element against a predetermined range (bottom, top).
    * <p/>
-   * The score function is a linear interpolation of the array index across the region between bottom and top
+   * The score function is a linear interpolation of the array index across the region between
+   * bottom and top
    *
    * @param array  the array
    * @param idx    the index to score
@@ -608,9 +598,9 @@ public class VillingSyllabifier extends Syllabifier {
   }
 
   public static void main(String[] args) throws Exception {
-
     File file = new File(args[0]);
-    AudioInputStream soundIn = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
+    AudioInputStream soundIn =
+        AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
 
     WavReader reader = new WavReader();
     WavData wav = reader.read(soundIn);

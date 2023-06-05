@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,42 +30,35 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.io.AuToBIFileReader;
 import edu.cuny.qc.speech.AuToBI.util.PhoneUtils;
-
 import java.io.IOException;
 import java.util.*;
 
 /**
- * SyllableFeatureExtractor constructs syllable regions for each word based on phone regions and a pronunciation
- * dictionary.
- * <p/>
- * The pronunciation dictionary that is disseminated with the Boston University Radio News Corpus is inconsistent with
- * the forced alignment phones included with the corpus.  Therefore, the syllable regions are constructed by aligning
- * the pronunciation of a word with its phone string.  This alignment is incurs zero cost for alignment of identical
- * phone strings and alignment of vowels -- where vowels contain "A", "E", "I", "O", "U"/ If the pronunciation contains
- * the same phone set, this will be an exact match.  If they don't, this will give a best effort alignment between the
- * two.
+ * SyllableFeatureExtractor constructs syllable regions for each word based on phone regions and a
+ * pronunciation dictionary. <p/> The pronunciation dictionary that is disseminated with the Boston
+ * University Radio News Corpus is inconsistent with the forced alignment phones included with the
+ * corpus.  Therefore, the syllable regions are constructed by aligning the pronunciation of a word
+ * with its phone string.  This alignment is incurs zero cost for alignment of identical phone
+ * strings and alignment of vowels -- where vowels contain "A", "E", "I", "O", "U"/ If the
+ * pronunciation contains the same phone set, this will be an exact match.  If they don't, this will
+ * give a best effort alignment between the two.
  */
 @SuppressWarnings("unchecked")
 public class SyllableFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "syls";
-  private String syllable_feature;         // The name of the feature to store syllables on.
-  private String phone_feature;            // The name of the feature containing a list of phone regions.
+  private String syllable_feature; // The name of the feature to store syllables on.
+  private String phone_feature; // The name of the feature containing a list of phone regions.
   private HashMap<String, HashSet<String>> lexicon; // The pronunciation dictionary
 
-  enum trace_symbol {
-    INS, SUB, DEL
-  }  // The symbols required for the dynamic programming trace.
+  enum trace_symbol { INS, SUB, DEL } // The symbols required for the dynamic programming trace.
 
   /**
    * Constructs a new SyllableFeatureExtractor, and reads an appropriate lexicon.
    * <p/>
-   * The lexicon is expected to be a comma separated containing two fields, the word, and its pronunciation, where the
-   * pronunciation is a whitespace separated list of phones, where syllable boundaries are indicated by whitespace
-   * separated asterisks '*'.
-   * <p/>
-   * This is an example line from a properly formatted lexicon:
-   * <p/>
-   * abandonment, ax * b ae+1 n * d ax n * m ax n t
+   * The lexicon is expected to be a comma separated containing two fields, the word, and its
+   * pronunciation, where the pronunciation is a whitespace separated list of phones, where syllable
+   * boundaries are indicated by whitespace separated asterisks '*'. <p/> This is an example line
+   * from a properly formatted lexicon: <p/> abandonment, ax * b ae+1 n * d ax n * m ax n t
    *
    * @param syllable_feature the name of the feature to store the syllable
    * @param phone_feature    the name of the feature containing phone boundaries
@@ -70,8 +66,8 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
    * @throws java.io.IOException if there is a problem reading the lexicon
    */
   @Deprecated
-  public SyllableFeatureExtractor(String syllable_feature, String phone_feature, String lexicon_filename)
-      throws IOException {
+  public SyllableFeatureExtractor(
+      String syllable_feature, String phone_feature, String lexicon_filename) throws IOException {
     this.syllable_feature = syllable_feature;
     this.phone_feature = phone_feature;
     readLexicon(lexicon_filename);
@@ -114,8 +110,8 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
   /**
    * Constructs syllables for each word based on the syllabification described in the lexicon.
    * <p/>
-   * If there is no available pronunciation for a word, this feature extraction routine defaults to C*V syllable
-   * boundaries for word internal syllables and C*VC* for word final syllables.
+   * If there is no available pronunciation for a word, this feature extraction routine defaults to
+   * C*V syllable boundaries for word internal syllables and C*VC* for word final syllables.
    *
    * @param regions The regions to extract features from.
    * @throws FeatureExtractorException if there is a problem with the feature extraction
@@ -126,9 +122,8 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
       List<SubWord> syllables;
       if (lexicon.containsKey(lexiconKey(w.getLabel()))) {
         try {
-          syllables =
-              getBestSyllabification(lexicon.get(lexiconKey(w.getLabel())),
-                  (List<Region>) w.getAttribute(phone_feature));
+          syllables = getBestSyllabification(
+              lexicon.get(lexiconKey(w.getLabel())), (List<Region>) w.getAttribute(phone_feature));
         } catch (AuToBIException e) {
           throw new FeatureExtractorException(e.getMessage());
         }
@@ -140,10 +135,9 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
     }
   }
 
-
   /**
-   * Constructs a list of syllables based on a list of phones assuming a C*V syllable structure for word internal
-   * syllables, and a C*VC* syllable structure for word final phones.
+   * Constructs a list of syllables based on a list of phones assuming a C*V syllable structure for
+   * word internal syllables, and a C*VC* syllable structure for word final phones.
    *
    * @param phones a list of phones
    * @return a list of syllables
@@ -187,18 +181,12 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
     return syllables;
   }
 
-
   /**
-   * Given a list of phones and a set of syllabifications, construct syllable regions with appropriate durations and
-   * labels.
-   * <p/>
-   * Precondition: syllabification represents a syllabification of the list of phones.
-   * <p/>
-   * The format of syllabification is:
-   * <p/>
-   * phone0 phone 1 * phone 2 ... * phoneN-1 phoneN
-   * <p/>
-   * phoneX is a phone label, the asterisk (*) character represents a syllable boundary.
+   * Given a list of phones and a set of syllabifications, construct syllable regions with
+   * appropriate durations and labels. <p/> Precondition: syllabification represents a
+   * syllabification of the list of phones. <p/> The format of syllabification is: <p/> phone0 phone
+   * 1 * phone 2 ... * phoneN-1 phoneN <p/> phoneX is a phone label, the asterisk (*) character
+   * represents a syllable boundary.
    *
    * @param phones           The phones that make up the syllable string
    * @param syllabifications The candidate syllabifications of the phones
@@ -236,12 +224,12 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
             } else if (i == 0) {
               dp[i][j] = dp[i][j - 1] + INS_COST;
               trace[i][j] = trace_symbol.INS;
-            } else if ((dp[i - 1][j] + DEL_COST < dp[i - 1][j - 1] + SUB_COST) &&
-                (dp[i - 1][j] + DEL_COST < dp[i][j - 1] + INS_COST)) {
+            } else if ((dp[i - 1][j] + DEL_COST < dp[i - 1][j - 1] + SUB_COST)
+                && (dp[i - 1][j] + DEL_COST < dp[i][j - 1] + INS_COST)) {
               dp[i][j] = dp[i - 1][j] + DEL_COST;
               trace[i][j] = trace_symbol.DEL;
-            } else if ((dp[i][j - 1] + INS_COST < dp[i - 1][j - 1] + SUB_COST) &&
-                (dp[i][j - 1] + INS_COST < dp[i - 1][j] + DEL_COST)) {
+            } else if ((dp[i][j - 1] + INS_COST < dp[i - 1][j - 1] + SUB_COST)
+                && (dp[i][j - 1] + INS_COST < dp[i - 1][j] + DEL_COST)) {
               dp[i][j] = dp[i][j - 1] + INS_COST;
               trace[i][j] = trace_symbol.INS;
             } else {
@@ -312,7 +300,6 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
     return syllables;
   }
 
-
   /**
    * Determines the substitution cost between two phones.
    * <p/>
@@ -327,13 +314,15 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
    * @return the substitution cost
    */
   private static Double subCost(String phone1, String phone2) {
-    if (phone1.equalsIgnoreCase(phone2)) return 0.0;
-    if (PhoneUtils.isVowel(phone1) && PhoneUtils.isVowel(phone2)) return 0.0;
-    if (!PhoneUtils.isVowel(phone1) && !PhoneUtils.isVowel(phone2)) return 1.0;
+    if (phone1.equalsIgnoreCase(phone2))
+      return 0.0;
+    if (PhoneUtils.isVowel(phone1) && PhoneUtils.isVowel(phone2))
+      return 0.0;
+    if (!PhoneUtils.isVowel(phone1) && !PhoneUtils.isVowel(phone2))
+      return 1.0;
     // Severely penalize consonant vowel matching.
     return 20.0;
   }
-
 
   /**
    * Cleans a string for indexing into the lexicon.

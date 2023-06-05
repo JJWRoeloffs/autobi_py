@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,7 +27,6 @@
 package edu.cuny.qc.speech.AuToBI.util;
 
 import edu.cuny.qc.speech.AuToBI.io.FormattedFile;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +34,6 @@ import java.util.List;
  * AuToBIReaderUtils is a utility class to store static methods to support reading files in AuToBI.
  */
 public class AuToBIReaderUtils {
-
   // Utility Classes cannot be initialized.
   private AuToBIReaderUtils() {
     throw new AssertionError();
@@ -75,7 +76,8 @@ public class AuToBIReaderUtils {
    * @see edu.cuny.qc.speech.AuToBI.io.FormattedFile
    */
 
-  public static List<FormattedFile> globFormattedFiles(String pattern, FormattedFile.Format format) {
+  public static List<FormattedFile> globFormattedFiles(
+      String pattern, FormattedFile.Format format) {
     if (format == null) {
       return globFormattedFiles(pattern);
     }
@@ -86,5 +88,4 @@ public class AuToBIReaderUtils {
     }
     return files;
   }
-
 }

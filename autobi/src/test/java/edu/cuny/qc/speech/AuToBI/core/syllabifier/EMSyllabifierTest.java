@@ -19,24 +19,22 @@
  */
 package edu.cuny.qc.speech.AuToBI.core.syllabifier;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for EMSyllabifier class.
@@ -93,7 +91,6 @@ public class EMSyllabifierTest {
     assertEquals(1.53296535674, x, 0.0001);
   }
 
-
   @Test
   public void testIntersectionReturnNaNWhenNoInternalIntersectionExists() {
     GMMComponent m1 = new GMMComponent(0., 1.);
@@ -119,8 +116,8 @@ public class EMSyllabifierTest {
     }
     List<Region> regions = ems.generatePseudosyllableRegions(wav);
 
-    // Note: there are 12 true syllables in the file.  If the approach is tuned to become more accurate,
-    // the expected value may change.
+    // Note: there are 12 true syllables in the file.  If the approach is tuned to become more
+    // accurate, the expected value may change.
     assertEquals(15, regions.size());
   }
 
@@ -152,7 +149,7 @@ public class EMSyllabifierTest {
     List<GMMComponent> gmm = new ArrayList<GMMComponent>();
     gmm.add(m1);
 
-    Contour c = new Contour(1, 0.5, new double[]{10});
+    Contour c = new Contour(1, 0.5, new double[] {10});
 
     double ll = ems.calcLikelihood(gmm, c);
     double expected_ll = Math.log(m1.calcLikelihood(1.));
@@ -165,7 +162,7 @@ public class EMSyllabifierTest {
     List<GMMComponent> gmm = new ArrayList<GMMComponent>();
     gmm.add(m1);
 
-    Contour c = new Contour(1, 0.5, new double[]{20});
+    Contour c = new Contour(1, 0.5, new double[] {20});
 
     double ll = ems.calcLikelihood(gmm, c);
     double expected_ll = Math.log(m1.calcLikelihood(1.));

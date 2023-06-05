@@ -20,21 +20,18 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for Tier
  */
 public class TierTest {
-
   @Test
   public void testGetters() {
     Tier t = new Tier() {

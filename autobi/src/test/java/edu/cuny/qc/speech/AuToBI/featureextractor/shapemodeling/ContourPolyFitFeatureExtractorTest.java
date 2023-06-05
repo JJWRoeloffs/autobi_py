@@ -20,19 +20,17 @@
 
 package edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
+import java.util.ArrayList;
+import java.util.List;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
-
 
 /**
  * A Test class for Quantized contour models.
@@ -42,7 +40,6 @@ import static org.junit.Assert.*;
 public class ContourPolyFitFeatureExtractorTest {
   private ContourPolyFitFeatureExtractor fe;
   private List<Region> regions;
-
 
   @Before
   public void setUp() {
@@ -69,7 +66,7 @@ public class ContourPolyFitFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeatures() {
     Word w = new Word(0, 1, "test");
-    w.setAttribute("f0", new Contour(0.0, 0.001, new double[]{0.3, 0.3, 0.3, 1.4, 0.2, 0.1}));
+    w.setAttribute("f0", new Contour(0.0, 0.001, new double[] {0.3, 0.3, 0.3, 1.4, 0.2, 0.1}));
     regions.add(w);
 
     try {
@@ -86,7 +83,7 @@ public class ContourPolyFitFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
     Word w = new Word(0, 1, "test");
-    w.setAttribute("f0", new Contour(0.0, 0.1, new double[]{0.3, 0.3, 0.3, 1.4, 0.2, 0.1}));
+    w.setAttribute("f0", new Contour(0.0, 0.1, new double[] {0.3, 0.3, 0.3, 1.4, 0.2, 0.1}));
     regions.add(w);
 
     try {

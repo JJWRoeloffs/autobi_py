@@ -19,18 +19,17 @@
  */
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
-import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
-import edu.cuny.qc.speech.AuToBI.core.Region;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
+import edu.cuny.qc.speech.AuToBI.core.Region;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for TiltFeatureExtractor
@@ -135,11 +134,12 @@ public class XValSpectrumPADFeatureExtractorTest {
       fe.extractFeatures(regions);
       for (Region word : regions) {
         // In this test case the classifier should be able to correctly predict each test label
-        assertEquals(word.getAttribute("test_class"), word.getAttribute("nominal_bark_0_1__prediction"));
+        assertEquals(
+            word.getAttribute("test_class"), word.getAttribute("nominal_bark_0_1__prediction"));
 
-        assertTrue("confidence less than 0.5: " + word.getAttribute("bark_0_1__prediction_confidence"),
+        assertTrue(
+            "confidence less than 0.5: " + word.getAttribute("bark_0_1__prediction_confidence"),
             (Double) word.getAttribute("bark_0_1__prediction_confidence") >= 0.5);
-
       }
     } catch (FeatureExtractorException e) {
       fail(e.getMessage());

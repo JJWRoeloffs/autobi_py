@@ -9,44 +9,44 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
  */
 package edu.cuny.qc.speech.AuToBI.io;
 
+import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.util.AlignmentUtils;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIReaderUtils;
 import edu.cuny.qc.speech.AuToBI.util.WordReaderUtils;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * BURNCReader is an AuToBIWordReader specifically for reading the Boston University Radio News Corpus (BURNC) input
- * files.
- * <p/>
- * The input format is unconventional.  It includes forced alignment output files (*.ala) which include phone hypotheses
- * and word boundaries.  (Under typical usage, only the word boundaries are read.)
- * <p/>
- * Tones and break information are stored in vanilla XWaves files.
+ * BURNCReader is an AuToBIWordReader specifically for reading the Boston University Radio News
+ * Corpus (BURNC) input files. <p/> The input format is unconventional.  It includes forced
+ * alignment output files (*.ala) which include phone hypotheses and word boundaries.  (Under
+ * typical usage, only the word boundaries are read.) <p/> Tones and break information are stored in
+ * vanilla XWaves files.
  */
 public class BURNCReader extends AuToBIWordReader {
-  private String filestem;       // The stem of the set of BURNC files to be read
-  private String phone_feature;  // The name of a feature to store phone regions in.
+  private String filestem; // The stem of the set of BURNC files to be read
+  private String phone_feature; // The name of a feature to store phone regions in.
 
   /**
    * Constructs a new BURNC reader.
@@ -58,8 +58,8 @@ public class BURNCReader extends AuToBIWordReader {
   }
 
   /**
-   * Constructs a new BURNC reader that optionally reads BURNC phones and stores then in a list associated with each
-   * word.
+   * Constructs a new BURNC reader that optionally reads BURNC phones and stores then in a list
+   * associated with each word.
    */
   public BURNCReader(String filestem, String phone_feature) {
     // TODO: clear any extension if present.
@@ -75,9 +75,9 @@ public class BURNCReader extends AuToBIWordReader {
    * @return a list of words read from the ala file.
    */
   public List<Word> readWords() {
-
     List<Word> words = readALAWords();
-    if (words == null) return null;
+    if (words == null)
+      return null;
 
     try {
       List<Region> tones = readTones();
@@ -101,36 +101,12 @@ public class BURNCReader extends AuToBIWordReader {
    * <p/>
    * Ala files include phone identities and word identities.
    * <p/>
-   * Phone identities are whitespace separated and contain the following fields: phone_id start_time(ms) duration(ms)
-   * <p/>
-   * Lines that are start with ">" characters contain word annotations, but no start and end times, these must be
-   * constructed from the phone annotations. For example:
-   * <p/>
-   * N       20      3
-   * <p/>
-   * AY      23      12
-   * <p/>
-   * N       35      4
-   * <p/>
-   * TCL     39      2
-   * <p/>
-   * T       41      4
-   * <p/>
-   * IY+1    45      8
-   * <p/>
-   * N       53      5
-   * <p/>
-   * >nineteen
-   * <p/>
-   * S       58      10
-   * <p/>
-   * EH+1    68      8
-   * <p/>
-   * V       76      3
-   * <p/>
-   * EN      79      4
-   * <p/>
-   * TCL     83      2
+   * Phone identities are whitespace separated and contain the following fields: phone_id
+   * start_time(ms) duration(ms) <p/> Lines that are start with ">" characters contain word
+   * annotations, but no start and end times, these must be constructed from the phone annotations.
+   * For example: <p/> N       20      3 <p/> AY      23      12 <p/> N       35      4 <p/> TCL 39
+   * 2 <p/> T       41      4 <p/> IY+1    45      8 <p/> N       53      5 <p/> >nineteen <p/> S 58
+   * 10 <p/> EH+1    68      8 <p/> V       76      3 <p/> EN      79      4 <p/> TCL     83      2
    * <p/>
    * T       85      1
    * <p/>
@@ -138,8 +114,8 @@ public class BURNCReader extends AuToBIWordReader {
    * <p/>
    * >seventy
    * <p/>
-   * Indicates two words: "nineteen" which starts at .2 and ends at .58 and "seventy" which starts at .58 and ends at
-   * .96
+   * Indicates two words: "nineteen" which starts at .2 and ends at .58 and "seventy" which starts
+   * at .58 and ends at .96
    *
    * @return A list of words.
    */
@@ -168,7 +144,7 @@ public class BURNCReader extends AuToBIWordReader {
             Word w = new Word(word_start_time, end_time, word, null, filename);
             w.setAttribute("speaker_id", filename.replaceFirst("^.*/", "").subSequence(0, 3));
             if (read_phones) {
-              w.setAttribute(phone_feature, phones);  // Assign the phones to the list.
+              w.setAttribute(phone_feature, phones); // Assign the phones to the list.
             }
             words.add(w);
           }
@@ -177,7 +153,6 @@ public class BURNCReader extends AuToBIWordReader {
           }
           word_start_time = -1.0;
         } else {
-
           // The .ala format is a whitespace delimited format containing the fields:
           // phoneid word_start_time duration
           String[] data = line.split("\\s+");
@@ -225,7 +200,8 @@ public class BURNCReader extends AuToBIWordReader {
   }
 
   /**
-   * Reads ToBI break indices from an xwaves formatted Breaks file and aligns them to the input words.
+   * Reads ToBI break indices from an xwaves formatted Breaks file and aligns them to the input
+   * words.
    *
    * @return a list of regions describing the breaks
    * @throws java.io.FileNotFoundException if there is no break file

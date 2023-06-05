@@ -19,18 +19,16 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import org.junit.Test;
-
-import java.util.Set;
-
 import static junit.framework.Assert.*;
 import static org.junit.Assert.assertNotSame;
+
+import java.util.Set;
+import org.junit.Test;
 
 /**
  * Tests for PitchCandidate
  */
 public class RegionTest {
-
   @Test
   public void testConstructor() {
     Region r = new Region(0.0, 1.0, "test_label", "/test/file/name.txt");
@@ -73,7 +71,6 @@ public class RegionTest {
 
   @Test
   public void testConstructorFromOtherRegionWithNoAttributes() {
-
     Region r = new Region(0.0, 1.0, "test_label", "/test/file/name.txt");
     Region new_r = new Region(r);
 
@@ -86,7 +83,6 @@ public class RegionTest {
 
   @Test
   public void testConstructorFromOtherRegionWithAttributes() {
-
     Region r = new Region(0.0, 1.0, "test_label", "/test/file/name.txt");
     r.setAttribute("test", "value");
     Region new_r = new Region(r);
@@ -98,7 +94,6 @@ public class RegionTest {
     assertEquals("/test/file/name.txt", new_r.getFile());
     assertTrue(new_r.hasAttribute("test"));
   }
-
 
   @Test
   public void testSetAndGetStart() {
@@ -211,11 +206,9 @@ public class RegionTest {
     assertEquals(0, r.getAttributeNames().size());
   }
 
-
   @Test
   public void testSetFeatureSetAssignsRequiredFeatureNames() {
     Region r = new Region(5.0, 15.0, "test_label", "/test/file/name.txt");
-
 
     FeatureSet fs = new FeatureSet();
     fs.insertRequiredFeature("test_feature");
@@ -228,7 +221,6 @@ public class RegionTest {
   @Test
   public void testSetFeatureSetAssignsClassAttribute() {
     Region r = new Region(5.0, 15.0, "test_label", "/test/file/name.txt");
-
 
     FeatureSet fs = new FeatureSet();
     fs.setClassAttribute("test_feature");
@@ -317,4 +309,3 @@ public class RegionTest {
     assertEquals("TESTING", w.getAttribute("test_attribute"));
   }
 }
-

@@ -20,18 +20,17 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
+import static org.junit.Assert.*;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test class for CPromTextGridReader
@@ -40,7 +39,6 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("unchecked")
 public class CPromTextGridReaderTest {
-
   private final String testfile = ResourcePath.getResourcePath("test.cprom.TextGrid");
   private CPromTextGridReader reader;
 
@@ -77,8 +75,8 @@ public class CPromTextGridReaderTest {
   @Test
   public void testReadWordsCorrectlySetsLabels() {
     String[] expected_labels =
-        ("voilà donc vous avez bien perçu même intuitivement qu' il|y avait euh des choses issues de radios " +
-            "commerciales ou de radios classiques etcaetera")
+        ("voilà donc vous avez bien perçu même intuitivement qu' il|y avait euh des choses issues de radios "
+            + "commerciales ou de radios classiques etcaetera")
             .split(" ");
 
     try {
@@ -95,8 +93,7 @@ public class CPromTextGridReaderTest {
 
   @Test
   public void testReadWordsCorrectlySetsProminenceAsPitchAccent() {
-    String[] expected_prominence =
-        "n n n n n y n n n n y n n n n n n y n n n y y".split(" ");
+    String[] expected_prominence = "n n n n n y n n n n y n n n n n n y n n n y y".split(" ");
 
     try {
       List<Word> words = reader.readWords();
@@ -115,18 +112,17 @@ public class CPromTextGridReaderTest {
     }
   }
 
-
   @Test
   public void testReadWordsCorrectlySetsSecondaryProminenceAsPitchAccent() {
     reader = new CPromTextGridReader(testfile, "words", "delivery", "UTF16", true);
-    String[] expected_prominence =
-        "y n n n y y n y n n y n n n n n y y n n n y y".split(" ");
+    String[] expected_prominence = "y n n n y y n y n n y n n n n n y y n n n y y".split(" ");
 
     try {
       List<Word> words = reader.readWords();
       for (int i = 0; i < expected_prominence.length; i++) {
         if (expected_prominence[i].equals("y")) {
-          assertNotNull(words.get(i).getLabel() + " should be accented but isn't", words.get(i).getAccent());
+          assertNotNull(
+              words.get(i).getLabel() + " should be accented but isn't", words.get(i).getAccent());
           assertEquals("X*?", words.get(i).getAccent());
         } else {
           assertNull(words.get(i).getAccent());

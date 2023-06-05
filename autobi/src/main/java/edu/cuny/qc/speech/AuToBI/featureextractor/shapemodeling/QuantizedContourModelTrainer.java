@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,17 +28,15 @@ package edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling;
 
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.ConditionalDistribution;
-import edu.cuny.qc.speech.AuToBI.core.Pair;
 import edu.cuny.qc.speech.AuToBI.core.Contour;
+import edu.cuny.qc.speech.AuToBI.core.Pair;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
-
 import java.util.List;
 
 /**
  * A class to train a QuantizedContourModel.
  */
 public class QuantizedContourModelTrainer {
-
   public int time_bins; // the number of time bins
   public int value_bins; // the number of value bins
   public double omit_rate; // omit the top and bottom n% of data points when quantizing value
@@ -62,7 +63,6 @@ public class QuantizedContourModelTrainer {
    * @return a quantized contour model
    */
   public QuantizedContourModel train(List<Contour> contours) {
-
     Pair<Double, Double> limits = identifyLimits(contours);
     ContourQuantizer cq = new ContourQuantizer(time_bins, value_bins, limits.first, limits.second);
     ConditionalDistribution[] slices = new ConditionalDistribution[time_bins];
@@ -101,8 +101,8 @@ public class QuantizedContourModelTrainer {
   }
 
   /**
-   * Identifies the upper and lower limits of the quantized contour model based on the training contours and the trainer
-   * omit rate.
+   * Identifies the upper and lower limits of the quantized contour model based on the training
+   * contours and the trainer omit rate.
    *
    * @param contours the training contours.
    * @return a pair containing the lower and upper limits.
@@ -116,18 +116,15 @@ public class QuantizedContourModelTrainer {
     int omit_size = (int) Math.floor(n * omit_rate + 1);
 
     double[] top_n = new double[omit_size];
-    for (int i = 0; i < top_n.length; ++i)
-      top_n[i] = -Double.MAX_VALUE;
+    for (int i = 0; i < top_n.length; ++i) top_n[i] = -Double.MAX_VALUE;
 
     double[] bottom_n = new double[omit_size];
-    for (int i = 0; i < bottom_n.length; ++i)
-      bottom_n[i] = Double.MAX_VALUE;
+    for (int i = 0; i < bottom_n.length; ++i) bottom_n[i] = Double.MAX_VALUE;
 
     double high_limit = -Double.MAX_VALUE;
     double low_limit = Double.MAX_VALUE;
 
     for (Contour c : contours) {
-
       for (Pair<Double, Double> tvp : c) {
         double v = tvp.second;
 
@@ -160,9 +157,7 @@ public class QuantizedContourModelTrainer {
           }
           low_limit = new_limit;
         }
-
       }
-
     }
 
     return new Pair<Double, Double>(low_limit, high_limit);

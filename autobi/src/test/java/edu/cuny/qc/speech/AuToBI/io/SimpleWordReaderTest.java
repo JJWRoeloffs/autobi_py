@@ -20,16 +20,15 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
-import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.io.IOException;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for SimpleWordReader
@@ -38,7 +37,6 @@ import static org.junit.Assert.fail;
  */
 @SuppressWarnings("unchecked")
 public class SimpleWordReaderTest {
-
   @Test
   public void testReadsWords() {
     SimpleWordReader reader = new SimpleWordReader(ResourcePath.getResourcePath("test.txt"));
@@ -55,7 +53,8 @@ public class SimpleWordReaderTest {
 
   @Test
   public void testReadsWithUTF16() {
-    SimpleWordReader reader = new SimpleWordReader(ResourcePath.getResourcePath("test.utf16.txt"), "UTF16");
+    SimpleWordReader reader =
+        new SimpleWordReader(ResourcePath.getResourcePath("test.utf16.txt"), "UTF16");
 
     try {
       List<Word> words = reader.readWords();
@@ -69,7 +68,8 @@ public class SimpleWordReaderTest {
 
   @Test
   public void testReadsWithNonStandardOrder() {
-    SimpleWordReader reader = new SimpleWordReader(ResourcePath.getResourcePath("test.order.txt"), "UTF8", 0, 2, 1);
+    SimpleWordReader reader =
+        new SimpleWordReader(ResourcePath.getResourcePath("test.order.txt"), "UTF8", 0, 2, 1);
 
     try {
       List<Word> words = reader.readWords();
@@ -83,7 +83,8 @@ public class SimpleWordReaderTest {
 
   @Test
   public void testReadsWithInvalidOrderDefaultsTo012() {
-    SimpleWordReader reader = new SimpleWordReader(ResourcePath.getResourcePath("test.txt"), "UTF8", 0, 0, 0);
+    SimpleWordReader reader =
+        new SimpleWordReader(ResourcePath.getResourcePath("test.txt"), "UTF8", 0, 0, 0);
 
     try {
       List<Word> words = reader.readWords();

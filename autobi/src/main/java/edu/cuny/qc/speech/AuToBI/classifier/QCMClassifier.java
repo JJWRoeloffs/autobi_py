@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -30,24 +33,24 @@ import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling.ContourQuantizerException;
 import edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling.QuantizedContourModel;
 import edu.cuny.qc.speech.AuToBI.featureextractor.shapemodeling.QuantizedContourModelTrainer;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**
- * QCMClassifier is a bayesian classifier which models the likelihood of each class using a QuantizedContourModel and a
- * multinomial prior.
+ * QCMClassifier is a bayesian classifier which models the likelihood of each class using a
+ * QuantizedContourModel and a multinomial prior.
  */
 public class QCMClassifier extends AuToBIClassifier {
   private String class_attribute; // the class attribute to predict
   private String contour_attribute; // the attribute to use for classification
   private int time_bins; // time bins in the QCM
-  private int value_bins;  // value bins in the QCM
+  private int value_bins; // value bins in the QCM
   private HashMap<String, QuantizedContourModel> models; // a set of QCM for classification
   private Distribution prior; // Prior distribution of class labels
 
-  public QCMClassifier(String class_attribute, String contour_attribute, int time_bins, int value_bins) {
+  public QCMClassifier(
+      String class_attribute, String contour_attribute, int time_bins, int value_bins) {
     this.class_attribute = class_attribute;
     this.contour_attribute = contour_attribute;
     this.time_bins = time_bins;
@@ -111,7 +114,8 @@ public class QCMClassifier extends AuToBIClassifier {
     prior.normalize();
 
     for (String key : data.keySet()) {
-      QuantizedContourModelTrainer trainer = new QuantizedContourModelTrainer(time_bins, value_bins, 0.025);
+      QuantizedContourModelTrainer trainer =
+          new QuantizedContourModelTrainer(time_bins, value_bins, 0.025);
       QuantizedContourModel qcm = trainer.train(data.get(key));
       models.put(key, qcm);
     }

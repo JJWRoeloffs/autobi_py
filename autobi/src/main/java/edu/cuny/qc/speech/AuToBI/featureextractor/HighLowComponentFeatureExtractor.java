@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,13 +28,12 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA. User: andrew Date: 7/13/12 Time: 11:21 AM To change this template use File | Settings |
- * File Templates.
+ * Created with IntelliJ IDEA. User: andrew Date: 7/13/12 Time: 11:21 AM To change this template use
+ * File | Settings | File Templates.
  */
 @SuppressWarnings("unchecked")
 public class HighLowComponentFeatureExtractor extends FeatureExtractor {
@@ -46,7 +48,6 @@ public class HighLowComponentFeatureExtractor extends FeatureExtractor {
     this.extracted_features.add("highGP[" + feature + "]");
   }
 
-
   @Override
   public void extractFeatures(List regions) throws FeatureExtractorException {
     // 2 component GMM in one dimension. trained with EM.
@@ -55,7 +56,8 @@ public class HighLowComponentFeatureExtractor extends FeatureExtractor {
       if (r.hasAttribute(feature)) {
         Contour c;
         try {
-          c = ContourUtils.getSubContour((Contour) r.getAttribute(feature), r.getStart(), r.getEnd());
+          c = ContourUtils.getSubContour(
+              (Contour) r.getAttribute(feature), r.getStart(), r.getEnd());
         } catch (AuToBIException e) {
           throw new FeatureExtractorException(e.getMessage());
         }
@@ -73,7 +75,8 @@ public class HighLowComponentFeatureExtractor extends FeatureExtractor {
     }
   }
 
-  // TODO: this two component GMM fitting with EM should probably be refactored into EM utility code.
+  // TODO: this two component GMM fitting with EM should probably be refactored into EM utility
+  // code.
   private Pair<GParam, GParam> fit(GParam low, GParam high, ArrayList<Double> data) {
     Double EPS = 0.00001;
 
@@ -137,5 +140,4 @@ public class HighLowComponentFeatureExtractor extends FeatureExtractor {
     pdf *= Math.pow(Math.E, (-(value - mean) * (value - mean)) / (2 * stdev * stdev));
     return pdf;
   }
-
 }

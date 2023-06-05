@@ -20,23 +20,21 @@
 
 package edu.cuny.qc.speech.AuToBI.io;
 
-import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
-import edu.cuny.qc.speech.AuToBI.core.Word;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
+import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
+import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.io.IOException;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Test class for edu.cuny.qc.speech.AuToBI.io.BuckeyeReader
  */
 public class BuckeyeReaderTest {
-
   @Test
   public void testReadsLines() {
     BuckeyeReader reader = new BuckeyeReader(ResourcePath.getResourcePath("test.buckeye.words"));

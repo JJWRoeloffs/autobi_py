@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -30,11 +33,11 @@ import edu.cuny.qc.speech.AuToBI.core.Pair;
 /**
  * This class fits a polynomial to a contour.
  * <p/>
- * This is used to obtain the polynomial fit coefficients when modeling the shape of a pitch or intensity contour as a
- * polynomial curve.
+ * This is used to obtain the polynomial fit coefficients when modeling the shape of a pitch or
+ * intensity contour as a polynomial curve.
  */
 public class ContourPolynomialFitter {
-  private int n;  // The degree of the polynomial to fit.
+  private int n; // The degree of the polynomial to fit.
 
   /**
    * Constructs a new ContourPolynomialFitter with degree n.
@@ -46,13 +49,13 @@ public class ContourPolynomialFitter {
   }
 
   /**
-   * Calculates the polynomial coefficients of a minimum squared error fit of an n degree polynomial to the contour.
+   * Calculates the polynomial coefficients of a minimum squared error fit of an n degree polynomial
+   * to the contour.
    *
    * @param c the contour
    * @return an array of polynomial coefficients
    */
   public double[] fitContour(Contour c) {
-
     Pair<Matrix, Matrix> tx = constructTargetAndDataMatrix(c);
     Matrix t = tx.first;
     Matrix x = tx.second;
@@ -63,14 +66,14 @@ public class ContourPolynomialFitter {
   }
 
   /**
-   * Calculates the mean squared error (MSE) between a contour c, and the polynomial weights given by weights.
+   * Calculates the mean squared error (MSE) between a contour c, and the polynomial weights given
+   * by weights.
    *
    * @param c       the contour
    * @param weights the weights
    * @return the mean squared error
    */
   public double getMSE(Contour c, double[] weights) {
-
     Pair<Matrix, Matrix> tx = constructTargetAndDataMatrix(c);
     Matrix t = tx.first;
     Matrix x = tx.second;

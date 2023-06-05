@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -29,7 +32,6 @@ import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
 import java.util.List;
 
 /**
@@ -40,7 +42,7 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class ContourPolyFitFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "fit,fitMSE";
-  private ContourPolynomialFitter fitter;  // the fitter responsible for calculating coefficients
+  private ContourPolynomialFitter fitter; // the fitter responsible for calculating coefficients
   private String acoustic_feature; // the name of the acoustic contour feature
 
   public ContourPolyFitFeatureExtractor(ContourPolynomialFitter fitter, String acoustic_feature) {
@@ -49,7 +51,8 @@ public class ContourPolyFitFeatureExtractor extends FeatureExtractor {
 
     this.required_features.add(acoustic_feature);
     for (int i = 0; i <= fitter.getOrder(); ++i) {
-      this.extracted_features.add("fit[" + acoustic_feature + "," + fitter.getOrder() + "," + i + "]");
+      this.extracted_features.add(
+          "fit[" + acoustic_feature + "," + fitter.getOrder() + "," + i + "]");
     }
     this.extracted_features.add("fitMSE[" + acoustic_feature + "," + fitter.getOrder() + "]");
   }
@@ -60,7 +63,6 @@ public class ContourPolyFitFeatureExtractor extends FeatureExtractor {
 
   @Override
   public void extractFeatures(List regions) throws FeatureExtractorException {
-
     for (Region r : (List<Region>) regions) {
       if (r.hasAttribute(acoustic_feature)) {
         Contour super_c = (Contour) r.getAttribute(acoustic_feature);
@@ -75,7 +77,8 @@ public class ContourPolyFitFeatureExtractor extends FeatureExtractor {
           r.setAttribute("fit[" + acoustic_feature + "," + fitter.getOrder() + "," + i + "]", w[i]);
         }
 
-        r.setAttribute("fitMSE[" + acoustic_feature + "," + fitter.getOrder() + "]", fitter.getMSE(c, w));
+        r.setAttribute(
+            "fitMSE[" + acoustic_feature + "," + fitter.getOrder() + "]", fitter.getMSE(c, w));
       }
     }
   }

@@ -1,14 +1,13 @@
 package edu.cuny.qc.speech.AuToBI.classifier;
 
+import static org.junit.Assert.*;
+
 import edu.cuny.qc.speech.AuToBI.AuToBI;
 import edu.cuny.qc.speech.AuToBI.core.*;
 import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
+import java.util.List;
 import org.junit.Test;
 import weka.classifiers.trees.J48;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * Test class for WekaClassifier.
@@ -16,7 +15,6 @@ import static org.junit.Assert.*;
  * @see WekaClassifier
  */
 public class WekaClassifierTest {
-
   @Test
   public void testTrainConstructsFeaturesIfNotSet() {
     FeatureSet fs = new FeatureSet();

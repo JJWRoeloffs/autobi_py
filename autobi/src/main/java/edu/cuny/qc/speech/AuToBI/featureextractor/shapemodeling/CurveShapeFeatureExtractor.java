@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -29,17 +32,15 @@ import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException;
 import edu.cuny.qc.speech.AuToBI.util.ContourUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA. User: andrew Date: 7/13/12 Time: 11:21 AM To change this template use File | Settings |
- * File Templates.
+ * Created with IntelliJ IDEA. User: andrew Date: 7/13/12 Time: 11:21 AM To change this template use
+ * File | Settings | File Templates.
  */
 @SuppressWarnings("unchecked")
 public class CurveShapeFeatureExtractor extends FeatureExtractor {
-
   private String feature;
   public static final String moniker = "risingCurve,fallingCurve,peakCurve,valleyCurve";
 
@@ -160,10 +161,12 @@ public class CurveShapeFeatureExtractor extends FeatureExtractor {
         // merge blocks
         double value = 0.0;
         for (int i = start_merge; i <= end_merge; ++i) {
-          value += pava_blocks.get(i).x * (pava_blocks.get(i).high_idx - pava_blocks.get(i).low_idx + 1);
+          value +=
+              pava_blocks.get(i).x * (pava_blocks.get(i).high_idx - pava_blocks.get(i).low_idx + 1);
         }
         value /= (pava_blocks.get(end_merge).high_idx - pava_blocks.get(start_merge).low_idx + 1);
-        Block new_block = new Block(pava_blocks.get(start_merge).low_idx, pava_blocks.get(end_merge).high_idx, value);
+        Block new_block = new Block(
+            pava_blocks.get(start_merge).low_idx, pava_blocks.get(end_merge).high_idx, value);
 
         // remove the old blocks
         while (start_merge <= end_merge) {
@@ -220,9 +223,9 @@ public class CurveShapeFeatureExtractor extends FeatureExtractor {
   }
 
   private class Block {
-    int low_idx;   // the lowest corresponding index
-    int high_idx;  // the highest corresponding index
-    double x;      // the current value of the block
+    int low_idx; // the lowest corresponding index
+    int high_idx; // the highest corresponding index
+    double x; // the current value of the block
 
     public Block(int low, int high, double x) {
       this.low_idx = low;

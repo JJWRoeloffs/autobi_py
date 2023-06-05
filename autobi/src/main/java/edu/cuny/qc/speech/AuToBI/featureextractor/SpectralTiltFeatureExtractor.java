@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -24,25 +27,24 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.*;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
 
 /**
  * SpectralTiltFeatureExtractor extracts spectral tilt from a each region.
  * <p/>
- * Spectral tilt, in this case, is defined as the ratio of the energy in a specified spectral region and the total
- * energy in the frame.
+ * Spectral tilt, in this case, is defined as the ratio of the energy in a specified spectral region
+ * and the total energy in the frame.
  */
 @SuppressWarnings("unchecked")
 public class SpectralTiltFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "spectralTilt";
-  private String spectrum_feature;  // the spectrum of the signal
+  private String spectrum_feature; // the spectrum of the signal
 
   // An associated ContourFeatureExtractor responsible for the extraction
-  private int low;                          // The low boundary of the frequency bandwidth
-  private int high;                         // The high boundary of the frequency bandwidth
+  private int low; // The low boundary of the frequency bandwidth
+  private int high; // The high boundary of the frequency bandwidth
 
   /**
    * Constructs a new SpectralTiltFeatureExtractor.
@@ -66,7 +68,6 @@ public class SpectralTiltFeatureExtractor extends FeatureExtractor {
     this(Integer.parseInt(low_bark), Integer.parseInt(high_bark));
   }
 
-
   /**
    * Converts a bark value to a hertz value using the following formula:
    * <p/>
@@ -83,7 +84,8 @@ public class SpectralTiltFeatureExtractor extends FeatureExtractor {
    * Extracts spectral tilt features from a set of regions.
    *
    * @param regions the regions to extract features from
-   * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException if something goes wrong with the
+   * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException if something goes
+   *     wrong with the
    *                                                                              feature extraction
    */
   public void extractFeatures(List regions) throws FeatureExtractorException {
@@ -95,7 +97,8 @@ public class SpectralTiltFeatureExtractor extends FeatureExtractor {
           if (cache.containsKey(spectrum)) {
             r.setAttribute("spectralTilt[" + low + "," + high + "]", cache.get(spectrum));
           } else {
-            Contour spectral_tilt = spectrum.getPowerTiltContour(barkToHertz(low), barkToHertz(high), false);
+            Contour spectral_tilt =
+                spectrum.getPowerTiltContour(barkToHertz(low), barkToHertz(high), false);
             r.setAttribute("spectralTilt[" + low + "," + high + "]", spectral_tilt);
             cache.put(spectrum, spectral_tilt);
           }

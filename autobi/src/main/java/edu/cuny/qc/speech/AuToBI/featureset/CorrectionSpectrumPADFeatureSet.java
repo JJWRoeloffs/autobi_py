@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -25,19 +28,19 @@ package edu.cuny.qc.speech.AuToBI.featureset;
 
 import edu.cuny.qc.speech.AuToBI.core.ContextDesc;
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A FeatureSet subclass to generate correction classifications.
  * <p/>
- * This feature set describes the FeaturesRequired to generate corrections for a given spectral pitch accent detector.
+ * This feature set describes the FeaturesRequired to generate corrections for a given spectral
+ * pitch accent detector.
  */
 public class CorrectionSpectrumPADFeatureSet extends FeatureSet {
-
   /**
-   * Constructs a CorrectionSpectrumPADFeatureSet for a spectral region defined by low and high bark values.
+   * Constructs a CorrectionSpectrumPADFeatureSet for a spectral region defined by low and high bark
+   * values.
    *
    * @param low  the low bark value
    * @param high the high bark value
@@ -60,9 +63,9 @@ public class CorrectionSpectrumPADFeatureSet extends FeatureSet {
     contexts.add(new ContextDesc("f1b0", 1, 0));
     contexts.add(new ContextDesc("f1b1", 1, 1));
     for (ContextDesc context : contexts) {
-      for (String norm : new String[]{"", "_norm"}) {
-        for (String slope : new String[]{"", "_delta"}) {
-          for (String agg : new String[]{"__zMax", "__zMean"}) {
+      for (String norm : new String[] {"", "_norm"}) {
+        for (String slope : new String[] {"", "_delta"}) {
+          for (String agg : new String[] {"__zMax", "__zMean"}) {
             insertRequiredFeature("f0" + slope + norm + "_" + context.getLabel() + agg);
           }
         }
@@ -71,10 +74,10 @@ public class CorrectionSpectrumPADFeatureSet extends FeatureSet {
       insertRequiredFeature("duration__duration_" + context.getLabel() + "__rNorm");
     }
 
-    for (String acoustic : new String[]{"f0"}) {
-      for (String norm : new String[]{"", "_norm"}) {
-        for (String slope : new String[]{"", "_delta"}) {
-          for (String agg : new String[]{"max", "mean", "stdev", "zMax"}) {
+    for (String acoustic : new String[] {"f0"}) {
+      for (String norm : new String[] {"", "_norm"}) {
+        for (String slope : new String[] {"", "_delta"}) {
+          for (String agg : new String[] {"max", "mean", "stdev", "zMax"}) {
             insertRequiredFeature(acoustic + slope + norm + "__" + agg);
           }
         }

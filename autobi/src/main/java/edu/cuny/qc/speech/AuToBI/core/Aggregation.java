@@ -9,40 +9,43 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import java.util.Collection;
-import java.io.Serializable;
-
 import static org.apache.commons.math3.special.Erf.erf;
+
+import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * A class to store aggregations of real numbered information.
  * <p/>
- * Aggregation is used to store and serialize running means and standard deviations of values such as pitch and
- * intensity.
+ * Aggregation is used to store and serialize running means and standard deviations of values such
+ * as pitch and intensity.
  */
 public class Aggregation implements Serializable {
   private static final long serialVersionUID = 2012709453361591892L;
 
   private String label; // an optional label for the aggregation
-  private Double min;   // the maximum value in the aggregation
-  private Double max;   // the minimum value in the aggregation
-  private Double sum;   // the sum of all values added to the aggregation
-  private Double ssq;   // the sum of squares of all values added to the aggregation
-  private Integer n;    // the number of elements in the aggregation
+  private Double min; // the maximum value in the aggregation
+  private Double max; // the minimum value in the aggregation
+  private Double sum; // the sum of all values added to the aggregation
+  private Double ssq; // the sum of squares of all values added to the aggregation
+  private Integer n; // the number of elements in the aggregation
 
   /**
    * Constructs a new Aggregation
@@ -66,7 +69,6 @@ public class Aggregation implements Serializable {
     this.label = label;
   }
 
-
   /**
    * Sets the label.
    *
@@ -85,7 +87,6 @@ public class Aggregation implements Serializable {
     return label;
   }
 
-
   /**
    * Inserts a new value in the Aggregation
    *
@@ -102,10 +103,9 @@ public class Aggregation implements Serializable {
   /**
    * Removes a value from the Aggregation.
    * <p/>
-   * Removing a value from an Aggregation can invalidate its minimum and maximum calculation if the value was equal to
-   * the current minmum or maximum.
-   * <p/>
-   * Note: no check is made that the value was ever initially added to the Aggregation.
+   * Removing a value from an Aggregation can invalidate its minimum and maximum calculation if the
+   * value was equal to the current minmum or maximum. <p/> Note: no check is made that the value
+   * was ever initially added to the Aggregation.
    *
    * @param v the value
    */
@@ -113,7 +113,7 @@ public class Aggregation implements Serializable {
     sum -= v;
     ssq -= (v * v);
     if (v.equals(max)) {
-      max = Double.NaN;  // no running max and min
+      max = Double.NaN; // no running max and min
     }
     if (v.equals(min)) {
       min = Double.NaN;
@@ -127,8 +127,7 @@ public class Aggregation implements Serializable {
    * @param values the values
    */
   public void insert(Collection<Double> values) {
-    for (Double d : values)
-      this.insert(d);
+    for (Double d : values) this.insert(d);
   }
 
   /**
@@ -137,8 +136,7 @@ public class Aggregation implements Serializable {
    * @param values the values
    */
   public void remove(Collection<Double> values) {
-    for (Double d : values)
-      this.remove(d);
+    for (Double d : values) this.remove(d);
   }
 
   /**
@@ -149,7 +147,8 @@ public class Aggregation implements Serializable {
    * @return the mean
    */
   public Double getMean() {
-    if (n < 1) return 0.0;
+    if (n < 1)
+      return 0.0;
     return sum / n;
   }
 
@@ -161,7 +160,8 @@ public class Aggregation implements Serializable {
    * @return the standard deviation
    */
   public Double getStdev() {
-    if (n < 2) return 0.0;
+    if (n < 2)
+      return 0.0;
 
     return Math.sqrt(getVariance());
   }
@@ -174,7 +174,8 @@ public class Aggregation implements Serializable {
    * @return the variance
    */
   public Double getVariance() {
-    if (n < 2) return 0.0;
+    if (n < 2)
+      return 0.0;
 
     Double mean = sum / n;
     return (ssq - (n * mean * mean)) / (n - 1);
@@ -239,8 +240,8 @@ public class Aggregation implements Serializable {
   }
 
   /**
-   * Treating this aggregation as a Gaussian probability distribution function, evaluates the probability that a value
-   * generated was generated by this aggregation.
+   * Treating this aggregation as a Gaussian probability distribution function, evaluates the
+   * probability that a value generated was generated by this aggregation.
    *
    * @param value the value to evaluate
    * @return the gaussian PDF evaluated at value
@@ -255,11 +256,9 @@ public class Aggregation implements Serializable {
   }
 
   /**
-   * Evaluates the CDF of the aggregation.  The aggregation is treated as a Gaussian distribution in this case
-   * <p/>
-   * The CDF is the probability of a value drawn from the distribution falling below f
-   * <p/>
-   * cdf(x) = 1/2 [1 + erf(x - mu/sqrt(2 * stdev^2))]
+   * Evaluates the CDF of the aggregation.  The aggregation is treated as a Gaussian distribution in
+   * this case <p/> The CDF is the probability of a value drawn from the distribution falling below
+   * f <p/> cdf(x) = 1/2 [1 + erf(x - mu/sqrt(2 * stdev^2))]
    *
    * @param value the value
    * @return the CDF

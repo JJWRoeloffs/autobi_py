@@ -1,15 +1,14 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import edu.cuny.qc.speech.AuToBI.ResourcePath;
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.SpeakerNormalizationParameter;
-import edu.cuny.qc.speech.AuToBI.ResourcePath;
-import org.junit.Test;
-
 import java.util.ArrayList;
-
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.Test;
 
 /**
  * Test class for SNPAssignmentFeatureExtractor.
@@ -17,7 +16,6 @@ import static org.junit.Assert.fail;
  * @see SNPAssignmentFeatureExtractor
  */
 public class SNPAssignmentFeatureExtractorTest {
-
   @Test
   public void assignsDefaultFeatureOnNullSpeakerID() {
     try {

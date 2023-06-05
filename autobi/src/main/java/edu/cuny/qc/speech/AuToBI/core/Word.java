@@ -9,14 +9,17 @@
 
  ***********************************************************************************************************************
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ in compliance with
  * the License. You should have received a copy of the Apache 2.0 License along with AuToBI.
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See
+ the License for the
  * specific language governing permissions and limitations under the License.
  *
  ***********************************************************************************************************************
@@ -27,12 +30,12 @@ package edu.cuny.qc.speech.AuToBI.core;
  * Word are Regions that have a number of ToBI based variables defined.
  */
 public class Word extends Region {
-  private String accent;  // null if this word is not accented
-  private double accent_time;  // -1 if this word is not accented
-  private String break_before;  // null if there is no break before this word
-  private String break_after;  // null if there is no break after this word
+  private String accent; // null if this word is not accented
+  private double accent_time; // -1 if this word is not accented
+  private String break_before; // null if there is no break before this word
+  private String break_after; // null if there is no break after this word
   private String phrase_accent; // the phrase accent (if any)
-  private String boundary_tone;  // the boudnary tone (if any)
+  private String boundary_tone; // the boudnary tone (if any)
 
   /**
    * Constructs a new Word.
@@ -179,8 +182,8 @@ public class Word extends Region {
    * @return the string representation
    */
   public String toString() {
-    return super.toString() + "[" + break_before + ", " + break_after + "]" +
-        (accent == null ? "" : " " + accent + " " + accent_time);
+    return super.toString() + "[" + break_before + ", " + break_after + "]"
+        + (accent == null ? "" : " " + accent + " " + accent_time);
   }
 
   /**
@@ -189,7 +192,8 @@ public class Word extends Region {
    * @return true if the word is intonational phrase final
    */
   public boolean isIntonationalPhraseFinal() {
-    return (getBreakAfter() != null) && (getBreakAfter().equals("4-") || getBreakAfter().equals("4"));
+    return (getBreakAfter() != null)
+        && (getBreakAfter().equals("4-") || getBreakAfter().equals("4"));
   }
 
   /**
@@ -198,7 +202,8 @@ public class Word extends Region {
    * @return true if the word is intermediate phrase final
    */
   public boolean isIntermediatePhraseFinal() {
-    return (getBreakAfter() != null) && (getBreakAfter().startsWith("4") || getBreakAfter().startsWith("3"));
+    return (getBreakAfter() != null)
+        && (getBreakAfter().startsWith("4") || getBreakAfter().startsWith("3"));
   }
 
   /**
