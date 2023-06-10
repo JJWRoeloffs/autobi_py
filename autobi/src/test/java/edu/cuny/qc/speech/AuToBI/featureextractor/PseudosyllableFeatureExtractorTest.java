@@ -38,12 +38,12 @@ import org.junit.Test;
  */
 public class PseudosyllableFeatureExtractorTest {
   private PseudosyllableFeatureExtractor fe;
-  private List<Region> regions;
+  private List<Word> words;
 
   @Before
   public void setUp() throws Exception {
     fe = new PseudosyllableFeatureExtractor();
-    regions = new ArrayList<Region>();
+    words = new ArrayList<>();
   }
 
   @Test
@@ -61,7 +61,7 @@ public class PseudosyllableFeatureExtractorTest {
   @Test
   public void testExtractFeaturesExtractsFeatures() {
     Word w = new Word(4.3, 5, "word");
-    regions.add(w);
+    words.add(w);
 
     WavReader reader = new WavReader();
 
@@ -77,18 +77,14 @@ public class PseudosyllableFeatureExtractorTest {
     }
     w.setAttribute("wav", wav);
 
-    try {
-      fe.extractFeatures(regions);
-      assertTrue(w.hasAttribute("psyl"));
-    } catch (FeatureExtractorException e) {
-      fail();
-    }
+    fe.extractFeaturesWord(words);
+    assertTrue(w.hasAttribute("psyl"));
   }
 
   @Test
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
     Word w = new Word(4.3, 5, "word");
-    regions.add(w);
+    words.add(w);
 
     WavReader reader = new WavReader();
 
@@ -103,16 +99,13 @@ public class PseudosyllableFeatureExtractorTest {
       e.printStackTrace();
     }
     w.setAttribute("wav", wav);
-    try {
-      fe.extractFeatures(regions);
-      Region syl = (Region) w.getAttribute("psyl");
-      // Don't worry about the specific region, but make sure that there is overlap.
-      // Different pseudosyllabification algorithms will yield different hypotheses here
-      // this test shouldn't break if the internal algorithms is modified.
-      assertTrue("Syllable does not overlap the word",
-          syl.getEnd() > w.getStart() && syl.getStart() < w.getEnd());
-    } catch (FeatureExtractorException e) {
-      fail();
-    }
+
+    fe.extractFeaturesWord(words);
+    Region syl = (Region) w.getAttribute("psyl");
+    // Don't worry about the specific region, but make sure that there is overlap.
+    // Different pseudosyllabification algorithms will yield different hypotheses here
+    // this test shouldn't break if the internal algorithms is modified.
+    assertTrue("Syllable does not overlap the word",
+        syl.getEnd() > w.getStart() && syl.getStart() < w.getEnd());
   }
 }

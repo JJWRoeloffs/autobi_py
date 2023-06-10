@@ -40,8 +40,8 @@ import java.util.List;
  * <Orthography> <Start> <End>
  */
 public class SimpleWordReader extends AuToBIWordReader {
-  private String filename;
-  private String charset_name;
+  private final String filename;
+  private final String charset_name;
 
   private int ortho_idx; // the index of the orthographic label
   private int start_idx; // the index of the start time
@@ -113,7 +113,7 @@ public class SimpleWordReader extends AuToBIWordReader {
       file_reader = new AuToBIFileReader(filename);
     }
 
-    List<Word> words = new ArrayList<Word>();
+    List<Word> words = new ArrayList<>();
     String line;
     while ((line = file_reader.readLine()) != null) {
       String[] data = line.split("\\s+");
@@ -122,8 +122,8 @@ public class SimpleWordReader extends AuToBIWordReader {
             "Line " + file_reader.getLineNumber() + " has too few fields - " + line);
       }
 
-      Double start = Double.parseDouble(data[start_idx]);
-      Double end = Double.parseDouble(data[end_idx]);
+      double start = Double.parseDouble(data[start_idx]);
+      double end = Double.parseDouble(data[end_idx]);
 
       if (end < start) {
         throw new AuToBIException(

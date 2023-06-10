@@ -41,7 +41,7 @@ public class EvaluationSummary {
    * Constructs an empty EvaluationSummary.
    */
   public EvaluationSummary() {
-    results = new ArrayList<EvaluationResults>();
+    results = new ArrayList<>();
   }
 
   /**
@@ -50,7 +50,7 @@ public class EvaluationSummary {
    * @param eval the evaluation result
    */
   public EvaluationSummary(EvaluationResults eval) {
-    results = new ArrayList<EvaluationResults>();
+    results = new ArrayList<>();
     try {
       add(eval);
     } catch (AuToBIException e) {

@@ -63,10 +63,7 @@ public class WordReaderUtils {
     if (regex == null) {
       regex = DEFAULT_SILENCE_REGEX;
     }
-    if (label != null && label.length() > 0 && !label.matches(regex)) {
-      return false;
-    }
-    return true;
+    return label == null || label.length() <= 0 || label.matches(regex);
   }
 
   /**

@@ -115,10 +115,7 @@ public class SubregionUtils {
       throw new FeatureExtractorException("Cannot parse the subregion: " + subregion_name);
     }
 
-    boolean milliseconds = false;
-    if (subregion_name.matches(".*ms$")) {
-      milliseconds = true;
-    }
+    boolean milliseconds = subregion_name.matches(".*ms$");
 
     String number;
     if (milliseconds) {
@@ -139,8 +136,8 @@ public class SubregionUtils {
    * @param attribute_name      the name of the copied attribute
    */
   public static void assignFeatureToSubregions(
-      List regions, String subregion_attribute, String attribute_name) {
-    for (Region r : (List<Region>) regions) {
+      List<Region> regions, String subregion_attribute, String attribute_name) {
+    for (Region r : regions) {
       if (r.hasAttribute(subregion_attribute) && r.hasAttribute(attribute_name)) {
         Region subregion = (Region) r.getAttribute(subregion_attribute);
         subregion.setAttribute(attribute_name, r.getAttribute(attribute_name));
@@ -157,8 +154,8 @@ public class SubregionUtils {
    * @param attribute_name      the name of the copied attribute
    */
   public static void assignFeatureToAllSubregions(
-      List regions, String subregion_attribute, String attribute_name) {
-    for (Region r : (List<Region>) regions) {
+      List<Region> regions, String subregion_attribute, String attribute_name) {
+    for (Region r : regions) {
       if (r.hasAttribute(subregion_attribute) && r.hasAttribute(attribute_name)) {
         for (Region subregion : (List<Region>) r.getAttribute(subregion_attribute)) {
           subregion.setAttribute(attribute_name, r.getAttribute(attribute_name));
@@ -200,8 +197,7 @@ public class SubregionUtils {
 
     for (int channel = 0; channel < wav_data.numberOfChannels; ++channel) {
       double[] norm = wav_data.getSamples(channel);
-      System.arraycopy(
-          norm, start_idx, sub_wav.samples[channel], start_idx - start_idx, num_frames);
+      System.arraycopy(norm, start_idx, sub_wav.samples[channel], 0, num_frames);
     }
 
     return sub_wav;

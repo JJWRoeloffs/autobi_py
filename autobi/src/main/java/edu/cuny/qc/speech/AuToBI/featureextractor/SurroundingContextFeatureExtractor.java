@@ -37,7 +37,7 @@ import java.util.List;
 public class SurroundingContextFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "prev,next";
 
-  private String feature; // feature to copy
+  private final String feature; // feature to copy
 
   public SurroundingContextFeatureExtractor(String feature) {
     this.feature = feature;
@@ -47,19 +47,17 @@ public class SurroundingContextFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     for (int i = 0; i < regions.size(); ++i) {
-      Region r = (Region) regions.get(i);
+      Region r = regions.get(i);
       if (i != 0) {
-        if (((Region) regions.get(i - 1)).hasAttribute(feature)) {
-          r.setAttribute(
-              "prev[" + feature + "]", ((Region) regions.get(i - 1)).getAttribute(feature));
+        if ((regions.get(i - 1)).hasAttribute(feature)) {
+          r.setAttribute("prev[" + feature + "]", (regions.get(i - 1)).getAttribute(feature));
         }
       }
       if (i != regions.size() - 1) {
-        if (((Region) regions.get(i + 1)).hasAttribute(feature)) {
-          r.setAttribute(
-              "next[" + feature + "]", ((Region) regions.get(i + 1)).getAttribute(feature));
+        if ((regions.get(i + 1)).hasAttribute(feature)) {
+          r.setAttribute("next[" + feature + "]", (regions.get(i + 1)).getAttribute(feature));
         }
       }
     }

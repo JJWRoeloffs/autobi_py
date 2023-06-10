@@ -34,7 +34,6 @@ import org.junit.Test;
  *
  * @see ConsGZReader
  */
-@SuppressWarnings("unchecked")
 public class ConsGZReaderTest {
   private final String testfile = ResourcePath.getResourcePath("test.cons.gz");
   private ConsGZReader reader;

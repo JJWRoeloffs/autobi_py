@@ -36,10 +36,9 @@ import java.util.List;
  * previously generated speaker normalization parameters. <p/> The operation does assume, however,
  * that the file contains speech by a single speaker.
  */
-@SuppressWarnings("unchecked")
 public class NormalizationParameterFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "spkrNormParams";
-  private String destination_feature; // the destination feature name
+  private final String destination_feature; // the destination feature name
 
   /**
    * Constructs a new NormalizationParameterFeatureExtractor.
@@ -76,9 +75,9 @@ public class NormalizationParameterFeatureExtractor extends FeatureExtractor {
    * @throws FeatureExtractorException if there is a problem.
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     SpeakerNormalizationParameter snp = new SpeakerNormalizationParameter();
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       if (r.hasAttribute("f0")) {
         Contour pitch;
         try {
@@ -101,7 +100,7 @@ public class NormalizationParameterFeatureExtractor extends FeatureExtractor {
       }
     }
 
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       r.setAttribute(destination_feature, snp);
     }
   }

@@ -36,7 +36,7 @@ import java.util.List;
  * A TextGridReader to process the Rhapsodie format of ToBI-like intonation.
  */
 public class RhapsodieTextGridReader extends TextGridReader {
-  private String tone_tier_name; // the name of the tone tier.
+  private final String tone_tier_name; // the name of the tone tier.
   private Tier tone_tier; // A tier to store tone annotations
   private Tier rhap_words_tier; // the words tier from rhapsodie annotation
 

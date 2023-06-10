@@ -39,12 +39,11 @@ import java.util.List;
  * @see TiltFeatureExtractor
  * @see edu.cuny.qc.speech.AuToBI.core.TiltParameters
  */
-@SuppressWarnings("unchecked")
 public class SkewFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "skewAmp,skewDur";
 
-  private String f1;
-  private String f2;
+  private final String f1;
+  private final String f2;
 
   /**
    * Constructs a new SkewFeatureExtractor.
@@ -70,8 +69,8 @@ public class SkewFeatureExtractor extends FeatureExtractor {
    *     happen
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute("tiltAmp[" + f1 + "]") && r.hasAttribute("tiltDur[" + f1 + "]")
           && r.hasAttribute("tiltAmp[" + f2 + "]") && r.hasAttribute("tiltDur[" + f2 + "]")) {
         r.setAttribute("skewAmp[" + f1 + "," + f2 + "]",

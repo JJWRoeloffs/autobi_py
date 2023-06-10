@@ -41,7 +41,6 @@
 //  *
 //  * @see SyllableFeatureExtractor
 //  */
-// @SuppressWarnings("unchecked")
 // public class SyllableFeatureExtractorTest {
 
 //   private SyllableFeatureExtractor fe;

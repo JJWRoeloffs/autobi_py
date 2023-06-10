@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class DifferenceFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "diff";
-  private String feature;
+  private final String feature;
 
   /**
    * Constructs a DifferenceFeatureExtractor.
@@ -72,10 +72,10 @@ public class DifferenceFeatureExtractor extends FeatureExtractor {
    * @throws FeatureExtractorException if the feature hasn't been set, or if it is not a numeric
    *     value.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     for (int i = 0; i < regions.size() - 1; ++i) {
-      Region r = (Region) regions.get(i);
-      Region next_r = (Region) regions.get(i + 1);
+      Region r = regions.get(i);
+      Region next_r = regions.get(i + 1);
 
       if (r.hasAttribute(feature) && next_r.hasAttribute(feature)) {
         if (!(r.getAttribute(feature) instanceof Number)) {

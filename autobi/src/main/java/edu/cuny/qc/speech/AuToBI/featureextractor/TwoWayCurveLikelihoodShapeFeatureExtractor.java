@@ -34,13 +34,12 @@ import java.util.List;
  * Created with IntelliJ IDEA. User: andrew Date: 7/24/12 Time: 11:19 AM To change this template use
  * File | Settings | File Templates.
  */
-@SuppressWarnings("unchecked")
 public class TwoWayCurveLikelihoodShapeFeatureExtractor extends FeatureExtractor {
   public static final String moniker =
       "rrLL,rfLL,rpLL,rvLL,frLL,ffLL,fpLL,fvLL,prLL,pfLL,ppLL,vvLL,vrLL,vfLL,vpLL,vvLL";
 
-  private String f1;
-  private String f2;
+  private final String f1;
+  private final String f2;
 
   public TwoWayCurveLikelihoodShapeFeatureExtractor(String f1, String f2) {
     this.f1 = f1;
@@ -78,8 +77,8 @@ public class TwoWayCurveLikelihoodShapeFeatureExtractor extends FeatureExtractor
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       for (String shape1 : new String[] {"rising", "falling", "peak", "valley"}) {
         for (String shape2 : new String[] {"rising", "falling", "peak", "valley"}) {
           if (r.hasAttribute(shape1 + "LL[" + f1 + "]")

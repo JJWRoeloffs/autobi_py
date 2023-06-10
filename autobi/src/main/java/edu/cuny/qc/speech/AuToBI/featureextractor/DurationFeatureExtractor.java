@@ -64,21 +64,21 @@ public class DurationFeatureExtractor extends FeatureExtractor {
    * @param data_points the data points
    * @throws FeatureExtractorException if the regions overlap
    */
-  public void extractFeatures(List data_points) throws FeatureExtractorException {
-    Double previous_pause;
-    Double following_pause;
-    Double max_pauselen = 120.0;
-    Double epsilon = 0.001;
+  public void extractFeatures(List<Region> data_points) throws FeatureExtractorException {
+    double previous_pause;
+    double following_pause;
+    double max_pauselen = 120.0;
+    double epsilon = 0.001;
     for (int i = 0; i < data_points.size(); ++i) {
       if (i < data_points.size() - 1) {
-        following_pause = Math.min(max_pauselen,
-            ((Region) data_points.get(i + 1)).getStart() - ((Region) data_points.get(i)).getEnd());
+        following_pause = Math.min(
+            max_pauselen, (data_points.get(i + 1)).getStart() - (data_points.get(i)).getEnd());
       } else {
         following_pause = max_pauselen;
       }
       if (i > 0) {
-        previous_pause = Math.min(max_pauselen,
-            ((Region) data_points.get(i)).getStart() - ((Region) data_points.get(i - 1)).getEnd());
+        previous_pause = Math.min(
+            max_pauselen, (data_points.get(i)).getStart() - (data_points.get(i - 1)).getEnd());
       } else {
         previous_pause = max_pauselen;
       }
@@ -100,7 +100,7 @@ public class DurationFeatureExtractor extends FeatureExtractor {
         }
       }
 
-      Region region = (Region) data_points.get(i);
+      Region region = data_points.get(i);
 
       region.setAttribute("duration", (region.getEnd() - region.getStart()));
       region.setAttribute("prevPause", previous_pause);

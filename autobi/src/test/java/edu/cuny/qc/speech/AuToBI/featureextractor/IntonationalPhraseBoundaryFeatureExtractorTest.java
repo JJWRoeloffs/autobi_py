@@ -56,20 +56,16 @@ public class IntonationalPhraseBoundaryFeatureExtractorTest {
     IntonationalPhraseBoundaryFeatureExtractor fe =
         new IntonationalPhraseBoundaryFeatureExtractor();
 
-    List<Region> regions = new ArrayList<Region>();
+    List<Word> words = new ArrayList<>();
     Word w = new Word(0.0, 1.0, "test");
-    regions.add(w);
     w.setPhraseAccent("L-");
     w.setPhraseAccent("L-");
     w.setBoundaryTone("H%");
     w.setBreakAfter("4");
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-      assertTrue(w.hasAttribute("nominal_IntonationalPhraseBoundary"));
-    } catch (FeatureExtractorException e) {
-      e.printStackTrace();
-    }
+    fe.extractFeaturesWord(words);
+    assertTrue(w.hasAttribute("nominal_IntonationalPhraseBoundary"));
   }
 
   @Test
@@ -77,19 +73,14 @@ public class IntonationalPhraseBoundaryFeatureExtractorTest {
     IntonationalPhraseBoundaryFeatureExtractor fe =
         new IntonationalPhraseBoundaryFeatureExtractor();
 
-    List<Region> regions = new ArrayList<Region>();
+    List<Word> words = new ArrayList<>();
     Word w = new Word(0.0, 1.0, "test");
-    regions.add(w);
+    words.add(w);
     w.setPhraseAccent("L-");
     w.setBoundaryTone("H%");
     w.setBreakAfter("4");
 
-    try {
-      fe.extractFeatures(regions);
-
-      assertEquals("INTONATIONAL_BOUNDARY", w.getAttribute("nominal_IntonationalPhraseBoundary"));
-    } catch (FeatureExtractorException e) {
-      e.printStackTrace();
-    }
+    fe.extractFeaturesWord(words);
+    assertEquals("INTONATIONAL_BOUNDARY", w.getAttribute("nominal_IntonationalPhraseBoundary"));
   }
 }

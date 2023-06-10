@@ -42,7 +42,6 @@ import org.junit.Test;
  *
  * @see edu.cuny.qc.speech.AuToBI.core.FeatureSetPropagator
  */
-@SuppressWarnings("unchecked")
 public class FeatureSetPropagatorTest {
   @SuppressWarnings("UnusedDeclaration")
   @Test

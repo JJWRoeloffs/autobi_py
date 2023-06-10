@@ -237,8 +237,8 @@ public class AlignmentUtils {
    */
   public static void copyToBITonesByIndex(List<Word> words, List<Region> tones)
       throws AuToBIException {
-    List<String> phrase_accents = new ArrayList<String>();
-    List<String> boundary_tones = new ArrayList<String>();
+    List<String> phrase_accents = new ArrayList<>();
+    List<String> boundary_tones = new ArrayList<>();
 
     ListIterator<Region> toneIter = tones.listIterator();
     for (Word word : words) {

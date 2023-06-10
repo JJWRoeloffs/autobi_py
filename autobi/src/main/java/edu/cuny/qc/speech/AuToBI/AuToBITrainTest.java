@@ -140,7 +140,7 @@ public class AuToBITrainTest {
 
         EvaluationSummary es = new EvaluationSummary(er);
 
-        AuToBIUtils.log("Test Results on test set\n" + es.toString());
+        AuToBIUtils.log("Test Results on test set\n" + es);
       }
     } catch (UnsupportedAudioFileException e) {
       e.printStackTrace();

@@ -31,6 +31,7 @@ import edu.cuny.qc.speech.AuToBI.io.AuToBIFileWriter;
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import edu.cuny.qc.speech.AuToBI.util.ClassifierUtils;
 import java.io.IOException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
@@ -44,7 +45,7 @@ import java.util.*;
  * @see edu.cuny.qc.speech.AuToBI.AuToBI
  */
 public class FeatureSet implements Serializable {
-  private static final long serialVersionUID = 20120110L;
+  @Serial private static final long serialVersionUID = 20120110L;
 
   protected Map<String, Integer> required_features; // The required feature names
   protected Set<Feature> features; // The extracted feature objects
@@ -55,9 +56,9 @@ public class FeatureSet implements Serializable {
    * Constructs an empty FeatureSet.
    */
   public FeatureSet() {
-    this.features = new LinkedHashSet<Feature>();
-    this.data_points = new ArrayList<Word>();
-    this.required_features = new HashMap<String, Integer>();
+    this.features = new LinkedHashSet<>();
+    this.data_points = new ArrayList<>();
+    this.required_features = new HashMap<>();
   }
 
   /**
@@ -103,7 +104,7 @@ public class FeatureSet implements Serializable {
    * @return the feature names
    */
   public List<String> getFeatureNames() {
-    ArrayList<String> names = new ArrayList<String>();
+    ArrayList<String> names = new ArrayList<>();
     for (Feature f : features) names.add(f.getName());
 
     return names;
@@ -160,7 +161,7 @@ public class FeatureSet implements Serializable {
    */
   private void checkDataPoints() {
     if (data_points == null)
-      data_points = new ArrayList<Word>();
+      data_points = new ArrayList<>();
   }
 
   /**
@@ -266,11 +267,7 @@ public class FeatureSet implements Serializable {
     if (class_attribute != null && class_attribute.equals(feature_name)) {
       return 0;
     }
-    if (required_features.containsKey(feature_name)) {
-      return required_features.get(feature_name);
-    } else {
-      return -1;
-    }
+    return required_features.getOrDefault(feature_name, -1);
   }
 
   /**
@@ -418,7 +415,7 @@ public class FeatureSet implements Serializable {
           first = false;
         }
         if (r.getAttribute(f.getName()) == null) {
-          AuToBIUtils.debug("missing attribute:" + f.getName() + " on word:" + r.toString());
+          AuToBIUtils.debug("missing attribute:" + f.getName() + " on word:" + r);
 
           // Weka's arff standard uses the question mark (?) to indicate missing values
           sb.append("?");

@@ -26,8 +26,6 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
-import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +35,7 @@ import java.util.regex.Pattern;
  */
 public class AuToBIParameters {
   // A map of parameters and values
-  private HashMap<String, String> parameters = new HashMap<String, String>();
+  private final HashMap<String, String> parameters = new HashMap<>();
 
   /**
    * Parses command line arguments into parameters.
@@ -95,11 +93,7 @@ public class AuToBIParameters {
    * @return the parameter value or null if the parameter was not set.
    */
   public String getOptionalParameter(String parameter_name) {
-    if (parameters.containsKey(parameter_name)) {
-      return parameters.get(parameter_name);
-    } else {
-      return null;
-    }
+    return parameters.getOrDefault(parameter_name, null);
   }
 
   /**

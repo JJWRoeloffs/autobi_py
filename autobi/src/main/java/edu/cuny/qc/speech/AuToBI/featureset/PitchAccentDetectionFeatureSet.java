@@ -59,7 +59,7 @@ public class PitchAccentDetectionFeatureSet extends FeatureSet {
       }
     }
 
-    List<String> contexts = new ArrayList<String>();
+    List<String> contexts = new ArrayList<>();
     contexts.add("f2b2");
     contexts.add("f2b1");
     contexts.add("f2b0");

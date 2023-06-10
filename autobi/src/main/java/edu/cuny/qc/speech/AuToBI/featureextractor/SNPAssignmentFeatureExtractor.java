@@ -41,11 +41,11 @@ import java.util.List;
 public class SNPAssignmentFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "spkrNormParamsFromFile";
 
-  private String destination_feature; // The name of the feature to store the SNPs on
-  private String speaker_id_feature; // The name of the speaker identifier feature
-  private HashMap<String, SpeakerNormalizationParameter>
+  private final String destination_feature; // The name of the feature to store the SNPs on
+  private final String speaker_id_feature; // The name of the speaker identifier feature
+  private final HashMap<String, SpeakerNormalizationParameter>
       snp_map; // map from speaker ids to features.
-  private SpeakerNormalizationParameter default_snp = null;
+  private final SpeakerNormalizationParameter default_snp;
 
   /**
    * Constructs a new SNPAssignmentFeatureExtractor.
@@ -82,7 +82,7 @@ public class SNPAssignmentFeatureExtractor extends FeatureExtractor {
       this.snp_map = null;
     } else {
       this.default_snp = null;
-      this.snp_map = new HashMap<String, SpeakerNormalizationParameter>();
+      this.snp_map = new HashMap<>();
       loadSNPList(snp_files);
       this.required_features.add(speaker_id_feature);
     }
@@ -114,8 +114,8 @@ public class SNPAssignmentFeatureExtractor extends FeatureExtractor {
    * @throws FeatureExtractorException
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (speaker_id_feature != null) {
         if (snp_map.containsKey(r.getAttribute(speaker_id_feature).toString())) {
           r.setAttribute(

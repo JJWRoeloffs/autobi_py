@@ -26,9 +26,7 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
-import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
 import java.lang.Math;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,14 +35,13 @@ import java.util.List;
  * intensity contour). <p/> The frame is set at the start of a list of words and is incremented one
  * word at a time.  At each points statistics about the contour can be queried.
  */
-@SuppressWarnings("unchecked")
 public class ContextFrame {
   protected List<Region> data; // the word regions
   protected LinkedList<Double> window; // the windowed contour
   protected String feature_name; // the feature that is analyzed
-  private Integer back; // the amount of back context
-  private Integer front; // the amount of forward context
-  private Integer current; // current point in the word regions
+  private final int back; // the amount of back context
+  private final int front; // the amount of forward context
+  private int current; // current point in the word regions
   private Aggregation agg; // stores the aggregate values
 
   /**
@@ -71,7 +68,7 @@ public class ContextFrame {
    */
   public void init() {
     this.agg = new Aggregation();
-    window = new LinkedList<Double>();
+    window = new LinkedList<>();
     for (int i = current; i < Math.min(data.size(), current + front + 1); ++i) {
       // only include data read from the same file.
       if (data.get(i).getAttribute(feature_name) instanceof Number) {
@@ -118,7 +115,7 @@ public class ContextFrame {
       }
     } else if (data.get(0).getAttribute(feature_name) instanceof Contour) {
       // remove trailing values
-      Integer points_to_remove = 0;
+      int points_to_remove = 0;
       if (current - back - 1 >= 0
           && data.get(current - back - 1).getAttribute(feature_name) instanceof Contour) {
         points_to_remove =
@@ -154,7 +151,7 @@ public class ContextFrame {
    */
   public Double getMax() {
     if (agg.getMax() != null && Double.isNaN(agg.getMax())) {
-      Double max = -(Double.MAX_VALUE);
+      double max = -(Double.MAX_VALUE);
 
       for (Double d : window) max = Math.max(d, max);
       agg.setMax(max);
@@ -173,7 +170,7 @@ public class ContextFrame {
    */
   public Double getMin() {
     if (agg.getMax() != null && Double.isNaN(agg.getMin())) {
-      Double min = Double.MAX_VALUE;
+      double min = Double.MAX_VALUE;
 
       for (Double d : window) min = Math.min(d, min);
       agg.setMin(min);

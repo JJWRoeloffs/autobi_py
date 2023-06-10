@@ -69,7 +69,7 @@ public class ContourFeatureExtractor extends FeatureExtractor {
   public void setAttributeName(String attribute_name) {
     this.attribute_name = attribute_name;
 
-    extracted_features = new ArrayList<String>();
+    extracted_features = new ArrayList<>();
     extracted_features.add("max[" + this.attribute_name + "]");
     extracted_features.add("min[" + this.attribute_name + "]");
     extracted_features.add("mean[" + this.attribute_name + "]");
@@ -96,8 +96,8 @@ public class ContourFeatureExtractor extends FeatureExtractor {
    * @param regions The regions to extract features from.
    * @throws FeatureExtractorException if something goes wrong.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region region : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region region : regions) {
       try {
         extractFeatures(region);
       } catch (AuToBIException e) {

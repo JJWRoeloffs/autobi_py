@@ -98,7 +98,6 @@
 package edu.cuny.qc.speech.AuToBI;
 
 import edu.cuny.qc.speech.AuToBI.core.AuToBIException;
-import edu.cuny.qc.speech.AuToBI.core.Contour;
 import edu.cuny.qc.speech.AuToBI.core.PitchContour;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
 import edu.cuny.qc.speech.AuToBI.io.WavReader;
@@ -146,7 +145,7 @@ public class RAPTPitchExtractor {
     par.maxF0 = maxF0;
   }
 
-  class Params {
+  static class Params {
     public float trans_cost;
     public float trans_amp;
     public float trans_spec;
@@ -169,7 +168,7 @@ public class RAPTPitchExtractor {
     public float cand_thresh;
   }
 
-  class DPFrame {
+  static class DPFrame {
     public DPRecord dp;
     public Cross cp;
     public float rms;
@@ -193,7 +192,7 @@ public class RAPTPitchExtractor {
     }
   }
 
-  class DPRecord {
+  static class DPRecord {
     public int ncands;
     public int[] locs;
     public float[] pvals;
@@ -202,7 +201,7 @@ public class RAPTPitchExtractor {
     public float[] dpvals;
   }
 
-  class Cross {
+  static class Cross {
     public float[] correl;
     public int maxloc;
     public float maxval;
@@ -210,13 +209,13 @@ public class RAPTPitchExtractor {
     public int firstlag;
   }
 
-  class WindowStat {
+  static class WindowStat {
     float err = 0;
     float rms = 0;
     float[] rho = null;
   }
 
-  class Stat {
+  static class Stat {
     public float[] stat;
     public float[] rms;
     public float[] rms_ratio;
@@ -336,9 +335,9 @@ public class RAPTPitchExtractor {
     agap = (int) (STAT_AINT * freq);
     ind = (agap - stat_wsize) / 2;
     i = stat_wsize + ind;
-    pad = downpatch + ((i > ncomp) ? i : ncomp);
-    buffsize[0] = nframes * step + pad;
-    sdstep[0] = nframes * step;
+    pad = downpatch + Math.max(i, ncomp);
+    buffsize[0] = (long) nframes * step + pad;
+    sdstep[0] = (long) nframes * step;
 
     // Allocate a circular buffer of DPFrames
     size_circ_buf = (int) (DP_CIRCULAR / frame_int);
@@ -842,8 +841,8 @@ public class RAPTPitchExtractor {
             engc = 1.0; /* in case of roundoff error */
           }
           correl[ci++] = t = (float) (sum / Math.sqrt(10000.0 + (engc * engr)));
-          engc -= (double) (dbdata[dds] * dbdata[dds]);
-          engc += (double) (dbdata[ds] * dbdata[ds]);
+          engc -= (dbdata[dds] * dbdata[dds]);
+          engc += (dbdata[ds] * dbdata[ds]);
           if (t > amax) {
             amax = t;
             iloc = i + start;
@@ -918,8 +917,8 @@ public class RAPTPitchExtractor {
         for (j = size, sum = 0.0f, dbi = 0, dds = ds = i + start; j-- > 0;)
           sum += dbdata[dbi++] * dbdata[ds++];
         correl[ci++] = t = (float) (sum / Math.sqrt(engc * engr)); /* output norm. CC */
-        engc -= (double) (dbdata[dds] * dbdata[dds]); /* adjust norm. energy for next lag */
-        if ((engc += (double) (dbdata[ds] * dbdata[ds])) < 1.0) {
+        engc -= dbdata[dds] * dbdata[dds]; /* adjust norm. energy for next lag */
+        if ((engc += dbdata[ds] * dbdata[ds]) < 1.0) {
           engc = 1.0; /* (hack: in case of roundoff error) */
         }
         if (t > amax) { /* Find abs. max. as we go. */
@@ -1475,7 +1474,7 @@ public class RAPTPitchExtractor {
   }
 
   public boolean xlpc(int lpc_ord, float lpc_stabl, int wsize, float[] data, int didx, float[] lpca,
-      float[] ar, float[] lpck, float normerr[] /* scalar */, float rms[], float preemp, int type)
+      float[] ar, float[] lpck, float[] normerr /* scalar */, float[] rms, float preemp, int type)
       throws AuToBIException {
     float[] rho = new float[BIGSORD + 1];
     float[] k = new float[BIGSORD];
@@ -1514,6 +1513,9 @@ public class RAPTPitchExtractor {
       rho[0] = r[0];
       r = rho;
       System.arraycopy(r, 0, ar, 0, lpc_ord + 1);
+    }
+    if (r == null) {
+      throw new AuToBIException("Unreachable");
     }
     xdurbin(r, k, a, lpc_ord, er);
 
@@ -1708,7 +1710,7 @@ public class RAPTPitchExtractor {
       }
       return;
     }
-    e[0] = (float) Math.sqrt((double) (sum0 / wsize));
+    e[0] = (float) Math.sqrt((sum0 / wsize));
     sum0 = (float) (1.0 / sum0);
     for (int i = 1; i <= p; i++) {
       sum = 0.f;
@@ -1805,8 +1807,8 @@ public class RAPTPitchExtractor {
     int length = total_samples;
     int ndone = 0;
 
-    ArrayList<Double> f0 = new ArrayList<Double>();
-    ArrayList<Double> vuv = new ArrayList<Double>();
+    ArrayList<Double> f0 = new ArrayList<>();
+    ArrayList<Double> vuv = new ArrayList<>();
     while (true) {
       done = ((actsize < buffsize[0]) || (total_samples == buffsize[0]));
 

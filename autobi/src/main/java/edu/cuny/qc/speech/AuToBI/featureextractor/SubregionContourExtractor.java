@@ -36,12 +36,11 @@ import java.util.List;
 /**
  * Constructs a subcontour object based on an acoustic contour and a defined subregion.
  */
-@SuppressWarnings("unchecked")
 public class SubregionContourExtractor extends FeatureExtractor {
   public static final String moniker = "subregionC";
 
-  private String contour_feature; // the acoustic contour feature
-  private String subregion_feature; // the subregion feature
+  private final String contour_feature; // the acoustic contour feature
+  private final String subregion_feature; // the subregion feature
 
   /**
    * Constructs a new SubregionContourExtractor.
@@ -62,8 +61,8 @@ public class SubregionContourExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       Contour c = (Contour) r.getAttribute(contour_feature);
       if (c != null && r.hasAttribute(subregion_feature)) {
         Region subregion = (Region) r.getAttribute(subregion_feature);

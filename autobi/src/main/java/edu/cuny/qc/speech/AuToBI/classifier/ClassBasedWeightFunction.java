@@ -34,8 +34,8 @@ import java.util.Map;
  * File | Settings | File Templates.
  */
 public class ClassBasedWeightFunction extends WeightFunction {
-  private String attribute;
-  private Map<String, Double> fn;
+  private final String attribute;
+  private final Map<String, Double> fn;
 
   public ClassBasedWeightFunction(String attribute, Map<String, Double> weight_fn) {
     this.attribute = attribute;

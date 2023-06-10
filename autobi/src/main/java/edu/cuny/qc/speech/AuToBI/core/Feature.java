@@ -27,6 +27,7 @@
 package edu.cuny.qc.speech.AuToBI.core;
 
 import edu.cuny.qc.speech.AuToBI.util.AuToBIUtils;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
@@ -37,8 +38,8 @@ import java.util.*;
  * <p/>
  * For nominal features, the Feature class manages the possible nominal values.
  */
-public class Feature implements Comparable, Serializable {
-  private static final long serialVersionUID = 6410344724558496458L;
+public class Feature implements Comparable<Object>, Serializable {
+  @Serial private static final long serialVersionUID = 6410344724558496458L;
   private String name; // the feature name
   private LinkedHashSet<String> nominalValues; // the nominal values
   public static final int STRING_LIST = 0;
@@ -112,7 +113,7 @@ public class Feature implements Comparable, Serializable {
    * Sets the feature to contain nominal values.
    */
   public void setNominal() {
-    nominalValues = new LinkedHashSet<String>();
+    nominalValues = new LinkedHashSet<>();
   }
 
   /**
@@ -172,7 +173,7 @@ public class Feature implements Comparable, Serializable {
    * @param values a set of nominal values
    */
   public void setNominalValues(Collection<String> values) {
-    this.nominalValues = new LinkedHashSet<String>();
+    this.nominalValues = new LinkedHashSet<>();
     this.nominalValues.addAll(values);
   }
 
@@ -182,7 +183,7 @@ public class Feature implements Comparable, Serializable {
    * @param values the values
    */
   public void setNominalValues(String[] values) {
-    nominalValues = new LinkedHashSet<String>();
+    nominalValues = new LinkedHashSet<>();
     this.nominalValues.addAll(Arrays.asList(values));
   }
 
@@ -193,7 +194,7 @@ public class Feature implements Comparable, Serializable {
    */
   public void addNominalValues(Collection<String> values) {
     if (nominalValues == null) {
-      nominalValues = new LinkedHashSet<String>();
+      nominalValues = new LinkedHashSet<>();
     }
     for (String s : values) {
       this.nominalValues.add(s);
@@ -207,7 +208,7 @@ public class Feature implements Comparable, Serializable {
    */
   public void addNominalValues(String[] values) {
     if (nominalValues == null) {
-      nominalValues = new LinkedHashSet<String>();
+      nominalValues = new LinkedHashSet<>();
     }
     this.nominalValues.addAll(Arrays.asList(values));
   }

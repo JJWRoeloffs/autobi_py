@@ -58,7 +58,7 @@ public class AuToBIReaderUtils {
    */
   public static List<FormattedFile> globFormattedFiles(String pattern) {
     List<String> filenames = AuToBIUtils.glob(pattern);
-    List<FormattedFile> files = new ArrayList<FormattedFile>();
+    List<FormattedFile> files = new ArrayList<>();
     for (String filename : filenames) {
       files.add(new FormattedFile(filename));
     }
@@ -82,7 +82,7 @@ public class AuToBIReaderUtils {
       return globFormattedFiles(pattern);
     }
     List<String> filenames = AuToBIUtils.glob(pattern);
-    List<FormattedFile> files = new ArrayList<FormattedFile>();
+    List<FormattedFile> files = new ArrayList<>();
     for (String filename : filenames) {
       files.add(new FormattedFile(filename, format));
     }

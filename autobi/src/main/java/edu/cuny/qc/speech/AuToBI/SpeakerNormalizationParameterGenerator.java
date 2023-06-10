@@ -122,7 +122,7 @@ public class SpeakerNormalizationParameterGenerator {
    */
   public SpeakerNormalizationParameter generateNormalizationParameter(
       WavData wav, String speaker_id) {
-    List<WavData> list = new ArrayList<WavData>();
+    List<WavData> list = new ArrayList<>();
     list.add(wav);
     return generateNormalizationParameter(list, speaker_id);
   }

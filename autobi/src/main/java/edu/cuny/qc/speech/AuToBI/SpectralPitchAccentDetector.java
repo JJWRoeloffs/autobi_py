@@ -57,7 +57,7 @@ public class SpectralPitchAccentDetector extends AuToBIClassifier {
   private final String positive_correction = "CORRECT";
 
   // The maximum bark index -- typically this is 20, but can be trained differently.
-  private int high_bark;
+  private final int high_bark;
 
   /**
    * Constructs a new SpectralPitchAccentDetector to calculate a corrected weighted majority voting

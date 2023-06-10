@@ -27,6 +27,7 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
+import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.util.ToBIUtils;
 import java.util.List;
@@ -40,7 +41,7 @@ import java.util.List;
  */
 public class PhraseAccentBoundaryToneFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "nominal_PhraseAccentBoundaryTone";
-  private String feature; // the feature to store the extracted values in
+  private final String feature; // the feature to store the extracted values in
 
   /**
    * Constructs a new PhraseAccentBoundaryToneFeatureExtractor.
@@ -58,13 +59,16 @@ public class PhraseAccentBoundaryToneFeatureExtractor extends FeatureExtractor {
     extracted_features.add(feature);
   }
 
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    throw new UnsupportedOperationException();
+  }
+
   /**
    * Extracts ground truth phrase accent boundary tone pairs of each region.
    *
-   * @param regions The regions to extract features from.
-   * @throws FeatureExtractorException if something goes wrong
+   * @param words The regions to extract features from.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    ToBIUtils.setPhraseAccentBoundaryTone((List<Word>) regions, feature);
+  public void extractFeaturesWord(List<Word> words) {
+    ToBIUtils.setPhraseAccentBoundaryTone(words, feature);
   }
 }

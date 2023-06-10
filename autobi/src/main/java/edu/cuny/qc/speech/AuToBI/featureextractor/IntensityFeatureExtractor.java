@@ -41,7 +41,7 @@ import java.util.List;
 public class IntensityFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "I";
 
-  private String feature_name; // the name of the feature to hold intensity information
+  private final String feature_name; // the name of the feature to hold intensity information
 
   @Deprecated
   public IntensityFeatureExtractor(String feature_name) {
@@ -59,14 +59,14 @@ public class IntensityFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     // Identify all regions which are associated with each wav data.
-    HashMap<WavData, List<Region>> wave_region_map = new HashMap<WavData, List<Region>>();
-    for (Region r : (List<Region>) regions) {
+    HashMap<WavData, List<Region>> wave_region_map = new HashMap<>();
+    for (Region r : regions) {
       WavData wav = (WavData) r.getAttribute("wav");
       if (wav != null) {
         if (!wave_region_map.containsKey(wav)) {
-          wave_region_map.put(wav, new ArrayList<Region>());
+          wave_region_map.put(wav, new ArrayList<>());
         }
         wave_region_map.get(wav).add(r);
       }

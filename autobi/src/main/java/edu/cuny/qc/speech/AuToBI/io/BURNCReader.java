@@ -45,8 +45,8 @@ import java.util.List;
  * vanilla XWaves files.
  */
 public class BURNCReader extends AuToBIWordReader {
-  private String filestem; // The stem of the set of BURNC files to be read
-  private String phone_feature; // The name of a feature to store phone regions in.
+  private final String filestem; // The stem of the set of BURNC files to be read
+  private final String phone_feature; // The name of a feature to store phone regions in.
 
   /**
    * Constructs a new BURNC reader.
@@ -121,17 +121,14 @@ public class BURNCReader extends AuToBIWordReader {
    */
   protected List<Word> readALAWords() {
     String line;
-    Double word_start_time = -1.0;
-    Double end_time = -1.0;
+    double word_start_time = -1.0;
+    double end_time = -1.0;
     AuToBIFileReader reader;
     String filename = filestem + ".ala";
-    ArrayList<Word> words = new ArrayList<Word>();
+    ArrayList<Word> words = new ArrayList<>();
 
-    ArrayList<Region> phones = new ArrayList<Region>();
-    boolean read_phones = false;
-    if (phone_feature != null && phone_feature.length() != 0) {
-      read_phones = true;
-    }
+    ArrayList<Region> phones = new ArrayList<>();
+    boolean read_phones = phone_feature != null && phone_feature.length() != 0;
 
     try {
       reader = new AuToBIFileReader(filename);
@@ -149,7 +146,7 @@ public class BURNCReader extends AuToBIWordReader {
             words.add(w);
           }
           if (read_phones) {
-            phones = new ArrayList<Region>();
+            phones = new ArrayList<>();
           }
           word_start_time = -1.0;
         } else {
@@ -219,7 +216,7 @@ public class BURNCReader extends AuToBIWordReader {
    * @throws FileNotFoundException if there is no such file
    */
   public List<Region> readXWavesPointTier(String filename) throws FileNotFoundException {
-    List<Region> tier = new ArrayList<Region>();
+    List<Region> tier = new ArrayList<>();
 
     AuToBIFileReader reader = new AuToBIFileReader(filename);
 

@@ -40,7 +40,7 @@ import java.util.*;
  * calculating corpus statistics.
  */
 public class PartitionUtils {
-  private static Random rng = new Random(); // a random number generator.
+  private static final Random rng = new Random(); // a random number generator.
 
   // Utility functions cannot be constructed.
   private PartitionUtils() {
@@ -82,7 +82,7 @@ public class PartitionUtils {
    */
   public static HashMap<String, Integer> generateXValFoldAssignment(
       List<String> strings, int num_folds) {
-    HashMap<String, Integer> h = new HashMap<String, Integer>();
+    HashMap<String, Integer> h = new HashMap<>();
     for (String string : strings) {
       int j = rng.nextInt(num_folds);
       h.put(string, j);
@@ -106,7 +106,7 @@ public class PartitionUtils {
    */
   public static void assignStratifiedFoldNum(List<Word> data_points, String feature_name,
       Integer num_folds, String class_attribute) throws AuToBIException {
-    Map<String, Integer> assigner = new HashMap<String, Integer>();
+    Map<String, Integer> assigner = new HashMap<>();
 
     for (Word r : data_points) {
       if (r.hasAttribute(class_attribute)) {
@@ -122,8 +122,8 @@ public class PartitionUtils {
         }
         assigner.put(key, value);
       } else {
-        throw new AuToBIException("No class_attribute, " + class_attribute
-            + ", feature assigned on Region: " + r.toString());
+        throw new AuToBIException(
+            "No class_attribute, " + class_attribute + ", feature assigned on Region: " + r);
       }
     }
   }
@@ -193,7 +193,7 @@ public class PartitionUtils {
    */
   public static List<Word> getAttributeMatchingWords(
       List<Word> data_points, String feature_name, Object feature_value) {
-    List<Word> filtered_words = new ArrayList<Word>();
+    List<Word> filtered_words = new ArrayList<>();
     for (Word w : data_points) {
       if (w.hasAttribute(feature_name) && w.getAttribute(feature_name).equals(feature_value)) {
         filtered_words.add(w);
@@ -247,8 +247,8 @@ public class PartitionUtils {
     }
 
     // Construct understampled set of data_points
-    ArrayList<Word> new_data_points = new ArrayList<Word>();
-    ArrayList<Word> undersampled_points = new ArrayList<Word>();
+    ArrayList<Word> new_data_points = new ArrayList<>();
+    ArrayList<Word> undersampled_points = new ArrayList<>();
 
     Integer n = 0;
     for (Word w : data_points) {
@@ -258,7 +258,7 @@ public class PartitionUtils {
           ++n;
         } else {
           // randomly select if the current point is a member of the undersampled set.
-          Double x = Math.random();
+          double x = Math.random();
           if (x < target_size / n) {
             // replace an existing point withe equal probability
             int idx = (int) Math.floor(target_size * Math.random());

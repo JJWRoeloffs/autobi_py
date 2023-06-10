@@ -118,9 +118,9 @@ public class VillingSyllabifier extends Syllabifier {
     }
 
     // Identify boundaries
-    ArrayList<Integer> onset_peaks = new ArrayList<Integer>();
-    ArrayList<Integer> onset_starts = new ArrayList<Integer>();
-    ArrayList<Integer> onset_ends = new ArrayList<Integer>();
+    ArrayList<Integer> onset_peaks = new ArrayList<>();
+    ArrayList<Integer> onset_starts = new ArrayList<>();
+    ArrayList<Integer> onset_ends = new ArrayList<>();
     identfyOnsets(onset_vel, onset_peaks, onset_starts, onset_ends);
 
     // Score candidate boundaries
@@ -173,7 +173,7 @@ public class VillingSyllabifier extends Syllabifier {
     }
 
     // Construct a list of the best boundaries
-    ArrayList<Double> boundary_list = new ArrayList<Double>();
+    ArrayList<Double> boundary_list = new ArrayList<>();
 
     for (int i = 0; i < boundary_scores.length; ++i) {
       if (boundary_scores[i] > 0 && vs[i] > 0) {
@@ -185,10 +185,10 @@ public class VillingSyllabifier extends Syllabifier {
     // Convert boundaries into regions.
     ArrayList<Region> syllables = generateRegionsFromPoints(boundary_list);
 
-    ArrayList<Region> ret = new ArrayList<Region>();
+    ArrayList<Region> ret = new ArrayList<>();
     // identify silence
     double max_e = 0.0;
-    double e[] = new double[syllables.size()];
+    double[] e = new double[syllables.size()];
     for (int i = 0; i < syllables.size(); ++i) {
       Region r = syllables.get(i);
       double sum = 0;
@@ -217,7 +217,7 @@ public class VillingSyllabifier extends Syllabifier {
    * @return a list of regions corresponding to the given boundaries
    */
   public ArrayList<Region> generateRegionsFromPoints(ArrayList<Double> boundary_list) {
-    ArrayList<Region> regions = new ArrayList<Region>();
+    ArrayList<Region> regions = new ArrayList<>();
     if (boundary_list.size() == 0) {
       return regions;
     }
@@ -450,7 +450,7 @@ public class VillingSyllabifier extends Syllabifier {
         0.5265, -0.0254, -0.2860, -0.1221, -0.0060, 0.1186, 0.0975, -0.0884, -0.0849};
 
     double[] denominator = {1, -0.4667, 0.0691, -0.2148, -0.0706, 0.1136, 0.0974, -0.1088, 0.0437};
-    return new Pair<double[], double[]>(numerator, denominator);
+    return new Pair<>(numerator, denominator);
   }
 
   /**
@@ -465,7 +465,7 @@ public class VillingSyllabifier extends Syllabifier {
     double[] numerator = {0.9592, -1.9184, 0.9592};
 
     double[] denominator = {1, -1.9167, 0.9201};
-    return new Pair<double[], double[]>(numerator, denominator);
+    return new Pair<>(numerator, denominator);
   }
 
   /**
@@ -480,7 +480,7 @@ public class VillingSyllabifier extends Syllabifier {
     double[] numerator = {0.0300, 0.0599, 0.0300};
 
     double[] denominator = {1, -1.4542, 0.5741};
-    return new Pair<double[], double[]>(numerator, denominator);
+    return new Pair<>(numerator, denominator);
   }
 
   /**
@@ -495,7 +495,7 @@ public class VillingSyllabifier extends Syllabifier {
     double[] numerator = {0.1867, 0.3734, 0.1867};
 
     double[] denominator = {1, -0.4629, 0.2097};
-    return new Pair<double[], double[]>(numerator, denominator);
+    return new Pair<>(numerator, denominator);
   }
 
   /**
@@ -509,7 +509,7 @@ public class VillingSyllabifier extends Syllabifier {
     double[] numerator = {0.0024, 0.0024};
 
     double[] denominator = {1, -0.9953};
-    return new Pair<double[], double[]>(numerator, denominator);
+    return new Pair<>(numerator, denominator);
   }
 
   /**

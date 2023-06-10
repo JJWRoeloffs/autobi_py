@@ -28,6 +28,7 @@ package edu.cuny.qc.speech.AuToBI.core;
 
 import static org.apache.commons.math3.special.Erf.erf;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -38,7 +39,7 @@ import java.util.Collection;
  * as pitch and intensity.
  */
 public class Aggregation implements Serializable {
-  private static final long serialVersionUID = 2012709453361591892L;
+  @Serial private static final long serialVersionUID = 2012709453361591892L;
 
   private String label; // an optional label for the aggregation
   private Double min; // the maximum value in the aggregation

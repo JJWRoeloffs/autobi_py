@@ -26,6 +26,7 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -35,10 +36,10 @@ import java.util.HashMap;
  * Currently is used for z-score normalization of pitch, log pitch,  intensity and log_intensity
  */
 public class SpeakerNormalizationParameter implements Serializable {
-  private static final long serialVersionUID = 20100509L;
+  @Serial private static final long serialVersionUID = 20100509L;
   // an association from the normalization attribute to the aggregation used for the normalization
-  private HashMap<String, Aggregation> params;
-  private String speaker_id; // a speaker identifier for the parameters
+  private final HashMap<String, Aggregation> params;
+  private final String speaker_id; // a speaker identifier for the parameters
 
   /**
    * Constructs an empty SpeakerNormalizationParameter.
@@ -54,7 +55,7 @@ public class SpeakerNormalizationParameter implements Serializable {
    */
   public SpeakerNormalizationParameter(String speaker_id) {
     this.speaker_id = speaker_id;
-    params = new HashMap<String, Aggregation>();
+    params = new HashMap<>();
     params.put("f0", new Aggregation());
     params.put("log[f0]", new Aggregation());
     params.put("I", new Aggregation());

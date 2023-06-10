@@ -27,6 +27,7 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
+import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.util.ToBIUtils;
 import java.util.List;
@@ -37,7 +38,7 @@ import java.util.List;
  */
 public class PitchAccentFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "nominal_PitchAccent";
-  private String feature; // the destination feature
+  private final String feature; // the destination feature
 
   /**
    * Constructs a new PitchAccentFeatureExtractor.
@@ -54,6 +55,9 @@ public class PitchAccentFeatureExtractor extends FeatureExtractor {
     this.feature = moniker;
     extracted_features.add(feature);
   }
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * Stores an indicator of the presence or absence of a pitch accent on each region, based on
@@ -64,10 +68,8 @@ public class PitchAccentFeatureExtractor extends FeatureExtractor {
    * values.
    *
    * @param regions The regions to extract features from.
-   * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException if somethign goes
-   *     wrong.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    ToBIUtils.setPitchAccent((List<Word>) regions, feature);
+  public void extractFeaturesWord(List<Word> words) {
+    ToBIUtils.setPitchAccent(words, feature);
   }
 }

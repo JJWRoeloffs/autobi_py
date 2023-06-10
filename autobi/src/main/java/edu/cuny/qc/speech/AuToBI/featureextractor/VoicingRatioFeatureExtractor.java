@@ -36,11 +36,11 @@ import java.util.List;
 /**
  * Voiced to unvoiced ratio
  */
-@SuppressWarnings("unchecked")
 public class VoicingRatioFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "voicingRatio";
 
-  private String pitch_feature; // the feature containing the pitch feature to determine voicing
+  private final String
+      pitch_feature; // the feature containing the pitch feature to determine voicing
 
   public VoicingRatioFeatureExtractor(String pitch_feature) {
     this.pitch_feature = pitch_feature;
@@ -50,8 +50,8 @@ public class VoicingRatioFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       Contour pitch;
       try {
         pitch = ContourUtils.getSubContour(
@@ -59,12 +59,8 @@ public class VoicingRatioFeatureExtractor extends FeatureExtractor {
       } catch (AuToBIException e) {
         throw new FeatureExtractorException(e.getMessage() + ":" + r.getFile());
       }
-      if (pitch != null) {
-        r.setAttribute(
-            "voicingRatio[" + pitch_feature + "]", pitch.contentSize() * 1.0 / pitch.size());
-      } else {
-        r.setAttribute("voicingRatio[" + pitch_feature + "]", 0.0);
-      }
+      r.setAttribute(
+          "voicingRatio[" + pitch_feature + "]", pitch.contentSize() * 1.0 / pitch.size());
     }
   }
 }

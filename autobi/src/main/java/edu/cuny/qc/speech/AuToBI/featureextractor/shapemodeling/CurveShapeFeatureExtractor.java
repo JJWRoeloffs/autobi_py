@@ -39,9 +39,8 @@ import java.util.List;
  * Created with IntelliJ IDEA. User: andrew Date: 7/13/12 Time: 11:21 AM To change this template use
  * File | Settings | File Templates.
  */
-@SuppressWarnings("unchecked")
 public class CurveShapeFeatureExtractor extends FeatureExtractor {
-  private String feature;
+  private final String feature;
   public static final String moniker = "risingCurve,fallingCurve,peakCurve,valleyCurve";
 
   public CurveShapeFeatureExtractor(String feature) {
@@ -55,8 +54,8 @@ public class CurveShapeFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute(feature)) {
         Contour super_c = (Contour) r.getAttribute(feature);
         Contour c;
@@ -126,7 +125,7 @@ public class CurveShapeFeatureExtractor extends FeatureExtractor {
       }
     }
 
-    ArrayList<Block> pava_blocks = new ArrayList<Block>();
+    ArrayList<Block> pava_blocks = new ArrayList<>();
     // initialize blocks
     for (int i = 0; i < c.size(); ++i) {
       if (!Double.isNaN(v[i])) {
@@ -222,7 +221,7 @@ public class CurveShapeFeatureExtractor extends FeatureExtractor {
     return curve;
   }
 
-  private class Block {
+  private static class Block {
     int low_idx; // the lowest corresponding index
     int high_idx; // the highest corresponding index
     double x; // the current value of the block

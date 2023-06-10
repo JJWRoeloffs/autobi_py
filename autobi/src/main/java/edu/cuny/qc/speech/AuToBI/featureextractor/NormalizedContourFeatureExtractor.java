@@ -41,8 +41,8 @@ import java.util.List;
  */
 public class NormalizedContourFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "znormC";
-  private String feature_name; // the feature to analyze
-  private String norm_feature; // the parameters to run the normalization
+  private final String feature_name; // the feature to analyze
+  private final String norm_feature; // the parameters to run the normalization
 
   /**
    * Constructs a new NormalizedContourFeatureExtractor to analyze the supplied feature_name using
@@ -77,11 +77,11 @@ public class NormalizedContourFeatureExtractor extends FeatureExtractor {
    * @throws FeatureExtractorException if the normalization parameters cannot normalize the features
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     // Need to make sure that we only extract one normalized contour per original contour
-    HashMap<Contour, Contour> cache = new HashMap<Contour, Contour>();
+    HashMap<Contour, Contour> cache = new HashMap<>();
 
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       if (r.hasAttribute(feature_name) && r.hasAttribute(norm_feature)) {
         Contour c = (Contour) r.getAttribute(feature_name);
         if (cache.containsKey(c)) {

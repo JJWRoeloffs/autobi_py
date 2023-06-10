@@ -37,7 +37,6 @@ import org.junit.Test;
  *
  * @see edu.cuny.qc.speech.AuToBI.io.CPromTextGridReader
  */
-@SuppressWarnings("unchecked")
 public class CPromTextGridReaderTest {
   private final String testfile = ResourcePath.getResourcePath("test.cprom.TextGrid");
   private CPromTextGridReader reader;

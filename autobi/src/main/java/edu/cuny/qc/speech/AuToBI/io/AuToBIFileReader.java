@@ -33,7 +33,7 @@ import java.io.*;
  */
 public class AuToBIFileReader extends BufferedReader {
   private int line_number; // the current line number
-  private String filename; // the filename
+  private final String filename; // the filename
 
   /**
    * Constructs an AuToBIFileReader.

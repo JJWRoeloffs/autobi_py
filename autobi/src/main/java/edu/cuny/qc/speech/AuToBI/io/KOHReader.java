@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KOHReader extends AuToBIWordReader {
-  private String filename;
+  private final String filename;
 
   public KOHReader(String filename) {
     this.filename = filename;
@@ -55,11 +55,11 @@ public class KOHReader extends AuToBIWordReader {
   public List<Word> readWords() throws IOException, AuToBIException {
     AuToBIFileReader reader = new AuToBIFileReader(filename);
 
-    List<Word> words = new ArrayList<Word>();
+    List<Word> words = new ArrayList<>();
     String line;
     String prev_break_idx = null;
     while ((line = reader.readLine()) != null) {
-      String data[] = line.trim().split(";");
+      String[] data = line.trim().split(";");
 
       if (data.length == 17) {
         if (!data[11].trim().startsWith(".") && !data[11].trim().startsWith("~")) {
@@ -78,8 +78,7 @@ public class KOHReader extends AuToBIWordReader {
             w.setPhraseAccent(phrase_accent_label.trim());
 
             if (phrase_accent.contains("%")) {
-              String boundary_tone =
-                  phrase_accent.substring(phrase_accent.indexOf("-") + 1, phrase_accent.length());
+              String boundary_tone = phrase_accent.substring(phrase_accent.indexOf("-") + 1);
               if (boundary_tone.trim().length() > 0) {
                 w.setBoundaryTone(boundary_tone.trim());
               }

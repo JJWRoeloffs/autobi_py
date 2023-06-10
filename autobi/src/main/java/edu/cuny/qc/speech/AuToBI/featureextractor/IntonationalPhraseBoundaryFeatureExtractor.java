@@ -27,6 +27,7 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
+import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.util.ToBIUtils;
 import java.util.List;
@@ -40,7 +41,7 @@ import java.util.List;
  */
 public class IntonationalPhraseBoundaryFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "nominal_IntonationalPhraseBoundary";
-  private String feature; // the stored feature name
+  private final String feature; // the stored feature name
 
   /**
    * Constructs a new IntonationalPhraseBoundaryFeatureExtractor.
@@ -66,7 +67,11 @@ public class IntonationalPhraseBoundaryFeatureExtractor extends FeatureExtractor
    * @param regions The regions to extract features from.
    * @throws FeatureExtractorException If something goes wrong.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    ToBIUtils.setIntonationalPhraseBoundary((List<Word>) regions, feature);
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    throw new UnsupportedOperationException();
+  }
+
+  public void extractFeaturesWord(List<Word> words) {
+    ToBIUtils.setIntonationalPhraseBoundary(words, feature);
   }
 }

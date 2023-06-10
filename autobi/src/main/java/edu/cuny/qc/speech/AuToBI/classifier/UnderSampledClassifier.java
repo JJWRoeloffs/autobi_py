@@ -35,8 +35,8 @@ import edu.cuny.qc.speech.AuToBI.util.PartitionUtils;
  * UnderSampledClassifier downsamples majority class tokens before training.
  */
 public class UnderSampledClassifier extends AuToBIClassifier {
-  private AuToBIClassifier classifier;
-  private String class_attribute;
+  private final AuToBIClassifier classifier;
+  private final String class_attribute;
 
   public UnderSampledClassifier(AuToBIClassifier classifier, String class_attribute) {
     this.classifier = classifier;

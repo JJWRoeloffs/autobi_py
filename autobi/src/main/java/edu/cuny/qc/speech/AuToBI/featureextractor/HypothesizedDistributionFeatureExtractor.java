@@ -37,8 +37,8 @@ import java.util.List;
  * classes for each data point.
  */
 public class HypothesizedDistributionFeatureExtractor extends FeatureExtractor {
-  private String dist_feature; // The feature to store the distribution
-  private AuToBIClassifier classifier; // The classifier to generate distribution.
+  private final String dist_feature; // The feature to store the distribution
+  private final AuToBIClassifier classifier; // The classifier to generate distribution.
   private FeatureSet fs; // The feature set describing the required features.
 
   /**
@@ -64,8 +64,8 @@ public class HypothesizedDistributionFeatureExtractor extends FeatureExtractor {
    * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r instanceof Word) {
         try {
           Distribution dist = classifier.distributionForInstance((Word) r);

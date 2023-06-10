@@ -42,11 +42,10 @@ import java.util.List;
  *
  * @see edu.cuny.qc.speech.AuToBI.core.SpeakerNormalizationParameter
  */
-@SuppressWarnings("unchecked")
 public class RangeNormalizedContourFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "rnormC";
-  private String feature_name; // the feature to analyze
-  private String norm_feature; // the parameters to run the normalization
+  private final String feature_name; // the feature to analyze
+  private final String norm_feature; // the parameters to run the normalization
 
   /**
    * Constructs a new NormalizedContourFeatureExtractor to analyze the supplied feature_name using
@@ -90,10 +89,10 @@ public class RangeNormalizedContourFeatureExtractor extends FeatureExtractor {
    * the features
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    HashMap<Contour, Contour> cache = new HashMap<Contour, Contour>();
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    HashMap<Contour, Contour> cache = new HashMap<>();
 
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       if (r.hasAttribute(feature_name) && r.hasAttribute(norm_feature)) {
         Contour c = (Contour) r.getAttribute(feature_name);
         if (cache.containsKey(c)) {

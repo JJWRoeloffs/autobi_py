@@ -34,7 +34,7 @@ package edu.cuny.qc.speech.AuToBI.io;
  * of annotation formatting.
  */
 public class FormattedFile {
-  public static enum Format {
+  public enum Format {
     TEXTGRID,
     CPROM,
     BURNC,

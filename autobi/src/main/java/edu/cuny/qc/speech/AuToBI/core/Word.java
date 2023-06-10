@@ -259,4 +259,8 @@ public class Word extends Region {
   public boolean hasBoundaryTone() {
     return (boundary_tone != null && boundary_tone.length() > 0);
   }
+
+  public Region toRegion() {
+    return new Region(start, end, label, file, attributes, feature_set, fs_attributes);
+  }
 }

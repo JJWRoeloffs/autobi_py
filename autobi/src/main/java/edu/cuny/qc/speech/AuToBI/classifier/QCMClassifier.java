@@ -42,11 +42,11 @@ import java.util.List;
  * QuantizedContourModel and a multinomial prior.
  */
 public class QCMClassifier extends AuToBIClassifier {
-  private String class_attribute; // the class attribute to predict
-  private String contour_attribute; // the attribute to use for classification
-  private int time_bins; // time bins in the QCM
-  private int value_bins; // value bins in the QCM
-  private HashMap<String, QuantizedContourModel> models; // a set of QCM for classification
+  private final String class_attribute; // the class attribute to predict
+  private final String contour_attribute; // the attribute to use for classification
+  private final int time_bins; // time bins in the QCM
+  private final int value_bins; // value bins in the QCM
+  private final HashMap<String, QuantizedContourModel> models; // a set of QCM for classification
   private Distribution prior; // Prior distribution of class labels
 
   public QCMClassifier(
@@ -55,7 +55,7 @@ public class QCMClassifier extends AuToBIClassifier {
     this.contour_attribute = contour_attribute;
     this.time_bins = time_bins;
     this.value_bins = value_bins;
-    this.models = new HashMap<String, QuantizedContourModel>();
+    this.models = new HashMap<>();
     this.prior = new Distribution();
   }
 
@@ -98,13 +98,13 @@ public class QCMClassifier extends AuToBIClassifier {
   public void train(FeatureSet feature_set) throws Exception {
     models.clear();
     prior = new Distribution();
-    HashMap<String, List<Contour>> data = new HashMap<String, List<Contour>>();
+    HashMap<String, List<Contour>> data = new HashMap<>();
 
     for (Word w : feature_set.getDataPoints()) {
       prior.add((String) w.getAttribute(class_attribute));
 
       if (!data.containsKey(w.getAttribute(class_attribute))) {
-        data.put((String) w.getAttribute(class_attribute), new ArrayList<Contour>());
+        data.put((String) w.getAttribute(class_attribute), new ArrayList<>());
       }
       if (w.hasAttribute(contour_attribute)) {
         data.get(w.getAttribute(class_attribute)).add((Contour) w.getAttribute(contour_attribute));

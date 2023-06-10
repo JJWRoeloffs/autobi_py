@@ -34,7 +34,6 @@ import java.util.List;
  *
  * @see Contour
  */
-@SuppressWarnings("unchecked")
 public class ContourUtils {
   // Utility classes cannot be constructed.
   private ContourUtils() {
@@ -51,12 +50,12 @@ public class ContourUtils {
    * @param feature_name The feature name to store the contour on the regions
    */
   public static void assignValuesToOrderedRegions(
-      List regions, Contour contour, String feature_name) {
+      List<Region> regions, Contour contour, String feature_name) {
     if (regions.size() == 0) {
       return;
     }
     int i = 0;
-    Region current = (Region) regions.get(i);
+    Region current = regions.get(i);
     Contour attr = new Contour(
         current.getStart(), contour.getStep(), contour.indexFromTime(current.getDuration()) + 1);
     current.setAttribute(feature_name, attr);
@@ -66,7 +65,7 @@ public class ContourUtils {
         i++;
         if (i >= regions.size())
           break;
-        current = (Region) regions.get(i);
+        current = regions.get(i);
         attr = new Contour(current.getStart(), contour.getStep(),
             contour.indexFromTime(current.getDuration()) + 1);
 
@@ -77,7 +76,7 @@ public class ContourUtils {
       }
     }
     while (i < regions.size()) {
-      current = (Region) regions.get(i);
+      current = regions.get(i);
       current.setAttribute(feature_name, new Contour(current.getStart(), contour.getStep(), 0));
       ++i;
     }
@@ -97,9 +96,9 @@ public class ContourUtils {
    *     are inconsistent.
    *                                                        (I.e., start > end)
    */
-  public static void assignValuesToRegions(List regions, Contour contour, String feature_name)
-      throws AuToBIException {
-    for (Region r : (List<Region>) regions) {
+  public static void assignValuesToRegions(
+      List<Region> regions, Contour contour, String feature_name) throws AuToBIException {
+    for (Region r : regions) {
       Contour values_subset = ContourUtils.getSubContour(contour, r.getStart(), r.getEnd());
       r.setAttribute(feature_name, values_subset);
     }
@@ -119,13 +118,13 @@ public class ContourUtils {
    *     end)
    */
   public static void assignValuesToSubregions(
-      List<Region> subregions, List regions, String feature_name) throws AuToBIException {
+      List<Region> subregions, List<Region> regions, String feature_name) throws AuToBIException {
     // Constructs a single contour that spans the whole list of regions.
     // To hold every value, use the smallest time step and lowest start time.
     double x0 = Double.MAX_VALUE;
     double time_step = Double.MAX_VALUE;
     double max_time = 0.0;
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       if (r.hasAttribute(feature_name)) {
         Contour c = (Contour) r.getAttribute(feature_name);
         x0 = Math.min(x0, c.getStart());
@@ -137,7 +136,7 @@ public class ContourUtils {
     // Only bother with the assignment if there is a contour to process
     if (max_time - x0 > 0) {
       Contour contour = new Contour(x0, time_step, (int) Math.ceil((max_time - x0) / time_step));
-      for (Region r : (List<Region>) regions) {
+      for (Region r : regions) {
         Contour c = (Contour) r.getAttribute(feature_name);
         for (Pair<Double, Double> tvp : c) {
           contour.set(tvp.first, tvp.second);

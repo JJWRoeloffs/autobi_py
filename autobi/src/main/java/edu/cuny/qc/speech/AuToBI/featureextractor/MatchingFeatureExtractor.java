@@ -37,13 +37,12 @@ import java.util.List;
  * used to compare predicted values to hypothesized values. A reasonable extension to this will be
  * to allow a user to specify the values for matching and differing feature values.
  */
-@SuppressWarnings("unchecked")
 public class MatchingFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "matching";
 
-  private String feature1; // One of the feature names
-  private String feature2; // The second feature name
-  private String destination; // Name for the destination variable.
+  private final String feature1; // One of the feature names
+  private final String feature2; // The second feature name
+  private final String destination; // Name for the destination variable.
 
   /**
    * Constructs a new MatchingFeatureExtractor to compare the values of two features, feature1, and
@@ -85,8 +84,8 @@ public class MatchingFeatureExtractor extends FeatureExtractor {
    * @param regions The regions to extract features from.
    * @throws FeatureExtractorException if any region does not have one of the matching features.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute(feature1) && r.hasAttribute(feature2)) {
         if (r.getAttribute(feature1).equals(r.getAttribute(feature2))) {
           r.setAttribute(destination, "CORRECT");

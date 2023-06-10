@@ -30,13 +30,12 @@ import edu.cuny.qc.speech.AuToBI.core.*;
 import java.util.HashMap;
 import java.util.List;
 
-@SuppressWarnings("unchecked")
 public class CombinedContourFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "prodC";
-  private String feature1; // the first feature
-  private String feature2; // the second feature
+  private final String feature1; // the first feature
+  private final String feature2; // the second feature
   private String extracted_f; // the extracted feature name
-  private double f2_coeff; // the combination coefficient of the second feature
+  private final double f2_coeff; // the combination coefficient of the second feature
 
   /**
    * Constructs a new CombinedContourFeatureExtractor to merge two contours into a single numeric
@@ -70,11 +69,11 @@ public class CombinedContourFeatureExtractor extends FeatureExtractor {
    * @throws FeatureExtractorException if the normalization parameters cannot normalize the features
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    HashMap<Contour, Contour> cache = new HashMap<Contour, Contour>();
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    HashMap<Contour, Contour> cache = new HashMap<>();
     String extracted_feature = "prodC[" + feature1 + "," + feature2 + "," + f2_coeff + "]";
 
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       if (r.hasAttribute(feature1) && r.hasAttribute(feature2)) {
         Contour src = (Contour) r.getAttribute(feature1);
         if (cache.containsKey(src)) {

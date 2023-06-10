@@ -36,7 +36,7 @@ import java.util.Iterator;
  */
 public class ContourIterator implements Iterator<Pair<Double, Double>> {
   private int i; // the current index
-  private Contour c; // the associated contour
+  private final Contour c; // the associated contour
 
   /**
    * Constructs a new ContourIterator for a given Contour.

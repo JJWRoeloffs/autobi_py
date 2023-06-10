@@ -53,7 +53,7 @@ public class AuToBIUtils {
   }
 
   // A log4j logger
-  private static Logger logger = Logger.getLogger(AuToBIUtils.class);
+  private static final Logger logger = Logger.getLogger(AuToBIUtils.class);
 
   /**
    * Logs a message to the logger.
@@ -109,14 +109,14 @@ public class AuToBIUtils {
   public static List<String> glob(String pattern) {
     File dir;
 
-    ArrayList<String> filenames = new ArrayList<String>();
+    ArrayList<String> filenames = new ArrayList<>();
     if (pattern != null) {
       for (String file_pattern : pattern.split(",")) {
         file_pattern = file_pattern.replaceAll("~", System.getProperty("user.home"));
         if (!file_pattern.startsWith("/")) {
           file_pattern = System.getProperty("user.dir") + "/" + file_pattern;
         }
-        file_pattern = file_pattern.substring(1, file_pattern.length());
+        file_pattern = file_pattern.substring(1);
         dir = new File("/");
 
         for (String file_name : getFileList(dir, file_pattern)) filenames.add(file_name);
@@ -139,12 +139,12 @@ public class AuToBIUtils {
       throw new AuToBIException("Pattern, " + pattern + ", matches multiple files");
     }
 
-    ArrayList<String> filenames = new ArrayList<String>();
+    ArrayList<String> filenames = new ArrayList<>();
     String file_pattern = pattern.replaceAll("~", System.getProperty("user.home"));
     if (!file_pattern.startsWith("/")) {
       file_pattern = System.getProperty("user.dir") + "/" + file_pattern;
     }
-    file_pattern = file_pattern.substring(1, file_pattern.length());
+    file_pattern = file_pattern.substring(1);
     File dir = new File("/");
 
     for (String file_name : getFileList(dir, file_pattern)) filenames.add(file_name);
@@ -184,7 +184,7 @@ public class AuToBIUtils {
    * @return A list of file names  in the directory that match the patter
    */
   public static List<String> getFileList(File dir, String file_pattern) {
-    ArrayList<String> file_names = new ArrayList<String>();
+    ArrayList<String> file_names = new ArrayList<>();
     String[] path_elements = file_pattern.split("/");
 
     if (path_elements[0].equals(".")) {
@@ -250,7 +250,7 @@ public class AuToBIUtils {
 
     // Note: I'm sure there's a way to do this with a regular expression, but dealing with
     // matching brackets is frustrating
-    ArrayList<String> ret = new ArrayList<String>();
+    ArrayList<String> ret = new ArrayList<>();
     if (!feature.contains("[")) {
       ret.add(feature);
     } else {
@@ -260,7 +260,7 @@ public class AuToBIUtils {
 
       // Parameters will keep the final closing bracket to allow the for loop below to recognize the
       // end of string.
-      String parameters = feature.substring(openBracket + 1, feature.length());
+      String parameters = feature.substring(openBracket + 1);
       if (parameters.length() == 0) {
         throw new AuToBIException("Invalid feature name format: " + feature);
       }
@@ -406,7 +406,7 @@ public class AuToBIUtils {
    */
   public static HashMap<String, AuToBITask> createTaskListFromParameters(
       AuToBIParameters params, boolean serialized) {
-    HashMap<String, AuToBITask> map = new HashMap<String, AuToBITask>();
+    HashMap<String, AuToBITask> map = new HashMap<>();
 
     try {
       if (params.hasParameter("pitch_accent_detector")) {

@@ -30,8 +30,8 @@ package edu.cuny.qc.speech.AuToBI.core.syllabifier;
  * A simple class to hold mean and variance information for Gaussian Mixture Model components.
  */
 class GMMComponent {
-  double mean = 0;
-  double variance = 0;
+  double mean;
+  double variance;
   boolean isSilence;
   double weight; // mixture coefficient
   double n; // total (weighted) responsibility assigned to this component

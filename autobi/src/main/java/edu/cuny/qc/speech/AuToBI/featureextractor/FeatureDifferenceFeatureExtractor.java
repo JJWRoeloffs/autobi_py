@@ -34,12 +34,11 @@ import java.util.List;
  * Created with IntelliJ IDEA. User: andrew Date: 7/24/12 Time: 11:10 AM To change this template use
  * File | Settings | File Templates.
  */
-@SuppressWarnings("unchecked")
 public class FeatureDifferenceFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "minus";
 
-  private String f1;
-  private String f2;
+  private final String f1;
+  private final String f2;
 
   public FeatureDifferenceFeatureExtractor(String f1, String f2) {
     this.f1 = f1;
@@ -51,8 +50,8 @@ public class FeatureDifferenceFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute(f1) && r.hasAttribute(f2)) {
         r.setAttribute("minus[" + f1 + "," + f2 + "]",
             ((Double) r.getAttribute(f1)) - ((Double) r.getAttribute(f2)));

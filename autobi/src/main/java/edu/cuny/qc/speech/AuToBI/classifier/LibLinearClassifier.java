@@ -65,7 +65,7 @@ public class LibLinearClassifier extends AuToBIClassifier {
     this.eps = 0.01;
     this.class_weighting = class_weighting;
 
-    this.norm_map = new HashMap<String, Aggregation>();
+    this.norm_map = new HashMap<>();
     this.feature_map = HashBiMap.create();
   }
 

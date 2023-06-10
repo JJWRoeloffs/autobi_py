@@ -36,8 +36,8 @@ import java.util.List;
  */
 public class SpeakerNormalizationParameterFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "spkrNormParameterFeatures";
-  private String speaker_id_feature;
-  private String destination_feature;
+  private final String speaker_id_feature;
+  private final String destination_feature;
 
   public SpeakerNormalizationParameterFeatureExtractor(
       String speaker_id_feature, String destination_feature) {
@@ -50,11 +50,10 @@ public class SpeakerNormalizationParameterFeatureExtractor extends FeatureExtrac
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    HashMap<String, SpeakerNormalizationParameter> params =
-        new HashMap<String, SpeakerNormalizationParameter>();
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    HashMap<String, SpeakerNormalizationParameter> params = new HashMap<>();
 
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       SpeakerNormalizationParameter norm_params;
       if (!params.containsKey(r.getAttribute(speaker_id_feature))) {
         params.put((String) r.getAttribute(speaker_id_feature),
@@ -79,7 +78,7 @@ public class SpeakerNormalizationParameterFeatureExtractor extends FeatureExtrac
       }
     }
 
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       r.setAttribute(destination_feature, params.get(r.getAttribute(speaker_id_feature)));
     }
   }

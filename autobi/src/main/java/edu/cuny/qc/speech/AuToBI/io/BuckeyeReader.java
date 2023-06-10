@@ -37,7 +37,7 @@ import java.util.List;
  * Reader class for buckeye corpus files.
  */
 public class BuckeyeReader extends AuToBIWordReader {
-  private String filename; // the words file to read.
+  private final String filename; // the words file to read.
 
   public BuckeyeReader(String filename) {
     this.filename = filename;
@@ -53,7 +53,7 @@ public class BuckeyeReader extends AuToBIWordReader {
   @Override
   public List<Word> readWords() throws IOException, AuToBIException {
     AuToBIFileReader reader = new AuToBIFileReader(filename);
-    ArrayList<Word> words = new ArrayList<Word>();
+    ArrayList<Word> words = new ArrayList<>();
 
     boolean started = false;
     String line;

@@ -37,7 +37,7 @@ import java.util.List;
  * A file reader for the DUR corpus.
  */
 public class DURReader extends AuToBIWordReader {
-  private String filename;
+  private final String filename;
 
   /**
    * Constructs a new DURReader.
@@ -59,10 +59,10 @@ public class DURReader extends AuToBIWordReader {
   public List<Word> readWords() throws IOException, AuToBIException {
     AuToBIFileReader reader = new AuToBIFileReader(filename);
 
-    List<Word> words = new ArrayList<Word>();
+    List<Word> words = new ArrayList<>();
     String line;
     Word word = null;
-    Double time = 0.0;
+    double time = 0.0;
     String next_break = null;
     while ((line = reader.readLine()) != null) {
       if (line.trim().length() > 0 && !line.startsWith("**")) {

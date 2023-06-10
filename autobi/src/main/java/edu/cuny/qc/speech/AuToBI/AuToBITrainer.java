@@ -51,7 +51,8 @@ import java.util.List;
  * @see edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier
  */
 public class AuToBITrainer {
-  private AuToBI autobi; // An AuToBI object to store parameters and handle the feature extraction.
+  // An AuToBI object to store parameters and handle the feature extraction.
+  private final AuToBI autobi;
 
   /**
    * Constructs a new AuToBITrainer with an associated AuToBI object to manage parameters and

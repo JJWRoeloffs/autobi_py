@@ -33,9 +33,8 @@ import java.util.List;
 /**
  * Extracts the area under a contour.
  */
-@SuppressWarnings("unchecked")
 public class AUContourFeatureExtractor extends FeatureExtractor {
-  private String feature; // The contour feature to calculate the area under
+  private final String feature; // The contour feature to calculate the area under
 
   public static final String moniker = "area";
 
@@ -47,8 +46,8 @@ public class AUContourFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute(feature)) {
         Contour super_c = (Contour) r.getAttribute(feature);
         Contour c;

@@ -39,13 +39,12 @@ import java.util.List;
  * <p/>
  * The frequency range is defined in bark scale.
  */
-@SuppressWarnings("unchecked")
 public class FFVBandFeatureExtractor extends ContourFeatureExtractor {
   public static final String moniker = "spectrumBand";
-  private String spectrum_feature; // the spectrum feature
+  private final String spectrum_feature; // the spectrum feature
 
-  private int low; // the low boundary of the frequency bandwidth
-  private int high; // the high boundary of the frequency bandwidth
+  private final int low; // the low boundary of the frequency bandwidth
+  private final int high; // the high boundary of the frequency bandwidth
 
   /**
    * Constructs a new SpectrumBandFeatureExtractor with associated spectrum, feature prefix and
@@ -61,7 +60,7 @@ public class FFVBandFeatureExtractor extends ContourFeatureExtractor {
     this.high = high_bark;
 
     // register extracted features
-    extracted_features = new ArrayList<String>();
+    extracted_features = new ArrayList<>();
     extracted_features.add("spectrumBand[" + low + "," + high + "]");
 
     required_features.add(spectrum_feature);
@@ -78,10 +77,10 @@ public class FFVBandFeatureExtractor extends ContourFeatureExtractor {
    * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException if something goes
    *     wrong.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    HashMap<Spectrum, Contour> cache = new HashMap<Spectrum, Contour>();
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    HashMap<Spectrum, Contour> cache = new HashMap<>();
     try {
-      for (Region r : (List<Region>) regions) {
+      for (Region r : regions) {
         if (r.hasAttribute(spectrum_feature)) {
           Spectrum spectrum = (Spectrum) r.getAttribute(spectrum_feature);
           if (cache.containsKey(spectrum)) {

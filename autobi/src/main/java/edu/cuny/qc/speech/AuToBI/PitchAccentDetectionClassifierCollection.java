@@ -27,6 +27,7 @@
 package edu.cuny.qc.speech.AuToBI;
 
 import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -40,18 +41,20 @@ import java.util.HashMap;
  * This should be converted into a more general object to store classifier ensembles.
  */
 public class PitchAccentDetectionClassifierCollection implements Serializable {
-  private static final long serialVersionUID = 20100420L;
+  @Serial private static final long serialVersionUID = 20100420L;
 
-  private HashMap<String, AuToBIClassifier>
-      pitch_accent_detectors; // the initial pitch accent detectors
-  private HashMap<String, AuToBIClassifier> correction_classifiers; // the correcting classifiers
+  // the initial pitch accent detectors
+  private final HashMap<String, AuToBIClassifier> pitch_accent_detectors;
+
+  // the correcting classifiers
+  private final HashMap<String, AuToBIClassifier> correction_classifiers;
 
   /**
    * Constructs a new, empty, PitchAccentDetectionClassifierCollection.
    */
   public PitchAccentDetectionClassifierCollection() {
-    pitch_accent_detectors = new HashMap<String, AuToBIClassifier>();
-    correction_classifiers = new HashMap<String, AuToBIClassifier>();
+    pitch_accent_detectors = new HashMap<>();
+    correction_classifiers = new HashMap<>();
   }
 
   /**
@@ -108,6 +111,6 @@ public class PitchAccentDetectionClassifierCollection implements Serializable {
    * @return a string representing the region
    */
   private String generateKey(int low, int high) {
-    return Integer.toString(low) + "_" + Integer.toString(high);
+    return low + "_" + high;
   }
 }

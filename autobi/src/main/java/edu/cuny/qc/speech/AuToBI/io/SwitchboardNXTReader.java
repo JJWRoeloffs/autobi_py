@@ -40,7 +40,7 @@ import java.util.List;
  * File | Settings | File Templates.
  */
 public class SwitchboardNXTReader extends AuToBIWordReader {
-  private String filestem; // the base filestem containing word offset data
+  private final String filestem; // the base filestem containing word offset data
 
   /**
    * Constructs a new SwitchboardNXTReader.
@@ -74,7 +74,7 @@ public class SwitchboardNXTReader extends AuToBIWordReader {
     AlignmentUtils.copyToBITonesByTime(words, accent_tier.getRegions());
     AlignmentUtils.copyToBITonesByTime(words, breaks_tier.getRegions());
 
-    List<Region> break_indices = new ArrayList<Region>();
+    List<Region> break_indices = new ArrayList<>();
     for (Region r : breaks_tier.getRegions()) {
       if (r.getLabel().startsWith("0") || r.getLabel().startsWith("1")
           || r.getLabel().startsWith("2") || r.getLabel().startsWith("3")
@@ -98,7 +98,7 @@ public class SwitchboardNXTReader extends AuToBIWordReader {
    * @return a list of words
    */
   protected List<Word> generateWordList(List<Region> regions) {
-    List<Word> words = new ArrayList<Word>();
+    List<Word> words = new ArrayList<>();
     for (Region r : regions) {
       if (!WordReaderUtils.isSilentRegion(r.getLabel(), silence_regex)) {
         Word w = new Word(r.getStart(), r.getEnd(), r.getLabel(), null, r.getFile());

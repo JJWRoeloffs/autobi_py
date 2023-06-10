@@ -33,7 +33,7 @@ import java.util.Collection;
  * The results from an evaluation -- without storing instances
  */
 public class EvaluationResults {
-  private String[] classNames; // an array of class labels
+  private final String[] classNames; // an array of class labels
   private double[][] confusionMatrix; // the confusion matrix
 
   /**
@@ -355,7 +355,7 @@ public class EvaluationResults {
    * @return BER value
    */
   public Double getBalancedErrorRate() {
-    Double ber = 0.0;
+    double ber = 0.0;
     try {
       for (String class_name : getClassNames()) {
         ber += 1 - getRecall(class_name);
@@ -374,13 +374,13 @@ public class EvaluationResults {
    * @return Mutual Information
    */
   public Double getMutualInformation() {
-    Double mi = 0.0;
+    double mi = 0.0;
     for (String class_x : getClassNames()) {
       for (String class_y : getClassNames()) {
         try {
           if (getNumClassInstances(class_x) > 0 && getNumClassifiedAs(class_y) > 0
               && getInstances(class_x, class_y) > 0) {
-            Double p_xy = getInstances(class_x, class_y) / getNumInstances();
+            double p_xy = getInstances(class_x, class_y) / getNumInstances();
             Double p_x = getNumClassInstances(class_x).doubleValue() / getNumInstances();
             Double p_y = getNumClassifiedAs(class_y).doubleValue() / getNumInstances();
             mi += p_xy * Math.log(p_xy / (p_x * p_y));

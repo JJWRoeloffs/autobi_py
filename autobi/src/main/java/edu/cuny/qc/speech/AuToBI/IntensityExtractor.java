@@ -83,7 +83,7 @@ public class IntensityExtractor extends SampledDataAnalyzer {
     double t0 = win_dur / 2.0; // the first intensity frame is half way between the first window.
     int s0 = xToNearestIndex(0.0, wav.getFrameSize(), t0);
 
-    int num_frames = (int) Math.floor((wav.getNumSamples() - win_samples) / time_samples) + 1;
+    int num_frames = ((wav.getNumSamples() - win_samples) / time_samples) + 1;
 
     if (wav.getDuration() < time_step || wav.getDuration() < win_dur) {
       return new Contour(t0, time_step, 0);
@@ -135,6 +135,9 @@ public class IntensityExtractor extends SampledDataAnalyzer {
     WavReader reader = new WavReader();
     WavData wav;
     try {
+      if (soundIn == null) {
+        throw new AuToBIException("soundIn was null");
+      }
       if (args.length > 1) {
         wav = reader.read(soundIn, Double.parseDouble(args[1]), Double.parseDouble(args[2]));
       } else {

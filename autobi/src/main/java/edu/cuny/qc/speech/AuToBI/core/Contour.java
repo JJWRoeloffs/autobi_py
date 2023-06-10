@@ -295,7 +295,7 @@ public class Contour implements Iterable<Pair<Double, Double>> {
     if (i < 0 || i >= n || isEmpty(i)) {
       return null;
     }
-    return new Pair<Double, Double>(timeFromIndex(i), values[i]);
+    return new Pair<>(timeFromIndex(i), values[i]);
   }
 
   /**

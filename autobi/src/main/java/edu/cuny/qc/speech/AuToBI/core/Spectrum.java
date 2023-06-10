@@ -33,10 +33,10 @@ package edu.cuny.qc.speech.AuToBI.core;
  * by time and frequency.
  */
 public class Spectrum {
-  private double[][] data;
-  private double starting_time;
-  private double frame_size;
-  private double freq_resolution;
+  private final double[][] data;
+  private final double starting_time;
+  private final double frame_size;
+  private final double freq_resolution;
 
   /**
    * Constructs a Spectrum object.
@@ -236,9 +236,7 @@ public class Spectrum {
       throws AuToBIException {
     double[] power = getPowerInBand(freq_1, freq_2, log_values);
 
-    Contour power_contour = new Contour(starting_time, frame_size, power);
-
-    return power_contour;
+    return new Contour(starting_time, frame_size, power);
   }
 
   /**

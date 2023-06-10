@@ -35,7 +35,6 @@ import org.junit.Test;
  *
  * @see edu.cuny.qc.speech.AuToBI.io.SimpleWordReader
  */
-@SuppressWarnings("unchecked")
 public class SimpleWordReaderTest {
   @Test
   public void testReadsWords() {

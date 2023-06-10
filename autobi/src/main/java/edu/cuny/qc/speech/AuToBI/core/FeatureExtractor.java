@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * An abstract base class for extracting features from region objects.
@@ -65,7 +66,11 @@ public abstract class FeatureExtractor {
    * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException If something goes
    *     wrong.
    */
-  public abstract void extractFeatures(List regions) throws FeatureExtractorException;
+  public abstract void extractFeatures(List<Region> regions) throws FeatureExtractorException;
+
+  public void extractFeaturesWord(List<Word> words) throws FeatureExtractorException {
+    extractFeatures(words.stream().map(Word::toRegion).collect(Collectors.toList()));
+  }
 
   /**
    * Retrieves a list of extracted features.
@@ -90,7 +95,7 @@ public abstract class FeatureExtractor {
    * objects.
    */
   public FeatureExtractor() {
-    extracted_features = new ArrayList<String>();
-    required_features = new HashSet<String>();
+    extracted_features = new ArrayList<>();
+    required_features = new HashSet<>();
   }
 }

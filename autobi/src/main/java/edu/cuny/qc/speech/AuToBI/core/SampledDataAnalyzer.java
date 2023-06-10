@@ -97,7 +97,7 @@ public abstract class SampledDataAnalyzer {
    * @return a Pair containing the number of frames (first) and the initial time (second)
    */
   protected Pair<Integer, Double> getNFramesAndStartTime(double time_step, double window_size) {
-    Pair<Integer, Double> pair = new Pair<Integer, Double>();
+    Pair<Integer, Double> pair = new Pair<>();
     // Determine the number of frames
     pair.first = (int) (Math.floor((wav.getDuration() - window_size) / time_step) + 1);
 

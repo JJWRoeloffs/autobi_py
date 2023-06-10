@@ -41,7 +41,7 @@ public class Distribution extends HashMap<String, Double> {
    * @param s the string to add
    */
   public void add(String s) {
-    Double value = 1.0;
+    double value = 1.0;
     if (containsKey(s)) {
       value = get(s) + 1;
     }

@@ -37,10 +37,9 @@ import java.util.List;
  * Created with IntelliJ IDEA. User: andrew Date: 7/13/12 Time: 11:21 AM To change this template use
  * File | Settings | File Templates.
  */
-@SuppressWarnings("unchecked")
 public class CurveShapeLikelihoodFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "risingLL,fallingLL,peakLL,valleyLL";
-  private String feature;
+  private final String feature;
 
   public CurveShapeLikelihoodFeatureExtractor(String feature) {
     this.feature = feature;
@@ -57,8 +56,8 @@ public class CurveShapeLikelihoodFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute("risingCurve[" + feature + "]")
           && r.hasAttribute("fallingCurve[" + feature + "]")
           && r.hasAttribute("peakCurve[" + feature + "]")

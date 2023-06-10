@@ -129,7 +129,7 @@ public class SpectrumExtractor extends SampledDataAnalyzer {
         for (int j = 0; j < spectrum.numFreqs(); ++j) {
           System.out.print(spectrum.get(i, j) + " ");
         }
-        System.out.println("");
+        System.out.println();
       }
 
       if (display) {
@@ -153,9 +153,9 @@ public class SpectrumExtractor extends SampledDataAnalyzer {
   }
 
   public static class SpectrogramPanel extends JPanel {
-    private BufferedImage image = null;
+    private final BufferedImage image;
 
-    private int width, height;
+    private final int width, height;
     private double min = 0., max = 0.;
 
     public SpectrogramPanel(Spectrum spectrum) {

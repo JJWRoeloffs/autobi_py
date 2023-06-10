@@ -41,8 +41,8 @@ import java.util.List;
  */
 public class SubregionFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "subregion";
-  private String subregion_name; // the name of the subregion
-  private Double subregion_length; // the length in seconds of the subregion
+  private final String subregion_name; // the name of the subregion
+  private final Double subregion_length; // the length in seconds of the subregion
 
   /**
    * Constructs a new SubregionFeatureExtractor
@@ -62,8 +62,8 @@ public class SubregionFeatureExtractor extends FeatureExtractor {
    *
    * @param regions The regions to extract features from.
    */
-  public void extractFeatures(List regions) {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) {
+    for (Region r : regions) {
       Region subregion = new Region(r.getEnd() - subregion_length, r.getEnd());
 
       r.setAttribute(moniker + "[" + subregion_name + "]", subregion);

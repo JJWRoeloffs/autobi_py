@@ -70,10 +70,10 @@ public class DeltaContourFeatureExtractor extends FeatureExtractor {
    * @param regions The regions to extract features from
    * @throws FeatureExtractorException When something goes wrong
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    HashMap<Contour, Contour> cache = new HashMap<Contour, Contour>();
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    HashMap<Contour, Contour> cache = new HashMap<>();
 
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       if (r.hasAttribute(attribute_name)) {
         Contour c = (Contour) r.getAttribute(attribute_name);
         if (cache.containsKey(c)) {

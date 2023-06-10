@@ -37,14 +37,13 @@ import java.util.List;
  * Spectral tilt, in this case, is defined as the ratio of the energy in a specified spectral region
  * and the total energy in the frame.
  */
-@SuppressWarnings("unchecked")
 public class SpectralTiltFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "spectralTilt";
-  private String spectrum_feature; // the spectrum of the signal
+  private final String spectrum_feature; // the spectrum of the signal
 
   // An associated ContourFeatureExtractor responsible for the extraction
-  private int low; // The low boundary of the frequency bandwidth
-  private int high; // The high boundary of the frequency bandwidth
+  private final int low; // The low boundary of the frequency bandwidth
+  private final int high; // The high boundary of the frequency bandwidth
 
   /**
    * Constructs a new SpectralTiltFeatureExtractor.
@@ -58,7 +57,7 @@ public class SpectralTiltFeatureExtractor extends FeatureExtractor {
     this.low = low_bark;
     this.high = high_bark;
 
-    extracted_features = new ArrayList<String>();
+    extracted_features = new ArrayList<>();
     extracted_features.add("spectralTilt[" + low + "," + high + "]");
 
     required_features.add(spectrum_feature);
@@ -88,10 +87,10 @@ public class SpectralTiltFeatureExtractor extends FeatureExtractor {
    *     wrong with the
    *                                                                              feature extraction
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     try {
-      HashMap<Spectrum, Contour> cache = new HashMap<Spectrum, Contour>();
-      for (Region r : (List<Region>) regions) {
+      HashMap<Spectrum, Contour> cache = new HashMap<>();
+      for (Region r : regions) {
         if (r.hasAttribute(spectrum_feature)) {
           Spectrum spectrum = (Spectrum) r.getAttribute(spectrum_feature);
           if (cache.containsKey(spectrum)) {

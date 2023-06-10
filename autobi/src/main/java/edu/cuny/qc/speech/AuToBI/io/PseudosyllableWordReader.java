@@ -50,9 +50,9 @@ import java.util.List;
  * @see AuToBIWordReader
  */
 public class PseudosyllableWordReader extends AuToBIWordReader {
-  private WavData wav_data; // the audio material to base the segmentation on
+  private final WavData wav_data; // the audio material to base the segmentation on
   private double threshold; // the silence threshold in mean dB in the region
-  private FormattedFile annotation_file; // A file containing ToBI annotations.
+  private final FormattedFile annotation_file; // A file containing ToBI annotations.
 
   /**
    * Constructs a new PseudosyllableWordReader based on audio data, wav_data, and a silence

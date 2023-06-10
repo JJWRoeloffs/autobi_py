@@ -86,7 +86,7 @@ public class EnsembleSampledClassifier extends AuToBIClassifier {
    * @throws Exception if there is a training problem
    */
   public void train(FeatureSet feature_set) throws Exception {
-    classifiers = new ArrayList<AuToBIClassifier>();
+    classifiers = new ArrayList<>();
     List<FeatureSet> training_sets = constructEnsembleFeatureSets(feature_set);
 
     for (FeatureSet fs : training_sets) {
@@ -107,7 +107,7 @@ public class EnsembleSampledClassifier extends AuToBIClassifier {
 
   public List<FeatureSet> constructEnsembleFeatureSets(FeatureSet training_set)
       throws AuToBIException {
-    List<FeatureSet> training_sets = new ArrayList<FeatureSet>();
+    List<FeatureSet> training_sets = new ArrayList<>();
 
     // Identify the majority class.
     Distribution class_distribution = PartitionUtils.generateAttributeDistribution(

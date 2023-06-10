@@ -27,10 +27,7 @@
 package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import edu.cuny.qc.speech.AuToBI.classifier.AuToBIClassifier;
-import edu.cuny.qc.speech.AuToBI.core.Distribution;
-import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
-import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
-import edu.cuny.qc.speech.AuToBI.core.Word;
+import edu.cuny.qc.speech.AuToBI.core.*;
 import java.util.List;
 
 /**
@@ -40,15 +37,14 @@ import java.util.List;
  * extraction routine generates hypotheses for the second -- correction -- tier. <p/> This is
  * currently deprecated because it does not conform with the AuToBI 1.4 feature naming conventions
  */
-@SuppressWarnings("unchecked")
 @Deprecated
 public class CorrectionSpectrumPADFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "correction_prediction,correction_prediction_confidence";
 
-  private int low; // the low bark
-  private int high; // the high bark
-  private AuToBIClassifier classifier; // The correction classifier
-  private FeatureSet fs; // A FeatureSet to describe the required features for the classifier
+  private final int low; // the low bark
+  private final int high; // the high bark
+  private final AuToBIClassifier classifier; // The correction classifier
+  private final FeatureSet fs; // A FeatureSet to describe the required features for the classifier
 
   /**
    * Constructs a CorrectionSpectrumPADFeatureExtractor
@@ -73,21 +69,25 @@ public class CorrectionSpectrumPADFeatureExtractor extends FeatureExtractor {
     required_features.addAll(fs.getRequiredFeatures());
     required_features.add(fs.getClassAttribute());
   }
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * Extracts correction features over each region.
    *
-   * @param regions the regions to generate features for
+   * @param words the regions to generate features for
    * @throws FeatureExtractorException if something goes wrong.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  @Override
+  public void extractFeaturesWord(List<Word> words) throws FeatureExtractorException {
     // Construct a feature set.
     FeatureSet feature_set = fs.newInstance();
 
-    feature_set.setDataPoints(regions);
+    feature_set.setDataPoints(words);
     feature_set.constructFeatures();
 
-    for (Word w : (List<Word>) regions) {
+    for (Word w : words) {
       try {
         Distribution result = classifier.distributionForInstance(w);
 

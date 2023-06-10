@@ -29,13 +29,14 @@ package edu.cuny.qc.speech.AuToBI.classifier;
 import edu.cuny.qc.speech.AuToBI.core.Distribution;
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
 import edu.cuny.qc.speech.AuToBI.core.Word;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
  * An abstract serializable class to store, call and train classifiers.
  */
 public abstract class AuToBIClassifier implements Serializable {
-  private static final long serialVersionUID = 20090507L;
+  @Serial private static final long serialVersionUID = 20090507L;
 
   /**
    * Return the normalized posterior distribution from the classifier.

@@ -21,7 +21,6 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import static junit.framework.Assert.*;
 
-import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +34,12 @@ import org.junit.Test;
  */
 public class PhraseAccentBoundaryToneFeatureExtractorTest {
   private PhraseAccentBoundaryToneFeatureExtractor fe;
-  private List<Region> regions;
+  private List<Word> words;
 
   @Before
   public void setUp() throws Exception {
     fe = new PhraseAccentBoundaryToneFeatureExtractor();
-    regions = new ArrayList<Region>();
+    words = new ArrayList<>();
   }
 
   @Test
@@ -59,14 +58,10 @@ public class PhraseAccentBoundaryToneFeatureExtractorTest {
     Word w = new Word(0, 1, "word");
     w.setPhraseAccent("L-");
     w.setBoundaryTone("H%");
-    regions.add(w);
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-      assertTrue(w.hasAttribute("nominal_PhraseAccentBoundaryTone"));
-    } catch (FeatureExtractorException e) {
-      fail();
-    }
+    fe.extractFeaturesWord(words);
+    assertTrue(w.hasAttribute("nominal_PhraseAccentBoundaryTone"));
   }
 
   @Test
@@ -74,28 +69,20 @@ public class PhraseAccentBoundaryToneFeatureExtractorTest {
     Word w = new Word(0, 1, "word");
     w.setPhraseAccent("L-");
     w.setBoundaryTone("H%");
-    regions.add(w);
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-      assertEquals("L-Hx", w.getAttribute("nominal_PhraseAccentBoundaryTone"));
-    } catch (FeatureExtractorException e) {
-      fail();
-    }
+    fe.extractFeaturesWord(words);
+    assertEquals("L-Hx", w.getAttribute("nominal_PhraseAccentBoundaryTone"));
   }
 
   @Test
   public void testExtractFeaturesExtractsCorrectlyWithNoBoundaryTone() {
     Word w = new Word(0, 1, "word");
     w.setPhraseAccent("L-");
-    regions.add(w);
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-      assertTrue(w.hasAttribute("nominal_PhraseAccentBoundaryTone"));
-      assertEquals("NOTONE", w.getAttribute("nominal_PhraseAccentBoundaryTone"));
-    } catch (FeatureExtractorException e) {
-      fail();
-    }
+    fe.extractFeaturesWord(words);
+    assertTrue(w.hasAttribute("nominal_PhraseAccentBoundaryTone"));
+    assertEquals("NOTONE", w.getAttribute("nominal_PhraseAccentBoundaryTone"));
   }
 }

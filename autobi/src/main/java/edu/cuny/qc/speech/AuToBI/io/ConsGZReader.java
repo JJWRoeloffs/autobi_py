@@ -41,8 +41,8 @@ import java.util.zip.GZIPInputStream;
  * ConsGZReader is a class that reads gzipped plain text representations of consensus nets.
  */
 public class ConsGZReader extends AuToBIWordReader {
-  private String filename; // the words file to read.
-  private String charset; // the charset encoding
+  private final String filename; // the words file to read.
+  private final String charset; // the charset encoding
 
   public ConsGZReader(String filename) {
     this.filename = filename;
@@ -74,7 +74,7 @@ public class ConsGZReader extends AuToBIWordReader {
             new InputStreamReader(new GZIPInputStream(new FileInputStream(filename)), charset));
       }
 
-      List<Word> words = new ArrayList<Word>();
+      List<Word> words = new ArrayList<>();
       String line;
       while ((line = reader.readLine()) != null) {
         String[] data = line.trim().split("\\s+");

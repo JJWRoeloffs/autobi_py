@@ -40,8 +40,8 @@ import java.util.List;
  * leveraged across multiple classification tasks.
  */
 public class HypothesizedEventFeatureExtractor extends FeatureExtractor {
-  private String hyp_feature; // The feature to store the hypothesis
-  private AuToBIClassifier classifier; // The classifier to generate hypotheses.
+  private final String hyp_feature; // The feature to store the hypothesis
+  private final AuToBIClassifier classifier; // The classifier to generate hypotheses.
   private FeatureSet fs; // The feature set describing the required features.
 
   /**
@@ -67,8 +67,8 @@ public class HypothesizedEventFeatureExtractor extends FeatureExtractor {
    * @throws FeatureExtractorException
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r instanceof Word) {
         try {
           String hyp = classifier.classify((Word) r);

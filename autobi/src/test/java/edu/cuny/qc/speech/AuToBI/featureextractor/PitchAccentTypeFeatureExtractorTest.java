@@ -21,7 +21,6 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 
 import static junit.framework.Assert.*;
 
-import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +34,12 @@ import org.junit.Test;
  */
 public class PitchAccentTypeFeatureExtractorTest {
   private PitchAccentTypeFeatureExtractor fe;
-  private List<Region> regions;
+  private List<Word> words;
 
   @Before
   public void setUp() throws Exception {
     fe = new PitchAccentTypeFeatureExtractor();
-    regions = new ArrayList<Region>();
+    words = new ArrayList<>();
   }
 
   @Test
@@ -58,41 +57,29 @@ public class PitchAccentTypeFeatureExtractorTest {
   public void testExtractFeaturesExtractsFeatures() {
     Word w = new Word(0, 1, "word");
     w.setAccent("H*");
-    regions.add(w);
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-      assertTrue(w.hasAttribute("nominal_PitchAccentType"));
-    } catch (FeatureExtractorException e) {
-      fail();
-    }
+    fe.extractFeaturesWord(words);
+    assertTrue(w.hasAttribute("nominal_PitchAccentType"));
   }
 
   @Test
   public void testExtractFeaturesExtractsFeaturesCorrectly() {
     Word w = new Word(0, 1, "word");
     w.setAccent("H*");
-    regions.add(w);
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-      assertEquals("H*", w.getAttribute("nominal_PitchAccentType"));
-    } catch (FeatureExtractorException e) {
-      fail();
-    }
+    fe.extractFeaturesWord(words);
+    assertEquals("H*", w.getAttribute("nominal_PitchAccentType"));
   }
 
   @Test
   public void testExtractFeaturesExtractsCorrectlyWithNoPitchAccent() {
     Word w = new Word(0, 1, "word");
-    regions.add(w);
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-      assertTrue(w.hasAttribute("nominal_PitchAccentType"));
-      assertEquals("NOACCENT", w.getAttribute("nominal_PitchAccentType"));
-    } catch (FeatureExtractorException e) {
-      fail();
-    }
+    fe.extractFeaturesWord(words);
+    assertTrue(w.hasAttribute("nominal_PitchAccentType"));
+    assertEquals("NOACCENT", w.getAttribute("nominal_PitchAccentType"));
   }
 }

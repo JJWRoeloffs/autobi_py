@@ -34,12 +34,11 @@ import java.util.List;
  * Created with IntelliJ IDEA. User: andrew Date: 7/24/12 Time: 11:13 AM To change this template use
  * File | Settings | File Templates.
  */
-@SuppressWarnings("unchecked")
 public class RatioFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "ratio";
   public static final double MAX_VALUE = 1000;
-  private String f1;
-  private String f2;
+  private final String f1;
+  private final String f2;
 
   public RatioFeatureExtractor(String f1, String f2) {
     this.f1 = f1;
@@ -51,8 +50,8 @@ public class RatioFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute(f1) && r.hasAttribute(f2)) {
         double value = ((Double) r.getAttribute(f1)) / ((Double) r.getAttribute(f2));
         r.setAttribute(

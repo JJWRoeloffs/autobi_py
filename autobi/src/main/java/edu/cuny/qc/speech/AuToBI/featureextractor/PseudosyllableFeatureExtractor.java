@@ -29,6 +29,7 @@ package edu.cuny.qc.speech.AuToBI.featureextractor;
 import edu.cuny.qc.speech.AuToBI.core.FeatureExtractor;
 import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.WavData;
+import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.core.syllabifier.Syllabifier;
 import edu.cuny.qc.speech.AuToBI.core.syllabifier.VillingSyllabifier;
 import edu.cuny.qc.speech.AuToBI.util.SubregionUtils;
@@ -44,10 +45,9 @@ import java.util.List;
  * @see Syllabifier
  * @see edu.cuny.qc.speech.AuToBI.core.SubWord
  */
-@SuppressWarnings("unchecked")
 public class PseudosyllableFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "psyl";
-  private String subregion_name; // the feature name to store the subregion
+  private final String subregion_name; // the feature name to store the subregion
 
   /**
    * Constructs a new PseudosyllableFeatureExtractor.
@@ -69,22 +69,26 @@ public class PseudosyllableFeatureExtractor extends FeatureExtractor {
     this.extracted_features.add(subregion_name);
   }
 
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    throw new UnsupportedOperationException();
+  }
   /**
    * Identifies the loudest pseudosyllable for a given region, constructs a SubWord object, and
    * stores it with each region.
    *
-   * @param regions The regions to extract features from.
+   * @param words The regions to extract features from.
    * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException if anything goes
    *     wrong.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  @Override
+  public void extractFeaturesWord(List<Word> words) {
     // Identify all regions which are associated with each wav data.
-    HashMap<WavData, List<Region>> wave_region_map = new HashMap<WavData, List<Region>>();
-    for (Region r : (List<Region>) regions) {
+    HashMap<WavData, List<Region>> wave_region_map = new HashMap<>();
+    for (Region r : words) {
       WavData wav = (WavData) r.getAttribute("wav");
       if (wav != null) {
         if (!wave_region_map.containsKey(wav)) {
-          wave_region_map.put(wav, new ArrayList<Region>());
+          wave_region_map.put(wav, new ArrayList<>());
         }
         wave_region_map.get(wav).add(r);
       }
@@ -94,7 +98,7 @@ public class PseudosyllableFeatureExtractor extends FeatureExtractor {
       Syllabifier syllabifier = new VillingSyllabifier();
       List<Region> pseudosyllables = syllabifier.generatePseudosyllableRegions(wav);
 
-      SubregionUtils.alignLongestSubregionsToWords(regions, pseudosyllables, subregion_name);
+      SubregionUtils.alignLongestSubregionsToWords(words, pseudosyllables, subregion_name);
     }
   }
 }

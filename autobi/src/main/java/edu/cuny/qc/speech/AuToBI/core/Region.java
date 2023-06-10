@@ -26,6 +26,7 @@
  */
 package edu.cuny.qc.speech.AuToBI.core;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
@@ -37,18 +38,30 @@ import java.util.*;
  * training.
  */
 public class Region implements Serializable {
-  private static final long serialVersionUID = 6410344724558496468L;
-  private double start; // the start time
-  private double end; // the end time
-  private String label; // an optional label for the region.  For words, this is typically the
-                        // orthography of the word
-  private String file; // an optional field to store the path to the source file for the region.
-  private Map<String, Object> attributes; // a collection of attributes associated with the region.
+  @Serial private static final long serialVersionUID = 6410344724558496468L;
+  protected double start; // the start time
+  protected double end; // the end time
+  protected String label; // an optional label for the region.  For words, this is typically the
+                          // orthography of the word
+  protected String file; // an optional field to store the path to the source file for the region.
+  protected Map<String, Object>
+      attributes; // a collection of attributes associated with the region.
 
-  private FeatureSet feature_set;
+  protected FeatureSet feature_set;
   // a FeatureSet that describes the features that are required on this region for classification
-  private Object[] fs_attributes; // a list of values for each of the required attributes from the
-                                  // FeatureSet
+  protected Object[] fs_attributes; // a list of values for each of the required attributes from the
+                                    // FeatureSet
+
+  public Region(double start, double end, String label, String file, Map<String, Object> attributes,
+      FeatureSet feature_set, Object[] fs_attributes) {
+    this.start = start;
+    this.end = end;
+    this.label = label;
+    this.file = file;
+    this.attributes = attributes;
+    this.feature_set = feature_set;
+    this.fs_attributes = fs_attributes;
+  }
 
   /**
    * Constrcuts a new region with a label and file.
@@ -109,7 +122,7 @@ public class Region implements Serializable {
     label = r.label;
     file = r.file;
     if (r.attributes != null) {
-      attributes = new HashMap<String, Object>(r.attributes);
+      attributes = new HashMap<>(r.attributes);
     }
 
     // TODO: copy featureset and fs_attributes.
@@ -228,7 +241,7 @@ public class Region implements Serializable {
     // Move any attributes that were required by the previous feature set.
     Map<String, Object> attr_storage = null;
     if (this.feature_set != null) {
-      attr_storage = new HashMap<String, Object>();
+      attr_storage = new HashMap<>();
       for (String f : feature_set.getRequiredFeatures()) {
         attr_storage.put(f, getAttribute(f));
       }
@@ -249,7 +262,7 @@ public class Region implements Serializable {
 
     // Move any previously non-required attributes to required storage.
     checkMapUsage();
-    Set<String> to_move = new HashSet<String>();
+    Set<String> to_move = new HashSet<>();
     for (String f : this.attributes.keySet()) {
       if (feature_set.getRequiredFeatures().contains(f)) {
         to_move.add(f);
@@ -325,7 +338,7 @@ public class Region implements Serializable {
    */
   public Set<String> getAttributeNames() {
     checkMapUsage();
-    Set<String> names = new HashSet<String>();
+    Set<String> names = new HashSet<>();
     for (String name : this.attributes.keySet()) {
       if (getAttribute(name) != null) {
         names.add(name);
@@ -378,7 +391,7 @@ public class Region implements Serializable {
    */
   private void checkMapUsage() {
     if (attributes == null) {
-      attributes = new HashMap<String, Object>();
+      attributes = new HashMap<>();
     }
   }
 

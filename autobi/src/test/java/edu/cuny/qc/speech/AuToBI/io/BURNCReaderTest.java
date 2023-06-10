@@ -39,7 +39,6 @@
 //  *
 //  * @see BURNCReader
 //  */
-// @SuppressWarnings("unchecked")
 // public class BURNCReaderTest {
 //   private BURNCReader reader;
 

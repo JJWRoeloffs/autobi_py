@@ -48,7 +48,7 @@ public abstract class Tier {
    */
   public Tier() {
     is_point_tier = false;
-    regions = new LinkedList<Region>();
+    regions = new LinkedList<>();
   }
 
   /**

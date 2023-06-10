@@ -37,7 +37,7 @@ import edu.cuny.qc.speech.AuToBI.core.Pair;
  * intensity contour as a polynomial curve.
  */
 public class ContourPolynomialFitter {
-  private int n; // The degree of the polynomial to fit.
+  private final int n; // The degree of the polynomial to fit.
 
   /**
    * Constructs a new ContourPolynomialFitter with degree n.
@@ -100,7 +100,7 @@ public class ContourPolynomialFitter {
    * @return a pair of matrices.
    */
   private Pair<Matrix, Matrix> constructTargetAndDataMatrix(Contour c) {
-    Pair<Matrix, Matrix> retval = new Pair<Matrix, Matrix>();
+    Pair<Matrix, Matrix> retval = new Pair<>();
 
     Matrix t = new Matrix(c.size(), 1);
     Matrix x = new Matrix(c.size(), n + 1);

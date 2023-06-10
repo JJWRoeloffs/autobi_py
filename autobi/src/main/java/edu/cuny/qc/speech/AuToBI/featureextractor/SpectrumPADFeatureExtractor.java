@@ -39,16 +39,16 @@ import java.util.List;
  * This is deprecated because it's functionality does not conform to the AuToBI v1.4 feature
  * extraction conventions
  */
-@SuppressWarnings("unchecked")
 @Deprecated
 public class SpectrumPADFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "spectrumPAD";
 
   private final String ACCENTED_VALUE = "ACCENTED"; // a label for ACCENTED words
-  private int low; // the bottom of the spectral region (in bark)
-  private int high; // the top of the spectral region (in bark)
-  private AuToBIClassifier classifier; // the classifier responsible for generating predictions
-  private FeatureSet fs; // a featureSet to describe the features requied by the classifier
+  private final int low; // the bottom of the spectral region (in bark)
+  private final int high; // the top of the spectral region (in bark)
+  private final AuToBIClassifier
+      classifier; // the classifier responsible for generating predictions
+  private final FeatureSet fs; // a featureSet to describe the features requied by the classifier
 
   /**
    * Constructs a new SpectrumPADFeatureExtractor given a spectral region, externally trained
@@ -73,6 +73,9 @@ public class SpectrumPADFeatureExtractor extends FeatureExtractor {
     required_features.addAll(fs.getRequiredFeatures());
     required_features.add(fs.getClassAttribute());
   }
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * Generates hypothesed pitch accent detection predictions for each region and stores these with
@@ -82,15 +85,15 @@ public class SpectrumPADFeatureExtractor extends FeatureExtractor {
    * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException if something goes
    *     wrong
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeaturesWord(List<Word> words) throws FeatureExtractorException {
     // Construct a feature set.
     FeatureSet feature_set = fs.newInstance();
 
     // Extract spectrum features.
-    feature_set.setDataPoints((List<Word>) regions);
+    feature_set.setDataPoints(words);
     feature_set.constructFeatures();
 
-    for (Word w : (List<Word>) regions) {
+    for (Word w : words) {
       try {
         Distribution result = classifier.distributionForInstance(w);
 

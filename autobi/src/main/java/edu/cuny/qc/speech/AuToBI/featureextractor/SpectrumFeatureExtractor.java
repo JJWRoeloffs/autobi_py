@@ -37,12 +37,12 @@ import java.util.List;
  * v1.4 SpectrumFeatureExtractor has changed to attach spectra to each region rather than cutting
  * down to size This is a more effective route to extracting context.
  */
-@SuppressWarnings("unchecked")
 public class SpectrumFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "spectrum";
-  private String feature_name; // the name of the feature to hold pitch information
-  private double frame_size; // The spectrum frame duration
-  private double hamming_window; // The size of the hamming window used in the spectrum analysis
+  private final String feature_name; // the name of the feature to hold pitch information
+  private final double frame_size; // The spectrum frame duration
+  private final double
+      hamming_window; // The size of the hamming window used in the spectrum analysis
 
   /**
    * Constructs a new SpectrumFeatureExtractor to process wav_data and store the resulting Spectrum
@@ -100,9 +100,9 @@ public class SpectrumFeatureExtractor extends FeatureExtractor {
    * @throws FeatureExtractorException if there is a problem.
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    HashMap<WavData, Spectrum> cache = new HashMap<WavData, Spectrum>();
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    HashMap<WavData, Spectrum> cache = new HashMap<>();
+    for (Region r : regions) {
       if (r.hasAttribute("wav")) {
         WavData wav = (WavData) r.getAttribute("wav");
         if (cache.containsKey(wav)) {

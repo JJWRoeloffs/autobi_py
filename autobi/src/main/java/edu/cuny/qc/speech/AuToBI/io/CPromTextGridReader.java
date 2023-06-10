@@ -37,9 +37,9 @@ import java.util.List;
  * A TextGridReader to process the CProm format of prominence annotations.
  */
 public class CPromTextGridReader extends TextGridReader {
-  private String prominence_tier_name; // the name of the prominence tier.
+  private final String prominence_tier_name; // the name of the prominence tier.
   private Tier prominence_tier; // A tier to store prominence annotations
-  private Boolean include_secondary;
+  private final Boolean include_secondary;
   // A flag dictating whether the "secondary" prominence should be considered as accented.
 
   public CPromTextGridReader(String filename, String words_tier, String prominence_tier,

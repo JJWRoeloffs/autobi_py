@@ -38,8 +38,8 @@ import java.util.List;
  */
 public class LogContourFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "log";
-  private String src; // The source feature
-  private String tgt; // The target feature
+  private final String src; // The source feature
+  private final String tgt; // The target feature
 
   // Constructs a new Feature Extractor
   @Deprecated
@@ -65,10 +65,10 @@ public class LogContourFeatureExtractor extends FeatureExtractor {
   /**
    * Constructs a new Contour object containing log transformed values based on a source contour.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    HashMap<Contour, Contour> cache = new HashMap<Contour, Contour>();
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    HashMap<Contour, Contour> cache = new HashMap<>();
 
-    for (Region r : (List<Region>) regions) {
+    for (Region r : regions) {
       if (r.hasAttribute(src)) {
         Contour src_contour = (Contour) r.getAttribute(src);
         if (cache.containsKey(src_contour)) {

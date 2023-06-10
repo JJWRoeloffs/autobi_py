@@ -47,9 +47,9 @@ public class NXTTier extends Tier {
    *
    * @param reader the reader to read from
    * @throws java.io.IOException     if there is an input output problem
-   * @throws NXTSyntaxErrorException If there is a formatting problem
+   * @throws IOException If there is an IO problem
    */
-  public void readTier(AuToBIFileReader reader) throws NXTSyntaxErrorException, IOException {
+  public void readTier(AuToBIFileReader reader) throws IOException {
     String line;
     Region prev_r = null;
     while ((line = reader.readLine()) != null) {
@@ -86,7 +86,7 @@ public class NXTTier extends Tier {
     Matcher break_m = break_p.matcher(line);
 
     if (break_m.find()) {
-      List<Region> regions = new ArrayList<Region>();
+      List<Region> regions = new ArrayList<>();
 
       Pattern time_p = Pattern.compile("UWtime=\"(.*?)\"");
       Pattern breakid_p = Pattern.compile("index=\"(.*?)\"");

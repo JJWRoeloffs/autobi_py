@@ -43,11 +43,10 @@ import java.util.List;
  *
  * @see SubregionResetFeatureExtractor
  */
-@SuppressWarnings("unchecked")
 public class ResetContourFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "reset";
-  private String feature_name; // the prefix of the stored feature name
-  private String subregion_name; // the name of the subregion
+  private final String feature_name; // the prefix of the stored feature name
+  private final String subregion_name; // the name of the subregion
 
   /**
    * Constructs a new ResetContourFeatureExtractor.
@@ -97,7 +96,7 @@ public class ResetContourFeatureExtractor extends FeatureExtractor {
    * @param regions The regions to analyze.
    * @throws FeatureExtractorException if any region doesn't have a valid subregion.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     List<Region> van_subregions;
     List<Region> trail_subregions;
 
@@ -105,9 +104,9 @@ public class ResetContourFeatureExtractor extends FeatureExtractor {
     if (subregion_name != null && !subregion_name.equals("")) {
       destination_feature = moniker + "[" + feature_name + "," + subregion_name + "]";
 
-      van_subregions = new ArrayList<Region>();
-      trail_subregions = new ArrayList<Region>();
-      for (Region r : (List<Region>) regions) {
+      van_subregions = new ArrayList<>();
+      trail_subregions = new ArrayList<>();
+      for (Region r : regions) {
         String van_subregion_name = "van[" + subregion_name + "]";
         String trail_subregion_name = "trail[" + subregion_name + "]";
         if (r.hasAttribute(van_subregion_name)) {
@@ -151,8 +150,7 @@ public class ResetContourFeatureExtractor extends FeatureExtractor {
         trail_agg.insert(tvp.second);
       }
 
-      ((Region) regions.get(i))
-          .setAttribute(destination_feature, trail_agg.getMean() - van_agg.getMean());
+      (regions.get(i)).setAttribute(destination_feature, trail_agg.getMean() - van_agg.getMean());
     }
   }
 }

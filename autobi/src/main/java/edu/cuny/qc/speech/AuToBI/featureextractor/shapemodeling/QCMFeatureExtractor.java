@@ -44,12 +44,11 @@ import java.util.List;
  * would be registered via a config file or default paths pointing to a resource path (within the
  * jar)  This is a strong candidate for inclusion in 1.4.1.
  */
-@SuppressWarnings("unchecked")
 @Deprecated
 public class QCMFeatureExtractor extends FeatureExtractor {
-  private QuantizedContourModel qcm; // the model
-  private String acoustic_feature; // the acoustic contour feature
-  private String feature_name; // the destination feature
+  private final QuantizedContourModel qcm; // the model
+  private final String acoustic_feature; // the acoustic contour feature
+  private final String feature_name; // the destination feature
 
   /**
    * Constructs a new QCMFeatureExtractor, using a user-specified model, and extracting the log
@@ -77,8 +76,8 @@ public class QCMFeatureExtractor extends FeatureExtractor {
    * @throws FeatureExtractorException
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute(acoustic_feature)) {
         Contour super_c = (Contour) r.getAttribute(acoustic_feature);
         Contour c;

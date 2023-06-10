@@ -50,8 +50,8 @@ public class ContextNormalizedFeatureExtractor extends FeatureExtractor {
 
   private static final Double EPSILON =
       0.00001; // values less than this are considered zero for normalization
-  private String attribute_name; // the feature to normalize
-  private ContextDesc context; // the normalization context
+  private final String attribute_name; // the feature to normalize
+  private final ContextDesc context; // the normalization context
 
   /**
    * Constructs a ContextNormalizedFeatureExtractor
@@ -98,7 +98,7 @@ public class ContextNormalizedFeatureExtractor extends FeatureExtractor {
    * @param regions the list of data points
    * @throws FeatureExtractorException if there is a problem.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     // Don't differentiate context regions and feature regions
     extractFeatures(regions, regions);
   }
@@ -113,16 +113,16 @@ public class ContextNormalizedFeatureExtractor extends FeatureExtractor {
    * @param context_regions The regions to calculate normalization parameters from
    * @throws FeatureExtractorException if something goes wrong
    */
-  public void extractFeatures(List regions, List<Region> context_regions)
+  public void extractFeatures(List<Region> regions, List<Region> context_regions)
       throws FeatureExtractorException {
     if (regions.size() != context_regions.size()) {
       throw new FeatureExtractorException("Regions and Context Regions must be the same size");
     }
     if (regions.isEmpty())
       return;
-    if (((Region) regions.get(0)).getAttribute(attribute_name) instanceof Contour) {
+    if ((regions.get(0)).getAttribute(attribute_name) instanceof Contour) {
       for (int i = 0; i < regions.size(); ++i) {
-        Region r = (Region) regions.get(i);
+        Region r = regions.get(i);
 
         int prev_idx = Math.max(0, i - context.getBack());
         int next_idx = Math.min(regions.size() - 1, i + context.getBack());
@@ -130,13 +130,11 @@ public class ContextNormalizedFeatureExtractor extends FeatureExtractor {
         extractContextNormAttributes(
             r, context_regions.get(prev_idx).getStart(), context_regions.get(next_idx).getEnd());
       }
-    } else if (((Region) regions.get(0)).getAttribute(attribute_name) instanceof Double) {
+    } else if ((regions.get(0)).getAttribute(attribute_name) instanceof Double) {
       ContextFrame window = new ContextFrame(
           context_regions, attribute_name, context.getBack(), context.getForward());
-      for (Object o : regions) {
-        Region r = (Region) o;
-
-        extractContextNormAttributes(r, window);
+      for (Region region : regions) {
+        extractContextNormAttributes(region, window);
         window.increment();
       }
     }
@@ -175,8 +173,7 @@ public class ContextNormalizedFeatureExtractor extends FeatureExtractor {
     // Calculate normalized features
     String context_feature_stem = attribute_name + "," + context.getLabel();
 
-    if (r.getAttribute(attribute_name) instanceof Double) {
-      Double value = (Double) r.getAttribute(attribute_name);
+    if (r.getAttribute(attribute_name) instanceof Double value) {
       // Z Score
       if (Math.abs(stdev) > EPSILON) {
         r.setAttribute("zNormWordContext[" + context_feature_stem + "]", (value - mean) / stdev);
@@ -219,8 +216,7 @@ public class ContextNormalizedFeatureExtractor extends FeatureExtractor {
 
     String context_feature_stem = attribute_name + "," + context.getLabel();
 
-    if (r.getAttribute(attribute_name) instanceof Double) {
-      Double value = (Double) r.getAttribute(attribute_name);
+    if (r.getAttribute(attribute_name) instanceof Double value) {
       // Z Score
       if (Math.abs(stdev) > EPSILON) {
         r.setAttribute("zNormWordContext[" + context_feature_stem + "]", (value - mean) / stdev);

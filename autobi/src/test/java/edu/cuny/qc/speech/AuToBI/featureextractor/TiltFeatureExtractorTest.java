@@ -36,7 +36,6 @@ import org.junit.Test;
  *
  * @see TiltFeatureExtractor
  */
-@SuppressWarnings("unchecked")
 public class TiltFeatureExtractorTest {
   private TiltFeatureExtractor fe;
   private List<Region> regions;

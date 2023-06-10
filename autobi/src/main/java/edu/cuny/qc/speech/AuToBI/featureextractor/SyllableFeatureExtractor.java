@@ -43,11 +43,10 @@ import java.util.*;
  * pronunciation contains the same phone set, this will be an exact match.  If they don't, this will
  * give a best effort alignment between the two.
  */
-@SuppressWarnings("unchecked")
 public class SyllableFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "syls";
-  private String syllable_feature; // The name of the feature to store syllables on.
-  private String phone_feature; // The name of the feature containing a list of phone regions.
+  private final String syllable_feature; // The name of the feature to store syllables on.
+  private final String phone_feature; // The name of the feature containing a list of phone regions.
   private HashMap<String, HashSet<String>> lexicon; // The pronunciation dictionary
 
   enum trace_symbol { INS, SUB, DEL } // The symbols required for the dynamic programming trace.
@@ -95,12 +94,12 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
   private void readLexicon(String filename) throws IOException {
     AuToBIFileReader reader = new AuToBIFileReader(filename);
 
-    lexicon = new HashMap<String, HashSet<String>>();
+    lexicon = new HashMap<>();
     String line;
     while ((line = reader.readLine()) != null) {
       String[] data = line.split(",");
       if (!lexicon.containsKey(data[0])) {
-        lexicon.put(lexiconKey(data[0]), new HashSet<String>());
+        lexicon.put(lexiconKey(data[0]), new HashSet<>());
       }
       lexicon.get(lexiconKey(data[0])).add(data[1]);
     }
@@ -116,9 +115,13 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
    * @param regions The regions to extract features from.
    * @throws FeatureExtractorException if there is a problem with the feature extraction
    */
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Word w : (List<Word>) regions) {
+  public void extractFeaturesWord(List<Word> words) throws FeatureExtractorException {
+    for (Word w : words) {
       List<SubWord> syllables;
       if (lexicon.containsKey(lexiconKey(w.getLabel()))) {
         try {
@@ -142,11 +145,12 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
    * @param phones a list of phones
    * @return a list of syllables
    */
+  @SuppressWarnings("unchecked")
   private List<SubWord> constructCVSyllables(List<Region> phones) {
-    List<SubWord> syllables = new ArrayList<SubWord>();
+    List<SubWord> syllables = new ArrayList<>();
 
     SubWord current_syllable = new SubWord(0.0, 0.0, "");
-    List<Region> current_phones = new ArrayList<Region>();
+    List<Region> current_phones = new ArrayList<>();
     for (Region phone : phones) {
       current_phones.add(phone);
 
@@ -163,7 +167,7 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
         syllables.add(current_syllable);
 
         current_syllable = new SubWord(0.0, 0.0, "");
-        current_phones = new ArrayList<Region>();
+        current_phones = new ArrayList<>();
       }
     }
 
@@ -247,7 +251,7 @@ public class SyllableFeatureExtractor extends FeatureExtractor {
       }
     }
 
-    ArrayList<SubWord> syllables = new ArrayList<SubWord>();
+    ArrayList<SubWord> syllables = new ArrayList<>();
     SubWord syllable = null;
     int i = phones.size();
     int j = best_syl_data.length;

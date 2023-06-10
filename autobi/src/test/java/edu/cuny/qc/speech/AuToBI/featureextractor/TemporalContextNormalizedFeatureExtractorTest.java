@@ -35,7 +35,6 @@ import org.junit.Test;
  *
  * @see edu.cuny.qc.speech.AuToBI.featureextractor.TiltFeatureExtractor
  */
-@SuppressWarnings("unchecked")
 public class TemporalContextNormalizedFeatureExtractorTest {
   private TemporalContextNormalizedFeatureExtractor fe;
   private List<Region> regions;

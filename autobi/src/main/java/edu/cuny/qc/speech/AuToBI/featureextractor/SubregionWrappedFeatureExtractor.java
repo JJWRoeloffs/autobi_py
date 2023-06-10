@@ -38,11 +38,10 @@ import java.util.List;
  *
  * @see edu.cuny.qc.speech.AuToBI.core.FeatureExtractor
  */
-@SuppressWarnings("unchecked")
 @Deprecated
 public class SubregionWrappedFeatureExtractor extends FeatureExtractor {
-  private FeatureExtractor fe; // the Wrapped feature extractor
-  private String subregion_attribute;
+  private final FeatureExtractor fe; // the Wrapped feature extractor
+  private final String subregion_attribute;
   // a descriptor of the feature containing the subregion object to be analysed
 
   /**
@@ -54,7 +53,7 @@ public class SubregionWrappedFeatureExtractor extends FeatureExtractor {
     this.subregion_attribute = subregion_attribute;
     this.fe = fe;
 
-    extracted_features = new ArrayList<String>();
+    extracted_features = new ArrayList<>();
     for (String feature : fe.getExtractedFeatures()) {
       extracted_features.add(feature + "_" + subregion_attribute);
     }
@@ -73,10 +72,10 @@ public class SubregionWrappedFeatureExtractor extends FeatureExtractor {
    *                                                                              subregion feature
    * is assigned or a problem with the tvpfe.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     // Construct a list of subregions.
-    List<Region> subregions = new ArrayList<Region>();
-    for (Region r : (List<Region>) regions) {
+    List<Region> subregions = new ArrayList<>();
+    for (Region r : regions) {
       if (r.hasAttribute(subregion_attribute)) {
         subregions.add((Region) r.getAttribute(subregion_attribute));
       } else {
@@ -94,7 +93,7 @@ public class SubregionWrappedFeatureExtractor extends FeatureExtractor {
 
     // Copy extracted features from subregions to regions
     for (int i = 0; i < regions.size(); ++i) {
-      Region r = (Region) regions.get(i);
+      Region r = regions.get(i);
       Region subregion = subregions.get(i);
       for (String feature : fe.getExtractedFeatures()) {
         r.setAttribute(feature + "_" + subregion_attribute, subregion.getAttribute(feature));

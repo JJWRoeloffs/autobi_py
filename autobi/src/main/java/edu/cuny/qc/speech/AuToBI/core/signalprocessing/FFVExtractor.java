@@ -45,10 +45,10 @@ import javax.swing.*;
  * <p/>
  */
 public class FFVExtractor {
-  private double tsep; // the separation between the two windows (in seconds)
-  private double tint; // the length of the internal window (in seconds)
-  private double text; // the length of the external window (in seconds)
-  private double tstep; // ffv frame size (in seconds)
+  private final double tsep; // the separation between the two windows (in seconds)
+  private final double tint; // the length of the internal window (in seconds)
+  private final double text; // the length of the external window (in seconds)
+  private final double tstep; // ffv frame size (in seconds)
 
   private static final int FFT_COEFS = 512;
   private double[][] filterbank; // filterbank parameters
@@ -390,7 +390,7 @@ public class FFVExtractor {
         for (double anAFfv : aFfv) {
           System.out.print(anAFfv + " ");
         }
-        System.out.println("");
+        System.out.println();
       }
 
       if (display) {

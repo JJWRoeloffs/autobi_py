@@ -44,7 +44,6 @@ import org.junit.Test;
 /**
  * Test class for AuToBI.
  */
-@SuppressWarnings("unchecked")
 public class AuToBITest {
   public static class MockF0NoParamFeatureExtractor extends FeatureExtractor {
     public final static String moniker = "f0";

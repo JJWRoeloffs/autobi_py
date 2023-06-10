@@ -145,10 +145,10 @@ public class PitchExtractor extends SampledDataAnalyzer {
     int nFrames;
     int maximumLag;
     int iframe, nsampFFT;
-    double frame[][];
-    double ac[];
-    double window[];
-    double windowR[];
+    double[][] frame;
+    double[] ac;
+    double[] window;
+    double[] windowR;
     double globalPeak;
     double interpolation_depth;
     int nsamp_period, halfnsamp_period; /* Number of samples in longest period. */
@@ -309,7 +309,7 @@ public class PitchExtractor extends SampledDataAnalyzer {
       int rightSample = leftSample + 1;
       int startSample, endSample;
 
-      double localMean[] = new double[wav.numberOfChannels];
+      double[] localMean = new double[wav.numberOfChannels];
       for (int channel = 0; channel < wav.numberOfChannels; ++channel) {
         /*
          * Compute the local mean; look one longest period to both sides.
@@ -529,8 +529,8 @@ public class PitchExtractor extends SampledDataAnalyzer {
     PitchContour pitch = new PitchContour(t0, time_step, pitchFrames.size());
     int place;
     double maximum, value;
-    double delta[][];
-    int psi[][];
+    double[][] delta;
+    int[][] psi;
     /* Next three lines 20011015 */
     double timeStepCorrection = 0.01 / time_step;
     octaveJumpCost *= timeStepCorrection;
@@ -560,9 +560,9 @@ public class PitchExtractor extends SampledDataAnalyzer {
     for (int iframe = 1; iframe < pitchFrames.size(); iframe++) {
       PitchFrame prevFrame = pitchFrames.get(iframe - 1);
       PitchFrame curFrame = pitchFrames.get(iframe);
-      double prevDelta[] = delta[iframe - 1];
-      double curDelta[] = delta[iframe];
-      int curPsi[] = psi[iframe];
+      double[] prevDelta = delta[iframe - 1];
+      double[] curDelta = delta[iframe];
+      int[] curPsi = psi[iframe];
       for (int icand2 = 0; icand2 < curFrame.getNumCandidates(); icand2++) {
         double f2 = curFrame.getCandidate(icand2).frequency;
         maximum = -1e30;

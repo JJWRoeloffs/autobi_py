@@ -31,6 +31,7 @@ import edu.cuny.qc.speech.AuToBI.core.Feature;
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import edu.cuny.qc.speech.AuToBI.util.ClassifierUtils;
+import java.io.Serial;
 import java.util.Set;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
@@ -41,7 +42,7 @@ import weka.core.Instances;
  * WekaClassifier is an AuToBI wrapper around a weka classifier.
  */
 public class WekaClassifier extends AuToBIClassifier {
-  private static final long serialVersionUID = 1633315748323749801L;
+  @Serial private static final long serialVersionUID = 1633315748323749801L;
 
   protected Classifier weka_classifier; // the weka classifier
   // Stored features are necessary for classifying a single data point.

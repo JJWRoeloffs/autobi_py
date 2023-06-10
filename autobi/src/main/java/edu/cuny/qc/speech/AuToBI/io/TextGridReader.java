@@ -210,7 +210,7 @@ public class TextGridReader extends AuToBIWordReader {
    * @return a list of words
    */
   protected List<Word> generateWordList(List<Region> regions) {
-    List<Word> words = new ArrayList<Word>();
+    List<Word> words = new ArrayList<>();
     for (Region r : regions) {
       if (!WordReaderUtils.isSilentRegion(r.getLabel(), silence_regex)) {
         Word w = new Word(r.getStart(), r.getEnd(), r.getLabel(), null, r.getFile());

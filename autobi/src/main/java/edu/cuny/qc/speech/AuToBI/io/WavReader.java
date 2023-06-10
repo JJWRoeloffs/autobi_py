@@ -147,9 +147,9 @@ public class WavReader {
     while (i < bytes.length) {
       for (int channel = 0; channel < data.numberOfChannels; ++channel) {
         // Convert 16-bit little endian wav data to a double.
-        int low = (int) bytes[i];
+        int low = bytes[i];
         ++i;
-        int high = (int) bytes[i];
+        int high = bytes[i];
         ++i;
 
         int sample = (high << 8) + (low & 0x00ff);

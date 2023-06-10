@@ -33,14 +33,13 @@ import java.util.List;
 /**
  * Extracts the area under multiple contours with weights for each.
  */
-@SuppressWarnings("unchecked")
 public class AUPitchIntensityFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "area2";
 
   private String extracted_f; // the name of the extracted feature.
-  private String pitch_f; // the name of the pitch feature
-  private String i_f; // the name of the intensity feature
-  private double i_coeff; // the intensity scaling coefficient
+  private final String pitch_f; // the name of the pitch feature
+  private final String i_f; // the name of the intensity feature
+  private final double i_coeff; // the intensity scaling coefficient
 
   public AUPitchIntensityFeatureExtractor(String pitch_f, String i_f, String i_coeff) {
     this(pitch_f, i_f, Double.parseDouble(i_coeff));
@@ -58,8 +57,8 @@ public class AUPitchIntensityFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       Contour super_pitch_c = (Contour) r.getAttribute(pitch_f);
       Contour pitch_c;
       try {

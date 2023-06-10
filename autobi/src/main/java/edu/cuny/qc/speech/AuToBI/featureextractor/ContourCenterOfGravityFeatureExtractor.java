@@ -38,10 +38,9 @@ import java.util.List;
  * Here we allow any contour -- intensity, spectral tilt, etc -- to be processed using the same
  * notion.
  */
-@SuppressWarnings("unchecked")
 public class ContourCenterOfGravityFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "cog";
-  private String attribute_name; // the contour attribute name
+  private final String attribute_name; // the contour attribute name
 
   public ContourCenterOfGravityFeatureExtractor(String attribute_name) {
     this.attribute_name = attribute_name;
@@ -55,8 +54,8 @@ public class ContourCenterOfGravityFeatureExtractor extends FeatureExtractor {
    * @param regions The regions to extract features from.
    * @throws FeatureExtractorException if something goes wrong
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute(attribute_name)) {
         Contour super_c = (Contour) r.getAttribute(attribute_name);
         Contour c;

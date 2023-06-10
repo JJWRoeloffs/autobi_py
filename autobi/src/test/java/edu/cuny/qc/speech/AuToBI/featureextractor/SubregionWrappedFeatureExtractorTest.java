@@ -37,7 +37,6 @@ import org.junit.Test;
  *
  * @see SubregionWrappedFeatureExtractor
  */
-@SuppressWarnings("unchecked")
 public class SubregionWrappedFeatureExtractorTest {
   private SubregionWrappedFeatureExtractor fe;
   private List<Region> regions;

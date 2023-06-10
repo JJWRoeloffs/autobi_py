@@ -47,7 +47,7 @@ import java.util.List;
  * syllables), and all Gaussians with peak values smaller than 5% of the largest (silence).
  */
 public class EMSyllabifier extends Syllabifier {
-  private double thresh = 0.1;
+  private final double thresh = 0.1;
 
   @Override
   public List<Region> generatePseudosyllableRegions(WavData wav) {
@@ -71,7 +71,7 @@ public class EMSyllabifier extends Syllabifier {
   }
 
   private List<Region> toSegmentBoundaries(List<GMMComponent> components, double max_time) {
-    List<Region> regions = new LinkedList<Region>();
+    List<Region> regions = new LinkedList<>();
     double start = 0.0;
     for (int i = 0; i < components.size() - 1; i++) {
       GMMComponent m1 = components.get(i);
@@ -183,11 +183,8 @@ public class EMSyllabifier extends Syllabifier {
     mm1.weight = mm1.weight * mm1.n;
     mm2.weight = mm2.weight * mm2.n;
     double x = intersection(mm1, mm2);
-    if (Double.isNaN(x) || x < mm1.mean + thresh * Math.sqrt(mm1.variance)
-        || x > mm2.mean - thresh * Math.sqrt(mm2.variance)) {
-      return true;
-    }
-    return false;
+    return Double.isNaN(x) || x < mm1.mean + thresh * Math.sqrt(mm1.variance)
+        || x > mm2.mean - thresh * Math.sqrt(mm2.variance);
   }
 
   /**
@@ -323,7 +320,7 @@ public class EMSyllabifier extends Syllabifier {
    * @return initialized components
    */
   private List<GMMComponent> initializeComponents(double duration) {
-    List<GMMComponent> components = new ArrayList<GMMComponent>();
+    List<GMMComponent> components = new ArrayList<>();
     double step = 0.1;
     double ngauss = Math.floor(duration / step);
     for (double t = step; t < duration; t += step) {

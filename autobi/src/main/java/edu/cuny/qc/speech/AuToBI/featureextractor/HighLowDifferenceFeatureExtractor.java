@@ -34,10 +34,9 @@ import java.util.List;
  * Created with IntelliJ IDEA. User: andrew Date: 7/13/12 Time: 11:21 AM To change this template use
  * File | Settings | File Templates.
  */
-@SuppressWarnings("unchecked")
 public class HighLowDifferenceFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "highLowDiff";
-  private String feature; // the name of the feature name
+  private final String feature; // the name of the feature name
 
   public HighLowDifferenceFeatureExtractor(String feature) {
     this.feature = feature;
@@ -48,8 +47,8 @@ public class HighLowDifferenceFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute("lowGP[" + feature + "]") && r.hasAttribute("highGP[" + feature + "]")) {
         GParam lowgp = (GParam) r.getAttribute("lowGP[" + feature + "]");
         GParam highgp = (GParam) r.getAttribute("highGP[" + feature + "]");

@@ -43,10 +43,9 @@ import java.util.List;
  * univariate, two-component GMM. If the contour was classified as a peak the high component is
  * used, if a valley, the low component is used.
  */
-@SuppressWarnings("unchecked")
 public class PVALFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "PVAmp,PVLocation";
-  private String feature; // name of the feature
+  private final String feature; // name of the feature
 
   public PVALFeatureExtractor(String feature) {
     this.feature = feature;
@@ -64,8 +63,8 @@ public class PVALFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute("peakLL[" + feature + "]")
           && r.hasAttribute("valleyLL[" + feature + "]")) {
         double p_peak = (Double) r.getAttribute("peakLL[" + feature + "]");

@@ -36,11 +36,10 @@ import java.util.List;
  *
  * @see edu.cuny.qc.speech.AuToBI.core.TiltParameters
  */
-@SuppressWarnings("unchecked")
 public class TiltFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "tilt,tiltAmp,tiltDur";
 
-  private String contour_feature; // the Contour feature to analyze
+  private final String contour_feature; // the Contour feature to analyze
 
   /**
    * Constructs a new TiltFeatureExtractor to calculate Tilt features using the given feature
@@ -64,10 +63,10 @@ public class TiltFeatureExtractor extends FeatureExtractor {
    *     happen.
    */
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (!r.hasAttribute(contour_feature)) {
-        AuToBIUtils.warn("region, " + r.toString() + " doesn't have attribute: " + contour_feature);
+        AuToBIUtils.warn("region, " + r + " doesn't have attribute: " + contour_feature);
         continue;
       }
       TiltParameters tilt;

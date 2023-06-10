@@ -55,18 +55,14 @@ public class IntermediatePhraseBoundaryFeatureExtractorTest {
     IntermediatePhraseBoundaryFeatureExtractor fe =
         new IntermediatePhraseBoundaryFeatureExtractor();
 
-    List<Region> regions = new ArrayList<Region>();
+    List<Word> words = new ArrayList<>();
     Word w = new Word(0.0, 1.0, "test");
-    regions.add(w);
     w.setPhraseAccent("L-");
     w.setBreakAfter("3");
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-      assertTrue(w.hasAttribute("nominal_IntermediatePhraseBoundary"));
-    } catch (FeatureExtractorException e) {
-      e.printStackTrace();
-    }
+    fe.extractFeaturesWord(words);
+    assertTrue(w.hasAttribute("nominal_IntermediatePhraseBoundary"));
   }
 
   @Test
@@ -74,18 +70,13 @@ public class IntermediatePhraseBoundaryFeatureExtractorTest {
     IntermediatePhraseBoundaryFeatureExtractor fe =
         new IntermediatePhraseBoundaryFeatureExtractor();
 
-    List<Region> regions = new ArrayList<Region>();
+    List<Word> words = new ArrayList<>();
     Word w = new Word(0.0, 1.0, "test");
-    regions.add(w);
     w.setPhraseAccent("L-");
     w.setBreakAfter("3");
+    words.add(w);
 
-    try {
-      fe.extractFeatures(regions);
-
-      assertEquals("INTERMEDIATE_BOUNDARY", w.getAttribute("nominal_IntermediatePhraseBoundary"));
-    } catch (FeatureExtractorException e) {
-      e.printStackTrace();
-    }
+    fe.extractFeaturesWord(words);
+    assertEquals("INTERMEDIATE_BOUNDARY", w.getAttribute("nominal_IntermediatePhraseBoundary"));
   }
 }

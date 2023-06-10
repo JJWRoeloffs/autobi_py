@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
-import edu.cuny.qc.speech.AuToBI.core.Region;
 import edu.cuny.qc.speech.AuToBI.core.Word;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +35,13 @@ import org.junit.Test;
  *
  * @see edu.cuny.qc.speech.AuToBI.featureextractor.TiltFeatureExtractor
  */
-@SuppressWarnings("unchecked")
 public class XValSpectrumPADFeatureExtractorTest {
   private XValSpectrumPADFeatureExtractor fe;
-  private List<Region> regions;
+  private List<Word> words;
 
   @Before
   public void setUp() {
-    regions = new ArrayList<Region>();
+    words = new ArrayList<Word>();
     FeatureSet fs = new FeatureSet();
     fs.insertRequiredFeature("attr");
     fs.setClassAttribute("test_class");
@@ -84,26 +82,26 @@ public class XValSpectrumPADFeatureExtractorTest {
     Word w = new Word(0, 1, "test");
     w.setAttribute("attr", 1);
     w.setAttribute("test_class", "ACCENTED");
-    regions.add(w);
+    words.add(w);
 
     Word w2 = new Word(0, 1, "test");
     w2.setAttribute("attr", 2);
     w2.setAttribute("test_class", "DEACCENTED");
-    regions.add(w2);
+    words.add(w2);
 
     Word w3 = new Word(0, 1, "test");
     w3.setAttribute("attr", 2);
     w3.setAttribute("test_class", "DEACCENTED");
-    regions.add(w3);
+    words.add(w3);
 
     Word w4 = new Word(0, 1, "test");
     w4.setAttribute("attr", 1);
     w4.setAttribute("test_class", "ACCENTED");
-    regions.add(w4);
+    words.add(w4);
 
     try {
-      fe.extractFeatures(regions);
-      for (Region word : regions) {
+      fe.extractFeaturesWord(words);
+      for (Word word : words) {
         assertTrue(word.hasAttribute("nominal_bark_0_1__prediction"));
         assertTrue(word.hasAttribute("bark_0_1__prediction_confidence"));
         assertTrue(word.hasAttribute("bark_0_1__prediction_confidence_accented"));
@@ -121,18 +119,18 @@ public class XValSpectrumPADFeatureExtractorTest {
       Word w = new Word(0, 1, "test - accented");
       w.setAttribute("attr", 1);
       w.setAttribute("test_class", "ACCENTED");
-      regions.add(w);
+      words.add(w);
     }
     for (int i = 0; i < 10; i++) {
       Word w2 = new Word(0, 1, "test - deaccented");
       w2.setAttribute("attr", 2);
       w2.setAttribute("test_class", "DEACCENTED");
-      regions.add(w2);
+      words.add(w2);
     }
 
     try {
-      fe.extractFeatures(regions);
-      for (Region word : regions) {
+      fe.extractFeaturesWord(words);
+      for (Word word : words) {
         // In this test case the classifier should be able to correctly predict each test label
         assertEquals(
             word.getAttribute("test_class"), word.getAttribute("nominal_bark_0_1__prediction"));
@@ -153,11 +151,11 @@ public class XValSpectrumPADFeatureExtractorTest {
       Word w = new Word(0, 1, "test - accented");
       w.setAttribute("attr", 1);
       w.setAttribute("test_class", "ACCENTED");
-      regions.add(w);
+      words.add(w);
     }
 
     try {
-      fe.extractFeatures(regions);
+      fe.extractFeaturesWord(words);
       fail();
     } catch (FeatureExtractorException e) {
     }
@@ -168,10 +166,10 @@ public class XValSpectrumPADFeatureExtractorTest {
     Word w = new Word(0, 1, "test - accented");
     w.setAttribute("attr", 1);
     w.setAttribute("test_class", "ACCENTED");
-    regions.add(w);
+    words.add(w);
 
     try {
-      fe.extractFeatures(regions);
+      fe.extractFeaturesWord(words);
       fail();
     } catch (FeatureExtractorException e) {
     }
@@ -181,10 +179,10 @@ public class XValSpectrumPADFeatureExtractorTest {
   public void testExtractFeatureThrowsAnExceptionWhenThereIsNoClassAttribute() {
     Word w = new Word(0, 1, "test - accented");
     w.setAttribute("attr", 1);
-    regions.add(w);
+    words.add(w);
 
     try {
-      fe.extractFeatures(regions);
+      fe.extractFeaturesWord(words);
       fail();
     } catch (FeatureExtractorException e) {
     }

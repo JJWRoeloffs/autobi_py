@@ -40,12 +40,11 @@ import java.util.List;
  * v1.4 PitchFeatureExtractor has changed to attach full pitch contours to each region rather than
  * cutting down to size This is a more effective route to extracting context.
  */
-@SuppressWarnings("ALL")
 public class FFVFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "f0";
 
-  private String feature_name; // the name of the feature to hold pitch information
-  private double threshold; // the intensity threshold to determine silence.
+  private final String feature_name; // the name of the feature to hold pitch information
+  private final double threshold; // the intensity threshold to determine silence.
 
   @Deprecated
   public FFVFeatureExtractor(String feature_name) {
@@ -74,7 +73,7 @@ public class FFVFeatureExtractor extends FeatureExtractor {
   }
 
   public FFVFeatureExtractor(double threshold) {
-    this.feature_name = moniker + "[" + ((Double) threshold).toString() + "]";
+    this.feature_name = moniker + "[" + threshold + "]";
 
     this.required_features.add("wav");
     this.extracted_features.add(feature_name);
@@ -82,15 +81,15 @@ public class FFVFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     try {
       // Identify all regions which are associated with each wav data.
-      HashMap<WavData, List<Region>> wave_region_map = new HashMap<WavData, List<Region>>();
-      for (Region r : (List<Region>) regions) {
+      HashMap<WavData, List<Region>> wave_region_map = new HashMap<>();
+      for (Region r : regions) {
         WavData wav = (WavData) r.getAttribute("wav");
         if (wav != null) {
           if (!wave_region_map.containsKey(wav)) {
-            wave_region_map.put(wav, new ArrayList<Region>());
+            wave_region_map.put(wav, new ArrayList<>());
           }
           wave_region_map.get(wav).add(r);
         }

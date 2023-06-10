@@ -107,10 +107,9 @@ public class ClassifierUtils {
    * @param features        the features to include on the data point
    * @param class_attribute the class attribute
    * @return a weka instance of the point
-   * @throws Exception if something goes wrong
    */
   public static Instance convertWordToInstance(
-      Word point, Set<Feature> features, String class_attribute) throws Exception {
+      Word point, Set<Feature> features, String class_attribute) {
     ArrayList<Attribute> attributes = generateWekaAttributes(features);
     return constructWekaInstance(attributes, point, class_attribute);
   }
@@ -122,12 +121,12 @@ public class ClassifierUtils {
    * @return a FastVector of weka attributes
    */
   public static ArrayList<Attribute> generateWekaAttributes(Set<Feature> features) {
-    ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+    ArrayList<Attribute> attributes = new ArrayList<>();
 
     for (Feature f : features) {
       String attribute_name = f.getName();
       if (f.isNominal()) {
-        List<String> attribute_values = new ArrayList<String>();
+        List<String> attribute_values = new ArrayList<>();
         for (String s : f.getNominalValues()) {
           attribute_values.add(s);
         }
@@ -149,10 +148,8 @@ public class ClassifierUtils {
    *
    * @param feature_set the feature set to convert
    * @return a weka instances object
-   * @throws Exception If the arff file can't be written or read.
    */
-  public static Instances convertFeatureSetToWekaInstances(FeatureSet feature_set)
-      throws Exception {
+  public static Instances convertFeatureSetToWekaInstances(FeatureSet feature_set) {
     ArrayList<Attribute> attributes = generateWekaAttributes(feature_set.getFeatures());
     Instances instances =
         new Instances("AuToBI_feature_set", attributes, feature_set.getDataPoints().size());
@@ -225,7 +222,7 @@ public class ClassifierUtils {
           case Attribute.NOMINAL:
             int index =
                 attribute.indexOfValue(data_point.getAttribute(attribute.name()).toString());
-            instance[i] = (double) index;
+            instance[i] = index;
             break;
           case Attribute.NUMERIC:
             // Check if value is really a number.
@@ -317,7 +314,7 @@ public class ClassifierUtils {
     Feature hyp_attribute = new Feature(hyp_feature);
     hyp_attribute.generateNominalValues(fs.getDataPoints());
 
-    Set<String> sorted_values = new LinkedHashSet<String>();
+    Set<String> sorted_values = new LinkedHashSet<>();
     sorted_values.addAll(class_attribute.getNominalValues());
     sorted_values.addAll(hyp_attribute.getNominalValues());
 
@@ -359,7 +356,7 @@ public class ClassifierUtils {
       } catch (Exception e) {
         w.setAttribute(hyp_attribute, default_value);
         AuToBIUtils.warn("Classifier threw an exception. Assigning default value, " + default_value
-            + ", to word, " + w.toString() + "\n" + e.getMessage());
+            + ", to word, " + w + "\n" + e.getMessage());
       }
     }
   }
@@ -389,7 +386,7 @@ public class ClassifierUtils {
         w.setAttribute(hyp_attribute, default_value);
         w.setAttribute(conf_attribute, 0.5);
         AuToBIUtils.warn("Classifier threw an exception. Assigning default value, " + default_value
-            + ", to word, " + w.toString() + "\n" + e.getMessage());
+            + ", to word, " + w + "\n" + e.getMessage());
       }
     }
   }
@@ -414,7 +411,7 @@ public class ClassifierUtils {
       } catch (Exception e) {
         w.setAttribute(dist_attribute, default_value);
         AuToBIUtils.warn("Classifier threw an exception. Assigning default value, " + default_value
-            + ", to word, " + w.toString() + "\n" + e.getMessage());
+            + ", to word, " + w + "\n" + e.getMessage());
       }
     }
   }
@@ -424,7 +421,7 @@ public class ClassifierUtils {
    *
    * @param feature_set  The feature set
    * @param class_values An array of class values to describe the indexing of the labels.
-   * @return a list of doubles corresponding to labels.
+   * @return a array of doubles corresponding to labels.
    */
   public static double[] convertFeatureSetToLibLinearLabels(
       FeatureSet feature_set, String[] class_values) {
@@ -444,7 +441,7 @@ public class ClassifierUtils {
    *
    * @param feature_set the feature set to convert
    * @param feature_map a map of features to indices
-   * @return a list of Feature[] descriptions.
+   * @return a array of Feature[] descriptions.
    */
   public static de.bwaldvogel.liblinear.Feature[][] convertFeatureSetToLibLinearFeatures(
       FeatureSet feature_set, HashBiMap<Feature, Integer> feature_map) throws AuToBIException {
@@ -463,7 +460,7 @@ public class ClassifierUtils {
    * Converts a FeatureSet to a list of LibLinear Feature[] descriptions.
    *
    * @param feature_set the feature set to convert
-   * @return a list of Feature[] descriptions.
+   * @return a array of Feature[] descriptions.
    */
   public static de.bwaldvogel.liblinear.Feature[][] convertFeatureSetToLibLinearFeatures(
       FeatureSet feature_set) throws AuToBIException {
@@ -479,7 +476,7 @@ public class ClassifierUtils {
 
   public static de.bwaldvogel.liblinear.Feature[] convertWordToLibLinearFeatures(
       Word w, HashBiMap<Feature, Integer> feature_map) throws AuToBIException {
-    ArrayList<FeatureNode> fs = new ArrayList<FeatureNode>();
+    ArrayList<FeatureNode> fs = new ArrayList<>();
 
     BiMap<Integer, Feature> map_feature = feature_map.inverse();
 
@@ -565,7 +562,7 @@ public class ClassifierUtils {
    * @return a hash containing aggregations to be used for normaliation
    */
   public static HashMap<String, Aggregation> generateNormParams(FeatureSet feature_set) {
-    HashMap<String, Aggregation> norm_params = new HashMap<String, Aggregation>();
+    HashMap<String, Aggregation> norm_params = new HashMap<>();
 
     for (Word w : feature_set.getDataPoints()) {
       for (String f : feature_set.getFeatureNames()) {
@@ -575,7 +572,7 @@ public class ClassifierUtils {
         if (w.hasAttribute(f)) {
           Object v = w.getAttribute(f);
           if (v instanceof Number) {
-            Double value = ((Number) v).doubleValue();
+            double value = ((Number) v).doubleValue();
             if (!Double.isNaN(value)) {
               norm_params.get(f).insert(((Number) v).doubleValue());
             }

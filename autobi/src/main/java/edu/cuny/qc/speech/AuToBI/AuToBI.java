@@ -95,7 +95,7 @@ public class AuToBI {
 
   // A map from input filenames to serialized speaker normalization parameter
   // files.
-  private Map<String, String> speaker_norm_file_mapping;
+  private final Map<String, String> speaker_norm_file_mapping;
 
   // A map of the number of times each feature is needed.
   private HashMap<String, Integer> reference_count;
@@ -111,11 +111,11 @@ public class AuToBI {
    */
   public AuToBI() {
     params = new AuToBIParameters();
-    feature_registry = new HashMap<String, FeatureExtractor>();
-    moniker_map = new HashMap<String, Class<? extends FeatureExtractor>>();
-    executed_feature_extractors = new HashSet<FeatureExtractor>();
-    speaker_norm_file_mapping = new HashMap<String, String>();
-    tasks = new HashMap<String, AuToBITask>();
+    feature_registry = new HashMap<>();
+    moniker_map = new HashMap<>();
+    executed_feature_extractors = new HashSet<>();
+    speaker_norm_file_mapping = new HashMap<>();
+    tasks = new HashMap<>();
   }
 
   /**
@@ -271,8 +271,8 @@ public class AuToBI {
    * Clears the feature registry and the extracted features.
    */
   public void unregisterAllFeatureExtractors() {
-    feature_registry = new HashMap<String, FeatureExtractor>();
-    executed_feature_extractors = new HashSet<FeatureExtractor>();
+    feature_registry = new HashMap<>();
+    executed_feature_extractors = new HashSet<>();
   }
 
   /**
@@ -321,10 +321,10 @@ public class AuToBI {
    *                         associated registered feature extractors.
    */
   public void initializeReferenceCounting(FeatureSet fs) throws AuToBIException {
-    reference_count = new HashMap<String, Integer>();
-    dead_features = new HashSet<String>();
+    reference_count = new HashMap<>();
+    dead_features = new HashSet<>();
 
-    Stack<String> features = new Stack<String>();
+    Stack<String> features = new Stack<>();
     if (fs.getClassAttribute() != null) {
       features.add(fs.getClassAttribute());
     }
@@ -354,7 +354,7 @@ public class AuToBI {
   public void initializeFeatureRegistry(FeatureSet fs)
       throws AuToBIException, IllegalAccessException, InvocationTargetException,
              InstantiationException {
-    Stack<String> features = new Stack<String>();
+    Stack<String> features = new Stack<>();
     if (fs.getClassAttribute() != null) {
       features.add(fs.getClassAttribute());
     }
@@ -369,7 +369,7 @@ public class AuToBI {
       FeatureExtractor fe;
       // Construct FeatureExtractor
       if (!getFeatureRegistry().containsKey(fparams.get(0))) {
-        Class c = moniker_map.get(fparams.get(0));
+        Class<? extends FeatureExtractor> c = moniker_map.get(fparams.get(0));
 
         // Null FeatureExtractors correspond to features that do not to be extracted by
         // a feature extractor
@@ -377,17 +377,18 @@ public class AuToBI {
         // during region construction
         // like file and speaker_id. (This is also useful for testing)
         if (c != null) {
-          Constructor[] cons = c.getConstructors();
+          Constructor<?>[] cons = c.getConstructors();
           Object[] plist = fparams.subList(1, fparams.size()).toArray();
 
           // find constructor which takes as many strings as there are elements in plist
-          Constructor correct_cons = null;
-          for (Constructor constructor : cons) {
+          Constructor<?> correct_cons = null;
+          for (Constructor<?> constructor : cons) {
             if (constructor.getParameterTypes().length == plist.length) {
               boolean found = true;
-              for (Class param_class : constructor.getParameterTypes()) {
+              for (Class<?> param_class : constructor.getParameterTypes()) {
                 if (param_class != String.class) {
                   found = false;
+                  break;
                 }
               }
               if (found) {
@@ -444,11 +445,7 @@ public class AuToBI {
    * @return the current reference count for the feature
    */
   public int getReferenceCount(String feature) {
-    if (reference_count.containsKey(feature)) {
-      return reference_count.get(feature);
-    } else {
-      return 0;
-    }
+    return reference_count.getOrDefault(feature, 0);
   }
 
   /**
@@ -466,9 +463,7 @@ public class AuToBI {
     // obliterated, but this guarantees
     // that there are no features with positive reference counts in the dead feature
     // set.
-    if (dead_features.contains(feature)) {
-      dead_features.remove(feature);
-    }
+    dead_features.remove(feature);
   }
 
   /**
@@ -510,7 +505,7 @@ public class AuToBI {
 
       if (!executed_feature_extractors.contains(extractor)) {
         AuToBIUtils.debug("running feature extraction for: " + feature);
-        extractor.extractFeatures(fs.getDataPoints());
+        extractor.extractFeaturesWord(fs.getDataPoints());
         AuToBIUtils.debug("extracted features using: " + extractor.getClass().getCanonicalName());
         executed_feature_extractors.add(extractor);
       }
@@ -741,15 +736,15 @@ public class AuToBI {
           "FeatureSet has null class attribute.  Classification experiments will generate errors.");
     }
 
-    Set<Pair<String, String>> attr_omit = new HashSet<Pair<String, String>>();
-    Set<String> temp_features = new HashSet<String>();
+    Set<Pair<String, String>> attr_omit = new HashSet<>();
+    Set<String> temp_features = new HashSet<>();
     if (hasParameter("attribute_omit")
         && getOptionalParameter("attribute_omit", "").contains(":")) {
       try {
         String[] omission = getParameter("attribute_omit").split(",");
         for (String pair : omission) {
           String[] av_pair = pair.split(":");
-          attr_omit.add(new Pair<String, String>(av_pair[0], av_pair[1]));
+          attr_omit.add(new Pair<>(av_pair[0], av_pair[1]));
 
           if (!fs.getRequiredFeatures().contains(av_pair[0])) {
             temp_features.add(av_pair[0]);
@@ -769,7 +764,7 @@ public class AuToBI {
 
     ExecutorService threadpool =
         newFixedThreadPool(Integer.parseInt(getOptionalParameter("num_threads", "1")));
-    List<Future<FeatureSet>> results = new ArrayList<Future<FeatureSet>>();
+    List<Future<FeatureSet>> results = new ArrayList<>();
     for (FormattedFile filename : filenames) {
       results.add(threadpool.submit(new FeatureSetPropagator(this, filename, fs)));
     }
@@ -854,7 +849,7 @@ public class AuToBI {
    * <p/>
    * Only those tasks corresponding to loaded classifiers are executed.
    *
-   * @return a list of task identifiers.
+   * @return a set of task identifiers.
    */
   public Set<String> getClassificationTasks() {
     return tasks.keySet();
@@ -1197,7 +1192,7 @@ public class AuToBI {
         }
       }
     }
-    List<ContextDesc> contexts = new ArrayList<ContextDesc>();
+    List<ContextDesc> contexts = new ArrayList<>();
     contexts.add(new ContextDesc("f2b2", 2, 2));
     contexts.add(new ContextDesc("f2b1", 2, 1));
     contexts.add(new ContextDesc("f2b0", 2, 0));
@@ -1404,7 +1399,7 @@ public class AuToBI {
       }
 
       // Register appropriate feature extractors for each classifier in the collection
-      Integer high_bark = Integer.parseInt(getOptionalParameter("high_bark", "20"));
+      int high_bark = Integer.parseInt(getOptionalParameter("high_bark", "20"));
       for (int low = 0; low < high_bark; ++low) {
         for (int high = low + 1; high <= high_bark; ++high) {
           registerFeatureExtractor(new SpectrumPADFeatureExtractor(low, high,
@@ -1521,7 +1516,7 @@ public class AuToBI {
             + "pseudosyllabification.");
         wav.setFilename(wav_filename);
         if (hasParameter("silence_threshold")) {
-          Double threshold = Double.parseDouble(getParameter("silence_threshold"));
+          double threshold = Double.parseDouble(getParameter("silence_threshold"));
           word_reader = new PseudosyllableWordReader(wav, threshold);
         } else {
           word_reader = new PseudosyllableWordReader(wav);

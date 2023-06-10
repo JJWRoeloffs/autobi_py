@@ -35,11 +35,10 @@ import java.util.List;
  * <p/>
  * TODO: rename this class
  */
-@SuppressWarnings("unchecked")
 public class ContourDifferenceFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "rmse,meanError";
-  private String f1;
-  private String f2;
+  private final String f1;
+  private final String f2;
 
   public ContourDifferenceFeatureExtractor(String f1, String f2) {
     this.f1 = f1;
@@ -52,8 +51,8 @@ public class ContourDifferenceFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       if (r.hasAttribute(f1) && r.hasAttribute(f2)) {
         Contour c1, c2;
         try {

@@ -41,9 +41,9 @@ public class TemporalContextNormalizedFeatureExtractor extends FeatureExtractor 
 
   private static final Double EPSILON =
       0.00001; // values less than this are considered zero for normalization
-  private String attribute_name; // the feature to normalize
-  private int prev; // the normalization context in milliseconds (ms)
-  private int foll;
+  private final String attribute_name; // the feature to normalize
+  private final int prev; // the normalization context in milliseconds (ms)
+  private final int foll;
 
   /**
    * Constructs a ContextNormalizedFeatureExtractor from String arguments.
@@ -87,8 +87,8 @@ public class TemporalContextNormalizedFeatureExtractor extends FeatureExtractor 
    * @throws edu.cuny.qc.speech.AuToBI.featureextractor.FeatureExtractorException if there is a
    *     problem.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       extractContextNormAttributes(r, r.getStart() - prev / 1000., r.getEnd() + foll / 1000.);
     }
   }
@@ -104,8 +104,7 @@ public class TemporalContextNormalizedFeatureExtractor extends FeatureExtractor 
       throws FeatureExtractorException {
     Object attr = r.getAttribute(attribute_name);
 
-    if (attr instanceof Contour) {
-      Contour c = (Contour) attr;
+    if (attr instanceof Contour c) {
       try {
         Contour sub_c = ContourUtils.getSubContour(c, start, end);
         if (sub_c == null) {

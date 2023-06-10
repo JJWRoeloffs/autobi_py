@@ -29,7 +29,6 @@ import org.junit.Test;
  *
  * @see FormattedFile
  */
-@SuppressWarnings("unchecked")
 public class FormattedFileTest {
   @Test
   public void testConstructsTextGridFile() {

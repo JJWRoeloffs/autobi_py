@@ -40,7 +40,6 @@ import weka.classifiers.trees.J48;
  * classfiers. <p/> This has been deprecated because it does not conform to the AuToBI v1.4 feature
  * naming conventions
  */
-@SuppressWarnings("unchecked")
 @Deprecated
 public class XValSpectrumPADFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "barkPred,barkPredConf,barkPredConfAcc";
@@ -48,10 +47,10 @@ public class XValSpectrumPADFeatureExtractor extends FeatureExtractor {
   private final String ACCENTED_VALUE = "ACCENTED"; // the accented value
   private final String FOLD_ASSIGNMENT_FEATURE = "FOLD_ASSIGNMENT";
   // an feature to store fold assignment information on
-  private int low; // the bottom of the frequency region
-  private int high; // the top of the frequency region
-  private int num_folds; // the number of folds used in the hypothesis generation.
-  private FeatureSet fs; // a description of the featureset used in the prediction
+  private final int low; // the bottom of the frequency region
+  private final int high; // the top of the frequency region
+  private final int num_folds; // the number of folds used in the hypothesis generation.
+  private final FeatureSet fs; // a description of the featureset used in the prediction
 
   /**
    * Constructs a new XValSpectrumFeatureExtractor for a specific spectral region.
@@ -74,7 +73,9 @@ public class XValSpectrumPADFeatureExtractor extends FeatureExtractor {
     required_features.addAll(fs.getRequiredFeatures());
     required_features.add(fs.getClassAttribute());
   }
-
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    throw new UnsupportedOperationException();
+  }
   /**
    * Generates cross validated pitch accent detection hypotheses using energy information drawn from
    * the assigned spectral region.
@@ -82,15 +83,15 @@ public class XValSpectrumPADFeatureExtractor extends FeatureExtractor {
    * @param regions The regions to extract features from.
    * @throws FeatureExtractorException if something goes wrong.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeaturesWord(List<Word> words) throws FeatureExtractorException {
     // Construct a feature set.
     FeatureSet feature_set = fs.newInstance();
 
     // Extract spectrum features.
-    feature_set.setDataPoints((List<Word>) regions);
+    feature_set.setDataPoints(words);
     try {
-      PartitionUtils.assignStratifiedFoldNum((List<Word>) regions, FOLD_ASSIGNMENT_FEATURE,
-          num_folds, feature_set.getClassAttribute());
+      PartitionUtils.assignStratifiedFoldNum(
+          words, FOLD_ASSIGNMENT_FEATURE, num_folds, feature_set.getClassAttribute());
     } catch (AuToBIException e) {
       throw new FeatureExtractorException(e.getMessage());
     }
@@ -101,11 +102,11 @@ public class XValSpectrumPADFeatureExtractor extends FeatureExtractor {
 
       FeatureSet training_fs = fs.newInstance();
 
-      List<Word> training_regions = new ArrayList<Word>();
-      List<Word> testing_regions = new ArrayList<Word>();
+      List<Word> training_regions = new ArrayList<>();
+      List<Word> testing_regions = new ArrayList<>();
       try {
-        PartitionUtils.splitData((List<Word>) regions, training_regions, testing_regions, fold_num,
-            FOLD_ASSIGNMENT_FEATURE);
+        PartitionUtils.splitData(
+            words, training_regions, testing_regions, fold_num, FOLD_ASSIGNMENT_FEATURE);
       } catch (AuToBIException e) {
         // This should never happen.  If there is a problem with splitData it would have thrown
         // an exception during the fold assignment method assignStratifiedFoldNum

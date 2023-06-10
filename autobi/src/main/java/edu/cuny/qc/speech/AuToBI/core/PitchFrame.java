@@ -33,14 +33,14 @@ import java.util.List;
  * PitchFrame represents a number of pitch candidates for a single frame
  */
 public class PitchFrame {
-  private List<PitchCandidate> candidates; // the candidates.
+  private final List<PitchCandidate> candidates; // the candidates.
   private double intensity; // the intensity of the frame.
 
   /**
    * Constructs a new empty Pitch Frame
    */
   public PitchFrame() {
-    candidates = new ArrayList<PitchCandidate>();
+    candidates = new ArrayList<>();
     intensity = 0.0;
   }
 

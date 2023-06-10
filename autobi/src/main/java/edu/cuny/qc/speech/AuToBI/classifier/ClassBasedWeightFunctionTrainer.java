@@ -40,8 +40,8 @@ import java.util.Map;
  * File | Settings | File Templates.
  */
 public class ClassBasedWeightFunctionTrainer {
-  private String class_attribute;
-  private WeightType type;
+  private final String class_attribute;
+  private final WeightType type;
 
   public enum WeightType { LINEAR, ENTROPY }
 
@@ -72,7 +72,7 @@ public class ClassBasedWeightFunctionTrainer {
     }
 
     // Calculate the class weight
-    Map<String, Double> weight_fn = new HashMap<String, Double>();
+    Map<String, Double> weight_fn = new HashMap<>();
     for (String s : d.keySet()) {
       double p = d.get(s);
       if (type == WeightType.LINEAR) {

@@ -53,7 +53,7 @@ public class CorrectionSpectrumPADFeatureSet extends FeatureSet {
     insertRequiredFeature("bark_" + low + "_" + high + "__prediction_confidence");
     insertRequiredFeature("bark_" + low + "_" + high + "__prediction_confidence_accented");
 
-    List<ContextDesc> contexts = new ArrayList<ContextDesc>();
+    List<ContextDesc> contexts = new ArrayList<>();
     contexts.add(new ContextDesc("f2b2", 2, 2));
     contexts.add(new ContextDesc("f2b1", 2, 1));
     contexts.add(new ContextDesc("f2b0", 2, 0));

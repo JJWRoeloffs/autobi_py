@@ -160,6 +160,6 @@ public class QuantizedContourModelTrainer {
       }
     }
 
-    return new Pair<Double, Double>(low_limit, high_limit);
+    return new Pair<>(low_limit, high_limit);
   }
 }

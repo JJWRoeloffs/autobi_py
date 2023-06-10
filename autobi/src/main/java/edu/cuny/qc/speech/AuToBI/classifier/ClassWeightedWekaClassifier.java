@@ -28,6 +28,7 @@ package edu.cuny.qc.speech.AuToBI.classifier;
 
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet;
 import edu.cuny.qc.speech.AuToBI.util.ClassifierUtils;
+import java.io.Serial;
 import weka.classifiers.Classifier;
 import weka.core.Instances;
 
@@ -39,7 +40,7 @@ import weka.core.Instances;
  * The importance weight function is defined by a WeightFunction object.
  */
 public class ClassWeightedWekaClassifier extends WekaClassifier {
-  private static final long serialVersionUID = 20120303L;
+  @Serial private static final long serialVersionUID = 20120303L;
 
   /**
    * Constructs a new ClassWeightedWekaClassifier given a weka Classfiier object.

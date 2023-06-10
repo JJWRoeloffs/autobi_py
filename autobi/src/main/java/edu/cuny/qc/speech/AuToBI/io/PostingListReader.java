@@ -54,7 +54,7 @@ public class PostingListReader extends AuToBIWordReader {
   @Override
   public List<Word> readWords() throws IOException, AuToBIException {
     AuToBIFileReader reader = new AuToBIFileReader(filename);
-    List<Word> words = new ArrayList<Word>();
+    List<Word> words = new ArrayList<>();
 
     String line;
     String kwid = "";
@@ -82,7 +82,7 @@ public class PostingListReader extends AuToBIWordReader {
     }
 
     // Sort identified hits by time.
-    Collections.sort(words, new Comparator<Word>() {
+    Collections.sort(words, new Comparator<>() {
       public int compare(Word o1, Word o2) {
         return Double.compare(o1.getStart(), o2.getStart());
       }

@@ -42,7 +42,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  */
 public class FeatureSetPropagator implements Callable<FeatureSet> {
   private AuToBI autobi;
-  private FormattedFile file;
+  private final FormattedFile file;
   private final FeatureSet target_fs;
 
   public FeatureSetPropagator(AuToBI autobi, FormattedFile file, FeatureSet fs) {

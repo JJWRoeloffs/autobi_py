@@ -40,11 +40,10 @@ import java.util.List;
  * if the initial region is 100ms, and a 200ms subregion is requested, the subregion boundary will
  * fall earlier than the initial region boundary
  */
-@SuppressWarnings("unchecked")
 public class SubregionResetFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "van,trail";
-  private String subregion_name; // the name of the subregion
-  private Double subregion_length; // the length (in seconds) of the subregion
+  private final String subregion_name; // the name of the subregion
+  private final Double subregion_length; // the length (in seconds) of the subregion
 
   /**
    * Constructs a new SubregionResetFeatureExtractor.
@@ -75,8 +74,8 @@ public class SubregionResetFeatureExtractor extends FeatureExtractor {
    *     wrong with the
    *                                                                              extraction.
    */
-  public void extractFeatures(List regions) throws FeatureExtractorException {
-    for (Region r : (List<Region>) regions) {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
+    for (Region r : regions) {
       // construct subregions
       Region trail_region = new Region(r.getStart(), r.getStart() + subregion_length);
       Region van_region = new Region(r.getEnd() - subregion_length, r.getEnd());

@@ -35,10 +35,9 @@ import java.util.List;
  * Created with IntelliJ IDEA. User: andrew Date: 7/13/12 Time: 11:21 AM To change this template use
  * File | Settings | File Templates.
  */
-@SuppressWarnings("unchecked")
 public class HighLowComponentFeatureExtractor extends FeatureExtractor {
   public static final String moniker = "lowGP,highGP";
-  private String feature; // the name of the feature name
+  private final String feature; // the name of the feature name
 
   public HighLowComponentFeatureExtractor(String feature) {
     this.feature = feature;
@@ -49,10 +48,10 @@ public class HighLowComponentFeatureExtractor extends FeatureExtractor {
   }
 
   @Override
-  public void extractFeatures(List regions) throws FeatureExtractorException {
+  public void extractFeatures(List<Region> regions) throws FeatureExtractorException {
     // 2 component GMM in one dimension. trained with EM.
-    for (Region r : (List<Region>) regions) {
-      ArrayList<Double> data = new ArrayList<Double>();
+    for (Region r : regions) {
+      ArrayList<Double> data = new ArrayList<>();
       if (r.hasAttribute(feature)) {
         Contour c;
         try {
@@ -78,12 +77,12 @@ public class HighLowComponentFeatureExtractor extends FeatureExtractor {
   // TODO: this two component GMM fitting with EM should probably be refactored into EM utility
   // code.
   private Pair<GParam, GParam> fit(GParam low, GParam high, ArrayList<Double> data) {
-    Double EPS = 0.00001;
+    double EPS = 0.00001;
 
-    Double previous_ll;
+    double previous_ll;
     GParam prev_low;
     GParam prev_high;
-    Double ll = -Double.MAX_VALUE;
+    double ll = -Double.MAX_VALUE;
     do {
       previous_ll = ll;
       prev_low = new GParam(low.mean, low.stdev);
@@ -132,7 +131,7 @@ public class HighLowComponentFeatureExtractor extends FeatureExtractor {
       }
     } while (ll > previous_ll + EPS);
 
-    return new Pair<GParam, GParam>(prev_low, prev_high);
+    return new Pair<>(prev_low, prev_high);
   }
 
   private Double gaussianLikelihood(Double value, double mean, double stdev) {
