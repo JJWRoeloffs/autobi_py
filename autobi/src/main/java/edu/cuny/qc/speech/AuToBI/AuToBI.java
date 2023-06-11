@@ -1087,7 +1087,7 @@ public class AuToBI {
    * for available feature extractors
    */
   public void registerDefaultFeatureExtractorMonikers() {
-    registerFeatureExtractorMonikers("edu.cuny.qc.speech.AuToBI.featureextractor");
+    registerFeatureExtractorMonikers();
 
     // Include null moniker entries for 'wav' and 'speaker_id'
     // these are handled by the wav reader and the word reading functionality
@@ -1102,10 +1102,9 @@ public class AuToBI {
    * This is exposed to allow users to write their own feature extractors and
    * seemlessly incorporate them into the feature extraction pipeline.
    */
-  public void registerFeatureExtractorMonikers(String package_name) {
-    Reflections reflections = new Reflections(package_name);
-    Set<Class<? extends FeatureExtractor>> fes =
-        reflections.getSubTypesOf(edu.cuny.qc.speech.AuToBI.core.FeatureExtractor.class);
+  public void registerFeatureExtractorMonikers() {
+    Reflections reflections = new Reflections(AuToBI.class.getPackageName());
+    Set<Class<? extends FeatureExtractor>> fes = reflections.getSubTypesOf(FeatureExtractor.class);
     for (Class<? extends FeatureExtractor> c : fes) {
       try {
         String value = c.getDeclaredField("moniker").get(c).toString();

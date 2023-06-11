@@ -1,6 +1,6 @@
 val py4j = "0.10.9.2"
 
-val reflections  = "0.9.9-RC1"
+val reflections  = "0.10.2"
 val commons_math = "3.3"
 val guava        = "16.0.1"
 val log4j        = "1.2.15"

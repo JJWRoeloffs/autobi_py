@@ -69,7 +69,7 @@ public abstract class FeatureExtractor {
   public abstract void extractFeatures(List<Region> regions) throws FeatureExtractorException;
 
   public void extractFeaturesWord(List<Word> words) throws FeatureExtractorException {
-    extractFeatures(words.stream().map(Word::toRegion).collect(Collectors.toList()));
+    extractFeatures(words.stream().map(word -> (Region) word).collect(Collectors.toList()));
   }
 
   /**
