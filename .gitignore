@@ -25,6 +25,7 @@ local.sbt
 .bloop/
 .metals/
 metals.sbt
+*.args
 
 # IDEA
 .idea
@@ -179,5 +180,5 @@ dmypy.json
 cython_debug/
 
 # "Java Build files" generated for python
-**/jar/__init__.py
-**/jar/*.jar
+**/_jar/__init__.py
+**/_jar/*.jar

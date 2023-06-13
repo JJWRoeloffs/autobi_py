@@ -16,11 +16,10 @@ val scalatest       = "3.2.13"
 val junit           = "4.12"
 val junit_interface = "0.11"
 
-ThisBuild / scalaVersion := "3.2.2"
+ThisBuild / scalaVersion := "3.3.0"
 
-ThisBuild / version := "1.1"
+ThisBuild / version := "0.1.1"
 
-ThisBuild / name         := "autobi_py"
 ThisBuild / organization := "edu.leidenuniv"
 
 ThisBuild / resolvers ++= Seq(
@@ -41,11 +40,11 @@ lazy val sharedSettings = Seq(
     "-new-syntax",
     "-feature",
     "-source:future",
-    "-language:implicitConversions",
     "-language:higherKinds",
     "-language:postfixOps",
     "-deprecation",
     "-Xcheck-macros",
+    "-Wunused:all",
   ),
 )
 
@@ -67,7 +66,6 @@ lazy val autobi = project
       "com.github.wendykierp"  % "JTransforms"     % jtransforms,
       "org.apache.ant"         % "ant-apache-oro"  % ant_apache_oro,
       "org.slf4j"              % "slf4j-simple"    % slf4j_simple    % Test,
-      "org.scalatest"         %% "scalatest"       % scalatest       % Test,
       "junit"                  % "junit"           % junit           % Test,
       "com.novocode"           % "junit-interface" % junit_interface % Test,
     ),
@@ -77,29 +75,43 @@ lazy val adapter = project
   .in(file("adapter"))
   .dependsOn(autobi)
   .settings(
-    name                          := "adapter",
-    assembly / mainClass          := Some("autobiadapter.AutobiServer"),
-    // We write the python __init__ with the side-effects of getting the path to write the jar to.
-    // Not the cleanest, but it works for now.
-    assembly / assemblyOutputPath := file(
-      BuildPython
-        .getDestenationPathAndWritePython(
-          "python/src/autobi",
-          (assembly / assemblyJarName).value,
-        ),
-    ),
+    name                 := "adapter",
     sharedSettings,
-    libraryDependencies          ++= Seq(
-      "net.sf.py4j" % "py4j" % py4j,
+    libraryDependencies ++= Seq(
+      "net.sf.py4j"    % "py4j"      % py4j,
+      "org.scalatest" %% "scalatest" % scalatest % Test,
     ),
+  )
+
+lazy val python = project
+  .in(file("python"))
+  .dependsOn(adapter)
+  .settings(
+    sharedSettings,
+    assembly / mainClass          := Some("edu.leidenuniv.AuToBIAdapter.api.python.PythonRunner"),
+    Compile / resourceManaged     := baseDirectory.value / "/src/autobi/_jar",
+    assembly / assemblyJarName    := s"AuToBIAdapter-${(ThisBuild / version).value}.jar",
+    assembly / assemblyOutputPath := (Compile / resourceManaged).value / (assembly / assemblyJarName).value,
+    Compile / resourceGenerators  += Def.task {
+      val file = (Compile / resourceManaged).value / "__init__.py"
+      IO.write(
+        file,
+        s"""
+        |from  pathlib import Path
+        |JARPATH = Path(__file__).parent.joinpath("${(assembly / assemblyJarName).value}").resolve()
+        """.stripMargin('|').trim(),
+      )
+      Seq(file)
+    }.taskValue,
   )
 
 lazy val root = project
   .in(file("."))
   .settings(
-    name := (ThisBuild / name).value,
+    name := "autobi_py",
   )
   .aggregate(
     adapter,
     autobi,
+    python,
   )
