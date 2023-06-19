@@ -1,4 +1,3 @@
-import subprocess
 import gc
 
 from collections import defaultdict
@@ -10,6 +9,7 @@ from typing import Optional
 
 from autobi._jar import JARPATH
 from .not_instantiable import NotInstantiable
+from .printing_service import py4j_print, PrintingService, PRINTING_QUEUE
 
 
 class JVMNotRunning(Exception):
@@ -35,18 +35,27 @@ class _JVM:
     # saving an optional instance of that dataclass.
     # However, because of the reference counting, this creates only more chaos
     gateway: Optional[JavaGateway] = None
+    printer: Optional[PrintingService] = None
     views: Optional[defaultdict[str, AutobiJVM]] = None
     ref_count: Optional[defaultdict[str, int]] = None
 
     @classmethod
     def is_in_valid_state(cls) -> bool:
-        if not (cls.gateway is None) == (cls.views is None) == (cls.ref_count is None):
+        if (
+            not (cls.gateway is None)
+            == (cls.views is None)
+            == (cls.ref_count is None)
+            == (cls.printer is None)
+        ):
             return False
 
         if cls.views is not None and cls.ref_count is not None:
             if not set(cls.views.keys()) == set(cls.ref_count.keys()):
                 print(cls.ref_count.keys(), cls.views.keys())
                 return False
+
+        if cls.printer is not None and cls.printer.is_stopped():
+            return False
 
         return True
 
@@ -56,12 +65,14 @@ class _JVM:
         return cls.views is not None
 
     @classmethod
-    def get_view(cls, name: str = "default") -> AutobiJVM:
+    def get_view(cls, name: str) -> AutobiJVM:
         if not cls.is_running():
+            cls.printer = PrintingService(py4j_print)
+            cls.printer.start()
             cls.gateway = JavaGateway.launch_gateway(
                 classpath=str(JARPATH),
-                redirect_stdout=subprocess.STDOUT,
-                redirect_stderr=subprocess.PIPE,
+                redirect_stdout=PRINTING_QUEUE,
+                redirect_stderr=PRINTING_QUEUE,
             )
             cls.views = defaultdict(lambda: cls.AutobiJVM(cls.gateway.new_jvm_view()))
             cls.ref_count = defaultdict(lambda: 0)
@@ -72,7 +83,7 @@ class _JVM:
         return result
 
     @classmethod
-    def delete_view(cls, name: str = "default") -> None:
+    def delete_view(cls, name: str) -> None:
         if not cls.is_running():
             raise JVMNotRunning("Cannot delete view: JVM is not running")
 
@@ -102,9 +113,13 @@ class _JVM:
             del cls.gateway
             # gc.collect is recommended to be called by the py4j docs after shutdown.
             gc.collect()
+        if cls.printer is not None:
+            cls.printer.stop()
         cls.gateway = None
         cls.views = None
         cls.ref_count = None
+        cls.printer = None
+        gc.collect()
 
 
 class AutobiJVMHandler:
@@ -116,7 +131,7 @@ class AutobiJVMHandler:
         pass
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str = "main") -> None:
         self.handler: Optional[_JVM.AutobiJVM] = None
         self.name = name
 
