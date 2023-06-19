@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * FeatureSet objects are responsible for maintaining information about the features required for a
@@ -70,9 +71,7 @@ public class FeatureSet implements Serializable {
     FeatureSet newfs = new FeatureSet();
     newfs.features.addAll(this.getFeatures());
     newfs.data_points.addAll(this.getDataPoints());
-    for (Map.Entry<String, Integer> entry : this.required_features.entrySet()) {
-      newfs.required_features.put(entry.getKey(), entry.getValue());
-    }
+    newfs.required_features.putAll(this.required_features);
     newfs.class_attribute = this.getClassAttribute();
     return newfs;
   }
@@ -92,9 +91,7 @@ public class FeatureSet implements Serializable {
    * @param words the data points
    */
   public void setDataPoints(List<Word> words) {
-    for (Word w : words) {
-      w.setFeatureSet(this);
-    }
+    words.forEach(w -> w.setFeatureSet(this));
     data_points = words;
   }
 
@@ -104,10 +101,7 @@ public class FeatureSet implements Serializable {
    * @return the feature names
    */
   public List<String> getFeatureNames() {
-    ArrayList<String> names = new ArrayList<>();
-    for (Feature f : features) names.add(f.getName());
-
-    return names;
+    return features.stream().map(Feature::getName).collect(Collectors.toList());
   }
 
   /**
@@ -119,12 +113,7 @@ public class FeatureSet implements Serializable {
    * @return the associated feature object
    */
   public Feature getFeature(String feature_name) {
-    for (Feature f : features) {
-      if (f.getName().equals(feature_name)) {
-        return f;
-      }
-    }
-    return null;
+    return features.stream().filter(f -> f.getName().equals(feature_name)).findAny().orElse(null);
   }
 
   /**
@@ -174,14 +163,12 @@ public class FeatureSet implements Serializable {
   }
 
   /**
-   * Removes an feature from every data point assigned to the data set.
+   * Removes a feature from every data point assigned to the data set.
    *
    * @param feature_name the attribute to remove.
    */
   public void removeFeatureFromDataPoints(String feature_name) {
-    for (Word w : data_points) {
-      w.removeAttribute(feature_name);
-    }
+    data_points.forEach(w -> w.removeAttribute(feature_name));
   }
 
   /**
@@ -368,8 +355,7 @@ public class FeatureSet implements Serializable {
 
     for (Feature f : this.features) {
       attrString.append("@attribute ");
-      attrString.append(
-          f.getName().replace(",", "_")); // commas are not allowed in in attribute names
+      attrString.append(f.getName().replace(",", "_")); // commas are not allowed in attribute names
       if (f.isNominal()) {
         if (f.getNominalValues().isEmpty()) {
           AuToBIUtils.warn(" Warning: empty nominal values for feature:" + f.getName()
