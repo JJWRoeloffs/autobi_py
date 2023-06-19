@@ -13,7 +13,7 @@ private[AuToBIAdapter] class Py4JServer:
 
   // Launch a Py4J gateway or client server for the process to connect to; this will let it see our
   // Java system properties and such
-  private val localhost = InetAddress.getLoopbackAddress()
+  private val localhost = InetAddress.getLoopbackAddress
   private val server    =
     if sys.env.getOrElse("AUTOBI_PIN_THREAD", "true").toLowerCase(Locale.ROOT) == "true"
     then
