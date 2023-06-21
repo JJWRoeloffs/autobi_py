@@ -77,8 +77,7 @@ class TestJVMManagment:
         # This simply asserts that a shutdown removes all references from this singleton
         # As far as I can find, there is no function to assert the gateway was actually shut down
 
-        from autobi.core.jvm_view import _shutdown
-        from autobi.core.jvm_view import _JVM
+        from autobi.core.jvm_view import _JVM, _shutdown
 
         assert _JVM.is_in_valid_state()
         with AutobiJVMHandler("test1") as jvm1:

@@ -8,6 +8,16 @@ F = TypeVar("F")
 SelfType = TypeVar("SelfType")
 
 
+def to_java_float(f: float) -> str:
+    """Takes a float, returns a string of that float with 6 digits of presision"""
+    return f"{f:.6f}"
+
+
+def to_java_bool(b: bool) -> str:
+    """returns 'true' or 'false' instead of 'True' and 'False'"""
+    return str(b).lower()
+
+
 def to_resolved_path_str(path: Path) -> str:
     "Takes a path, resolves the path, then returns the string representation of the path"
     return str(path.resolve())
