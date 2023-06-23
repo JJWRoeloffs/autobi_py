@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class TwoWayCurveLikelihoodShapeFeatureExtractor extends FeatureExtractor {
   public static final String moniker =
-      "rrLL,rfLL,rpLL,rvLL,frLL,ffLL,fpLL,fvLL,prLL,pfLL,ppLL,vvLL,vrLL,vfLL,vpLL,vvLL";
+      "rrLL,rfLL,rpLL,rvLL,frLL,ffLL,fpLL,fvLL,prLL,pfLL,ppLL,pvLL,vrLL,vfLL,vpLL,vvLL";
 
   private final String f1;
   private final String f2;
