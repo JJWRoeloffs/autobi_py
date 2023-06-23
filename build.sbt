@@ -78,8 +78,9 @@ lazy val adapter = project
     name                 := "adapter",
     sharedSettings,
     libraryDependencies ++= Seq(
-      "net.sf.py4j"    % "py4j"      % py4j,
-      "org.scalatest" %% "scalatest" % scalatest % Test,
+      "net.sf.py4j"     % "py4j"        % py4j,
+      "org.reflections" % "reflections" % reflections,
+      "org.scalatest"  %% "scalatest"   % scalatest % Test,
     ),
   )
 
