@@ -439,7 +439,9 @@ public class FeatureSet implements Serializable {
    * @return the features.
    */
   protected String generateCSVHeader() {
-    return AuToBIUtils.join(getFeatureNames(), ",") + "\n";
+    List<String> sanitisedFeatureNames =
+        getFeatureNames().stream().map(s -> s.replace(',', '_')).collect(Collectors.toList());
+    return AuToBIUtils.join(sanitisedFeatureNames, ",") + "\n";
   }
 
   /**
