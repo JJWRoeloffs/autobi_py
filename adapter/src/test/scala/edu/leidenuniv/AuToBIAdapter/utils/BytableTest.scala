@@ -1,6 +1,6 @@
 package edu.leidenuniv.AuToBIAdapter.utils
 
-import edu.leidenuniv.AuToBIAdapter.utils.ByteableOps.*
+import edu.leidenuniv.AuToBIAdapter.utils.ByteableOps.given
 import java.nio.ByteBuffer
 import org.scalatest.funsuite.AnyFunSuite
 
