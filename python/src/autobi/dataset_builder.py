@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Self, List
 from tempfile import TemporaryDirectory
 
 import pandas as pd
@@ -16,21 +17,21 @@ class DatasetBuilder:
         except Py4JJavaError:
             raise ValueError("Cannot read arguments. Could not parse Textgrid or Wav.")
 
-    def with_default_features(self, name: str) -> Self:
+    def with_default_features(self, name: str) -> DatasetBuilder:
         try:
             self._object.withDefaultFeatures(name)
         except Py4JJavaError:
             raise ValueError(f"Cannot add feature {name}, not found")
         return self
 
-    def with_feature(self, name: str) -> Self:
+    def with_feature(self, name: str) -> DatasetBuilder:
         try:
             self._object.withFeature(name)
         except Py4JJavaError:
             raise ValueError(f"Cannot add feature {name}, not found")
         return self
 
-    def with_features(self, names: List[str]) -> Self:
+    def with_features(self, names: List[str]) -> DatasetBuilder:
         _name = "\t".join(names)
         try:
             self._object.withFeatures(_name)

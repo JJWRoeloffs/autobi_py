@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=68.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,7 +8,7 @@ version = "0.1.1"
 authors = [{ name = "JJWRoeloffs", email = "jelleroeloffs@gmail.com" }]
 description = "A python wrapper and interface around AuToBI"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.9, <3.11"
 classifiers = [
   "Programming Language :: Python :: 3",
   "License :: OSI Approved :: MIT License",
@@ -33,7 +33,7 @@ include = ["src"]
 exclude = ["**/__pycache__"]
 reportMissingImports = true
 
-pythonVersion = "3.11"
+pythonVersion = "3.10"
 pythonPlatform = "Linux"
 
 executionEnvironments = [{ root = "src" }]
