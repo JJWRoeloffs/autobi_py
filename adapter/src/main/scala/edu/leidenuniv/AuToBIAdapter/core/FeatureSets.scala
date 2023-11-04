@@ -22,7 +22,7 @@ object FeatureSets:
     featureSet: Class[? <: FeatureSet],
   ): Option[Constructor[FeatureSet]] =
     featureSet.getConstructors.collectFirst {
-      case c: Constructor[FeatureSet] if c.getParameterCount == 0 => c
+      case c if c.getParameterCount == 0 => c.asInstanceOf[Constructor[FeatureSet]]
     }
 
   def getFeatureSet(name: String): Option[FeatureSet] =
