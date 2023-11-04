@@ -69,7 +69,7 @@ public class FormattedFile {
     } else if (filename.toLowerCase().endsWith("ala")) {
       this.format = FormattedFile.Format.BURNC;
     } else if (filestem.matches("s\\d\\d\\d\\d[ab].words")) {
-      this.format = Format.BUCKEYE;
+      this.format = FormattedFile.Format.BUCKEYE;
     } else if (filename.toLowerCase().endsWith("words")
         || filename.toLowerCase().endsWith(".txt")) {
       this.format = FormattedFile.Format.SIMPLE_WORD;
