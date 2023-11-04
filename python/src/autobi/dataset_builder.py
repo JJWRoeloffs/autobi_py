@@ -3,11 +3,13 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from typing import List
 
 import pandas as pd
 from py4j.java_gateway import Py4JJavaError
 
 from autobi.core import AutobiJVM, takes, to_resolved_path_str
+from .featurenames_builder import FeatureSet
 
 
 class DatasetBuilder:
@@ -39,6 +41,9 @@ class DatasetBuilder:
             raise ValueError(f"Cannot add features {names}, not found")
         return self
 
+    def with_feature_set(self, features: FeatureSet):
+        self.with_features(features._strings)
+
     @takes(Path, converter=to_resolved_path_str)
     def write_csv(self, filename: str):
         self._object.writeCSV(filename)
@@ -52,7 +57,7 @@ class DatasetBuilder:
         self._object.writeLibLinear(filename)
 
     def build_pandas(self) -> pd.DataFrame:
-        with TemporaryDirectory() as dir:
-            tempfile = Path(dir).joinpath("out.csv")
+        with TemporaryDirectory() as temp_dir:
+            tempfile = Path(temp_dir) / "out.csv"
             self.write_csv(tempfile)
-            return pd.read_csv(tempfile, delimiter=",")
+            return pd.read_csv(tempfile, delimiter=",", na_values=["?"]).astype(float)

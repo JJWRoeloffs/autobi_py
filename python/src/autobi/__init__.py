@@ -13,7 +13,7 @@ __version__ = "0.1.2"
 import autobi.core as core
 from autobi.run_default import RunDefault
 from autobi.arguments_builder import ArgumentBuilder
-from autobi.featurenames_builder import FeaturenamesBuilder
+from autobi.featurenames_builder import FeaturenamesBuilder, FeatureSet
 from autobi.dataset_builder import DatasetBuilder
 
 __all__ = (
@@ -21,5 +21,6 @@ __all__ = (
     "RunDefault",
     "ArgumentBuilder",
     "FeaturenamesBuilder",
+    "FeatureSet",
     "DatasetBuilder",
 )

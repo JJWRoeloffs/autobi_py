@@ -2,9 +2,15 @@ from __future__ import annotations
 
 import json
 from typing import List
+from dataclasses import dataclass
 
 from py4j.java_gateway import Py4JJavaError
 from autobi.core import AutobiJVM
+
+
+@dataclass
+class FeatureSet:
+    _strings: List[str]
 
 
 class FeaturenamesBuilder:
@@ -33,5 +39,8 @@ class FeaturenamesBuilder:
             raise ValueError(f"Cannot add features {names}, not found")
         return self
 
-    def build(self) -> List[str]:
+    def build_strings(self) -> List[str]:
         return json.loads(self._object.build())
+
+    def build(self) -> FeatureSet:
+        return FeatureSet(self.build_strings())

@@ -1,6 +1,6 @@
 import pytest
 
-from autobi import DatasetBuilder, ArgumentBuilder
+from autobi import DatasetBuilder, ArgumentBuilder, FeaturenamesBuilder
 from autobi.core import AutobiJVMHandler
 
 from .datafiles import WAVFILE, GRIDFILE
@@ -50,6 +50,17 @@ class TestDatasetBuilder:
             params.with_input_TextGrid(GRIDFILE)
             builder = DatasetBuilder(jvm, params.to_args_string())
             builder.with_features([feature1, feature2])
+
+    def test_with_feature_set(self):
+        with AutobiJVMHandler("test") as jvm:
+            fnames = FeaturenamesBuilder(jvm)
+            fnames.with_default_features("PhraseAccentClassificationFeatureSet")
+            feature_set = fnames.build()
+            params = ArgumentBuilder(jvm)
+            params.with_input_wav(WAVFILE)
+            params.with_input_TextGrid(GRIDFILE)
+            builder = DatasetBuilder(jvm, params.to_args_string())
+            builder.with_feature_set(feature_set)
 
     def test_buildable(self):
         with AutobiJVMHandler("test") as jvm:
