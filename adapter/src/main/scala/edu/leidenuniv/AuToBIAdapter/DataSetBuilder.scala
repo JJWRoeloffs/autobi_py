@@ -1,7 +1,12 @@
 package edu.leidenuniv.AuToBIAdapter
 
 import edu.cuny.qc.speech.AuToBI.core.{AuToBIParameters, FeatureSet, Word}
-import edu.leidenuniv.AuToBIAdapter.core.*
+import edu.leidenuniv.AuToBIAdapter.core.{
+  fromArgsString,
+  FeatureExtractors,
+  FeatureSets,
+  InputFiles,
+}
 import java.util.List as JavaList
 
 class DataSetBuilder(val featureSet: FeatureSet):

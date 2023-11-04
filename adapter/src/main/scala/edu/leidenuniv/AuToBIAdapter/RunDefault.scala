@@ -1,7 +1,7 @@
 package edu.leidenuniv.AuToBIAdapter
 
 import edu.cuny.qc.speech.AuToBI.AuToBI
-import edu.leidenuniv.AuToBIAdapter.utils.*
+import edu.leidenuniv.AuToBIAdapter.utils.Parsing
 
 class RunDefault:
   def run(args: Array[String]): Unit =

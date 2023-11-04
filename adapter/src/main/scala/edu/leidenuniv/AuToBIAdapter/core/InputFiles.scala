@@ -1,13 +1,18 @@
 package edu.leidenuniv.AuToBIAdapter.core
 
 import edu.cuny.qc.speech.AuToBI.core.{AuToBIParameters, WavData, Word}
-import edu.cuny.qc.speech.AuToBI.io.*
+import edu.cuny.qc.speech.AuToBI.io.{
+  AuToBIWordReader,
+  FormattedFile,
+  PseudosyllableWordReader,
+  WavReader,
+}
 import edu.cuny.qc.speech.AuToBI.util.WordReaderUtils
 import edu.leidenuniv.AuToBIAdapter.core.*
 import java.util.List as JavaList
 
 object InputFiles:
-  private val inputFileTypes = Map(
+  private val inputFileTypes: Map[String, FormattedFile.Format] = Map(
     "input_file"     -> FormattedFile.Format.TEXTGRID,
     "cprom_file"     -> FormattedFile.Format.CPROM,
     "rhapsodie_file" -> FormattedFile.Format.RHAPSODIE,

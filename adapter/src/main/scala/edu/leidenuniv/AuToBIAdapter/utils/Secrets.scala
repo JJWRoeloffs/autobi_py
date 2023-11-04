@@ -1,6 +1,6 @@
 package edu.leidenuniv.AuToBIAdapter.utils
 
-import edu.leidenuniv.AuToBIAdapter.utils.ByteableOps.*
+import edu.leidenuniv.AuToBIAdapter.utils.ByteableOps.Byteable
 import java.lang.Byte as JByte
 import java.security.SecureRandom
 

@@ -1,6 +1,6 @@
 package edu.leidenuniv.AuToBIAdapter.utils
 
-import scala.util.matching.*
+import scala.util.matching.Regex
 
 private[AuToBIAdapter] object Parsing:
   private lazy val splitOnWhitespaceRegex = new Regex("\"(.*?)\"|([^\\s]+)")
