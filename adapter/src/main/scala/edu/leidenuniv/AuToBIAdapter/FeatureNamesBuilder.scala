@@ -17,10 +17,8 @@ class FeatureNamesBuilder(val featureSet: FeatureSet):
 
   def withFeature(name: String): this.type =
     if FeatureExtractors.checkFeaturePossible(name) then
-      println(s"Adding: $name")
       featureSet.insertRequiredFeature(name)
     else
-      println(s"cannot add $name")
       throw new IllegalAccessException(
         s"Cannot add feature $name, no extractor available",
       )
