@@ -3,6 +3,7 @@ package edu.leidenuniv.AuToBIAdapter
 import edu.cuny.qc.speech.AuToBI.core.FeatureSet
 import edu.leidenuniv.AuToBIAdapter.core.{FeatureExtractors, FeatureSets}
 import scala.jdk.CollectionConverters.*
+import upickle.default.{read, write}
 
 class FeatureNamesBuilder(val featureSet: FeatureSet):
   def this() = this(FeatureSet())
@@ -30,7 +31,7 @@ class FeatureNamesBuilder(val featureSet: FeatureSet):
     this
 
   def withFeatures(names: String): this.type =
-    withFeatures(names.split('\t').toList)
+    withFeatures(read[List[String]](names))
 
   def build(): String =
-    featureSet.getRequiredFeatures.asScala.mkString("\t")
+    write(featureSet.getRequiredFeatures.asScala)

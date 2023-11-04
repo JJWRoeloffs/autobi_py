@@ -8,6 +8,7 @@ import edu.leidenuniv.AuToBIAdapter.core.{
   InputFiles,
 }
 import java.util.List as JavaList
+import upickle.default.read
 
 class DataSetBuilder(val featureSet: FeatureSet):
   def this(dataPoints: JavaList[Word]) =
@@ -41,7 +42,7 @@ class DataSetBuilder(val featureSet: FeatureSet):
     this
 
   def withFeatures(names: String): this.type =
-    withFeatures(names.split('\t').toList)
+    withFeatures(read[List[String]](names))
 
   private def build(): Unit =
     FeatureExtractors(featureSet).extractFeatures()

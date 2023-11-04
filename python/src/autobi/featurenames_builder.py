@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import List
 
 from py4j.java_gateway import Py4JJavaError
@@ -26,12 +27,11 @@ class FeaturenamesBuilder:
         return self
 
     def with_features(self, names: List[str]) -> FeaturenamesBuilder:
-        _name = "\t".join(names)
         try:
-            self._object.withFeatures(_name)
+            self._object.withFeatures(json.dumps(names))
         except Py4JJavaError:
             raise ValueError(f"Cannot add features {names}, not found")
         return self
 
     def build(self) -> List[str]:
-        return str(self._object.build()).split("\t")
+        return json.loads(self._object.build())

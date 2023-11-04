@@ -13,10 +13,11 @@ val liblinear       = "2.44"
 val jtransforms     = "3.1"
 val sspace          = "2.0.4"
 val scalatest       = "3.2.13"
+val toolkit         = "0.1.7"
 val junit           = "4.12"
 val junit_interface = "0.11"
 
-ThisBuild / scalaVersion := "3.3.0"
+ThisBuild / scalaVersion := "3.3.1"
 
 ThisBuild / version := "0.1.1"
 
@@ -79,6 +80,7 @@ lazy val adapter = project
     sharedSettings,
     libraryDependencies ++= Seq(
       "net.sf.py4j"     % "py4j"        % py4j,
+      "org.scala-lang" %% "toolkit"     % toolkit,
       "org.reflections" % "reflections" % reflections,
       "org.scalatest"  %% "scalatest"   % scalatest % Test,
     ),

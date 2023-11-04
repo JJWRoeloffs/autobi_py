@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -32,9 +33,8 @@ class DatasetBuilder:
         return self
 
     def with_features(self, names: List[str]) -> DatasetBuilder:
-        _name = "\t".join(names)
         try:
-            self._object.withFeatures(_name)
+            self._object.withFeatures(json.dumps(names))
         except Py4JJavaError:
             raise ValueError(f"Cannot add features {names}, not found")
         return self
