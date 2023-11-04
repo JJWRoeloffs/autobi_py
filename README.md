@@ -1,6 +1,12 @@
 # AuToBI-py
 
-A python wrapper and interfacing library around AuToBI. In early stages of development
+A python wrapper and interfacing library around AuToBI that I wrote for my Batcholor's thesis. AuToBI is effectively the only publically available system for the automatic generation of prosody transcriptions, created by Andrew Rosenberg for his PhD in 2012. 
+
+Modern research uses AuToBI as a baseline, but rarely interfaces with it directly (and when they do, they do so via the commandline with all limitations that come with that, such as [AASP](https://github.com/UUDigitalHumanitieslab/AASP)), as modern tooling generally uses Python over Java.
+
+AuToBI_py provides a simple python interface for AuToBI's feature generation systems, as well as the parts of AuToBI that are available from the commandline. Please check out the [README of the python library](https://github.com/JJWRoeloffs/autobi_py/blob/master/python/README.md) for documentation of this library.
+
+The project consists of three parts. AuToBI itself, which had to be forked and slightly rewritten to be able to provide the interface, an adapter that provides the interface in a JVM language, and a python library that uses py4j to interface with this JVM API and provide a cleaner python API.
 
 ## AuToBI
 
@@ -13,6 +19,7 @@ Build with sbt:
 sbt "autobi/compile"
 
 # Create one "Uber-jar" that contains all dependencies
+# Similar to how the original AuToBI was distributed
 sbt "autobi/assembly"
 ```
 
