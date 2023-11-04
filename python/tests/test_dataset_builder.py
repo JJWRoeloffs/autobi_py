@@ -1,4 +1,5 @@
 import pytest
+from pathlib import Path
 
 from autobi import DatasetBuilder, ArgumentBuilder, FeaturenamesBuilder
 from autobi.core import AutobiJVMHandler
@@ -72,6 +73,30 @@ class TestDatasetBuilder:
             builder.with_feature(feature)
             data_frame = builder.build_pandas()
             assert data_frame.columns.values == [feature.replace(",", "_")]
+
+    def test_not_writable_after_build(self):
+        with AutobiJVMHandler("test") as jvm:
+            feature = r"mean[subregionC[znormC[f0],subregion[200ms]]]"
+            params = ArgumentBuilder(jvm)
+            params.with_input_wav(WAVFILE)
+            params.with_input_TextGrid(GRIDFILE)
+            builder = DatasetBuilder(jvm, params.to_args_string())
+            builder.with_feature(feature)
+            _ = builder.build_pandas()
+            with pytest.raises(ValueError):
+                builder.with_feature(feature)
+
+    def test_not_double_buildable(self):
+        with AutobiJVMHandler("test") as jvm:
+            feature = r"mean[subregionC[znormC[f0],subregion[200ms]]]"
+            params = ArgumentBuilder(jvm)
+            params.with_input_wav(WAVFILE)
+            params.with_input_TextGrid(GRIDFILE)
+            builder = DatasetBuilder(jvm, params.to_args_string())
+            builder.with_feature(feature)
+            _ = builder.build_pandas()
+            with pytest.raises(ValueError):
+                builder.write_csv(Path() / "out.csv")
 
     def test_feature_errors_propogated_properly(self):
         with AutobiJVMHandler("test") as jvm:
