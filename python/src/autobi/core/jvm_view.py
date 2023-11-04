@@ -51,7 +51,6 @@ class _JVM:
 
         if cls.views is not None and cls.ref_count is not None:
             if not set(cls.views.keys()) == set(cls.ref_count.keys()):
-                print(cls.ref_count.keys(), cls.views.keys())
                 return False
 
         if cls.printer is not None and cls.printer.is_stopped():
