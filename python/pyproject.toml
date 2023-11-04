@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autobi_py"
-version = "0.1.2"
+version = "0.2.0"
 authors = [{ name = "JJWRoeloffs", email = "jelleroeloffs@gmail.com" }]
 description = "A python wrapper and interface around AuToBI"
 readme = "README.md"
