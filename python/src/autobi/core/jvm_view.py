@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import gc
 
 from collections import defaultdict
@@ -16,6 +18,15 @@ class JVMNotRunning(Exception):
     pass
 
 
+class AutobiJVM:
+    _jvm: JVMView
+
+    def __new__(cls):
+        raise NotInstantiable(
+            "AutobiJVM object can only be created by the AutobiJVMHandler"
+        )
+
+
 class _JVM:
     """
     The underlying JVM management Singleton
@@ -28,8 +39,12 @@ class _JVM:
     """
 
     @dataclass
-    class AutobiJVM:
+    class _AutobiJVM:
         _jvm: JVMView
+
+        @property
+        def __class__(self):
+            return AutobiJVM
 
     # It seems like this can be made cleaner with one dataclass that contains all three,
     # saving an optional instance of that dataclass.
@@ -73,7 +88,7 @@ class _JVM:
                 redirect_stdout=PRINTING_QUEUE,
                 redirect_stderr=PRINTING_QUEUE,
             )
-            cls.views = defaultdict(lambda: cls.AutobiJVM(cls.gateway.new_jvm_view()))
+            cls.views = defaultdict(lambda: cls._AutobiJVM(cls.gateway.new_jvm_view()))
             cls.ref_count = defaultdict(lambda: 0)
 
         cls.ref_count[name] += 1
@@ -131,10 +146,10 @@ class AutobiJVMHandler:
     """
 
     def __init__(self, name: str = "main") -> None:
-        self.handler: Optional[_JVM.AutobiJVM] = None
+        self.handler: Optional[AutobiJVM] = None
         self.name = name
 
-    def __enter__(self) -> _JVM.AutobiJVM:
+    def __enter__(self) -> AutobiJVM:
         self.handler = _JVM.get_view(self.name)
         return self.handler
 
@@ -151,15 +166,6 @@ def _shutdown():
     It is kept seperate from _JVM to allow it to be registered with atexit
     """
     _JVM.shutdown()
-
-
-class AutobiJVM:
-    _jvm: JVMView
-
-    def __new__(cls):
-        raise NotInstantiable(
-            "AutobiJVM object can only be created by the AutobiJVMHandler"
-        )
 
 
 # Disallow usage of _JVM
