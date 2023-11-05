@@ -1,16 +1,16 @@
 # AuToBI-py
 
-A python wrapper and interfacing library around AuToBI that I wrote for my Batcholor's thesis. AuToBI is effectively the only publically available system for the automatic generation of prosody transcriptions, created by Andrew Rosenberg for his PhD in 2012. 
+A Python wrapper and interfacing library around [AuToBI](https://github.com/AndrewRosenberg/AuToBI) that I wrote for my Bachelor's thesis. AuToBI is effectively the only publically available system for the automatic generation of prosody transcriptions, created by Andrew Rosenberg for his PhD in 2012.
 
-Modern research uses AuToBI as a baseline, but rarely interfaces with it directly (and when they do, they do so via the commandline with all limitations that come with that, such as [AASP](https://github.com/UUDigitalHumanitieslab/AASP)), as modern tooling generally uses Python over Java.
+Modern research uses AuToBI as a baseline but rarely interfaces with it directly (and when they do, they do so via the command line with all limitations that come with that, such as [AASP](https://github.com/UUDigitalHumanitieslab/AASP)), as modern tooling generally uses Python over Java.
 
-AuToBI_py provides a simple python interface for AuToBI's feature generation systems, as well as the parts of AuToBI that are available from the commandline. Please check out the [README of the python library](https://github.com/JJWRoeloffs/autobi_py/blob/master/python/README.md) for documentation of this library.
+AuToBI_py provides a simple Python interface for AuToBI's feature generation systems, as well as the parts of AuToBI that are available from the command line. Please check out the [README of the Python library](https://github.com/JJWRoeloffs/autobi_py/blob/master/python/README.md) for the Python documentation.
 
-The project consists of three parts. AuToBI itself, which had to be forked and slightly rewritten to be able to provide the interface, an adapter that provides the interface in a JVM language, and a python library that uses py4j to interface with this JVM API and provide a cleaner python API.
+The project consists of three parts. AuToBI itself, which had to be forked and slightly rewritten to be able to provide the interface, an adapter that provides the JVM interface in Scala, and a python library that uses py4j to interface with this adapter and provide a cleaner python API.
 
 ## AuToBI
 
-The AuToBI system for automatically generating prosody transcriptions, released under the Apache2 license. Only slightly modified for this version. There are two major changes to the original: the migration from Apache Ant to sbt, which is used for better cross-compiling, and the migration from java 6 to java 20, which was needed for loading the code into python. Despite all these changes, the functional behavior should be identical to the original.
+The AuToBI system for automatically generating prosody transcriptions, released under the Apache2 license. Only slightly modified for this version. There are two major changes to the original: the migration from Apache Ant to sbt, which is used for better cross-compiling, and the migration from Java 6 to Java 20, which was needed for loading the code into Python. Despite all these changes, the functional behavior should be identical to the original.
 
 Build with sbt:
 
@@ -31,9 +31,9 @@ sbt "autobi/test"
 
 ## Adapter
 
-The AuTOBI adapter is a minimal Scala library written to turn the AuToBI application into a library. It exposes core functionality of the AuToBI system in a way that makes it possible to interface it in a sensible manner. Theoretically speaking, it could be interfaced in any JVM language, however, it was written with py4j in mind, and thus most major functions only take simple collections as their inputs, making them less effective than one could expect of a native library. Usually, this package will only be build as a dependency of the python library.
+The AuTOBI adapter is a minimal Scala library written to turn the AuToBI application into a library. It exposes the core functionality of AuToBI in a way that makes it possible to interface it sensibly. Theoretically speaking, it could be used in any JVM language, however, it was written with py4j in mind, and thus key API functions only take strings as their inputs, making them less effective than one could expect of a native library.
 
-build with sbt:
+Build with sbt:
 
 ```sh
 # Compile only the adapter
@@ -53,9 +53,9 @@ sbt "adapter/test"
 
 ## Python library
 
-The main python library is the part of this application that is actually being used. This is the ultimate end-point of this project. It exposes the AuToBI adapter in a python interface using py4j, and contains some needed boilerplate to be able to call this Java/Scala code like it is native python.
+The Python library is the part of this application that is expected to be used. This is the ultimate end-point of this project. It exposes the AuToBI adapter in a Python interface using py4j and contains some needed boilerplate for calling this Java/Scala code like it is native Python.
 
-To run any Java or Scala code, a JVM needs to be running with the interfaced code available (through Java Reflections) in the jar. To compile this jar, move it to a location within the python sources and write the needed python file to tell the other python sources where it is, run:
+To run any Java or Scala code, a JVM needs to be running with the interfaced code available (through Java Reflections) in the jar. To compile this jar, move it to a location within the Python sources, and write the needed Python file to tell the other Python sources where it is, run:
 
 ```sh
 sbt "python/assembly"

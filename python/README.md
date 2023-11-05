@@ -1,12 +1,12 @@
 # autobi_py
 
-A python wrapper and interfacing library around AuToBI. AuToBI is effectively the only publically available system for the automatic generation of prosody transcriptions, created by Andrew Rosenberg for his PhD in 2012. 
+A Python wrapper and interfacing library around [AuToBI](https://github.com/AndrewRosenberg/AuToBI). AuToBI is effectively the only publically available system for the automatic generation of prosody transcriptions, created by Andrew Rosenberg for his PhD in 2012. 
 
-AuToBI_py provides a simple python interface for AuToBI's feature generation systems, as well as the parts of AuToBI that are available from the commandline.
+AuToBI_py provides a simple Python interface for AuToBI's feature generation systems, as well as the parts of AuToBI that are available from the command line.
 
 ## Usage
 
-To get started, the JVM needs to be running. Otherwise, the Java code cannot be called. To start the JVM, run:
+To get started, the JVM needs to be running, as the Java code can otherwise not be called. To start the JVM, use the `AutobiJVMHandler` class like so:
 
 ```python
 from autobi.core import AutobiJVMHandler
@@ -15,7 +15,7 @@ with AutobiJVMHandler() as jvm:
     do_stuff(jvm)
 ```
 
-AutobiJVMHandler returns a handle to the JVM (type `autobi.core.AutobiJVM`) that you can pass into functions from this library to let them access it. The constructor can take one argument, a string name, that is used to disginguish seperate views of the JVM as follows:
+`AutobiJVMHandler` returns a handle to the JVM (type `autobi.core.AutobiJVM`) that you can pass into functions from this library to let them access it. The constructor can take one argument, a string name, that is used to distinguish separate views of the JVM as follows:
 
 ```python
 from autobi.core import AutobiJVMHandler
@@ -34,7 +34,7 @@ with AutobiJVMHandler() as jvm1:
         assert jvm1 is jvm2
 ```
 
-If you want to hard shurtdown the JVM and invalidate all AutobiJVM instances for some reason, run `autobi.core._shutdown`.
+If you want to hard shutdown the JVM and invalidate all `AutobiJVM` instances for some reason, run `autobi.core._shutdown()`.
 
 ### Running AuToBI like from the commandline
 
@@ -52,7 +52,7 @@ with AutobiJVMHandler() as jvm:
     RunDefault(jvm).run("-adapter_test")
 ```
 
-To make creating arguments for running like this easier, the `ArgumentBuilder` class was created, which also does some checking with AuToBI to assure valid arguments are passed:
+To make creating arguments for running like this easier, there is the `ArgumentBuilder` class:
 
 ```python
 from pathlib import Path
@@ -73,12 +73,12 @@ with AutobiJVMHandler("test") as jvm:
 
 ### Extracting features
 
-The most important part of the adapter is the ability to use AuToBI's eccelent feature extraction algorithms on their own. The majority of Rosenberg's PhD was dedicated to feature extraction, and a large majority of the code is, too. 
+The most important part of the adapter is the ability to use AuToBI's excellent feature extraction algorithms on their own. The majority of Rosenberg's PhD was dedicated to feature extraction, and a large majority of the code is, too. 
 
 #### Creating a FeatureSet to extract.
 The primary interface for this is the `autobi.FeatureSet` class, which is simply a wrapper around a list of strings, where each string represents a valid feature.
 
-To generate one of these featuresets, use the `FeaturenamesBuilder` class:
+To generate one of these feature sets, use the `FeaturenamesBuilder` class:
 
 ```python
 from autobi import FeaturenamesBuilder
@@ -109,9 +109,9 @@ with AutobiJVMHandler() as jvm:
 What individual features are valid is not documented anywhere for AuToBI. The default feature sets, however, are simply the names of the [Java classes that inherit from FeatureSet](https://github.com/JJWRoeloffs/autobi_py/tree/master/autobi/src/main/java/edu/cuny/qc/speech/AuToBI/featureset) in the original AuToBI, which the adapter gets out with java reflections and runs to get the features they generate out.
 
 #### Extracting a FeatureSet
-To actually extract any features from input data, the API gets a little messier. The input expects a `.wav` file and a praat `.TextGrid` file, both *from disk*, which is to say that the functions take file paths as arguments. AuToBI should also accept different input formats, but those are not tested.
+To actually extract any features from input data, the API gets a little messier. The input expects a `.wav` file and a praat `.TextGrid` file, both *from disk*, meaning the functions take file paths as arguments. AuToBI should also accept different input formats, but I have not tested those.
 
-The necscity of the `.wav` file is probably expected. However, the `.TextGrid` file might be surprising. The reason this is needed is because ToBI is a transcription format that is defined as something to add *on top of* a normal, textual, transcription, and AuToBI only adds this layer. To get a base transcription in TextGrid format from raw audio, you can, for example, check out another project I wrote for my BA thesis: [transcribe_allign_textgrid](https://github.com/JJWRoeloffs/transcribe_allign_textgrid).
+The necessity of the `.wav` file is probably expected. However, the `.TextGrid` file might be surprising. The reason this is needed is because ToBI is a transcription format that is defined as something to add *on top of* a normal, textual, transcription, and AuToBI only adds this layer. To get a base transcription in TextGrid format from raw audio, you can, for example, check out another project I wrote for my BA thesis: [transcribe_allign_textgrid](https://github.com/JJWRoeloffs/transcribe_allign_textgrid).
 
 The format AuToBI expects the TextGrids to be in is a grid with a single interval tier, called "words", that contains the force-alligned transcription. It cannot deal with empty intervals, but those can be replaced with dashes instead. 
 
@@ -130,7 +130,7 @@ with AutobiJVMHandler() as jvm:
     data = DatasetBuilder(jvm, args)
 ```
 
-This DatasetBuilder should then be told what features to extract. This can, of course, be done by giving it an instance of `FeatureSet`, tough does also have the same functions as `FeaturenamesBuilder` to add more to it (The advantage of feature sets being you can pass them around your in code if you want to create multiple data sets)
+This `DatasetBuilder` should then be told what features to extract. This can, of course, be done by giving it an instance of `FeatureSet`, although it also has the same interface as `FeaturenamesBuilder` to add more to it (The advantage of feature sets being you can pass them around your in code if you want to create multiple data sets)
 
 ```python
 from autobi.core import AutobiJVMHandler
@@ -152,7 +152,7 @@ with AutobiJVMHandler() as jvm:
     databuilder.with_default_features("PitchAccentClassificationFeatureSet")
 ```
 
-Finally, the data can be extracted. To do this, the output can either be written do csv, arff or liblinear formats, or exported to a pandas dataframe directly, which simply writes to a csv, and then reads from that csv.
+Finally, the data can be extracted. To do this, the output can either be written do csv, arff, or liblinear formats, or exported to a pandas dataframe directly, which simply writes to a csv, and then reads from that csv.
 
 ```python
 # Please note you can only call one: Calling write invalidates the builder object.
@@ -171,7 +171,7 @@ with TemporaryDirectory() as temp_dir:
 which is added as a buildin function `datasetbuilder.build_pandas()`
 
 ## Examples
-A file that uses autobi_py to extract features might look a little like this, which is a simplified exerpt from the code I wrote for the actual experiment of my BA thesis (which can be found [here](https://zenodo.org/records/8129129))
+A file that uses autobi_py to extract features might look a little like this, which is a simplified excerpt from the code I wrote for the actual experiment of my BA thesis (which can be found [here](https://zenodo.org/records/8129129))
 
 ```python
 import functools
@@ -187,8 +187,6 @@ from autobi import ArgumentBuilder, DatasetBuilder, FeaturenamesBuilder, Feature
 
 @dataclass
 class DataSet:
-    boundry_detection: pd.DataFrame
-    boundry_classification: pd.DataFrame
     accent_detection: pd.DataFrame
     accent_classification: pd.DataFrame
 
@@ -254,7 +252,7 @@ def feature_creation_autobi(df: DataSet) -> DataSet:
         )
 ```
 
-Code that transforms the output from [transcribe_allign_textgrid](https://github.com/JJWRoeloffs/transcribe_allign_textgrid) to the format that AuToBI expects, making use of the [PraatIO](https://github.com/timmahrt/praatIO) library, might looks something like this:
+Code that transforms the output from [transcribe_allign_textgrid](https://github.com/JJWRoeloffs/transcribe_allign_textgrid) to the format that AuToBI expects, making use of the [PraatIO](https://github.com/timmahrt/praatIO) library, might look something like this:
 
 ```python
 from praatio.data_classes.interval_tier import IntervalTier
@@ -281,8 +279,8 @@ def reformat_textgrid(grid: TextGrid) -> TextGrid:
 
 ## Notes on weirdness of style
 
-An attentive reader might have noticed this adapter overuses the Builder pattern, and generally has a very weird python API. This is because of the limitations that come from the java-python bridge. The bridge is only sending strings (sometimes serialized as Json) to and from java. Because of this, the builder pattern is great, as it is sending single strings to the JVM at a time, with the `build` method returning only strings to be used for other parts of the API. Moreover, having to call the functions on objects means that those objects can keep reference to the jvm view themselves.
+An attentive reader might have noticed this adapter overuses the Builder pattern and generally has a very weird Python API. This is because of the limitations that come from the Java-Python bridge. The bridge is only sending strings (sometimes serialized as Json) to and from Java. Because of this, the builder pattern is great, as it sends single strings to the JVM at a time, with the `build` method returning only strings to be used for other parts of the API. Moreover, having to call the functions on objects means that those objects can keep a reference to the JVM view themselves.
 
-Similarly, the overuse of the ArgumentBuilder is because AuToBI is originally designed as an application, not a library. Internal Java functions all want an instance of AuToBIArguments, which I construct like this.
+Similarly, the overuse of the ArgumentBuilder is because AuToBI was originally designed as an application, not a library. Internal Java functions all want an instance of AuToBIArguments, which I construct like this.
 
-A more complete python project would probably add another layer of abstraction on top of the present library to provide a more pythonic API.
+A more complete Python project would probably add another layer of abstraction on top of the present library to provide a more Pythonic API.
