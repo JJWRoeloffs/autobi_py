@@ -8,8 +8,8 @@ class TestPy4jPrint:
         with AutobiJVMHandler("test") as jvm:
             RunDefault(jvm).run("-adapter_test")
 
-        out, err = capfd.readouterr()
-        assert out.strip("\n") == "PY4J | TEST SUCCESS: The adapter is running"
+        out, _ = capfd.readouterr()
+        assert out.rstrip() == "PY4J | TEST SUCCESS: The adapter is running"
 
     def test_repeated_startup(self, capfd):
         with AutobiJVMHandler("test") as jvm:
@@ -28,7 +28,5 @@ class TestPy4jPrint:
 
         _shutdown()
 
-        out, err = capfd.readouterr()
-        assert out.strip("\n") == "\n".join(
-            ["PY4J | TEST SUCCESS: The adapter is running"] * 4
-        )
+        out, _ = capfd.readouterr()
+        assert out.splitlines() == ["PY4J | TEST SUCCESS: The adapter is running"] * 4
