@@ -7,7 +7,7 @@ Python bindings for AuToBI: an Automatic prosodic annotation tool written in Jav
 __title__ = "AuToBI-py"
 __author__ = "JJWRoeloffs"
 __license__ = "APACHE"
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 import autobi.core as core
