@@ -31,7 +31,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: 'sbt'
+      - uses: sbt/setup-sbt@v1
       - name: Build JVM code and set .jar
         run: sbt python/assembly
       - name: Test with pytest
