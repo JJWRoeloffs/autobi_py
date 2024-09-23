@@ -19,7 +19,7 @@ val junit_interface = "0.11"
 
 ThisBuild / scalaVersion := "3.3.1"
 
-ThisBuild / version := "0.1.1"
+ThisBuild / version := "0.1.2"
 
 ThisBuild / organization := "edu.leidenuniv"
 

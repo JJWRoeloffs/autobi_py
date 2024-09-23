@@ -1,6 +1,6 @@
 # autobi_py
 
-A Python wrapper and interfacing library around [AuToBI](https://github.com/AndrewRosenberg/AuToBI). AuToBI is effectively the only publically available system for the automatic generation of prosody transcriptions, created by Andrew Rosenberg for his PhD in 2012. 
+A Python wrapper and interfacing library around [AuToBI](https://github.com/AndrewRosenberg/AuToBI). AuToBI is effectively the only publically available system for the automatic generation of prosody transcriptions, created by Andrew Rosenberg for his PhD in 2012.
 
 AuToBI_py provides a simple Python interface for AuToBI's feature generation systems, as well as the parts of AuToBI that are available from the command line.
 
@@ -38,7 +38,7 @@ If you want to hard shutdown the JVM and invalidate all `AutobiJVM` instances fo
 
 ### Running AuToBI like from the commandline
 
-To run AuToBI like you would from the commandline, use the `RunDefault` class:
+To run AuToBI like you would from the commandline, use the `RunDefault` or `TrainDefault` class:
 
 ```python
 from autobi import RunDefault
@@ -50,9 +50,17 @@ with AutobiJVMHandler() as jvm:
     # One argument has been added to argument list in the adapter
     # "-adapter_test", which prints "TEST SUCCESS: The adapter is running"
     RunDefault(jvm).run("-adapter_test")
+
+# Alternatively, you might want to use the TrainDefault class.
+# This is equivilant to calling the AuToBI jar file with the main function
+# from the edu.cuny.qc.speech.AuToBI.AuToBITrainer class instead.
+from autobi import TrainDefault
+
+with AutobiJVMHandler() as jvm:
+    TrainDefault(jvm).run("commandline_arguments")
 ```
 
-To make creating arguments for running like this easier, there is the `ArgumentBuilder` class:
+To make creating arguments for running like this easier, there is the `ArgumentBuilder` class, which works for both `RunDefault` and `TrainDefault`:
 
 ```python
 from pathlib import Path
@@ -73,9 +81,10 @@ with AutobiJVMHandler("test") as jvm:
 
 ### Extracting features
 
-The most important part of the adapter is the ability to use AuToBI's excellent feature extraction algorithms on their own. The majority of Rosenberg's PhD was dedicated to feature extraction, and a large majority of the code is, too. 
+The most important part of the adapter is the ability to use AuToBI's excellent feature extraction algorithms on their own. The majority of Rosenberg's PhD was dedicated to feature extraction, and a large majority of the code is, too.
 
 #### Creating a FeatureSet to extract.
+
 The primary interface for this is the `autobi.FeatureSet` class, which is simply a wrapper around a list of strings, where each string represents a valid feature.
 
 To generate one of these feature sets, use the `FeaturenamesBuilder` class:
@@ -109,11 +118,12 @@ with AutobiJVMHandler() as jvm:
 What individual features are valid is not documented anywhere for AuToBI. The default feature sets, however, are simply the names of the [Java classes that inherit from FeatureSet](https://github.com/JJWRoeloffs/autobi_py/tree/master/autobi/src/main/java/edu/cuny/qc/speech/AuToBI/featureset) in the original AuToBI, which the adapter gets out with java reflections and runs to get the features they generate out.
 
 #### Extracting a FeatureSet
-To actually extract any features from input data, the API gets a little messier. The input expects a `.wav` file and a praat `.TextGrid` file, both *from disk*, meaning the functions take file paths as arguments. AuToBI should also accept different input formats, but I have not tested those.
 
-The necessity of the `.wav` file is probably expected. However, the `.TextGrid` file might be surprising. The reason this is needed is because ToBI is a transcription format that is defined as something to add *on top of* a normal, textual, transcription, and AuToBI only adds this layer. To get a base transcription in TextGrid format from raw audio, you can, for example, check out another project I wrote for my BA thesis: [transcribe_allign_textgrid](https://github.com/JJWRoeloffs/transcribe_allign_textgrid).
+To actually extract any features from input data, the API gets a little messier. The input expects a `.wav` file and a praat `.TextGrid` file, both _from disk_, meaning the functions take file paths as arguments. AuToBI should also accept different input formats, but I have not tested those.
 
-The format AuToBI expects the TextGrids to be in is a grid with a single interval tier, called "words", that contains the force-alligned transcription. It cannot deal with empty intervals, but those can be replaced with dashes instead. 
+The necessity of the `.wav` file is probably expected. However, the `.TextGrid` file might be surprising. The reason this is needed is because ToBI is a transcription format that is defined as something to add _on top of_ a normal, textual, transcription, and AuToBI only adds this layer. To get a base transcription in TextGrid format from raw audio, you can, for example, check out another project I wrote for my BA thesis: [transcribe_allign_textgrid](https://github.com/JJWRoeloffs/transcribe_allign_textgrid).
+
+The format AuToBI expects the TextGrids to be in is a grid with a single interval tier, called "words", that contains the force-alligned transcription. It cannot deal with empty intervals, but those can be replaced with dashes instead.
 
 The actual data extraction is done with the `DatasetBuilder`, which takes an argument list from the ArgumentBuilder:
 
@@ -162,15 +172,18 @@ databuilder.write_liblinear(output_liblinear)
 ```
 
 One common pattern you might find yourself using is:
+
 ```python
 with TemporaryDirectory() as temp_dir:
     tempfile = Path(temp_dir) / "out.csv"
     databuilder.write_csv(tempfile)
     df = pd.read_csv(tempfile, delimiter=",", na_values=["?"]).astype(float)
 ```
+
 which is added as a buildin function `datasetbuilder.build_pandas()`
 
 ## Examples
+
 A file that uses autobi_py to extract features might look a little like this, which is a simplified excerpt from the code I wrote for the actual experiment of my BA thesis (which can be found [here](https://zenodo.org/records/8129129))
 
 ```python
@@ -244,7 +257,7 @@ def feature_creation_autobi(df: DataSet) -> DataSet:
                 features,
             )
             return pd.concat([df, autobi_features], axis=1, join="inner")
-        
+
         return create_features(
             df,
             get_accent_detection_features=functools.partial(get_features, accent_detection_features),
